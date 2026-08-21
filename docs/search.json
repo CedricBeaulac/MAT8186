@@ -44,7 +44,77 @@
     "href": "survol.html",
     "title": "1  Un survol rapide",
     "section": "",
-    "text": "Dans ce cours, nous apprendrons comment mettre au point une librairie R. Bien que nous pouvons nous poser plusieurs question, commençon par comprendre pourquoi.\nLa librairie (de l’anglais package) est le format le mieux structuré pour le partage de code. Aux cycles supérieurs, les étudiants sont appelés à se mettre en contact à la recherche scientifique. Une étape importante de la recherche est la dissimination des résultats. Dans le cadre de la recherche en science des données, il est commun de développé des méthodologies d’analyse de données et d’implémenter celles-ci. La mise-au-point d’une librairie est donc une manière de\n\nlibrary(devtools)\n\nLoading required package: usethis\n\n#&gt; Loading required package: usethis",
+    "text": "Pourquoi ?\nLa librairie (de l’anglais package) est le format le mieux structuré pour le partage de code. Aux cycles supérieurs, les étudiants sont appelés à entrer en contact avec la recherche scientifique. Une étape importante de la recherche est la dissémination des résultats. Dans le cadre de la recherche en science des données, il est commun de développer de nouvelles méthodologies d’analyse de données et d’implémenter celles-ci. La mise au point d’une librairie est donc une manière de diffuser ces implémentations et, conséquemment, de rendre de nouvelles méthodes d’analyse de données facilement accessibles.\nL’objectif est donc de remplacer le partage d’un simple document .R par un ensemble de fonctions réfléchies, complètes, documentées et facilement accessibles à de nouveaux utilisateurs.\nL’ajout constant de nouvelles librairies R sur le Comprehensive R Archive Network (CRAN) est l’une des raisons du succès de R au fil des années et permet à R de rester un langage utilisé et reconnu à l’ère de Python, Julia et des autres langages couramment utilisés en science des données. CRAN contient aujourd’hui près de 20 000 librairies! Vous avez sûrement déjà installé des librairies à partir de CRAN avec la commande install.packages(\"x\").",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#pourquoi-moi",
+    "href": "survol.html#pourquoi-moi",
+    "title": "1  Un survol rapide",
+    "section": "Pourquoi moi ?",
+    "text": "Pourquoi moi ?\nJe ne suis pas un expert de la mise au point de librairies, mais :\n\nJ’ai déjà mis au point une librairie!\nJe veux mettre au point d’autres librairies!\nJ’aime R, l’enseignement et l’enseignement de R.\nPersonne d’autre ne pouvait l’enseigner.\nJe compte sur une excellente référence pour faire une partie du travail à ma place.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#comment",
+    "href": "survol.html#comment",
+    "title": "1  Un survol rapide",
+    "section": "Comment ?",
+    "text": "Comment ?\nNous allons essentiellement suivre le livre R Packages de Hadley Wickham et Jennifer Bryan. Wickham est notamment l’auteur ou le coauteur de plusieurs librairies importantes de l’écosystème R, dont ggplot2, et l’un des principaux contributeurs au tidyverse et aux outils modernes de développement de librairies R.\nPour la mise au point de librairies, nous utiliserons… une librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#quoi",
+    "href": "survol.html#quoi",
+    "title": "1  Un survol rapide",
+    "section": "Quoi ?",
+    "text": "Quoi ?\nDans ce cours, nous allons bien entendu mettre au point une librairie R : c’est l’objectif principal. Nous verrons comment passer d’un ensemble de fonctions R à une librairie structurée, documentée, testée et pouvant être facilement partagée avec d’autres utilisateurs.\nNous verrons également plusieurs outils et concepts qui accompagnent le développement moderne en R :\n\nGit et GitHub, pour conserver un historique des différentes versions de notre code, partager celui-ci et collaborer avec d’autres utilisateurs;\nles bonnes pratiques pour organiser des projets, fichiers et fonctions R;\nla documentation et les tests, afin qu’une librairie puisse être comprise, utilisée et modifiée de manière fiable;\nquelques notions de programmation orientée objet, afin de comprendre comment R permet de définir des comportements associés à différents types d’objets;\nRcpp et reticulate, qui permettent respectivement d’intégrer du code C++ et Python à un projet R, notamment lorsque certaines fonctionnalités sont plus faciles ou plus efficaces à implémenter dans un autre langage.\n\nCes différents outils ne constituent pas des objectifs indépendants : nous les utiliserons progressivement comme des composantes du développement de notre librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#the-whole-game",
+    "href": "survol.html#the-whole-game",
+    "title": "1  Un survol rapide",
+    "section": "1.1 1 The Whole Game",
+    "text": "1.1 1 The Whole Game\nNous débutons avec une introduction du processus entier de mise-au-point de librairie. Le tout se fait presque seul en suivant les instructions de la librairie et en suivant attentivement le\n\nlibrary(devtools)\n\nLoading required package: usethis\n\n#&gt; Loading required package: usethis",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#nos-principaux-outils",
+    "href": "survol.html#nos-principaux-outils",
+    "title": "1  Un survol rapide",
+    "section": "Nos principaux outils",
+    "text": "Nos principaux outils\nR possède déjà les outils nécessaires pour construire, installer et vérifier des librairies.\nCependant, plusieurs librairies facilitent énormément le travail de développement.\nNous utiliserons principalement devtools et usethis.\n\ninstall.packages(\"devtools\")\n\nUne fois installée :\n\nlibrary(devtools)\n\nLa librairie devtools rassemble plusieurs outils associés au développement de librairies R.\nUne partie des fonctions que nous utiliserons proviennent en réalité de la librairie usethis.\nPar exemple :\n\nusethis::create_package()\n\nDans les notes de cours, nous utiliserons régulièrement la notation\nlibrairie::fonction()\nafin d’identifier clairement la provenance d’une fonction.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#création",
+    "href": "survol.html#création",
+    "title": "1  Un survol rapide",
+    "section": "Création",
+    "text": "Création\nCommençons par créer notre librairie :\n\nusethis::create_package(\"~/MAT8186/mat8186demo\")\n\nLe chemin devra évidemment être adapté à votre ordinateur.\ncreate_package() crée automatiquement plusieurs fichiers et répertoires.\nNous obtenons quelque chose qui ressemble à :\nmat8186demo/\n├── .Rbuildignore\n├── .gitignore\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n└── mat8186demo.Rproj\nNous venons déjà de créer plusieurs choses à la fois.\nNotre dossier est maintenant :\n\nun répertoire sur notre ordinateur;\nun projet RStudio;\nla structure minimale d’une librairie R.\n\n\n\n\n\n\n\nNe cherchons pas encore à tout comprendre\n\n\n\nNous reviendrons plus tard sur DESCRIPTION, NAMESPACE, .Rbuildignore et les autres fichiers.\nPour l’instant, retenons surtout que le répertoire R/ contiendra le code de notre librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#du-script-à-la-librairie",
+    "href": "survol.html#du-script-à-la-librairie",
+    "title": "1  Un survol rapide",
+    "section": "Du script à la librairie",
+    "text": "Du script à la librairie\nIl y a ici un changement important dans notre manière de travailler.\nDans un script d’analyse, nous pouvons retrouver quelque chose comme :\n\ndonnees &lt;- read.csv(\"donnees.csv\")\n\nresultat &lt;- lm(y ~ x, data = donnees)\n\nsummary(resultat)\n\nplot(resultat)\n\nDans le répertoire R/ d’une librairie, nous retrouverons plutôt des définitions de fonctions :\n\nma_fonction &lt;- function(x) {\n  ...\n}\n\nNous passons progressivement d’une logique de script d’analyse à une logique de développement logiciel.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]

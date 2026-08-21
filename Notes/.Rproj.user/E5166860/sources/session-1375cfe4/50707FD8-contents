@@ -1,0 +1,23 @@
+project:
+  type: book
+  output-dir: ../docs
+
+book:
+  title: "Notes de cours - MAT8186"
+  author: "Cedric Beaulac"
+  date: "2026-08"
+  chapters:
+    - index.qmd
+    - survol.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: spacelab
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+
