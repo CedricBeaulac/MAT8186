@@ -1,9 +1,12 @@
-# Un survol simple
+# Un survol rapide
 
-This is a book created from markdown and executable code.
+Dans ce cours, nous apprendrons comment mettre au point une librairie  R. Bien que nous pouvons nous poser plusieurs question, commençon par comprendre pourquoi.
 
-See @knuth84 for additional discussion of literate programming.
+La librairie (de l'anglais *package*) est le format le mieux structuré pour le partage de code. Aux cycles supérieurs, les étudiants sont appelés à se mettre en contact à la recherche scientifique. Une étape importante de la recherche est la dissimination des résultats. Dans le cadre de la recherche en science des données, il est commun de développé des méthodologies d'analyse de données et d'implémenter celles-ci. La mise-au-point d'une librairie est donc une manière 
+
+
 
 ```{r}
-1 + 1
+library(devtools)
+#> Loading required package: usethis
 ```
