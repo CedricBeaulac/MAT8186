@@ -4,9 +4,9 @@
     "href": "index.html",
     "title": "Notes de cours - MAT8186",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
+    "text": "Index\nIl s’agit d’un livre Quarto contenant le matériel du cours MAT8186.",
     "crumbs": [
-      "Preface"
+      "Index"
     ]
   },
   {
@@ -37,6 +37,16 @@
     "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
     "crumbs": [
       "References"
+    ]
+  },
+  {
+    "objectID": "survol.html",
+    "href": "survol.html",
+    "title": "1  Un survol rapide",
+    "section": "",
+    "text": "Dans ce cours, nous apprendrons comment mettre au point une librairie R. Bien que nous pouvons nous poser plusieurs question, commençon par comprendre pourquoi.\nLa librairie (de l’anglais package) est le format le mieux structuré pour le partage de code. Aux cycles supérieurs, les étudiants sont appelés à se mettre en contact à la recherche scientifique. Une étape importante de la recherche est la dissimination des résultats. Dans le cadre de la recherche en science des données, il est commun de développé des méthodologies d’analyse de données et d’implémenter celles-ci. La mise-au-point d’une librairie est donc une manière de\n\nlibrary(devtools)\n\nLoading required package: usethis\n\n#&gt; Loading required package: usethis",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
   }
 ]
