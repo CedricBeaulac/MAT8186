@@ -40,15 +40,15 @@ Nous allons essentiellement suivre le livre [R Packages](https://r-pkgs.org) de 
 
 Pour la mise au point de librairies, nous utiliserons... une librairie.
 
-# Le jeu au complet
+# Le concept de A à Z
 
 Dans cette première partie du cours, nous allons parcourir **très rapidement l'ensemble du processus de mise au point d'une librairie R**.
 
 L'objectif n'est pas de comprendre immédiatement toutes les commandes, tous les fichiers et toutes les conventions que nous allons rencontrer.
 
-Nous allons plutôt commencer par voir **le jeu au complet**.
+Nous allons plutôt commencer par voir **le chemin de A à Z**.
 
-À la fin de cette heure, nous aurons :
+À la fin, nous aurons :
 
 1. créé une librairie R;
 2. créé un dépôt Git;
@@ -90,9 +90,10 @@ Une fois installée :
 #| eval: false
 
 library(devtools)
+packageVersion("devtools")
 ```
 
-La librairie `devtools` rassemble plusieurs outils associés au développement de librairies R.
+La librairie `devtools` rassemble plusieurs outils associés au développement de librairies R. Le manuel de référence et la libraire sont conçu pour être utilisé main dans la main. Cette libraire permet à quiconque de *facilement* mettre des librairies au point.
 
 Une partie des fonctions que nous utiliserons proviennent en réalité de la librairie `usethis`.
 
@@ -124,17 +125,24 @@ Elle ne fera rien de particulièrement révolutionnaire.
 
 Son objectif sera simplement de nous permettre de parcourir une première fois toutes les étapes du développement d'une librairie R.
 
-## Création {.unnumbered}
-
-Commençons par créer notre librairie :
+Comme d'habitude, commencez par crée un répertoire et l'identifier comme répertoir de travail:
 
 ```{r}
 #| eval: false
 
-usethis::create_package("~/MAT8186/mat8186demo")
+setwd("C:/VotreRepertoire")
 ```
 
-Le chemin devra évidemment être adapté à votre ordinateur.
+## Création {.unnumbered}
+
+Puis, nous pouvons créer notre librairie :
+
+```{r}
+#| eval: false
+
+usethis::create_package("~/mat8186demo")
+```
+
 
 `create_package()` crée automatiquement plusieurs fichiers et répertoires.
 
@@ -198,24 +206,26 @@ Initial package structure
 
 Nous reviendrons beaucoup plus en détail sur **Git et GitHub** plus tard dans cette séance.
 
-# Notre première fonction
+Pour l'instant, Git conserve toute les version du répertoire nous permettant de conserver une trace de toute les modifications faites. 
 
-Une librairie R contient principalement des **fonctions**.
+# Une première fonction
 
-Créons une petite fonction permettant de transformer un vecteur numérique afin que ses valeurs se situent entre 0 et 1.
+Une librairie R contient principalement des **fonctions**. C'est par un ensemble de fonction que l'on peut encoder des méthodes plus complexes, l'atome d'une libraire est donc la fonction. 
+
+Créons une petite fonction permettant de centrer-réduire un vecteur numérique.
 
 Nous aimerions pouvoir faire :
 
 ```{r}
 #| eval: false
 
-rescale01(c(10, 20, 30))
+CR(c(10, 20, 30))
 ```
 
 et obtenir :
 
 ```text
-[1] 0.0 0.5 1.0
+[1] -1 0 1
 ```
 
 Une première version de notre fonction pourrait être :
@@ -223,8 +233,8 @@ Une première version de notre fonction pourrait être :
 ```{r}
 #| eval: false
 
-rescale01 <- function(x) {
-  (x - min(x)) / (max(x) - min(x))
+CR <- function(x) {
+  (x - mean(x)) / sd(x)
 }
 ```
 
@@ -239,13 +249,13 @@ Nous pouvons créer un fichier pour notre fonction avec :
 ```{r}
 #| eval: false
 
-usethis::use_r("rescale01")
+usethis::use_r("CR")
 ```
 
 Cette commande crée :
 
 ```text
-R/rescale01.R
+R/CR.R
 ```
 
 Nous pouvons alors y placer notre fonction :
@@ -253,8 +263,8 @@ Nous pouvons alors y placer notre fonction :
 ```{r}
 #| eval: false
 
-rescale01 <- function(x) {
-  (x - min(x)) / (max(x) - min(x))
+CR <- function(x) {
+  (x - mean(x)) / sd(x)
 }
 ```
 
