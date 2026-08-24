@@ -2,3 +2,19 @@
 
 Avant d'introduire GitHub et la publication en ligne de notre librairie, discutons rapidement d'une infrastructure R qui peut nous être utile; la projet R.
 
+## Le problème
+
+On commence toujours avec un beau répertoire de travail:
+
+```{r}
+#| eval: false
+
+setwd("C:/Users/TheBeast3.0/Desktop/MAT8186")
+```
+
+mais c'est pas pratique si notre projet est dans un service infonuagique (*cloud*) ou bien si on partage ce projet.
+
+# Projet R
+
+Le projet R est en quelque sorte la solution simple à ce problème... qui reglèra d'autres problèmes aussi. En y ajoutant une étiquette d'ouverture de projet et de sauvegarde on gardera notre environnement de travail sous contrôle et on va se garantir que le comportement de notre libraire soit reproductible. 
+

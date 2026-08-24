@@ -134,7 +134,7 @@
     "href": "Rproject.html",
     "title": "2  Projet R",
     "section": "",
-    "text": "Avant d’introduire GitHub et la publication en ligne de notre librairie, discutons rapidement d’une infrastructure R qui peut nous être utile; la projet R.",
+    "text": "2.1 Le problème\nOn commence toujours avec un beau répertoire de travail:\nsetwd(\"C:/Users/TheBeast3.0/Desktop/MAT8186\")\nmais c’est pas pratique si notre projet est dans un service infonuagique (cloud) ou bien si on partage ce projet.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
     ]

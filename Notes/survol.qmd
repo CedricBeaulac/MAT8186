@@ -40,7 +40,7 @@ Nous allons essentiellement suivre le livre [R Packages](https://r-pkgs.org) de 
 
 Pour la mise au point de librairies, nous utiliserons... une librairie.
 
-# Le concept de A à Z
+## Le concept de A à Z
 
 Dans cette première partie du cours, nous allons parcourir **très rapidement l'ensemble du processus de mise au point d'une librairie R**.
 
@@ -113,7 +113,7 @@ librairie::fonction()
 
 afin d'identifier clairement la provenance d'une fonction.
 
-# Créons une librairie
+## Créons une librairie
 
 Nous allons développer une petite librairie appelée :
 
@@ -173,7 +173,7 @@ Nous reviendrons plus tard sur `DESCRIPTION`, `NAMESPACE`, `.Rbuildignore` et le
 Pour l'instant, retenons surtout que le répertoire `R/` contiendra le code de notre librairie.
 :::
 
-# Ajoutons Git
+## Ajoutons Git
 
 Avant même d'écrire notre première fonction, nous pouvons commencer à conserver un historique de notre travail.
 
@@ -207,7 +207,7 @@ Nous reviendrons beaucoup plus en détail sur **Git et GitHub** plus tard dans c
 
 Pour l'instant, Git conserve toute les version du répertoire nous permettant de conserver une trace de toute les modifications faites.
 
-# Une première fonction
+## Une première fonction
 
 Une librairie R contient principalement des **fonctions**. C'est par un ensemble de fonction que l'on peut encoder des méthodes plus complexes, l'atome d'une libraire est donc la fonction.
 
@@ -355,7 +355,7 @@ modifier le code
 
 Ce cycle reviendra constamment pendant le cours.
 
-# Vérifier notre librairie
+## Vérifier notre librairie
 
 Une librairie R doit respecter plusieurs conventions, normes afin d'opérer. Ces normes et standards sont la raison principale pourquoi aurjourd'hui il est beaucoup plus facile d'utiliser des librairies R que des paquet Python.
 
@@ -393,7 +393,7 @@ Il est beaucoup plus facile de corriger un problème lorsqu'il vient d'apparaît
 Nous utiliserons donc `check()` **régulièrement pendant le développement**.
 :::
 
-# Le fichier DESCRIPTION
+## Le fichier DESCRIPTION
 
 Notre librairie possède déjà un fichier nommé :
 
@@ -442,7 +442,7 @@ Encoding: UTF-8
 
 Nous reviendrons plus tard sur la structure exacte du fichier `DESCRIPTION`, concentrons sur un élément d'intérêt de ce fichier, la licence.
 
-# Ajouter une licence
+## Ajouter une licence
 
 Si nous distribuons notre librairie, nous devons également indiquer **ce que les autres utilisateurs ont le droit de faire avec notre code**.
 
@@ -539,7 +539,7 @@ Notre fonction possède maintenant une documentation!
 
 Il s'agit peut-être de bon moment pour utiliser Git et laisser une trace des ces premières modifications.
 
-# Git {.unnumbered}
+## Git {.unnumbered}
 
 On va *staged* les documents modifiés que nous désirons sauvegarder et étiquette comme provenant de la même ronde de modification. 
 
@@ -547,7 +547,7 @@ Puis quand ces documents furent bien choisies, nous allons *commit* les changeme
 
 Finalement, lorsque l'on *push* ces modifications, la sauvegarde est déployé!
 
-# Ajouter un test
+## Ajouter un test
 
 Pour l'instant, nous avons testé notre fonction manuellement.
 
@@ -594,7 +594,7 @@ devtools::test()
 
 Si notre fonction est modifiée plus tard et ne produit plus le résultat attendu, le test nous avertira.
 
-# Utiliser une autre librairie
+## Utiliser une autre librairie
 
 Une librairie R n'a évidemment pas besoin de tout réimplémenter elle-même.
 
@@ -646,7 +646,7 @@ devtools::check()
 
 Nos tests nous permettent de vérifier que le comportement de notre fonction n'a pas changé, même si son implémentation interne est maintenant différente.
 
-# Installer notre librairie
+## Installer notre librairie
 
 Jusqu'à maintenant, `load_all()` nous permettait de simuler le chargement de notre librairie pendant son développement.
 
@@ -696,7 +696,7 @@ Nous avons donc déjà :
 - une dépendance;
 - un historique Git.
 
-# Et GitHub?
+## Et GitHub?
 
 Notre dépôt Git existe actuellement **sur notre ordinateur**.
 
@@ -770,7 +770,7 @@ Nous venons essentiellement de faire le cours au complet en accéléré.
 Maintenant, nous allons revenir en arrière et apprendre à faire chacune de ces étapes correctement.
 :::
 
-# Et maintenant?
+## Et maintenant?
 
 Avant de poursuivre le développement de notre librairie, nous allons revenir sur deux concepts que nous venons déjà d'utiliser sans vraiment les expliquer :
 
