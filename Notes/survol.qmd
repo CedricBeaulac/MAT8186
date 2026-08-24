@@ -1,6 +1,6 @@
 # Un survol rapide
 
-Dans ce cours, nous apprendrons comment mettre au point une librairie R. 
+Dans ce cours, nous apprendrons comment mettre au point une librairie R.
 
 ## Pourquoi ? {.unnumbered}
 
@@ -14,11 +14,11 @@ L'ajout constant de nouvelles librairies R sur le *Comprehensive R Archive Netwo
 
 Je ne suis pas un expert de la mise au point de librairies, mais :
 
-* J'ai déjà mis au point une librairie!
-* Je veux mettre au point d'autres librairies!
-* J'aime R, l'enseignement et l'enseignement de R.
-* Personne d'autre ne pouvait l'enseigner.
-* Je compte sur une excellente référence pour faire une partie du travail à ma place.
+- J'ai déjà mis au point une librairie!
+- Je veux mettre au point d'autres librairies!
+- J'aime R, l'enseignement et l'enseignement de R.
+- Personne d'autre ne pouvait l'enseigner.
+- Je compte sur une excellente référence pour faire une partie du travail à ma place.
 
 ## Quoi ? {.unnumbered}
 
@@ -26,11 +26,11 @@ Dans ce cours, nous allons bien entendu mettre au point une librairie R : c'est 
 
 Nous verrons également plusieurs outils et concepts qui accompagnent le développement moderne en R :
 
-* **Git et GitHub**, pour conserver un historique des différentes versions de notre code, partager celui-ci et collaborer avec d'autres utilisateurs;
-* les bonnes pratiques pour organiser des **projets, fichiers et fonctions R**;
-* la **documentation et les tests**, afin qu'une librairie puisse être comprise, utilisée et modifiée de manière fiable;
-* quelques notions de **programmation orientée objet**, afin de comprendre comment R permet de définir des comportements associés à différents types d'objets;
-* **Rcpp et reticulate**, qui permettent respectivement d'intégrer du code C++ et Python à un projet R, notamment lorsque certaines fonctionnalités sont plus faciles ou plus efficaces à implémenter dans un autre langage.
+- **Git et GitHub**, pour conserver un historique des différentes versions de notre code, partager celui-ci et collaborer avec d'autres utilisateurs;
+- les bonnes pratiques pour organiser des **projets, fichiers et fonctions R**;
+- la **documentation et les tests**, afin qu'une librairie puisse être comprise, utilisée et modifiée de manière fiable;
+- quelques notions de **programmation orientée objet**, afin de comprendre comment R permet de définir des comportements associés à différents types d'objets;
+- **Rcpp et reticulate**, qui permettent respectivement d'intégrer du code C++ et Python à un projet R, notamment lorsque certaines fonctionnalités sont plus faciles ou plus efficaces à implémenter dans un autre langage.
 
 Ces différents outils ne constituent pas des objectifs indépendants : nous les utiliserons progressivement comme des composantes du développement de notre librairie.
 
@@ -50,19 +50,19 @@ Nous allons plutôt commencer par voir **le chemin de A à Z**.
 
 À la fin, nous aurons :
 
-1. créé une librairie R;
-2. créé un dépôt Git;
-3. ajouté une première fonction;
-4. chargé notre librairie pendant son développement;
-5. vérifié sa structure;
-6. ajouté une licence;
-7. documenté notre fonction;
-8. ajouté un test;
-9. déclaré une dépendance;
+1.  créé une librairie R;
+2.  créé un dépôt Git;
+3.  ajouté une première fonction;
+4.  chargé notre librairie pendant son développement;
+5.  vérifié sa structure;
+6.  ajouté une licence;
+7.  documenté notre fonction;
+8.  ajouté un test;
+9.  déclaré une dépendance;
 10. installé notre librairie;
 11. vu comment elle pourra éventuellement être partagée.
 
-::: {.callout-note}
+::: callout-note
 ## Une première visite
 
 Il n'est **pas attendu que vous reteniez toutes les commandes présentées dans cette section**.
@@ -107,7 +107,7 @@ usethis::create_package()
 
 Dans les notes de cours, nous utiliserons régulièrement la notation
 
-```text
+``` text
 librairie::fonction()
 ```
 
@@ -117,7 +117,7 @@ afin d'identifier clairement la provenance d'une fonction.
 
 Nous allons développer une petite librairie appelée :
 
-```text
+``` text
 mat8186demo
 ```
 
@@ -143,12 +143,11 @@ Puis, nous pouvons créer notre librairie :
 usethis::create_package("~/mat8186demo")
 ```
 
-
 `create_package()` crée automatiquement plusieurs fichiers et répertoires.
 
 Nous obtenons quelque chose qui ressemble à :
 
-```text
+``` text
 mat8186demo/
 ├── .Rbuildignore
 ├── .gitignore
@@ -162,11 +161,11 @@ Nous venons déjà de créer plusieurs choses à la fois.
 
 Notre dossier est maintenant :
 
-* un **répertoire** sur notre ordinateur;
-* un **projet RStudio**;
-* la structure minimale d'une **librairie R**.
+- un **répertoire** sur notre ordinateur;
+- un **projet RStudio**;
+- la structure minimale d'une **librairie R**.
 
-::: {.callout-tip}
+::: callout-tip
 ## Ne cherchons pas encore à tout comprendre
 
 Nous reviendrons plus tard sur `DESCRIPTION`, `NAMESPACE`, `.Rbuildignore` et les autres fichiers.
@@ -186,7 +185,7 @@ usethis::use_git()
 
 Notre même dossier est maintenant :
 
-```text
+``` text
 un répertoire
       +
 un projet RStudio
@@ -200,17 +199,17 @@ Git peut maintenant conserver les différentes versions de notre travail.
 
 Nous pourrions immédiatement enregistrer cette première étape avec un *commit* :
 
-```text
+``` text
 Initial package structure
 ```
 
 Nous reviendrons beaucoup plus en détail sur **Git et GitHub** plus tard dans cette séance.
 
-Pour l'instant, Git conserve toute les version du répertoire nous permettant de conserver une trace de toute les modifications faites. 
+Pour l'instant, Git conserve toute les version du répertoire nous permettant de conserver une trace de toute les modifications faites.
 
 # Une première fonction
 
-Une librairie R contient principalement des **fonctions**. C'est par un ensemble de fonction que l'on peut encoder des méthodes plus complexes, l'atome d'une libraire est donc la fonction. 
+Une librairie R contient principalement des **fonctions**. C'est par un ensemble de fonction que l'on peut encoder des méthodes plus complexes, l'atome d'une libraire est donc la fonction.
 
 Créons une petite fonction permettant de centrer-réduire un vecteur numérique.
 
@@ -224,7 +223,7 @@ CR(c(10, 20, 30))
 
 et obtenir :
 
-```text
+``` text
 [1] -1 0 1
 ```
 
@@ -240,7 +239,7 @@ CR <- function(x) {
 
 Dans une librairie, notre code R est placé dans le répertoire :
 
-```text
+``` text
 R/
 ```
 
@@ -254,7 +253,7 @@ usethis::use_r("CR")
 
 Cette commande crée :
 
-```text
+``` text
 R/CR.R
 ```
 
@@ -302,21 +301,21 @@ Nous passons progressivement d'une logique de **script d'analyse** à une logiqu
 
 Notre fonction est maintenant enregistrée dans :
 
-```text
-R/rescale01.R
+``` text
+R/CR.R
 ```
 
 Comment pouvons-nous l'utiliser?
 
-Nous pourrions faire :
+Nous pouvons faire :
 
 ```{r}
 #| eval: false
 
-source("R/rescale01.R")
+source("R/CR.R")
 ```
 
-mais ce n'est pas la façon privilégiée de travailler lorsqu'on développe une librairie.
+et c'est en fait ce que nous faisons au premier cycle quand nous codons nos propres fonctions. Ce n'est pas la façon privilégiée de travailler lorsqu'on développe une librairie; nous allons *installer* la librairie.
 
 Nous allons plutôt utiliser :
 
@@ -333,14 +332,14 @@ Nous pouvons alors utiliser :
 ```{r}
 #| eval: false
 
-rescale01(c(10, 20, 30))
+CR(c(10, 20, 30))
 ```
 
 comme si notre librairie était déjà installée.
 
 Nous obtenons notre premier **cycle de développement** :
 
-```text
+``` text
 modifier le code
        ↓
    load_all()
@@ -358,11 +357,9 @@ Ce cycle reviendra constamment pendant le cours.
 
 # Vérifier notre librairie
 
-Une librairie R doit respecter plusieurs conventions.
+Une librairie R doit respecter plusieurs conventions, normes afin d'opérer. Ces normes et standards sont la raison principale pourquoi aurjourd'hui il est beaucoup plus facile d'utiliser des librairies R que des paquet Python.
 
-Heureusement, nous n'avons pas besoin de les vérifier manuellement.
-
-Nous pouvons demander à R de vérifier notre librairie avec :
+Heureusement, nous n'avons pas besoin de tous vérifier manuellement grâce à `devtools`. Nous pouvons demander à R de vérifier notre librairie avec :
 
 ```{r}
 #| eval: false
@@ -370,11 +367,11 @@ Nous pouvons demander à R de vérifier notre librairie avec :
 devtools::check()
 ```
 
-Cette commande réalise une longue série de vérifications sur notre librairie.
+Cette commande réalise une série de vérifications sur notre librairie.
 
 Le résultat peut contenir trois types de problèmes :
 
-```text
+``` text
 ERROR
 WARNING
 NOTE
@@ -382,13 +379,13 @@ NOTE
 
 À terme, nous aimerions obtenir :
 
-```text
+``` text
 0 errors ✔
 0 warnings ✔
 0 notes ✔
 ```
 
-::: {.callout-important}
+::: callout-important
 ## Vérifier régulièrement
 
 Il est beaucoup plus facile de corriger un problème lorsqu'il vient d'apparaître que lorsqu'on a modifié vingt fichiers depuis notre dernière vérification.
@@ -400,7 +397,7 @@ Nous utiliserons donc `check()` **régulièrement pendant le développement**.
 
 Notre librairie possède déjà un fichier nommé :
 
-```text
+``` text
 DESCRIPTION
 ```
 
@@ -408,7 +405,7 @@ Ce fichier contient les principales **métadonnées** de notre librairie.
 
 Il ressemble initialement à ceci :
 
-```text
+``` text
 Package: mat8186demo
 Title: What the Package Does
 Version: 0.0.0.9000
@@ -420,30 +417,30 @@ Encoding: UTF-8
 
 On y retrouvera notamment :
 
-* le nom de la librairie;
-* son titre;
-* sa version;
-* ses auteurs;
-* sa description;
-* sa licence;
-* ses dépendances.
+- le nom de la librairie;
+- son titre;
+- sa version;
+- ses auteurs;
+- sa description;
+- sa licence;
+- ses dépendances.
 
 Nous pourrions par exemple remplacer les informations génériques par :
 
-```text
+``` text
 Package: mat8186demo
-Title: Demonstration Tools for MAT8186
+Title: Demonstration for MAT8186
 Version: 0.0.0.9000
 Authors@R:
-    person("Prenom", "Nom",
-           email = "prenom.nom@example.com",
+    person("Cedric", "Beaulac",
+           email = "beaulac.cedric@uqam.ca",
            role = c("aut", "cre"))
 Description: Small functions used to demonstrate the development
     of an R library in MAT8186.
 Encoding: UTF-8
 ```
 
-Nous reviendrons plus tard sur la structure exacte du fichier `DESCRIPTION`.
+Nous reviendrons plus tard sur la structure exacte du fichier `DESCRIPTION`, concentrons sur un élément d'intérêt de ce fichier, la licence.
 
 # Ajouter une licence
 
@@ -459,57 +456,47 @@ usethis::use_mit_license()
 
 `usethis` crée et modifie automatiquement les fichiers nécessaires.
 
-Encore une fois, nous reviendrons plus tard sur les différentes licences disponibles.
+Les licences sont expliqués en plus grand détail au [chapitre 12 du manuel de référence](https://r-pkgs.org/license.html), nous n'en reparlons pas vraiment dans ce cours.
 
 # Documenter notre fonction
 
-Notre fonction fonctionne :
+Notre fonction fonctionne mais un utilisateur qui découvre notre librairie doit également pouvoir comprendre :
 
-```{r}
-#| eval: false
+- ce que fait la fonction;
+- quels arguments elle prend;
+- ce qu'elle retourne;
+- comment l'utiliser.
 
-rescale01(c(10, 20, 30))
-```
+Souvenez-vous que lorsque vous approchez une nouvelle libraire, nous utilisons la documentation R `?Library::function` pour mieux comprendre son fonctionnement.
 
-mais un utilisateur qui découvre notre librairie doit également pouvoir comprendre :
-
-* ce que fait la fonction;
-* quels arguments elle prend;
-* ce qu'elle retourne;
-* comment l'utiliser.
+Quand nous mettons au point une libraire, c'est à nous d'écrire la documentation.
 
 Nous allons utiliser **`roxygen2`** pour documenter notre fonction directement dans son fichier R.
 
+Il faut ouvrir le fichier R en question `~\mat8186\CR.R`, cliquer l'onglet *Code* puis *insert roxygen skeleton*. Ça va crée une entête vide, que l'on pourra remplir.
+
 ```{r}
 #| eval: false
 
-#' Recalibrer un vecteur entre 0 et 1
+#' Centre-réduire un vecteur
 #'
-#' Transforme linéairement un vecteur numérique afin que sa
-#' valeur minimale soit 0 et sa valeur maximale soit 1.
+#' Transforme linéairement un vecteur numérique afin qu'il soit de moyenne 0
+#' et d'écart-type 1.
 #'
 #' @param x Un vecteur numérique.
 #'
 #' @return Un vecteur numérique de même longueur que `x`.
 #'
 #' @examples
-#' rescale01(c(10, 20, 30))
+#' CR(c(10, 20, 30))
 #'
 #' @export
-rescale01 <- function(x) {
-  (x - min(x)) / (max(x) - min(x))
+CR <- function(x) {
+  (x - mean(x)) / sd(x)
 }
 ```
 
-Les commentaires commençant par :
-
-```text
-#'
-```
-
-ont une signification particulière pour `roxygen2`.
-
-Nous pouvons ensuite générer la documentation avec :
+Nous pouvons ensuite générer la documentation grâce à la libraire `devtools` :
 
 ```{r}
 #| eval: false
@@ -519,29 +506,46 @@ devtools::document()
 
 Cette commande crée notamment un répertoire :
 
-```text
+``` text
 man/
 ```
 
 contenant les pages d'aide de notre librairie.
 
-Nous pouvons maintenant refaire :
+Bon, on se rapelle notre boucle de développement, allons-y:
+
+``` text
+modifier le code
+       ↓
+   load_all()
+       ↓
+tester la fonction
+       ↓
+modifier le code
+       ↓
+   load_all()
+       ↓
+      ...
+```
 
 ```{r}
 #| eval: false
 
 devtools::load_all()
+?CR
 ```
 
-puis demander :
+Notre fonction possède maintenant une documentation!
 
-```{r}
-#| eval: false
+Il s'agit peut-être de bon moment pour utiliser Git et laisser une trace des ces premières modifications.
 
-?rescale01
-```
+# Git {.unnumbered}
 
-Notre fonction possède maintenant une vraie page d'aide.
+On va *staged* les documents modifiés que nous désirons sauvegarder et étiquette comme provenant de la même ronde de modification. 
+
+Puis quand ces documents furent bien choisies, nous allons *commit* les changement et les décrire à l'aide de commentaires.
+
+Finalement, lorsque l'on *push* ces modifications, la sauvegarde est déployé!
 
 # Ajouter un test
 
@@ -562,7 +566,7 @@ Puis créons un fichier de tests associé à notre fonction :
 ```{r}
 #| eval: false
 
-usethis::use_test("rescale01")
+usethis::use_test("CR")
 ```
 
 Nous pouvons y écrire :
@@ -570,11 +574,11 @@ Nous pouvons y écrire :
 ```{r}
 #| eval: false
 
-test_that("rescale01 transforme correctement un vecteur", {
+test_that("CR transforme correctement un vecteur", {
 
   expect_equal(
-    rescale01(c(10, 20, 30)),
-    c(0, 0.5, 1)
+    CR(c(10, 20, 30)),
+    c(-1, 0, 1)
   )
 
 })
@@ -594,7 +598,7 @@ Si notre fonction est modifiée plus tard et ne produit plus le résultat attend
 
 Une librairie R n'a évidemment pas besoin de tout réimplémenter elle-même.
 
-Elle peut utiliser des fonctions provenant d'autres librairies.
+Elle peut utiliser des fonctions provenant d'autres librairies, on appele ça des dépendances. Ici, c'est une des grandes forces des librairies R (en contraste avec Python), la gestion des dépendances.
 
 Supposons par exemple que nous souhaitions utiliser la librairie `scales`.
 
@@ -603,28 +607,28 @@ Nous pouvons déclarer cette dépendance avec :
 ```{r}
 #| eval: false
 
-usethis::use_package("scales")
+usethis::use_package("plyr")
 ```
 
-Cette commande ajoute notamment `scales` au fichier `DESCRIPTION`.
+Cette commande ajoute notamment `plyr` au fichier `DESCRIPTION`.
 
-Nous pourrions ensuite réécrire notre fonction comme :
+::: callout-tip
+## Le brio des dépendances R
+
+Nous pouvons spécifier une version spécifique de la dépendance et R peut gérer plusieurs versions de la même librairie pour satisfaire les dépendances si nécessaire.
+:::
+
+Nous pourrions ensuite écrire une fonction qui centre-réduit chaque colonne d'une base de données comme :
 
 ```{r}
 #| eval: false
 
-rescale01 <- function(x) {
-  scales::rescale(x, to = c(0, 1))
+CR-Donnee <- function(X) {
+  apply(x, 2,CR)
 }
+
+usethis::use_r("CR-Donnee")
 ```
-
-La notation :
-
-```text
-scales::rescale()
-```
-
-indique explicitement que nous utilisons la fonction `rescale()` provenant de la librairie `scales`.
 
 Et maintenant?
 
@@ -661,7 +665,7 @@ Après avoir redémarré R, nous pouvons l'utiliser comme n'importe quelle autre
 
 library(mat8186demo)
 
-rescale01(c(5, 10, 15))
+CR(c(5, 10, 15))
 ```
 
 C'est une étape importante.
@@ -682,32 +686,15 @@ Faisons donc une nouvelle vérification :
 devtools::check()
 ```
 
-Notre projet ressemble maintenant davantage à :
-
-```text
-mat8186demo/
-├── DESCRIPTION
-├── LICENSE
-├── NAMESPACE
-├── R/
-│   └── rescale01.R
-├── man/
-│   └── rescale01.Rd
-├── tests/
-│   └── testthat/
-├── .git/
-└── mat8186demo.Rproj
-```
-
 Nous avons donc déjà :
 
-* une librairie R;
-* une fonction;
-* de la documentation;
-* une licence;
-* des tests;
-* une dépendance;
-* un historique Git.
+- une librairie R;
+- deux fonctions;
+- de la documentation;
+- une licence;
+- des tests;
+- une dépendance;
+- un historique Git.
 
 # Et GitHub?
 
@@ -717,7 +704,7 @@ Une prochaine étape consistera à créer une copie distante de ce dépôt sur *
 
 Conceptuellement :
 
-```text
+``` text
 Notre ordinateur
      │
      │  Git
@@ -731,7 +718,7 @@ Historique local
 
 Nous verrons dans quelques instants comment mettre cela en place.
 
-::: {.callout-warning}
+::: callout-warning
 ## Git n'est pas GitHub
 
 **Git** est le système qui permet de conserver l'historique des versions de notre projet.
@@ -749,7 +736,7 @@ Le but n'était pas de mémoriser toutes les commandes.
 
 Le message principal est de comprendre le **cycle général de développement** d'une librairie :
 
-```text
+``` text
 Créer la librairie
         ↓
 Écrire une fonction
@@ -775,7 +762,7 @@ Une librairie n'est donc pas simplement **la forme finale que l'on donne à notr
 
 La librairie devient elle-même **l'environnement dans lequel nous développons notre code**.
 
-::: {.callout-tip}
+::: callout-tip
 ## Pour résumer
 
 Nous venons essentiellement de faire le cours au complet en accéléré.
@@ -787,8 +774,7 @@ Maintenant, nous allons revenir en arrière et apprendre à faire chacune de ces
 
 Avant de poursuivre le développement de notre librairie, nous allons revenir sur deux concepts que nous venons déjà d'utiliser sans vraiment les expliquer :
 
-1. les **projets RStudio et l'organisation des fichiers**;
-2. **Git et GitHub**.
+1.  les **projets RStudio et l'organisation des fichiers**;
+2.  **Git et GitHub**.
 
 Nous pourrons ensuite revenir au développement de notre librairie avec une meilleure compréhension de notre environnement de travail.
-

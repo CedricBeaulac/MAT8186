@@ -118,5 +118,25 @@
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
+  },
+  {
+    "objectID": "survol.html#ajoutons-git",
+    "href": "survol.html#ajoutons-git",
+    "title": "1  Un survol rapide",
+    "section": "3.1 Ajoutons Git",
+    "text": "3.1 Ajoutons Git\nAvant même d’écrire notre première fonction, nous pouvons commencer à conserver un historique de notre travail.\n\nusethis::use_git()\n\nNotre même dossier est maintenant :\nun répertoire\n      +\nun projet RStudio\n      +\nune librairie R\n      +\nun dépôt Git\nGit peut maintenant conserver les différentes versions de notre travail.\nNous pourrions immédiatement enregistrer cette première étape avec un commit :\nInitial package structure\nNous reviendrons beaucoup plus en détail sur Git et GitHub plus tard dans cette séance.\nPour l’instant, Git conserve toute les version du répertoire nous permettant de conserver une trace de toute les modifications faites.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html",
+    "href": "Rproject.html",
+    "title": "2  Projet R",
+    "section": "",
+    "text": "Avant d’introduire GitHub et la publication en ligne de notre librairie, discutons rapidement d’une infrastructure R qui peut nous être utile; la projet R.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
   }
 ]

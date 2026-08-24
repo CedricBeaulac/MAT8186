@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./Rproject.html" rel="next">
 <link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -154,6 +154,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./Rproject.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Projet R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
@@ -190,6 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#le-fichier-description" id="toc-le-fichier-description" class="nav-link" data-scroll-target="#le-fichier-description"><span class="header-section-number">8</span> Le fichier DESCRIPTION</a></li>
   <li><a href="#ajouter-une-licence" id="toc-ajouter-une-licence" class="nav-link" data-scroll-target="#ajouter-une-licence"><span class="header-section-number">9</span> Ajouter une licence</a></li>
   <li><a href="#documenter-notre-fonction" id="toc-documenter-notre-fonction" class="nav-link" data-scroll-target="#documenter-notre-fonction"><span class="header-section-number">10</span> Documenter notre fonction</a></li>
+  <li><a href="#git" id="toc-git" class="nav-link" data-scroll-target="#git">Git</a></li>
   <li><a href="#ajouter-un-test" id="toc-ajouter-un-test" class="nav-link" data-scroll-target="#ajouter-un-test"><span class="header-section-number">11</span> Ajouter un test</a></li>
   <li><a href="#utiliser-une-autre-librairie" id="toc-utiliser-une-autre-librairie" class="nav-link" data-scroll-target="#utiliser-une-autre-librairie"><span class="header-section-number">12</span> Utiliser une autre librairie</a></li>
   <li><a href="#installer-notre-librairie" id="toc-installer-notre-librairie" class="nav-link" data-scroll-target="#installer-notre-librairie"><span class="header-section-number">13</span> Installer notre librairie</a></li>
@@ -438,13 +445,13 @@ un dépôt Git</code></pre>
 <section id="utiliser-notre-librairie-pendant-son-développement" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Utiliser notre librairie pendant son développement</h1>
 <p>Notre fonction est maintenant enregistrée dans :</p>
-<pre class="text"><code>R/rescale01.R</code></pre>
+<pre class="text"><code>R/CR.R</code></pre>
 <p>Comment pouvons-nous l’utiliser?</p>
-<p>Nous pourrions faire :</p>
+<p>Nous pouvons faire :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/rescale01.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/CR.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>mais ce n’est pas la façon privilégiée de travailler lorsqu’on développe une librairie.</p>
+<p>et c’est en fait ce que nous faisons au premier cycle quand nous codons nos propres fonctions. Ce n’est pas la façon privilégiée de travailler lorsqu’on développe une librairie; nous allons <em>installer</em> la librairie.</p>
 <p>Nous allons plutôt utiliser :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -452,7 +459,7 @@ un dépôt Git</code></pre>
 <p><code>load_all()</code> charge temporairement notre librairie en cours de développement.</p>
 <p>Nous pouvons alors utiliser :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">CR</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>comme si notre librairie était déjà installée.</p>
 <p>Nous obtenons notre premier <strong>cycle de développement</strong> :</p>
@@ -471,13 +478,12 @@ modifier le code
 </section>
 <section id="vérifier-notre-librairie" class="level1" data-number="7">
 <h1 data-number="7"><span class="header-section-number">7</span> Vérifier notre librairie</h1>
-<p>Une librairie R doit respecter plusieurs conventions.</p>
-<p>Heureusement, nous n’avons pas besoin de les vérifier manuellement.</p>
-<p>Nous pouvons demander à R de vérifier notre librairie avec :</p>
+<p>Une librairie R doit respecter plusieurs conventions, normes afin d’opérer. Ces normes et standards sont la raison principale pourquoi aurjourd’hui il est beaucoup plus facile d’utiliser des librairies R que des paquet Python.</p>
+<p>Heureusement, nous n’avons pas besoin de tous vérifier manuellement grâce à <code>devtools</code>. Nous pouvons demander à R de vérifier notre librairie avec :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Cette commande réalise une longue série de vérifications sur notre librairie.</p>
+<p>Cette commande réalise une série de vérifications sur notre librairie.</p>
 <p>Le résultat peut contenir trois types de problèmes :</p>
 <pre class="text"><code>ERROR
 WARNING
@@ -526,16 +532,16 @@ Encoding: UTF-8</code></pre>
 </ul>
 <p>Nous pourrions par exemple remplacer les informations génériques par :</p>
 <pre class="text"><code>Package: mat8186demo
-Title: Demonstration Tools for MAT8186
+Title: Demonstration for MAT8186
 Version: 0.0.0.9000
 Authors@R:
-    person("Prenom", "Nom",
-           email = "prenom.nom@example.com",
+    person("Cedric", "Beaulac",
+           email = "beaulac.cedric@uqam.ca",
            role = c("aut", "cre"))
 Description: Small functions used to demonstrate the development
     of an R library in MAT8186.
 Encoding: UTF-8</code></pre>
-<p>Nous reviendrons plus tard sur la structure exacte du fichier <code>DESCRIPTION</code>.</p>
+<p>Nous reviendrons plus tard sur la structure exacte du fichier <code>DESCRIPTION</code>, concentrons sur un élément d’intérêt de ce fichier, la licence.</p>
 </section>
 <section id="ajouter-une-licence" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> Ajouter une licence</h1>
@@ -545,59 +551,70 @@ Encoding: UTF-8</code></pre>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_mit_license</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>usethis</code> crée et modifie automatiquement les fichiers nécessaires.</p>
-<p>Encore une fois, nous reviendrons plus tard sur les différentes licences disponibles.</p>
+<p>Les licences sont expliqués en plus grand détail au <a href="https://r-pkgs.org/license.html">chapitre 12 du manuel de référence</a>, nous n’en reparlons pas vraiment dans ce cours.</p>
 </section>
 <section id="documenter-notre-fonction" class="level1" data-number="10">
 <h1 data-number="10"><span class="header-section-number">10</span> Documenter notre fonction</h1>
-<p>Notre fonction fonctionne :</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>mais un utilisateur qui découvre notre librairie doit également pouvoir comprendre :</p>
+<p>Notre fonction fonctionne mais un utilisateur qui découvre notre librairie doit également pouvoir comprendre :</p>
 <ul>
 <li>ce que fait la fonction;</li>
 <li>quels arguments elle prend;</li>
 <li>ce qu’elle retourne;</li>
 <li>comment l’utiliser.</li>
 </ul>
+<p>Souvenez-vous que lorsque vous approchez une nouvelle libraire, nous utilisons la documentation R <code>?Library::function</code> pour mieux comprendre son fonctionnement.</p>
+<p>Quand nous mettons au point une libraire, c’est à nous d’écrire la documentation.</p>
 <p>Nous allons utiliser <strong><code>roxygen2</code></strong> pour documenter notre fonction directement dans son fichier R.</p>
+<p>Il faut ouvrir le fichier R en question <code>~\mat8186\CR.R</code>, cliquer l’onglet <em>Code</em> puis <em>insert roxygen skeleton</em>. Ça va crée une entête vide, que l’on pourra remplir.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Recalibrer un vecteur entre 0 et 1</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Transforme linéairement un vecteur numérique afin que sa</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' valeur minimale soit 0 et sa valeur maximale soit 1.</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x Un vecteur numérique.</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Un vecteur numérique de même longueur que `x`.</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' rescale01(c(10, 20, 30))</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Centre-réduire un vecteur</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Transforme linéairement un vecteur numérique afin qu'il soit de moyenne 0</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' et d'écart-type 1.</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x Un vecteur numérique.</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Un vecteur numérique de même longueur que `x`.</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' CR(c(10, 20, 30))</span></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>CR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Les commentaires commençant par :</p>
-<pre class="text"><code>#'</code></pre>
-<p>ont une signification particulière pour <code>roxygen2</code>.</p>
-<p>Nous pouvons ensuite générer la documentation avec :</p>
+<p>Nous pouvons ensuite générer la documentation grâce à la libraire <code>devtools</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Cette commande crée notamment un répertoire :</p>
 <pre class="text"><code>man/</code></pre>
 <p>contenant les pages d’aide de notre librairie.</p>
-<p>Nous pouvons maintenant refaire :</p>
+<p>Bon, on se rapelle notre boucle de développement, allons-y:</p>
+<pre class="text"><code>modifier le code
+       ↓
+   load_all()
+       ↓
+tester la fonction
+       ↓
+modifier le code
+       ↓
+   load_all()
+       ↓
+      ...</code></pre>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>?CR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>puis demander :</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>?rescale01</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Notre fonction possède maintenant une vraie page d’aide.</p>
+<p>Notre fonction possède maintenant une documentation!</p>
+<p>Il s’agit peut-être de bon moment pour utiliser Git et laisser une trace des ces premières modifications.</p>
+</section>
+<section id="git" class="level1 unnumbered">
+<h1 class="unnumbered">Git</h1>
+<p>On va <em>staged</em> les documents modifiés que nous désirons sauvegarder et étiquette comme provenant de la même ronde de modification.</p>
+<p>Puis quand ces documents furent bien choisies, nous allons <em>commit</em> les changement et les décrire à l’aide de commentaires.</p>
+<p>Finalement, lorsque l’on <em>push</em> ces modifications, la sauvegarde est déployé!</p>
 </section>
 <section id="ajouter-un-test" class="level1" data-number="11">
 <h1 data-number="11"><span class="header-section-number">11</span> Ajouter un test</h1>
@@ -605,56 +622,68 @@ Encoding: UTF-8</code></pre>
 <p>Mais comment savoir si une modification future brise accidentellement son comportement?</p>
 <p>Nous allons ajouter des <strong>tests automatisés</strong>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_testthat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_testthat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Puis créons un fichier de tests associé à notre fonction :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_test</span>(<span class="st">"rescale01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_test</span>(<span class="st">"CR"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Nous pouvons y écrire :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"rescale01 transforme correctement un vecteur"</span>, {</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)),</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">1</span>)</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"CR transforme correctement un vecteur"</span>, {</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">CR</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>)),</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Nous lançons ensuite les tests avec :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Si notre fonction est modifiée plus tard et ne produit plus le résultat attendu, le test nous avertira.</p>
 </section>
 <section id="utiliser-une-autre-librairie" class="level1" data-number="12">
 <h1 data-number="12"><span class="header-section-number">12</span> Utiliser une autre librairie</h1>
 <p>Une librairie R n’a évidemment pas besoin de tout réimplémenter elle-même.</p>
-<p>Elle peut utiliser des fonctions provenant d’autres librairies.</p>
+<p>Elle peut utiliser des fonctions provenant d’autres librairies, on appele ça des dépendances. Ici, c’est une des grandes forces des librairies R (en contraste avec Python), la gestion des dépendances.</p>
 <p>Supposons par exemple que nous souhaitions utiliser la librairie <code>scales</code>.</p>
 <p>Nous pouvons déclarer cette dépendance avec :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"scales"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"plyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Cette commande ajoute notamment <code>scales</code> au fichier <code>DESCRIPTION</code>.</p>
-<p>Nous pourrions ensuite réécrire notre fonction comme :</p>
+<p>Cette commande ajoute notamment <code>plyr</code> au fichier <code>DESCRIPTION</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Le brio des dépendances R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nous pouvons spécifier une version spécifique de la dépendance et R peut gérer plusieurs versions de la même librairie pour satisfaire les dépendances si nécessaire.</p>
+</div>
+</div>
+<p>Nous pourrions ensuite écrire une fonction qui centre-réduit chaque colonne d’une base de données comme :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>rescale01 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  scales<span class="sc">::</span><span class="fu">rescale</span>(x, <span class="at">to =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>CR<span class="sc">-</span>Donnee <span class="ot">&lt;-</span> <span class="cf">function</span>(X) {</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(x, <span class="dv">2</span>,CR)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_r</span>(<span class="st">"CR-Donnee"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>La notation :</p>
-<pre class="text"><code>scales::rescale()</code></pre>
-<p>indique explicitement que nous utilisons la fonction <code>rescale()</code> provenant de la librairie <code>scales</code>.</p>
 <p>Et maintenant?</p>
 <p>Nous relançons notre cycle :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>()</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>()</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Nos tests nous permettent de vérifier que le comportement de notre fonction n’a pas changé, même si son implémentation interne est maintenant différente.</p>
 </section>
@@ -663,13 +692,13 @@ Encoding: UTF-8</code></pre>
 <p>Jusqu’à maintenant, <code>load_all()</code> nous permettait de simuler le chargement de notre librairie pendant son développement.</p>
 <p>Nous pouvons maintenant réellement l’installer :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Après avoir redémarré R, nous pouvons l’utiliser comme n’importe quelle autre librairie :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mat8186demo)</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rescale01</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mat8186demo)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">CR</span>(<span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>C’est une étape importante.</p>
 <p>Nous ne possédons plus simplement <strong>un fichier <code>.R</code> contenant une fonction</strong>.</p>
@@ -680,25 +709,12 @@ Encoding: UTF-8</code></pre>
 <p>Nous avons maintenant ajouté plusieurs composantes à notre librairie.</p>
 <p>Faisons donc une nouvelle vérification :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Notre projet ressemble maintenant davantage à :</p>
-<pre class="text"><code>mat8186demo/
-├── DESCRIPTION
-├── LICENSE
-├── NAMESPACE
-├── R/
-│   └── rescale01.R
-├── man/
-│   └── rescale01.Rd
-├── tests/
-│   └── testthat/
-├── .git/
-└── mat8186demo.Rproj</code></pre>
 <p>Nous avons donc déjà :</p>
 <ul>
 <li>une librairie R;</li>
-<li>une fonction;</li>
+<li>deux fonctions;</li>
 <li>de la documentation;</li>
 <li>une licence;</li>
 <li>des tests;</li>
@@ -1207,8 +1223,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Rproject.html" class="pagination-link" aria-label="Projet R">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Projet R</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -1,0 +1,4 @@
+# Projet R
+
+Avant d'introduire GitHub et la publication en ligne de notre librairie, discutons rapidement d'une infrastructure R qui peut nous être utile; la projet R.
+

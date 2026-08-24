@@ -5,10 +5,11 @@ project:
 book:
   title: "Notes de cours - MAT8186"
   author: "Cedric Beaulac"
-  date: "2026-08"
+  date: "2026-08-01"
   chapters:
     - index.qmd
     - survol.qmd
+    - Rproject.qmd
     - references.qmd
 
 bibliography: references.bib
