@@ -193,36 +193,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#git-dans-rstudio" id="toc-git-dans-rstudio" class="nav-link" data-scroll-target="#git-dans-rstudio"><span class="header-section-number">3.5</span> Git dans RStudio</a></li>
   <li><a href="#git-status" id="toc-git-status" class="nav-link" data-scroll-target="#git-status"><code>git status</code></a></li>
   <li><a href="#git-nest-pas-github" id="toc-git-nest-pas-github" class="nav-link" data-scroll-target="#git-nest-pas-github"><span class="header-section-number">3.6</span> Git n’est pas GitHub</a></li>
-  <li><a href="#le-dépôt-local-et-le-dépôt-distant" id="toc-le-dépôt-local-et-le-dépôt-distant" class="nav-link" data-scroll-target="#le-dépôt-local-et-le-dépôt-distant"><span class="header-section-number">4</span> Le dépôt local et le dépôt distant</a>
+  <li><a href="#le-dépôt-local-et-le-dépôt-distant" id="toc-le-dépôt-local-et-le-dépôt-distant" class="nav-link" data-scroll-target="#le-dépôt-local-et-le-dépôt-distant"><span class="header-section-number">3.7</span> Le dépôt local et le dépôt distant</a></li>
+  <li><a href="#push" id="toc-push" class="nav-link" data-scroll-target="#push"><span class="header-section-number">3.8</span> Push</a></li>
+  <li><a href="#pull" id="toc-pull" class="nav-link" data-scroll-target="#pull"><span class="header-section-number">3.9</span> Pull</a></li>
+  <li><a href="#notre-cycle-de-travail-quotidien" id="toc-notre-cycle-de-travail-quotidien" class="nav-link" data-scroll-target="#notre-cycle-de-travail-quotidien"><span class="header-section-number">3.10</span> Notre cycle de travail quotidien</a></li>
+  <li><a href="#petit-exercice" id="toc-petit-exercice" class="nav-link" data-scroll-target="#petit-exercice"><span class="header-section-number">3.11</span> Petit exercice</a>
   <ul class="collapse">
-  <li><a href="#push" id="toc-push" class="nav-link" data-scroll-target="#push"><span class="header-section-number">4.1</span> Push</a></li>
-  <li><a href="#pull" id="toc-pull" class="nav-link" data-scroll-target="#pull"><span class="header-section-number">4.2</span> Pull</a></li>
-  <li><a href="#notre-cycle-de-travail-quotidien" id="toc-notre-cycle-de-travail-quotidien" class="nav-link" data-scroll-target="#notre-cycle-de-travail-quotidien"><span class="header-section-number">4.3</span> Notre cycle de travail quotidien</a></li>
+  <li><a href="#étape-1" id="toc-étape-1" class="nav-link" data-scroll-target="#étape-1"><span class="header-section-number">3.11.1</span> Étape 1</a></li>
+  <li><a href="#étape-2" id="toc-étape-2" class="nav-link" data-scroll-target="#étape-2"><span class="header-section-number">3.11.2</span> Étape 2</a></li>
+  <li><a href="#étape-3" id="toc-étape-3" class="nav-link" data-scroll-target="#étape-3"><span class="header-section-number">3.11.3</span> Étape 3</a></li>
+  <li><a href="#étape-4" id="toc-étape-4" class="nav-link" data-scroll-target="#étape-4"><span class="header-section-number">3.11.4</span> Étape 4</a></li>
+  <li><a href="#étape-5" id="toc-étape-5" class="nav-link" data-scroll-target="#étape-5"><span class="header-section-number">3.11.5</span> Étape 5</a></li>
   </ul></li>
-  <li><a href="#petit-exercice" id="toc-petit-exercice" class="nav-link" data-scroll-target="#petit-exercice"><span class="header-section-number">5</span> Petit exercice</a>
-  <ul class="collapse">
-  <li><a href="#étape-1" id="toc-étape-1" class="nav-link" data-scroll-target="#étape-1"><span class="header-section-number">5.0.1</span> Étape 1</a></li>
-  <li><a href="#étape-2" id="toc-étape-2" class="nav-link" data-scroll-target="#étape-2"><span class="header-section-number">5.0.2</span> Étape 2</a></li>
-  <li><a href="#étape-3" id="toc-étape-3" class="nav-link" data-scroll-target="#étape-3"><span class="header-section-number">5.0.3</span> Étape 3</a></li>
-  <li><a href="#étape-4" id="toc-étape-4" class="nav-link" data-scroll-target="#étape-4"><span class="header-section-number">5.0.4</span> Étape 4</a></li>
-  <li><a href="#étape-5" id="toc-étape-5" class="nav-link" data-scroll-target="#étape-5"><span class="header-section-number">5.0.5</span> Étape 5</a></li>
-  <li><a href="#préparer-son-environnement" id="toc-préparer-son-environnement" class="nav-link" data-scroll-target="#préparer-son-environnement"><span class="header-section-number">5.1</span> Préparer son environnement</a></li>
+  <li><a href="#préparer-son-environnement" id="toc-préparer-son-environnement" class="nav-link" data-scroll-target="#préparer-son-environnement"><span class="header-section-number">3.12</span> Préparer son environnement</a></li>
   <li><a href="#installer-git-sous-windows" id="toc-installer-git-sous-windows" class="nav-link" data-scroll-target="#installer-git-sous-windows">Installer Git sous Windows</a>
   <ul class="collapse">
-  <li><a href="#étape-1-télécharger-git" id="toc-étape-1-télécharger-git" class="nav-link" data-scroll-target="#étape-1-télécharger-git"><span class="header-section-number">5.1.1</span> Étape 1 — Télécharger Git</a></li>
-  <li><a href="#étape-2-installer-git" id="toc-étape-2-installer-git" class="nav-link" data-scroll-target="#étape-2-installer-git"><span class="header-section-number">5.1.2</span> Étape 2 — Installer Git</a></li>
-  <li><a href="#étape-3-vérifier-linstallation" id="toc-étape-3-vérifier-linstallation" class="nav-link" data-scroll-target="#étape-3-vérifier-linstallation"><span class="header-section-number">5.1.3</span> Étape 3 — Vérifier l’installation</a></li>
+  <li><a href="#étape-1-télécharger-git" id="toc-étape-1-télécharger-git" class="nav-link" data-scroll-target="#étape-1-télécharger-git"><span class="header-section-number">3.12.1</span> Étape 1 — Télécharger Git</a></li>
+  <li><a href="#étape-2-installer-git" id="toc-étape-2-installer-git" class="nav-link" data-scroll-target="#étape-2-installer-git"><span class="header-section-number">3.12.2</span> Étape 2 — Installer Git</a></li>
+  <li><a href="#étape-3-vérifier-linstallation" id="toc-étape-3-vérifier-linstallation" class="nav-link" data-scroll-target="#étape-3-vérifier-linstallation"><span class="header-section-number">3.12.3</span> Étape 3 — Vérifier l’installation</a></li>
   </ul></li>
-  </ul></li>
-  <li><a href="#créer-un-compte-github" id="toc-créer-un-compte-github" class="nav-link" data-scroll-target="#créer-un-compte-github"><span class="header-section-number">6</span> Créer un compte GitHub</a>
-  <ul class="collapse">
+  <li><a href="#créer-un-compte-github" id="toc-créer-un-compte-github" class="nav-link" data-scroll-target="#créer-un-compte-github"><span class="header-section-number">3.13</span> Créer un compte GitHub</a></li>
   <li><a href="#créer-le-compte" id="toc-créer-le-compte" class="nav-link" data-scroll-target="#créer-le-compte">Créer le compte</a></li>
-  </ul></li>
-  <li><a href="#présenter-git-à-github-et-à-vous-même" id="toc-présenter-git-à-github-et-à-vous-même" class="nav-link" data-scroll-target="#présenter-git-à-github-et-à-vous-même"><span class="header-section-number">7</span> Présenter Git à GitHub… et à vous-même</a></li>
-  <li><a href="#vérification-finale" id="toc-vérification-finale" class="nav-link" data-scroll-target="#vérification-finale"><span class="header-section-number">8</span> Vérification finale</a>
-  <ul class="collapse">
-  <li><a href="#première-partie-du-projet-évaluation" id="toc-première-partie-du-projet-évaluation" class="nav-link" data-scroll-target="#première-partie-du-projet-évaluation"><span class="header-section-number">8.1</span> Première partie du projet (évaluation)</a></li>
-  </ul></li>
+  <li><a href="#présenter-git-à-github-et-à-vous-même" id="toc-présenter-git-à-github-et-à-vous-même" class="nav-link" data-scroll-target="#présenter-git-à-github-et-à-vous-même"><span class="header-section-number">3.14</span> Présenter Git à GitHub… et à vous-même</a></li>
+  <li><a href="#vérification-finale" id="toc-vérification-finale" class="nav-link" data-scroll-target="#vérification-finale"><span class="header-section-number">3.15</span> Vérification finale</a></li>
+  <li><a href="#première-partie-du-projet-évaluation" id="toc-première-partie-du-projet-évaluation" class="nav-link" data-scroll-target="#première-partie-du-projet-évaluation"><span class="header-section-number">3.16</span> Première partie du projet (évaluation)</a></li>
   </ul>
 </nav>
     </div>
@@ -512,8 +506,8 @@ Deux concepts différents
 </div>
 </div>
 </section>
-<section id="le-dépôt-local-et-le-dépôt-distant" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Le dépôt local et le dépôt distant</h1>
+<section id="le-dépôt-local-et-le-dépôt-distant" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="le-dépôt-local-et-le-dépôt-distant"><span class="header-section-number">3.7</span> Le dépôt local et le dépôt distant</h2>
 <p>Lorsque notre projet existe également sur GitHub, nous avons essentiellement <strong>deux copies du dépôt</strong> :</p>
 <pre class="text"><code>LOCAL                         DISTANT
 
@@ -526,8 +520,9 @@ MAT8186/                       github.com/...
 <p>Deux opérations seront particulièrement importantes :</p>
 <pre class="text"><code>push
 pull</code></pre>
-<section id="push" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="push"><span class="header-section-number">4.1</span> Push</h2>
+</section>
+<section id="push" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="push"><span class="header-section-number">3.8</span> Push</h2>
 <p>Un <strong>push</strong> envoie nos nouveaux commits locaux vers GitHub.</p>
 <pre class="text"><code>ordinateur
     │
@@ -536,8 +531,8 @@ pull</code></pre>
  GitHub</code></pre>
 <p>Un <code>push</code> ne signifie donc pas simplement de sauvegarder un fichier sur Internet mais bien de transmettre l’historique complet des modifications de ce fichier sur la version en ligne de ce répertoire Git.</p>
 </section>
-<section id="pull" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="pull"><span class="header-section-number">4.2</span> Pull</h2>
+<section id="pull" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="pull"><span class="header-section-number">3.9</span> Pull</h2>
 <p>Un <strong>pull</strong> récupère les nouveaux commits présents sur GitHub.</p>
 <pre class="text"><code>ordinateur
     ▲
@@ -551,8 +546,8 @@ pull</code></pre>
 <li>des modifications ont été effectuées directement sur GitHub.</li>
 </ul>
 </section>
-<section id="notre-cycle-de-travail-quotidien" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="notre-cycle-de-travail-quotidien"><span class="header-section-number">4.3</span> Notre cycle de travail quotidien</h2>
+<section id="notre-cycle-de-travail-quotidien" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="notre-cycle-de-travail-quotidien"><span class="header-section-number">3.10</span> Notre cycle de travail quotidien</h2>
 <p>Pour un projet simple, notre cycle Git/GitHub ressemblera souvent à :</p>
 <pre class="text"><code>PULL
   ↓
@@ -583,12 +578,11 @@ Une règle simple pour commencer
 </div>
 </div>
 </section>
-</section>
-<section id="petit-exercice" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Petit exercice</h1>
+<section id="petit-exercice" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="petit-exercice"><span class="header-section-number">3.11</span> Petit exercice</h2>
 <p>Prenons notre librairie <code>mat8186demo</code>.</p>
-<section id="étape-1" class="level3" data-number="5.0.1">
-<h3 data-number="5.0.1" class="anchored" data-anchor-id="étape-1"><span class="header-section-number">5.0.1</span> Étape 1</h3>
+<section id="étape-1" class="level3" data-number="3.11.1">
+<h3 data-number="3.11.1" class="anchored" data-anchor-id="étape-1"><span class="header-section-number">3.11.1</span> Étape 1</h3>
 <p>Ouvrez :</p>
 <pre class="text"><code>R/CR.R</code></pre>
 <p>et ajoutez un commentaire :</p>
@@ -601,22 +595,22 @@ Une règle simple pour commencer
 </div>
 <p>Sauvegardez le fichier.</p>
 </section>
-<section id="étape-2" class="level3" data-number="5.0.2">
-<h3 data-number="5.0.2" class="anchored" data-anchor-id="étape-2"><span class="header-section-number">5.0.2</span> Étape 2</h3>
+<section id="étape-2" class="level3" data-number="3.11.2">
+<h3 data-number="3.11.2" class="anchored" data-anchor-id="étape-2"><span class="header-section-number">3.11.2</span> Étape 2</h3>
 <p>Regardez l’onglet <strong>Git</strong> de RStudio.</p>
 <p>Le fichier devrait apparaître comme modifié.</p>
 </section>
-<section id="étape-3" class="level3" data-number="5.0.3">
-<h3 data-number="5.0.3" class="anchored" data-anchor-id="étape-3"><span class="header-section-number">5.0.3</span> Étape 3</h3>
+<section id="étape-3" class="level3" data-number="3.11.3">
+<h3 data-number="3.11.3" class="anchored" data-anchor-id="étape-3"><span class="header-section-number">3.11.3</span> Étape 3</h3>
 <p>Examinez le <strong>Diff</strong>.</p>
 <p>Pouvez-vous identifier exactement la ligne ajoutée?</p>
 </section>
-<section id="étape-4" class="level3" data-number="5.0.4">
-<h3 data-number="5.0.4" class="anchored" data-anchor-id="étape-4"><span class="header-section-number">5.0.4</span> Étape 4</h3>
+<section id="étape-4" class="level3" data-number="3.11.4">
+<h3 data-number="3.11.4" class="anchored" data-anchor-id="étape-4"><span class="header-section-number">3.11.4</span> Étape 4</h3>
 <p>Cochez <strong>Staged</strong>.</p>
 </section>
-<section id="étape-5" class="level3" data-number="5.0.5">
-<h3 data-number="5.0.5" class="anchored" data-anchor-id="étape-5"><span class="header-section-number">5.0.5</span> Étape 5</h3>
+<section id="étape-5" class="level3" data-number="3.11.5">
+<h3 data-number="3.11.5" class="anchored" data-anchor-id="étape-5"><span class="header-section-number">3.11.5</span> Étape 5</h3>
 <p>Créez un commit avec le message :</p>
 <pre class="text"><code>Add comment to CR</code></pre>
 <p>Nous venons de créer une nouvelle version identifiable de notre projet.</p>
@@ -638,8 +632,9 @@ La suite
 </div>
 </div>
 </section>
-<section id="préparer-son-environnement" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="préparer-son-environnement"><span class="header-section-number">5.1</span> Préparer son environnement</h2>
+</section>
+<section id="préparer-son-environnement" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="préparer-son-environnement"><span class="header-section-number">3.12</span> Préparer son environnement</h2>
 <p>Avant d’aller plus loin, assurons-nous que tout le monde possède les outils nécessaires.</p>
 <p>Nous aurons besoin de :</p>
 <ol type="1">
@@ -651,13 +646,13 @@ La suite
 <section id="installer-git-sous-windows" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="installer-git-sous-windows">Installer Git sous Windows</h2>
 <p>Sous Windows, nous utiliserons <strong>Git for Windows</strong>.</p>
-<section id="étape-1-télécharger-git" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="étape-1-télécharger-git"><span class="header-section-number">5.1.1</span> Étape 1 — Télécharger Git</h3>
+<section id="étape-1-télécharger-git" class="level3" data-number="3.12.1">
+<h3 data-number="3.12.1" class="anchored" data-anchor-id="étape-1-télécharger-git"><span class="header-section-number">3.12.1</span> Étape 1 — Télécharger Git</h3>
 <p>Rendez-vous sur le site officiel de <strong>Git</strong> et téléchargez la version de <strong>Git for Windows</strong> correspondant à votre ordinateur.</p>
 <p>Pour la majorité des ordinateurs récents, il s’agira de la version <strong>64 bits (x64)</strong>.</p>
 </section>
-<section id="étape-2-installer-git" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="étape-2-installer-git"><span class="header-section-number">5.1.2</span> Étape 2 — Installer Git</h3>
+<section id="étape-2-installer-git" class="level3" data-number="3.12.2">
+<h3 data-number="3.12.2" class="anchored" data-anchor-id="étape-2-installer-git"><span class="header-section-number">3.12.2</span> Étape 2 — Installer Git</h3>
 <p>Lancez l’installateur.</p>
 <p>Pour ce cours, les <strong>options proposées par défaut conviennent généralement</strong>. Il n’est donc pas nécessaire de modifier toutes les options de l’installateur.</p>
 <p>L’installation ajoute notamment :</p>
@@ -681,8 +676,8 @@ Pas besoin de devenir expert de Git Bash
 </div>
 </div>
 </section>
-<section id="étape-3-vérifier-linstallation" class="level3" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="étape-3-vérifier-linstallation"><span class="header-section-number">5.1.3</span> Étape 3 — Vérifier l’installation</h3>
+<section id="étape-3-vérifier-linstallation" class="level3" data-number="3.12.3">
+<h3 data-number="3.12.3" class="anchored" data-anchor-id="étape-3-vérifier-linstallation"><span class="header-section-number">3.12.3</span> Étape 3 — Vérifier l’installation</h3>
 <p>Une fois Git installé, <strong>redémarrez RStudio</strong>.</p>
 <p>Ouvrez ensuite :</p>
 <p><strong>Tools → Global Options → Git/SVN</strong></p>
@@ -696,11 +691,11 @@ Pas besoin de devenir expert de Git Bash
 <p>Si une version est affichée, Git est correctement installé.</p>
 </section>
 </section>
-</section>
-<section id="créer-un-compte-github" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Créer un compte GitHub</h1>
+<section id="créer-un-compte-github" class="level2" data-number="3.13">
+<h2 data-number="3.13" class="anchored" data-anchor-id="créer-un-compte-github"><span class="header-section-number">3.13</span> Créer un compte GitHub</h2>
 <p>Git fonctionne localement et ne nécessite aucun compte.</p>
 <p>Par contre, pour partager nos dépôts et collaborer, nous utiliserons <strong>GitHub</strong>.</p>
+</section>
 <section id="créer-le-compte" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="créer-le-compte">Créer le compte</h2>
 <p>Rendez-vous sur <strong>GitHub</strong> et créez un compte personnel gratuit.</p>
@@ -725,9 +720,8 @@ Choisissez bien votre nom d’utilisateur
 </div>
 </div>
 </section>
-</section>
-<section id="présenter-git-à-github-et-à-vous-même" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Présenter Git à GitHub… et à vous-même</h1>
+<section id="présenter-git-à-github-et-à-vous-même" class="level2" data-number="3.14">
+<h2 data-number="3.14" class="anchored" data-anchor-id="présenter-git-à-github-et-à-vous-même"><span class="header-section-number">3.14</span> Présenter Git à GitHub… et à vous-même</h2>
 <p>Git doit savoir <strong>qui effectue les commits</strong>.</p>
 <p>Cette information est enregistrée dans la configuration de Git.</p>
 <p>Dans le terminal de RStudio, exécutez :</p>
@@ -755,8 +749,8 @@ Quelle adresse utiliser?
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Git devrait alors retourner les informations que nous venons d’entrer.</p>
 </section>
-<section id="vérification-finale" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Vérification finale</h1>
+<section id="vérification-finale" class="level2" data-number="3.15">
+<h2 data-number="3.15" class="anchored" data-anchor-id="vérification-finale"><span class="header-section-number">3.15</span> Vérification finale</h2>
 <p>Avant de poursuivre, assurez-vous que les trois éléments suivants fonctionnent.</p>
 <p>Dans le terminal :</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> <span class="at">--version</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -786,12 +780,12 @@ notre compte GitHub existe</code></pre>
 <p>Nous pouvons maintenant connecter un <strong>dépôt Git local</strong> à un <strong>dépôt GitHub distant</strong> et effectuer notre premier <code>push</code>.</p>
 </div>
 </div>
-<section id="première-partie-du-projet-évaluation" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="première-partie-du-projet-évaluation"><span class="header-section-number">8.1</span> Première partie du projet (évaluation)</h2>
+</section>
+<section id="première-partie-du-projet-évaluation" class="level2" data-number="3.16">
+<h2 data-number="3.16" class="anchored" data-anchor-id="première-partie-du-projet-évaluation"><span class="header-section-number">3.16</span> Première partie du projet (évaluation)</h2>
 <p>Une partie de la première évaluation consiste à crée votre compte GitHub et y héberger votre librairie R!</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

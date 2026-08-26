@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Notes de cours - MAT8186",
     "section": "",
-    "text": "Index\nIl s’agit d’un livre Quarto contenant le matériel du cours MAT8186.",
+    "text": "Index\nIl s’agit d’un livre Quarto contenant le matériel du cours MAT8186.\nCe matériel fut conçu pour un cours de 15 heures organisé en 5 séances de 3 heures. L’objectif du cours est d’amener les étudiants à développer leur propres librairies R et s’inspire fortement du livre R Packages.",
     "crumbs": [
       "Index"
     ]
@@ -327,6 +327,266 @@
     "text": "2.5 Git et GitHub\nNous avons déjà créé un dépôt Git sans vraiment expliquer ce que cela signifie.\nIl est maintenant temps de revenir sur Git, puis de comprendre son lien avec GitHub.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html",
+    "href": "Git.html",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "",
+    "text": "Pourquoi utiliser un système de contrôle des versions?\nVous avez probablement déjà utilisé un système de contrôle des versions artisanal :\nAprès quelques semaines, il devient difficile de répondre à des questions simples :\nGit propose une solution structurée à ce problème.\nPlutôt que de créer continuellement de nouvelles copies du même fichier, nous en conservons qu’un seul et nous conservons, par Git, son évolution.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#pourquoi-utiliser-un-système-de-contrôle-des-versions",
+    "href": "Git.html#pourquoi-utiliser-un-système-de-contrôle-des-versions",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "",
+    "text": "analyse.R\nanalyse_final.R\nanalyse_final2.R\nanalyse_final_VRAIMENT_FINAL.R\nanalyse_final_VRAIMENT_FINAL_corrige.R\n\n\nQuelle est la version actuelle?\nQu’est-ce qui a changé entre deux versions?\nPourquoi avons-nous effectué cette modification?\nQui a effectué la modification?\nEst-il possible de revenir à une version antérieure?\nEst-ce que cette ancienne version fonctionnait mieux?",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#un-répertoire-git",
+    "href": "Git.html#un-répertoire-git",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.1 Un répertoire Git",
+    "text": "3.1 Un répertoire Git\nL’unité fondamentale de Git est le répertoire (repository ou simplement repo).\nUn répertoire Git est essentiellement un fichier dont Git suit l’évolution.\nPar exemple :\nmat8186demo/\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n│   └── rescale01.R\n├── tests/\n├── man/\n└── .git/\nLe répertoire caché :\n.git/\ncontient l’information dont Git a besoin pour conserver l’historique du projet.\n\n\n\n\n\n\nUn dépôt reste un répertoire\n\n\n\nTransformer un répertoire en dépôt Git ne change pas fondamentalement vos fichiers.\nVous pouvez toujours ouvrir, modifier, déplacer et utiliser vos fichiers normalement.\nGit ajoute simplement une couche permettant d’en conserver l’historique.\n\n\nDans notre cas :\nmat8186demo/\nest donc simultanément :\nun répertoire\n      +\nun projet RStudio\n      +\nune librairie R\n      +\nun dépôt Git",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#le-commit",
+    "href": "Git.html#le-commit",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.2 Le commit",
+    "text": "3.2 Le commit\nGit ne conserve pas automatiquement chaque caractère que vous tapez.\nVous décidez plutôt quand une étape de votre travail mérite d’être enregistrée.\nCet enregistrement s’appelle un commit.\nOn peut voir un commit comme une photographie de l’état du projet à un moment jugé important.\nPar exemple :\nA    Initial package structure\n\nB    Add CR function\n\nC    Add documentation\n\nD    Add tests for CR\nChaque commit représente donc une étape identifiable du développement de notre librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#pourquoi-ne-pas-simplement-sauvegarder",
+    "href": "Git.html#pourquoi-ne-pas-simplement-sauvegarder",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "Pourquoi ne pas simplement sauvegarder?",
+    "text": "Pourquoi ne pas simplement sauvegarder?\nSauvegarder un fichier et créer un commit sont deux choses différentes.\nLorsque nous sauvegardons un document (Ctrl + S), nous remplaçons sa version précédente.\nUn commit sauvegarde la version actuelle du fichier tout en conservant la liste de toutes les modifications faites sur ce fichier. Si nos fichiers sont constamment sauvegarder par un commit, nous pouvons donc observer la liste complète des modifications faites sur ce document.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#un-commit-concerne-le-projet",
+    "href": "Git.html#un-commit-concerne-le-projet",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "Un commit concerne le projet",
+    "text": "Un commit concerne le projet\nUn aspect important de Git est qu’un commit peut contenir des modifications apportées à plusieurs fichiers simultanément.\nSupposons que nous modifions :\nR/CR.R\ntests/testthat/CR.R\nDESCRIPTION\nCes trois changements peuvent faire partie du même commit si, ensemble, ils représentent une modification logique du projet.\nPar exemple :\nImprove CR and update DESCRIPTION",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#les-trois-états-qui-nous-intéressent",
+    "href": "Git.html#les-trois-états-qui-nous-intéressent",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.3 Les trois états qui nous intéressent",
+    "text": "3.3 Les trois états qui nous intéressent\nPour commencer, nous pouvons utiliser un modèle mental très simple.\nUn fichier peut être :\nmodifié\n   ↓\nstaged\n   ↓\ncommitted",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#étape-1-modifié",
+    "href": "Git.html#étape-1-modifié",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "Étape 1: Modifié",
+    "text": "Étape 1: Modifié\nNous changeons un fichier normalement dans RStudio.\nGit remarque :\n\nCe fichier est différent de la dernière version enregistrée.\n\nMais rien n’a encore été ajouté à l’historique.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#étape-2-staged",
+    "href": "Git.html#étape-2-staged",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "Étape 2: Staged",
+    "text": "Étape 2: Staged\nAvant de faire un commit, nous choisissons les changements que nous voulons inclure.\nCette étape s’appelle staging.\nDans l’onglet Git de RStudio, cela correspond essentiellement à cocher la case Staged devant un fichier.\nNous disons alors à Git :\n\nJe veux que cette modification fasse partie de mon prochain commit.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#étape-3-committed",
+    "href": "Git.html#étape-3-committed",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "Étape 3: Committed",
+    "text": "Étape 3: Committed\nLorsque nous créons le commit, les changements sélectionnés sont ajoutés à l’historique du projet.\nNous devons également donner un message au commit.\nPar exemple :\nAdd rescale01 function\nNotre cycle devient donc :\nModifier\n   ↓\nSauvegarder\n   ↓\nExaminer les changements\n   ↓\nStage\n   ↓\nCommit",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#le-message-de-commit",
+    "href": "Git.html#le-message-de-commit",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.4 Le message de commit",
+    "text": "3.4 Le message de commit\nChaque commit doit avoir un court message.\nUn bon message explique principalement l’objectif de la modification.\nC’est plus difficile que ça en a l’aire….\n\n\n\n\n\n\nUne bonne habitude\n\n\n\nFaire plus de plus petit commit… (petits, fréquents et cohérents).\nUn commit devrait idéalement représenter une étape logique que vous pouvez décrire simplement.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#git-dans-rstudio",
+    "href": "Git.html#git-dans-rstudio",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.5 Git dans RStudio",
+    "text": "3.5 Git dans RStudio\nNous pouvons utiliser Git directement dans le terminal :\ngit status\ngit add\ngit commit\nmais RStudio offre une interface graphique pour les opérations que nous utiliserons le plus souvent.\nLorsqu’un projet RStudio est également un dépôt Git, un onglet Git apparaît dans RStudio.\nCet onglet nous permet notamment de :\n\nvoir les fichiers modifiés;\nexaminer les différences;\nsélectionner les fichiers à inclure dans un commit;\ncréer un commit;\nconsulter l’historique;\néventuellement envoyer et recevoir des modifications avec GitHub.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#git-status",
+    "href": "Git.html#git-status",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "git status",
+    "text": "git status\nMême si nous utiliserons principalement l’interface RStudio, une commande mérite d’être connue dès maintenant :\ngit status\nElle répond essentiellement à la question :\n\nDans quel état se trouve actuellement mon dépôt?\n\nOn pourrait obtenir :\nOn branch main\n\nChanges not staged for commit:\n    modified: R/rescale01.R\nGit nous indique donc qu’un fichier a été modifié depuis le dernier commit.\nAprès avoir commité toutes nos modifications :\nOn branch main\n\nnothing to commit, working tree clean\nL’expression :\nworking tree clean\nsignifie simplement que notre répertoire de travail ne contient actuellement aucune modification non enregistrée par Git.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#git-nest-pas-github",
+    "href": "Git.html#git-nest-pas-github",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.6 Git n’est pas GitHub",
+    "text": "3.6 Git n’est pas GitHub\nIl est essentiel de distinguer Git et GitHub.\nGit fonctionne entièrement sur votre ordinateur. Nous pourrions utiliser Git pendant des années sans jamais créer de compte GitHub.\nGitHub est essentiellement un service en ligne (cloud) qui permet d’héberger des dépôts Git.\nLorsque nous ajoutons GitHub :\n       ordinateur\n           │\n           │\n           ▼\n      dépôt Git local\n           │\n      push │ │ pull\n           │\n           ▼\n        GitHub\nGit conserve donc l’historique (localement).\nGitHub nous permet notamment de :\n\nconserver une copie distante du dépôt;\npartager notre code;\ncollaborer;\nconsulter l’historique dans une interface web;\ndistribuer notre librairie;\n\n\n\n\n\n\n\nDeux concepts différents\n\n\n\nGit = contrôle des versions\nGitHub = hébergement et collaboration autour de dépôts Git",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#le-dépôt-local-et-le-dépôt-distant",
+    "href": "Git.html#le-dépôt-local-et-le-dépôt-distant",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.7 Le dépôt local et le dépôt distant",
+    "text": "3.7 Le dépôt local et le dépôt distant\nLorsque notre projet existe également sur GitHub, nous avons essentiellement deux copies du dépôt :\nLOCAL                         DISTANT\n\nVotre ordinateur              GitHub\nMAT8186/                       github.com/...\n    │                              │\n    └── dépôt Git                  └── dépôt Git\nCes deux dépôts peuvent évoluer indépendamment.\nIl faut donc parfois transmettre les modifications d’un endroit à l’autre.\nDeux opérations seront particulièrement importantes :\npush\npull",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#push",
+    "href": "Git.html#push",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.8 Push",
+    "text": "3.8 Push\nUn push envoie nos nouveaux commits locaux vers GitHub.\nordinateur\n    │\n    │ push\n    ▼\n GitHub\nUn push ne signifie donc pas simplement de sauvegarder un fichier sur Internet mais bien de transmettre l’historique complet des modifications de ce fichier sur la version en ligne de ce répertoire Git.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#pull",
+    "href": "Git.html#pull",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.9 Pull",
+    "text": "3.9 Pull\nUn pull récupère les nouveaux commits présents sur GitHub.\nordinateur\n    ▲\n    │ pull\n    │\n GitHub\nCela devient particulièrement important lorsque :\n\nnous travaillons sur plusieurs ordinateurs;\nplusieurs personnes collaborent sur le même projet;\ndes modifications ont été effectuées directement sur GitHub.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#notre-cycle-de-travail-quotidien",
+    "href": "Git.html#notre-cycle-de-travail-quotidien",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.10 Notre cycle de travail quotidien",
+    "text": "3.10 Notre cycle de travail quotidien\nPour un projet simple, notre cycle Git/GitHub ressemblera souvent à :\nPULL\n  ↓\nModifier des fichiers\n  ↓\nSauvegarder\n  ↓\nExaminer les modifications\n  ↓\nSTAGE\n  ↓\nCOMMIT\n  ↓\nPUSH\nPuis nous recommençons.\n\n\n\n\n\n\nUne règle simple pour commencer\n\n\n\nLorsque vous travaillez avec un dépôt distant :\nPull avant de commencer, commit lorsque vous avez accompli une petite étape cohérente, push régulièrement.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#petit-exercice",
+    "href": "Git.html#petit-exercice",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.11 Petit exercice",
+    "text": "3.11 Petit exercice\nPrenons notre librairie mat8186demo.\n\n3.11.1 Étape 1\nOuvrez :\nR/CR.R\net ajoutez un commentaire :\n\n# Ma premiere fonction pour centrer-réduire!\n\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}\n\nSauvegardez le fichier.\n\n\n3.11.2 Étape 2\nRegardez l’onglet Git de RStudio.\nLe fichier devrait apparaître comme modifié.\n\n\n3.11.3 Étape 3\nExaminez le Diff.\nPouvez-vous identifier exactement la ligne ajoutée?\n\n\n3.11.4 Étape 4\nCochez Staged.\n\n\n3.11.5 Étape 5\nCréez un commit avec le message :\nAdd comment to CR\nNous venons de créer une nouvelle version identifiable de notre projet.\n\n\n\n\n\n\nLa suite\n\n\n\nNous savons maintenant ce que Git cherche à accomplir.\nLa prochaine étape consiste à connecter concrètement :\nRStudio → Git → GitHub\net à effectuer nous-mêmes le cycle :\nmodifier → commit → push → pull.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#préparer-son-environnement",
+    "href": "Git.html#préparer-son-environnement",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.12 Préparer son environnement",
+    "text": "3.12 Préparer son environnement\nAvant d’aller plus loin, assurons-nous que tout le monde possède les outils nécessaires.\nNous aurons besoin de :\n\nGit installé sur notre ordinateur;\nun compte GitHub;\nune configuration minimale permettant à Git d’identifier l’auteur des modifications.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#installer-git-sous-windows",
+    "href": "Git.html#installer-git-sous-windows",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "Installer Git sous Windows",
+    "text": "Installer Git sous Windows\nSous Windows, nous utiliserons Git for Windows.\n\n3.12.1 Étape 1 — Télécharger Git\nRendez-vous sur le site officiel de Git et téléchargez la version de Git for Windows correspondant à votre ordinateur.\nPour la majorité des ordinateurs récents, il s’agira de la version 64 bits (x64).\n\n\n3.12.2 Étape 2 — Installer Git\nLancez l’installateur.\nPour ce cours, les options proposées par défaut conviennent généralement. Il n’est donc pas nécessaire de modifier toutes les options de l’installateur.\nL’installation ajoute notamment :\n\nGit;\nles commandes Git accessibles dans le terminal;\nGit Bash, un terminal permettant d’utiliser Git sous Windows.\n\n\n\n\n\n\n\nPas besoin de devenir expert de Git Bash\n\n\n\nNous utiliserons principalement Git à travers RStudio.\nLe terminal nous servira surtout à vérifier certaines configurations ou à comprendre ce que RStudio fait derrière son interface.\n\n\n\n\n3.12.3 Étape 3 — Vérifier l’installation\nUne fois Git installé, redémarrez RStudio.\nOuvrez ensuite :\nTools → Global Options → Git/SVN\nRStudio devrait afficher un chemin dans le champ :\nGit executable\nOn peut également ouvrir le terminal de RStudio et exécuter :\ngit --version\nVous devriez obtenir quelque chose comme :\ngit version 2.x.x\nLa version exacte n’est pas importante.\nSi une version est affichée, Git est correctement installé.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#créer-un-compte-github",
+    "href": "Git.html#créer-un-compte-github",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.13 Créer un compte GitHub",
+    "text": "3.13 Créer un compte GitHub\nGit fonctionne localement et ne nécessite aucun compte.\nPar contre, pour partager nos dépôts et collaborer, nous utiliserons GitHub.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#créer-le-compte",
+    "href": "Git.html#créer-le-compte",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "Créer le compte",
+    "text": "Créer le compte\nRendez-vous sur GitHub et créez un compte personnel gratuit.\nVous devrez notamment choisir :\n\nune adresse courriel;\nun mot de passe;\nun nom d’utilisateur GitHub.\n\n\n\n\n\n\n\nChoisissez bien votre nom d’utilisateur\n\n\n\nVotre nom d’utilisateur GitHub sera visible dans l’adresse de vos projets et potentiellement dans vos contributions publiques.\nIl est donc préférable de choisir un nom relativement professionnel et que vous serez confortable d’utiliser à long terme.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#présenter-git-à-github-et-à-vous-même",
+    "href": "Git.html#présenter-git-à-github-et-à-vous-même",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.14 Présenter Git à GitHub… et à vous-même",
+    "text": "3.14 Présenter Git à GitHub… et à vous-même\nGit doit savoir qui effectue les commits.\nCette information est enregistrée dans la configuration de Git.\nDans le terminal de RStudio, exécutez :\ngit config --global user.name \"Votre Nom\"\nPar exemple :\ngit config --global user.name \"Jean Tremblay\"\nPuis indiquez votre adresse courriel :\ngit config --global user.email \"votre.adresse@courriel.ca\"\n\n\n\n\n\n\nQuelle adresse utiliser?\n\n\n\nIdéalement, utilisez une adresse courriel associée à votre compte GitHub.\nCela permettra à GitHub d’associer correctement vos commits à votre profil.\n\n\nNous pouvons vérifier notre configuration :\ngit config --global user.name\ngit config --global user.email\nGit devrait alors retourner les informations que nous venons d’entrer.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#vérification-finale",
+    "href": "Git.html#vérification-finale",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.15 Vérification finale",
+    "text": "3.15 Vérification finale\nAvant de poursuivre, assurez-vous que les trois éléments suivants fonctionnent.\nDans le terminal :\ngit --version\ndoit retourner une version de Git.\nPuis :\ngit config --global user.name\net :\ngit config --global user.email\ndoivent retourner vos informations.\nFinalement, vous devez être capable de vous connecter à votre compte GitHub dans votre navigateur.\n\n\n\n\n\n\nNous sommes prêts\n\n\n\nÀ ce stade :\nGit est installé\n       +\nGit connaît notre identité\n       +\nnotre compte GitHub existe\nNous pouvons maintenant connecter un dépôt Git local à un dépôt GitHub distant et effectuer notre premier push.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#première-partie-du-projet-évaluation",
+    "href": "Git.html#première-partie-du-projet-évaluation",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "3.16 Première partie du projet (évaluation)",
+    "text": "3.16 Première partie du projet (évaluation)\nUne partie de la première évaluation consiste à crée votre compte GitHub et y héberger votre librairie R!",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
     ]
   }
 ]

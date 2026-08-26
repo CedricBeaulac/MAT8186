@@ -340,7 +340,7 @@ GitHub nous permet notamment de :
 **GitHub = hébergement et collaboration autour de dépôts Git**
 :::
 
-# Le dépôt local et le dépôt distant
+## Le dépôt local et le dépôt distant
 
 Lorsque notre projet existe également sur GitHub, nous avons essentiellement **deux copies du dépôt** :
 
@@ -427,7 +427,7 @@ Lorsque vous travaillez avec un dépôt distant :
 **Pull avant de commencer, commit lorsque vous avez accompli une petite étape cohérente, push régulièrement.**
 :::
 
-# Petit exercice
+## Petit exercice
 
 Prenons notre librairie `mat8186demo`.
 
@@ -563,7 +563,7 @@ La version exacte n'est pas importante.
 
 Si une version est affichée, Git est correctement installé.
 
-# Créer un compte GitHub
+## Créer un compte GitHub
 
 Git fonctionne localement et ne nécessite aucun compte.
 
@@ -587,7 +587,7 @@ Votre nom d'utilisateur GitHub sera visible dans l'adresse de vos projets et pot
 Il est donc préférable de choisir un nom relativement professionnel et que vous serez confortable d'utiliser à long terme.
 :::
 
-# Présenter Git à GitHub... et à vous-même
+## Présenter Git à GitHub... et à vous-même
 
 Git doit savoir **qui effectue les commits**.
 
@@ -628,7 +628,7 @@ git config --global user.email
 
 Git devrait alors retourner les informations que nous venons d'entrer.
 
-# Vérification finale
+## Vérification finale
 
 Avant de poursuivre, assurez-vous que les trois éléments suivants fonctionnent.
 
