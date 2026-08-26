@@ -10,36 +10,6 @@
     ]
   },
   {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "1  Introduction",
-    "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
-    ]
-  },
-  {
-    "objectID": "summary.html",
-    "href": "summary.html",
-    "title": "2  Summary",
-    "section": "",
-    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
-    ]
-  },
-  {
-    "objectID": "references.html",
-    "href": "references.html",
-    "title": "References",
-    "section": "",
-    "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
-    "crumbs": [
-      "References"
-    ]
-  },
-  {
     "objectID": "survol.html",
     "href": "survol.html",
     "title": "1  Un survol rapide",
@@ -60,16 +30,6 @@
     ]
   },
   {
-    "objectID": "survol.html#comment",
-    "href": "survol.html#comment",
-    "title": "1  Un survol rapide",
-    "section": "Comment ?",
-    "text": "Comment ?\nNous allons essentiellement suivre le livre R Packages de Hadley Wickham et Jennifer Bryan. Wickham est notamment l’auteur ou le coauteur de plusieurs librairies importantes de l’écosystème R, dont ggplot2, et l’un des principaux contributeurs au tidyverse et aux outils modernes de développement de librairies R.\nPour la mise au point de librairies, nous utiliserons… une librairie.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
-    ]
-  },
-  {
     "objectID": "survol.html#quoi",
     "href": "survol.html#quoi",
     "title": "1  Un survol rapide",
@@ -80,11 +40,21 @@
     ]
   },
   {
-    "objectID": "survol.html#the-whole-game",
-    "href": "survol.html#the-whole-game",
+    "objectID": "survol.html#comment",
+    "href": "survol.html#comment",
     "title": "1  Un survol rapide",
-    "section": "1.1 1 The Whole Game",
-    "text": "1.1 1 The Whole Game\nNous débutons avec une introduction du processus entier de mise-au-point de librairie. Le tout se fait presque seul en suivant les instructions de la librairie et en suivant attentivement le\n\nlibrary(devtools)\n\nLoading required package: usethis\n\n#&gt; Loading required package: usethis",
+    "section": "Comment ?",
+    "text": "Comment ?\nNous allons essentiellement suivre le livre R Packages de Hadley Wickham et Jennifer Bryan. Wickham est notamment l’auteur ou le coauteur de plusieurs librairies importantes de l’écosystème R, dont ggplot2, et l’un des principaux contributeurs au tidyverse et aux outils modernes de développement de librairies R.\nPour la mise au point de librairies, nous utiliserons… une librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#le-concept-de-a-à-z",
+    "href": "survol.html#le-concept-de-a-à-z",
+    "title": "1  Un survol rapide",
+    "section": "1.1 Le concept de A à Z",
+    "text": "1.1 Le concept de A à Z\nDans cette première partie du cours, nous allons parcourir très rapidement l’ensemble du processus de mise au point d’une librairie R.\nL’objectif n’est pas de comprendre immédiatement toutes les commandes, tous les fichiers et toutes les conventions que nous allons rencontrer.\nNous allons plutôt commencer par voir le chemin de A à Z.\nÀ la fin, nous aurons :\n\ncréé une librairie R;\ncréé un dépôt Git;\najouté une première fonction;\nchargé notre librairie pendant son développement;\nvérifié sa structure;\najouté une licence;\ndocumenté notre fonction;\najouté un test;\ndéclaré une dépendance;\ninstallé notre librairie;\nvu comment elle pourra éventuellement être partagée.\n\n\n\n\n\n\n\nUne première visite\n\n\n\nIl n’est pas attendu que vous reteniez toutes les commandes présentées dans cette section.\nNous allons revenir beaucoup plus en détail sur chacune des étapes au cours des prochaines séances.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
@@ -100,21 +70,21 @@
     ]
   },
   {
-    "objectID": "survol.html#création",
-    "href": "survol.html#création",
+    "objectID": "survol.html#créons-une-librairie",
+    "href": "survol.html#créons-une-librairie",
     "title": "1  Un survol rapide",
-    "section": "Création",
-    "text": "Création\nPuis, nous pouvons créer notre librairie :\n\nusethis::create_package(\"~/mat8186demo\")\n\ncreate_package() crée automatiquement plusieurs fichiers et répertoires.\nNous obtenons quelque chose qui ressemble à :\nmat8186demo/\n├── .Rbuildignore\n├── .gitignore\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n└── mat8186demo.Rproj\nNous venons déjà de créer plusieurs choses à la fois.\nNotre dossier est maintenant :\n\nun répertoire sur notre ordinateur;\nun projet RStudio;\nla structure minimale d’une librairie R.\n\n\n\n\n\n\n\nNe cherchons pas encore à tout comprendre\n\n\n\nNous reviendrons plus tard sur DESCRIPTION, NAMESPACE, .Rbuildignore et les autres fichiers.\nPour l’instant, retenons surtout que le répertoire R/ contiendra le code de notre librairie.",
+    "section": "1.2 Créons une librairie",
+    "text": "1.2 Créons une librairie\nNous allons développer une petite librairie appelée :\nmat8186demo\nElle ne fera rien de particulièrement révolutionnaire.\nSon objectif sera simplement de nous permettre de parcourir une première fois toutes les étapes du développement d’une librairie R.\nComme d’habitude, commencez par crée un répertoire et l’identifier comme répertoir de travail:\n\nsetwd(\"C:/VotreRepertoire\")",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
   },
   {
-    "objectID": "survol.html#du-script-à-la-librairie",
-    "href": "survol.html#du-script-à-la-librairie",
+    "objectID": "survol.html#création",
+    "href": "survol.html#création",
     "title": "1  Un survol rapide",
-    "section": "Du script à la librairie",
-    "text": "Du script à la librairie\nIl y a ici un changement important dans notre manière de travailler.\nDans un script d’analyse, nous pouvons retrouver quelque chose comme :\n\ndonnees &lt;- read.csv(\"donnees.csv\")\n\nresultat &lt;- lm(y ~ x, data = donnees)\n\nsummary(resultat)\n\nplot(resultat)\n\nDans le répertoire R/ d’une librairie, nous retrouverons plutôt des définitions de fonctions :\n\nma_fonction &lt;- function(x) {\n  ...\n}\n\nNous passons progressivement d’une logique de script d’analyse à une logique de développement logiciel.",
+    "section": "Création",
+    "text": "Création\nPuis, nous pouvons créer notre librairie :\n\nusethis::create_package(\"~/mat8186demo\")\n\ncreate_package() crée automatiquement plusieurs fichiers et répertoires.\nNous obtenons quelque chose qui ressemble à :\nmat8186demo/\n├── .Rbuildignore\n├── .gitignore\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n└── mat8186demo.Rproj\nNous venons déjà de créer plusieurs choses à la fois.\nNotre dossier est maintenant :\n\nun répertoire sur notre ordinateur;\nun projet RStudio;\nla structure minimale d’une librairie R.\n\n\n\n\n\n\n\nNe cherchons pas encore à tout comprendre\n\n\n\nNous reviendrons plus tard sur DESCRIPTION, NAMESPACE, .Rbuildignore et les autres fichiers.\nPour l’instant, retenons surtout que le répertoire R/ contiendra le code de notre librairie.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
@@ -130,41 +100,31 @@
     ]
   },
   {
-    "objectID": "Rproject.html",
-    "href": "Rproject.html",
-    "title": "2  Projet R",
-    "section": "",
-    "text": "2.1 Le problème\nOn commence souvent un projet en définissant manuellement notre répertoire de travail :\nsetwd(\"C:/Users/MYPC/Desktop/MAT8186\")\nÇa fonctionne très bien… sur mon ordinateur!\nLe problème apparaît rapidement lorsque :\nPar exemple, le chemin\nn’existe probablement pas sur votre ordinateur.\nOn aimerait donc que notre code puisse fonctionner indépendamment de l’endroit où le projet est enregistré.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
-    ]
-  },
-  {
-    "objectID": "survol.html#le-concept-de-a-à-z",
-    "href": "survol.html#le-concept-de-a-à-z",
-    "title": "1  Un survol rapide",
-    "section": "1.1 Le concept de A à Z",
-    "text": "1.1 Le concept de A à Z\nDans cette première partie du cours, nous allons parcourir très rapidement l’ensemble du processus de mise au point d’une librairie R.\nL’objectif n’est pas de comprendre immédiatement toutes les commandes, tous les fichiers et toutes les conventions que nous allons rencontrer.\nNous allons plutôt commencer par voir le chemin de A à Z.\nÀ la fin, nous aurons :\n\ncréé une librairie R;\ncréé un dépôt Git;\najouté une première fonction;\nchargé notre librairie pendant son développement;\nvérifié sa structure;\najouté une licence;\ndocumenté notre fonction;\najouté un test;\ndéclaré une dépendance;\ninstallé notre librairie;\nvu comment elle pourra éventuellement être partagée.\n\n\n\n\n\n\n\nUne première visite\n\n\n\nIl n’est pas attendu que vous reteniez toutes les commandes présentées dans cette section.\nNous allons revenir beaucoup plus en détail sur chacune des étapes au cours des prochaines séances.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
-    ]
-  },
-  {
-    "objectID": "survol.html#créons-une-librairie",
-    "href": "survol.html#créons-une-librairie",
-    "title": "1  Un survol rapide",
-    "section": "1.2 Créons une librairie",
-    "text": "1.2 Créons une librairie\nNous allons développer une petite librairie appelée :\nmat8186demo\nElle ne fera rien de particulièrement révolutionnaire.\nSon objectif sera simplement de nous permettre de parcourir une première fois toutes les étapes du développement d’une librairie R.\nComme d’habitude, commencez par crée un répertoire et l’identifier comme répertoir de travail:\n\nsetwd(\"C:/VotreRepertoire\")",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
-    ]
-  },
-  {
     "objectID": "survol.html#une-première-fonction",
     "href": "survol.html#une-première-fonction",
     "title": "1  Un survol rapide",
     "section": "1.4 Une première fonction",
     "text": "1.4 Une première fonction\nUne librairie R contient principalement des fonctions. C’est par un ensemble de fonction que l’on peut encoder des méthodes plus complexes, l’atome d’une libraire est donc la fonction.\nCréons une petite fonction permettant de centrer-réduire un vecteur numérique.\nNous aimerions pouvoir faire :\n\nCR(c(10, 20, 30))\n\net obtenir :\n[1] -1 0 1\nUne première version de notre fonction pourrait être :\n\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}\n\nDans une librairie, notre code R est placé dans le répertoire :\nR/\nNous pouvons créer un fichier pour notre fonction avec :\n\nusethis::use_r(\"CR\")\n\nCette commande crée :\nR/CR.R\nNous pouvons alors y placer notre fonction :\n\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#du-script-à-la-librairie",
+    "href": "survol.html#du-script-à-la-librairie",
+    "title": "1  Un survol rapide",
+    "section": "Du script à la librairie",
+    "text": "Du script à la librairie\nIl y a ici un changement important dans notre manière de travailler.\nDans un script d’analyse, nous pouvons retrouver quelque chose comme :\n\ndonnees &lt;- read.csv(\"donnees.csv\")\n\nresultat &lt;- lm(y ~ x, data = donnees)\n\nsummary(resultat)\n\nplot(resultat)\n\nDans le répertoire R/ d’une librairie, nous retrouverons plutôt des définitions de fonctions :\n\nma_fonction &lt;- function(x) {\n  ...\n}\n\nNous passons progressivement d’une logique de script d’analyse à une logique de développement logiciel.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#utiliser-notre-librairie-pendant-son-développement",
+    "href": "survol.html#utiliser-notre-librairie-pendant-son-développement",
+    "title": "1  Un survol rapide",
+    "section": "1.5 Utiliser notre librairie pendant son développement",
+    "text": "1.5 Utiliser notre librairie pendant son développement\nNotre fonction est maintenant enregistrée dans :\nR/CR.R\nComment pouvons-nous l’utiliser?\nNous pouvons faire :\n\nsource(\"R/CR.R\")\n\net c’est en fait ce que nous faisons au premier cycle quand nous codons nos propres fonctions. Ce n’est pas la façon privilégiée de travailler lorsqu’on développe une librairie; nous allons installer la librairie.\nNous allons plutôt utiliser :\n\ndevtools::load_all()\n\nload_all() charge temporairement notre librairie en cours de développement.\nNous pouvons alors utiliser :\n\nCR(c(10, 20, 30))\n\ncomme si notre librairie était déjà installée.\nNous obtenons notre premier cycle de développement :\nmodifier le code\n       ↓\n   load_all()\n       ↓\ntester la fonction\n       ↓\nmodifier le code\n       ↓\n   load_all()\n       ↓\n      ...\nCe cycle reviendra constamment pendant le cours.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
@@ -195,6 +155,16 @@
     "title": "1  Un survol rapide",
     "section": "1.8 Ajouter une licence",
     "text": "1.8 Ajouter une licence\nSi nous distribuons notre librairie, nous devons également indiquer ce que les autres utilisateurs ont le droit de faire avec notre code.\nPar exemple, nous pouvons choisir une licence MIT :\n\nusethis::use_mit_license()\n\nusethis crée et modifie automatiquement les fichiers nécessaires.\nLes licences sont expliqués en plus grand détail au chapitre 12 du manuel de référence, nous n’en reparlons pas vraiment dans ce cours.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#documenter-notre-fonction",
+    "href": "survol.html#documenter-notre-fonction",
+    "title": "1  Un survol rapide",
+    "section": "1.9 Documenter notre fonction",
+    "text": "1.9 Documenter notre fonction\nNotre fonction fonctionne mais un utilisateur qui découvre notre librairie doit également pouvoir comprendre :\n\nce que fait la fonction;\nquels arguments elle prend;\nce qu’elle retourne;\ncomment l’utiliser.\n\nSouvenez-vous que lorsque vous approchez une nouvelle libraire, nous utilisons la documentation R ?Library::function pour mieux comprendre son fonctionnement.\nQuand nous mettons au point une libraire, c’est à nous d’écrire la documentation.\nNous allons utiliser roxygen2 pour documenter notre fonction directement dans son fichier R.\nIl faut ouvrir le fichier R en question ~\\mat8186\\CR.R, cliquer l’onglet Code puis insert roxygen skeleton. Ça va crée une entête vide, que l’on pourra remplir.\n\n#' Centre-réduire un vecteur\n#'\n#' Transforme linéairement un vecteur numérique afin qu'il soit de moyenne 0\n#' et d'écart-type 1.\n#'\n#' @param x Un vecteur numérique.\n#'\n#' @return Un vecteur numérique de même longueur que `x`.\n#'\n#' @examples\n#' CR(c(10, 20, 30))\n#'\n#' @export\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}\n\nNous pouvons ensuite générer la documentation grâce à la libraire devtools :\n\ndevtools::document()\n\nCette commande crée notamment un répertoire :\nman/\ncontenant les pages d’aide de notre librairie.\nBon, on se rapelle notre boucle de développement, allons-y:\nmodifier le code\n       ↓\n   load_all()\n       ↓\ntester la fonction\n       ↓\nmodifier le code\n       ↓\n   load_all()\n       ↓\n      ...\n\ndevtools::load_all()\n?CR\n\nNotre fonction possède maintenant une documentation!\nIl s’agit peut-être de bon moment pour utiliser Git et laisser une trace des ces premières modifications.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
@@ -240,11 +210,31 @@
     ]
   },
   {
+    "objectID": "survol.html#une-dernière-vérification",
+    "href": "survol.html#une-dernière-vérification",
+    "title": "1  Un survol rapide",
+    "section": "Une dernière vérification",
+    "text": "Une dernière vérification\nNous avons maintenant ajouté plusieurs composantes à notre librairie.\nFaisons donc une nouvelle vérification :\n\ndevtools::check()\n\nNous avons donc déjà :\n\nune librairie R;\ndeux fonctions;\nde la documentation;\nune licence;\ndes tests;\nune dépendance;\nun historique Git.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
     "objectID": "survol.html#et-github",
     "href": "survol.html#et-github",
     "title": "1  Un survol rapide",
     "section": "1.13 Et GitHub?",
     "text": "1.13 Et GitHub?\nNotre dépôt Git existe actuellement sur notre ordinateur.\nUne prochaine étape consistera à créer une copie distante de ce dépôt sur GitHub.\nConceptuellement :\nNotre ordinateur\n     │\n     │  Git\n     ▼\nHistorique local\n     │\n     │  push / pull\n     ▼\n    GitHub\nNous verrons dans quelques instants comment mettre cela en place.\n\n\n\n\n\n\nGit n’est pas GitHub\n\n\n\nGit est le système qui permet de conserver l’historique des versions de notre projet.\nGitHub est un service en ligne qui permet notamment d’héberger des dépôts Git et de collaborer avec d’autres personnes.\nOn peut utiliser Git sans GitHub.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#le-cycle-de-développement",
+    "href": "survol.html#le-cycle-de-développement",
+    "title": "1  Un survol rapide",
+    "section": "1.14 Le cycle de développement",
+    "text": "1.14 Le cycle de développement\nNous venons de voir énormément de choses très rapidement.\nLe but n’était pas de mémoriser toutes les commandes.\nLe message principal est de comprendre le cycle général de développement d’une librairie :\nCréer la librairie\n        ↓\nÉcrire une fonction\n        ↓\n    load_all()\n        ↓\nTester manuellement\n        ↓\nDocumenter\n        ↓\nTester automatiquement\n        ↓\n     check()\n        ↓\n     commit\n        ↓\nModifier le code\n        ↓\n     recommencer\nUne librairie n’est donc pas simplement la forme finale que l’on donne à notre code lorsqu’il est terminé.\nLa librairie devient elle-même l’environnement dans lequel nous développons notre code.\n\n\n\n\n\n\nPour résumer\n\n\n\nNous venons essentiellement de faire le cours au complet en accéléré.\nMaintenant, nous allons revenir en arrière et apprendre à faire chacune de ces étapes correctement.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
@@ -260,73 +250,13 @@
     ]
   },
   {
-    "objectID": "Rproject.html#projet-r",
-    "href": "Rproject.html#projet-r",
+    "objectID": "Rproject.html",
+    "href": "Rproject.html",
     "title": "2  Projet R",
-    "section": "2.1 Projet R",
-    "text": "2.1 Projet R\nLe projet R est en quelque sorte la solution simple à ce problème… qui reglèra d’autres problèmes aussi. En y ajoutant une étiquette d’ouverture de projet et de sauvegarde on gardera notre environnement de travail sous contrôle et on va se garantir que le comportement de notre libraire soit reproductible.",
+    "section": "",
+    "text": "2.1 Le problème\nOn commence souvent un projet en définissant manuellement notre répertoire de travail :\nsetwd(\"C:/Users/MYPC/Desktop/MAT8186\")\nÇa fonctionne très bien… sur mon ordinateur!\nLe problème apparaît rapidement lorsque :\nPar exemple, le chemin\nn’existe probablement pas sur votre ordinateur.\nOn aimerait donc que notre code puisse fonctionner indépendamment de l’endroit où le projet est enregistré.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
-    ]
-  },
-  {
-    "objectID": "Rproject.html#partir-à-neuf",
-    "href": "Rproject.html#partir-à-neuf",
-    "title": "2  Projet R",
-    "section": "2.3 Partir à neuf",
-    "text": "2.3 Partir à neuf\nR et RStudio peuvent conserver automatiquement une partie de notre environnement de travail entre deux sessions.\nDeux fichiers que vous avez peut-être déjà rencontrés sont :\n.RData\n.Rhistory\n.RData peut contenir les objets présents dans notre environnement R à la fin d’une session, tandis que .Rhistory peut conserver l’historique des commandes exécutées.\nCela peut sembler pratique.\nCependant, dans un projet reproductible, nous voulons idéalement être capables de reconstruire notre environnement à partir de notre code.\nPar exemple, si notre analyse nécessite l’objet donnees, nous préférons avoir :\n\ndonnees &lt;- read.csv(\"data/donnees.csv\")\n\ndans notre code plutôt que de dépendre d’un objet donnees qui serait mystérieusement réapparu depuis une ancienne session R.\nL’idée est donc de travailler avec intention : les objets nécessaires à notre analyse devraient pouvoir être recréés à partir des fichiers et du code contenus dans notre projet.\nPour cette raison, il est généralement recommandé de ne pas restaurer automatiquement .RData au démarrage et de ne pas sauvegarder automatiquement l’environnement de travail à la fermeture de RStudio.\nNous pouvons configurer ce comportement dans :\nTools -&gt; Global Options -&gt; General\net choisir notamment :\nRestore .RData into workspace at startup : NON\n\nSave workspace to .RData on exit : Never\n\n\n\n\n\n\nReproductibilité\n\n\n\nUne bonne question à se poser est :\n\nSi je ferme complètement RStudio, que je rouvre mon projet et que je réexécute mon code, est-ce que je peux reproduire mes résultats?\n\nSi la réponse est oui, nous sommes sur la bonne voie.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
-    ]
-  },
-  {
-    "objectID": "Rproject.html#un-projet-r",
-    "href": "Rproject.html#un-projet-r",
-    "title": "2  Projet R",
-    "section": "2.3 Un projet R",
-    "text": "2.3 Un projet R\nMaintenant, lorsque nous voulons entemmer sérieusement un projet d’analyse de données, d’écriture de diapostive RMD, ou bien de développement de librairie nous créons un projet R avec File -&gt; New Project.\nLa création d’un projet créer automatique un répertoire avec un document .Rproj. En ouvrant ce document, un l’édituer RStudio ouvre et le répertoire de travail est déjà bien identifié, on peut changer les paramèetre de sauvegarder et de chargement spécifiquement pour ce projet dans Tools -&gt; Project Options, y définir de nombre document .R ou autres format. Le principe est que désormais nous ouvrirons directement le projet (document .Rproj) lorsque nous voudrons y travailler.\nUn gain majeur et que les répertoire, donnée R (.RData) et autres structures sont maintenant relatives à ce projet ce qui crée de bon silos de travialle séparé.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
-    ]
-  },
-  {
-    "objectID": "survol.html#utiliser-notre-librairie-pendant-son-développement",
-    "href": "survol.html#utiliser-notre-librairie-pendant-son-développement",
-    "title": "1  Un survol rapide",
-    "section": "1.5 Utiliser notre librairie pendant son développement",
-    "text": "1.5 Utiliser notre librairie pendant son développement\nNotre fonction est maintenant enregistrée dans :\nR/CR.R\nComment pouvons-nous l’utiliser?\nNous pouvons faire :\n\nsource(\"R/CR.R\")\n\net c’est en fait ce que nous faisons au premier cycle quand nous codons nos propres fonctions. Ce n’est pas la façon privilégiée de travailler lorsqu’on développe une librairie; nous allons installer la librairie.\nNous allons plutôt utiliser :\n\ndevtools::load_all()\n\nload_all() charge temporairement notre librairie en cours de développement.\nNous pouvons alors utiliser :\n\nCR(c(10, 20, 30))\n\ncomme si notre librairie était déjà installée.\nNous obtenons notre premier cycle de développement :\nmodifier le code\n       ↓\n   load_all()\n       ↓\ntester la fonction\n       ↓\nmodifier le code\n       ↓\n   load_all()\n       ↓\n      ...\nCe cycle reviendra constamment pendant le cours.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
-    ]
-  },
-  {
-    "objectID": "survol.html#documenter-notre-fonction",
-    "href": "survol.html#documenter-notre-fonction",
-    "title": "1  Un survol rapide",
-    "section": "1.9 Documenter notre fonction",
-    "text": "1.9 Documenter notre fonction\nNotre fonction fonctionne mais un utilisateur qui découvre notre librairie doit également pouvoir comprendre :\n\nce que fait la fonction;\nquels arguments elle prend;\nce qu’elle retourne;\ncomment l’utiliser.\n\nSouvenez-vous que lorsque vous approchez une nouvelle libraire, nous utilisons la documentation R ?Library::function pour mieux comprendre son fonctionnement.\nQuand nous mettons au point une libraire, c’est à nous d’écrire la documentation.\nNous allons utiliser roxygen2 pour documenter notre fonction directement dans son fichier R.\nIl faut ouvrir le fichier R en question ~\\mat8186\\CR.R, cliquer l’onglet Code puis insert roxygen skeleton. Ça va crée une entête vide, que l’on pourra remplir.\n\n#' Centre-réduire un vecteur\n#'\n#' Transforme linéairement un vecteur numérique afin qu'il soit de moyenne 0\n#' et d'écart-type 1.\n#'\n#' @param x Un vecteur numérique.\n#'\n#' @return Un vecteur numérique de même longueur que `x`.\n#'\n#' @examples\n#' CR(c(10, 20, 30))\n#'\n#' @export\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}\n\nNous pouvons ensuite générer la documentation grâce à la libraire devtools :\n\ndevtools::document()\n\nCette commande crée notamment un répertoire :\nman/\ncontenant les pages d’aide de notre librairie.\nBon, on se rapelle notre boucle de développement, allons-y:\nmodifier le code\n       ↓\n   load_all()\n       ↓\ntester la fonction\n       ↓\nmodifier le code\n       ↓\n   load_all()\n       ↓\n      ...\n\ndevtools::load_all()\n?CR\n\nNotre fonction possède maintenant une documentation!\nIl s’agit peut-être de bon moment pour utiliser Git et laisser une trace des ces premières modifications.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
-    ]
-  },
-  {
-    "objectID": "survol.html#une-dernière-vérification",
-    "href": "survol.html#une-dernière-vérification",
-    "title": "1  Un survol rapide",
-    "section": "Une dernière vérification",
-    "text": "Une dernière vérification\nNous avons maintenant ajouté plusieurs composantes à notre librairie.\nFaisons donc une nouvelle vérification :\n\ndevtools::check()\n\nNous avons donc déjà :\n\nune librairie R;\ndeux fonctions;\nde la documentation;\nune licence;\ndes tests;\nune dépendance;\nun historique Git.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
-    ]
-  },
-  {
-    "objectID": "survol.html#le-cycle-de-développement",
-    "href": "survol.html#le-cycle-de-développement",
-    "title": "1  Un survol rapide",
-    "section": "1.14 Le cycle de développement",
-    "text": "1.14 Le cycle de développement\nNous venons de voir énormément de choses très rapidement.\nLe but n’était pas de mémoriser toutes les commandes.\nLe message principal est de comprendre le cycle général de développement d’une librairie :\nCréer la librairie\n        ↓\nÉcrire une fonction\n        ↓\n    load_all()\n        ↓\nTester manuellement\n        ↓\nDocumenter\n        ↓\nTester automatiquement\n        ↓\n     check()\n        ↓\n     commit\n        ↓\nModifier le code\n        ↓\n     recommencer\nUne librairie n’est donc pas simplement la forme finale que l’on donne à notre code lorsqu’il est terminé.\nLa librairie devient elle-même l’environnement dans lequel nous développons notre code.\n\n\n\n\n\n\nPour résumer\n\n\n\nNous venons essentiellement de faire le cours au complet en accéléré.\nMaintenant, nous allons revenir en arrière et apprendre à faire chacune de ces étapes correctement.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
   },
   {
@@ -355,6 +285,16 @@
     "title": "2  Projet R",
     "section": "Les chemins relatifs",
     "text": "Les chemins relatifs\nC’est ici qu’apparaît l’un des principaux avantages du projet.\nSupposons que notre structure soit :\nMAT8186/\n├── MAT8186.Rproj\n├── data/\n│   └── donnees.csv\n├── R/\n│   └── analyse.R\n└── notes.qmd\nPlutôt que d’écrire :\n\nread.csv(\n  \"C:/Users/MYPC/Desktop/MAT8186/data/donnees.csv\"\n)\n\nnous pouvons simplement écrire :\n\nread.csv(\"data/donnees.csv\")\n\nLe chemin est maintenant relatif à la racine du projet.\nSi nous déplaçons tout le projet ailleurs, le chemin\ndata/donnees.csv\ndemeure valide.\nIl fonctionnera également sur l’ordinateur d’un collègue qui possède la même structure de projet.\n\n\n\n\n\n\nUne bonne règle\n\n\n\nSi votre code contient :\nsetwd(\"C:/Users/mon_nom/...\")\nou un autre chemin propre à votre ordinateur, demandez-vous s’il ne serait pas préférable de travailler à partir d’un projet et d’utiliser un chemin relatif.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#partir-à-neuf",
+    "href": "Rproject.html#partir-à-neuf",
+    "title": "2  Projet R",
+    "section": "2.3 Partir à neuf",
+    "text": "2.3 Partir à neuf\nR et RStudio peuvent conserver automatiquement une partie de notre environnement de travail entre deux sessions.\nDeux fichiers que vous avez peut-être déjà rencontrés sont :\n.RData\n.Rhistory\n.RData peut contenir les objets présents dans notre environnement R à la fin d’une session, tandis que .Rhistory peut conserver l’historique des commandes exécutées.\nCela peut sembler pratique.\nCependant, dans un projet reproductible, nous voulons idéalement être capables de reconstruire notre environnement à partir de notre code.\nPar exemple, si notre analyse nécessite l’objet donnees, nous préférons avoir :\n\ndonnees &lt;- read.csv(\"data/donnees.csv\")\n\ndans notre code plutôt que de dépendre d’un objet donnees qui serait mystérieusement réapparu depuis une ancienne session R.\nL’idée est donc de travailler avec intention : les objets nécessaires à notre analyse devraient pouvoir être recréés à partir des fichiers et du code contenus dans notre projet.\nPour cette raison, il est généralement recommandé de ne pas restaurer automatiquement .RData au démarrage et de ne pas sauvegarder automatiquement l’environnement de travail à la fermeture de RStudio.\nNous pouvons configurer ce comportement dans :\nTools -&gt; Global Options -&gt; General\net choisir notamment :\nRestore .RData into workspace at startup : NON\n\nSave workspace to .RData on exit : Never\n\n\n\n\n\n\nReproductibilité\n\n\n\nUne bonne question à se poser est :\n\nSi je ferme complètement RStudio, que je rouvre mon projet et que je réexécute mon code, est-ce que je peux reproduire mes résultats?\n\nSi la réponse est oui, nous sommes sur la bonne voie.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
     ]
