@@ -153,6 +153,22 @@
 
 \KOMAoption{captions}{tableheading}
 \makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
 \@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
 \makeatother
 \makeatletter
@@ -204,8 +220,8 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Notes},
-  pdfauthor={Norah Jones},
+  pdftitle={Notes de cours - MAT8186},
+  pdfauthor={Cedric Beaulac},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -213,9 +229,9 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-\title{Notes}
-\author{Norah Jones}
-\date{2026-08-21}
+\title{Notes de cours - MAT8186}
+\author{Cedric Beaulac}
+\date{2026-08-01}
 
 \begin{document}
 \maketitle
@@ -228,59 +244,2374 @@
 }
 \bookmarksetup{startatroot}
 
-\chapter*{Preface}\label{preface}
-\addcontentsline{toc}{chapter}{Preface}
+\chapter*{Index}\label{index}
+\addcontentsline{toc}{chapter}{Index}
 
-\markboth{Preface}{Preface}
+\markboth{Index}{Index}
 
-This is a Quarto book.
+Il s'agit d'un livre Quarto contenant le matériel du cours MAT8186.
 
-To learn more about Quarto books visit
-\url{https://quarto.org/docs/books}.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{+} \DecValTok{1}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-[1] 2
-\end{verbatim}
+Ce matériel fut conçu pour un cours de 15 heures organisé en 5 séances
+de 3 heures. L'objectif du cours est d'amener les étudiants à développer
+leur propres librairies R et s'inspire fortement du livre
+\href{https://r-pkgs.org}{R Packages}.
 
 \bookmarksetup{startatroot}
 
-\chapter{Introduction}\label{introduction}
+\chapter{Un survol rapide}\label{un-survol-rapide}
 
-This is a book created from markdown and executable code.
+Dans ce cours, nous apprendrons comment mettre au point une librairie R.
 
-See Knuth (1984) for additional discussion of literate programming.
+\section*{Pourquoi ?}\label{pourquoi}
+\addcontentsline{toc}{section}{Pourquoi ?}
+
+\markright{Pourquoi ?}
+
+La librairie (de l'anglais \emph{package}) est le format le mieux
+structuré pour le partage de code. Aux cycles supérieurs, les étudiants
+sont appelés à entrer en contact avec la recherche scientifique. Une
+étape importante de la recherche est la dissémination des résultats.
+Dans le cadre de la recherche en science des données, il est commun de
+développer de nouvelles méthodologies d'analyse de données et
+d'implémenter celles-ci. La mise au point d'une librairie est donc une
+manière de diffuser ces implémentations et, conséquemment, de rendre de
+nouvelles méthodes d'analyse de données facilement accessibles.
+
+L'objectif est donc de remplacer le partage d'un simple document
+\texttt{.R} par un ensemble de fonctions réfléchies, complètes,
+documentées et facilement accessibles à de nouveaux utilisateurs.
+
+L'ajout constant de nouvelles librairies R sur le \emph{Comprehensive R
+Archive Network} (CRAN) est l'une des raisons du succès de R au fil des
+années et permet à R de rester un langage utilisé et reconnu à l'ère de
+Python, Julia et des autres langages couramment utilisés en science des
+données. CRAN contient aujourd'hui près de 20 000 librairies! Vous avez
+sûrement déjà installé des librairies à partir de CRAN avec la commande
+\texttt{install.packages("x")}.
+
+\section*{Pourquoi moi ?}\label{pourquoi-moi}
+\addcontentsline{toc}{section}{Pourquoi moi ?}
+
+\markright{Pourquoi moi ?}
+
+Je ne suis pas un expert de la mise au point de librairies, mais :
+
+\begin{itemize}
+\tightlist
+\item
+  J'ai déjà mis au point une librairie!
+\item
+  Je veux mettre au point d'autres librairies!
+\item
+  J'aime R, l'enseignement et l'enseignement de R.
+\item
+  Personne d'autre ne pouvait l'enseigner.
+\item
+  Je compte sur une excellente référence pour faire une partie du
+  travail à ma place.
+\end{itemize}
+
+\section*{Quoi ?}\label{quoi}
+\addcontentsline{toc}{section}{Quoi ?}
+
+\markright{Quoi ?}
+
+Dans ce cours, nous allons bien entendu mettre au point une librairie R
+: c'est l'objectif principal. Nous verrons comment passer d'un ensemble
+de fonctions R à une librairie structurée, documentée, testée et pouvant
+être facilement partagée avec d'autres utilisateurs.
+
+Nous verrons également plusieurs outils et concepts qui accompagnent le
+développement moderne en R :
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Git et GitHub}, pour conserver un historique des différentes
+  versions de notre code, partager celui-ci et collaborer avec d'autres
+  utilisateurs;
+\item
+  les bonnes pratiques pour organiser des \textbf{projets, fichiers et
+  fonctions R};
+\item
+  la \textbf{documentation et les tests}, afin qu'une librairie puisse
+  être comprise, utilisée et modifiée de manière fiable;
+\item
+  quelques notions de \textbf{programmation orientée objet}, afin de
+  comprendre comment R permet de définir des comportements associés à
+  différents types d'objets;
+\item
+  \textbf{Rcpp et reticulate}, qui permettent respectivement d'intégrer
+  du code C++ et Python à un projet R, notamment lorsque certaines
+  fonctionnalités sont plus faciles ou plus efficaces à implémenter dans
+  un autre langage.
+\end{itemize}
+
+Ces différents outils ne constituent pas des objectifs indépendants :
+nous les utiliserons progressivement comme des composantes du
+développement de notre librairie.
+
+\section*{Comment ?}\label{comment}
+\addcontentsline{toc}{section}{Comment ?}
+
+\markright{Comment ?}
+
+Nous allons essentiellement suivre le livre \href{https://r-pkgs.org}{R
+Packages} de Hadley Wickham et Jennifer Bryan. Wickham est notamment
+l'auteur ou le coauteur de plusieurs librairies importantes de
+l'écosystème R, dont \emph{ggplot2}, et l'un des principaux
+contributeurs au \emph{tidyverse} et aux outils modernes de
+développement de librairies R.
+
+Pour la mise au point de librairies, nous utiliserons\ldots{} une
+librairie.
+
+\section{Le concept de A à Z}\label{le-concept-de-a-uxe0-z}
+
+Dans cette première partie du cours, nous allons parcourir \textbf{très
+rapidement l'ensemble du processus de mise au point d'une librairie R}.
+
+L'objectif n'est pas de comprendre immédiatement toutes les commandes,
+tous les fichiers et toutes les conventions que nous allons rencontrer.
+
+Nous allons plutôt commencer par voir \textbf{le chemin de A à Z}.
+
+À la fin, nous aurons :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  créé une librairie R;
+\item
+  créé un dépôt Git;
+\item
+  ajouté une première fonction;
+\item
+  chargé notre librairie pendant son développement;
+\item
+  vérifié sa structure;
+\item
+  ajouté une licence;
+\item
+  documenté notre fonction;
+\item
+  ajouté un test;
+\item
+  déclaré une dépendance;
+\item
+  installé notre librairie;
+\item
+  vu comment elle pourra éventuellement être partagée.
+\end{enumerate}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Une première visite}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm]
+
+Il n'est \textbf{pas attendu que vous reteniez toutes les commandes
+présentées dans cette section}.
+
+Nous allons revenir beaucoup plus en détail sur chacune des étapes au
+cours des prochaines séances.
+
+\end{tcolorbox}
+
+\section*{Nos principaux outils}\label{nos-principaux-outils}
+\addcontentsline{toc}{section}{Nos principaux outils}
+
+\markright{Nos principaux outils}
+
+R possède déjà les outils nécessaires pour construire, installer et
+vérifier des librairies.
+
+Cependant, plusieurs librairies facilitent énormément le travail de
+développement.
+
+Nous utiliserons principalement \textbf{\texttt{devtools}} et
+\textbf{\texttt{usethis}}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{+} \DecValTok{1}
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-[1] 2
-\end{verbatim}
+Une fois installée :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(devtools)}
+\FunctionTok{packageVersion}\NormalTok{(}\StringTok{"devtools"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+La librairie \texttt{devtools} rassemble plusieurs outils associés au
+développement de librairies R. Le manuel de référence et la libraire
+sont conçu pour être utilisé main dans la main. Cette libraire permet à
+quiconque de \emph{facilement} mettre des librairies au point.
+
+Une partie des fonctions que nous utiliserons proviennent en réalité de
+la librairie \texttt{usethis}.
+
+Par exemple :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{create\_package}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Dans les notes de cours, nous utiliserons régulièrement la notation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{librairie::fonction()}
+\end{Highlighting}
+\end{Shaded}
+
+afin d'identifier clairement la provenance d'une fonction.
+
+\section{Créons une librairie}\label{cruxe9ons-une-librairie}
+
+Nous allons développer une petite librairie appelée :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat8186demo}
+\end{Highlighting}
+\end{Shaded}
+
+Elle ne fera rien de particulièrement révolutionnaire.
+
+Son objectif sera simplement de nous permettre de parcourir une première
+fois toutes les étapes du développement d'une librairie R.
+
+Comme d'habitude, commencez par crée un répertoire et l'identifier comme
+répertoir de travail:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"C:/VotreRepertoire"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section*{Création}\label{cruxe9ation}
+\addcontentsline{toc}{section}{Création}
+
+\markright{Création}
+
+Puis, nous pouvons créer notre librairie :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{create\_package}\NormalTok{(}\StringTok{"\textasciitilde{}/mat8186demo"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{create\_package()} crée automatiquement plusieurs fichiers et
+répertoires.
+
+Nous obtenons quelque chose qui ressemble à :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat8186demo/}
+\NormalTok{├── .Rbuildignore}
+\NormalTok{├── .gitignore}
+\NormalTok{├── DESCRIPTION}
+\NormalTok{├── NAMESPACE}
+\NormalTok{├── R/}
+\NormalTok{└── mat8186demo.Rproj}
+\end{Highlighting}
+\end{Shaded}
+
+Nous venons déjà de créer plusieurs choses à la fois.
+
+Notre dossier est maintenant :
+
+\begin{itemize}
+\tightlist
+\item
+  un \textbf{répertoire} sur notre ordinateur;
+\item
+  un \textbf{projet RStudio};
+\item
+  la structure minimale d'une \textbf{librairie R}.
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Ne cherchons pas encore à tout comprendre}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-tip-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm]
+
+Nous reviendrons plus tard sur \texttt{DESCRIPTION}, \texttt{NAMESPACE},
+\texttt{.Rbuildignore} et les autres fichiers.
+
+Pour l'instant, retenons surtout que le répertoire \texttt{R/}
+contiendra le code de notre librairie.
+
+\end{tcolorbox}
+
+\section{Ajoutons Git}\label{ajoutons-git}
+
+Avant même d'écrire notre première fonction, nous pouvons commencer à
+conserver un historique de notre travail.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_git}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Notre même dossier est maintenant :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{un répertoire}
+\NormalTok{      +}
+\NormalTok{un projet RStudio}
+\NormalTok{      +}
+\NormalTok{une librairie R}
+\NormalTok{      +}
+\NormalTok{un dépôt Git}
+\end{Highlighting}
+\end{Shaded}
+
+Git peut maintenant conserver les différentes versions de notre travail.
+
+Nous pourrions immédiatement enregistrer cette première étape avec un
+\emph{commit} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Initial package structure}
+\end{Highlighting}
+\end{Shaded}
+
+Nous reviendrons beaucoup plus en détail sur \textbf{Git et GitHub} plus
+tard dans cette séance.
+
+Pour l'instant, Git conserve toute les version du répertoire nous
+permettant de conserver une trace de toute les modifications faites.
+
+\section{Une première fonction}\label{une-premiuxe8re-fonction}
+
+Une librairie R contient principalement des \textbf{fonctions}. C'est
+par un ensemble de fonction que l'on peut encoder des méthodes plus
+complexes, l'atome d'une libraire est donc la fonction.
+
+Créons une petite fonction permettant de centrer-réduire un vecteur
+numérique.
+
+Nous aimerions pouvoir faire :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{CR}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+et obtenir :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[1] {-}1 0 1}
+\end{Highlighting}
+\end{Shaded}
+
+Une première version de notre fonction pourrait être :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CR }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  (x }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(x)) }\SpecialCharTok{/} \FunctionTok{sd}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Dans une librairie, notre code R est placé dans le répertoire :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R/}
+\end{Highlighting}
+\end{Shaded}
+
+Nous pouvons créer un fichier pour notre fonction avec :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_r}\NormalTok{(}\StringTok{"CR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Cette commande crée :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R/CR.R}
+\end{Highlighting}
+\end{Shaded}
+
+Nous pouvons alors y placer notre fonction :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CR }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  (x }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(x)) }\SpecialCharTok{/} \FunctionTok{sd}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\section*{Du script à la librairie}\label{du-script-uxe0-la-librairie}
+\addcontentsline{toc}{section}{Du script à la librairie}
+
+\markright{Du script à la librairie}
+
+Il y a ici un changement important dans notre manière de travailler.
+
+Dans un script d'analyse, nous pouvons retrouver quelque chose comme :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{donnees }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"donnees.csv"}\NormalTok{)}
+
+\NormalTok{resultat }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x, }\AttributeTok{data =}\NormalTok{ donnees)}
+
+\FunctionTok{summary}\NormalTok{(resultat)}
+
+\FunctionTok{plot}\NormalTok{(resultat)}
+\end{Highlighting}
+\end{Shaded}
+
+Dans le répertoire \texttt{R/} d'une librairie, nous retrouverons plutôt
+des \textbf{définitions de fonctions} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ma\_fonction }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  ...}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Nous passons progressivement d'une logique de \textbf{script d'analyse}
+à une logique de \textbf{développement logiciel}.
+
+\section{Utiliser notre librairie pendant son
+développement}\label{utiliser-notre-librairie-pendant-son-duxe9veloppement}
+
+Notre fonction est maintenant enregistrée dans :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R/CR.R}
+\end{Highlighting}
+\end{Shaded}
+
+Comment pouvons-nous l'utiliser?
+
+Nous pouvons faire :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{source}\NormalTok{(}\StringTok{"R/CR.R"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+et c'est en fait ce que nous faisons au premier cycle quand nous codons
+nos propres fonctions. Ce n'est pas la façon privilégiée de travailler
+lorsqu'on développe une librairie; nous allons \emph{installer} la
+librairie.
+
+Nous allons plutôt utiliser :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{load\_all}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{load\_all()} charge temporairement notre librairie en cours de
+développement.
+
+Nous pouvons alors utiliser :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{CR}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+comme si notre librairie était déjà installée.
+
+Nous obtenons notre premier \textbf{cycle de développement} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modifier le code}
+\NormalTok{       ↓}
+\NormalTok{   load\_all()}
+\NormalTok{       ↓}
+\NormalTok{tester la fonction}
+\NormalTok{       ↓}
+\NormalTok{modifier le code}
+\NormalTok{       ↓}
+\NormalTok{   load\_all()}
+\NormalTok{       ↓}
+\NormalTok{      ...}
+\end{Highlighting}
+\end{Shaded}
+
+Ce cycle reviendra constamment pendant le cours.
+
+\section{Vérifier notre librairie}\label{vuxe9rifier-notre-librairie}
+
+Une librairie R doit respecter plusieurs conventions, normes afin
+d'opérer. Ces normes et standards sont la raison principale pourquoi
+aurjourd'hui il est beaucoup plus facile d'utiliser des librairies R que
+des paquet Python.
+
+Heureusement, nous n'avons pas besoin de tous vérifier manuellement
+grâce à \texttt{devtools}. Nous pouvons demander à R de vérifier notre
+librairie avec :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{check}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Cette commande réalise une série de vérifications sur notre librairie.
+
+Le résultat peut contenir trois types de problèmes :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ERROR}
+\NormalTok{WARNING}
+\NormalTok{NOTE}
+\end{Highlighting}
+\end{Shaded}
+
+À terme, nous aimerions obtenir :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{0 errors ✔}
+\NormalTok{0 warnings ✔}
+\NormalTok{0 notes ✔}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Vérifier régulièrement}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-important-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm]
+
+Il est beaucoup plus facile de corriger un problème lorsqu'il vient
+d'apparaître que lorsqu'on a modifié vingt fichiers depuis notre
+dernière vérification.
+
+Nous utiliserons donc \texttt{check()} \textbf{régulièrement pendant le
+développement}.
+
+\end{tcolorbox}
+
+\section{Le fichier DESCRIPTION}\label{le-fichier-description}
+
+Notre librairie possède déjà un fichier nommé :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{DESCRIPTION}
+\end{Highlighting}
+\end{Shaded}
+
+Ce fichier contient les principales \textbf{métadonnées} de notre
+librairie.
+
+Il ressemble initialement à ceci :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Package: mat8186demo}
+\NormalTok{Title: What the Package Does}
+\NormalTok{Version: 0.0.0.9000}
+\NormalTok{Authors@R: ...}
+\NormalTok{Description: What the package does.}
+\NormalTok{License: ...}
+\NormalTok{Encoding: UTF{-}8}
+\end{Highlighting}
+\end{Shaded}
+
+On y retrouvera notamment :
+
+\begin{itemize}
+\tightlist
+\item
+  le nom de la librairie;
+\item
+  son titre;
+\item
+  sa version;
+\item
+  ses auteurs;
+\item
+  sa description;
+\item
+  sa licence;
+\item
+  ses dépendances.
+\end{itemize}
+
+Nous pourrions par exemple remplacer les informations génériques par :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Package: mat8186demo}
+\NormalTok{Title: Demonstration for MAT8186}
+\NormalTok{Version: 0.0.0.9000}
+\NormalTok{Authors@R:}
+\NormalTok{    person("Cedric", "Beaulac",}
+\NormalTok{           email = "beaulac.cedric@uqam.ca",}
+\NormalTok{           role = c("aut", "cre"))}
+\NormalTok{Description: Small functions used to demonstrate the development}
+\NormalTok{    of an R library in MAT8186.}
+\NormalTok{Encoding: UTF{-}8}
+\end{Highlighting}
+\end{Shaded}
+
+Nous reviendrons plus tard sur la structure exacte du fichier
+\texttt{DESCRIPTION}, concentrons sur un élément d'intérêt de ce
+fichier, la licence.
+
+\section{Ajouter une licence}\label{ajouter-une-licence}
+
+Si nous distribuons notre librairie, nous devons également indiquer
+\textbf{ce que les autres utilisateurs ont le droit de faire avec notre
+code}.
+
+Par exemple, nous pouvons choisir une licence MIT :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_mit\_license}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{usethis} crée et modifie automatiquement les fichiers
+nécessaires.
+
+Les licences sont expliqués en plus grand détail au
+\href{https://r-pkgs.org/license.html}{chapitre 12 du manuel de
+référence}, nous n'en reparlons pas vraiment dans ce cours.
+
+\section{Documenter notre fonction}\label{documenter-notre-fonction}
+
+Notre fonction fonctionne mais un utilisateur qui découvre notre
+librairie doit également pouvoir comprendre :
+
+\begin{itemize}
+\tightlist
+\item
+  ce que fait la fonction;
+\item
+  quels arguments elle prend;
+\item
+  ce qu'elle retourne;
+\item
+  comment l'utiliser.
+\end{itemize}
+
+Souvenez-vous que lorsque vous approchez une nouvelle libraire, nous
+utilisons la documentation R \texttt{?Library::function} pour mieux
+comprendre son fonctionnement.
+
+Quand nous mettons au point une libraire, c'est à nous d'écrire la
+documentation.
+
+Nous allons utiliser \textbf{\texttt{roxygen2}} pour documenter notre
+fonction directement dans son fichier R.
+
+Il faut ouvrir le fichier R en question
+\texttt{\textasciitilde{}\textbackslash{}mat8186\textbackslash{}CR.R},
+cliquer l'onglet \emph{Code} puis \emph{insert roxygen skeleton}. Ça va
+crée une entête vide, que l'on pourra remplir.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#\textquotesingle{} Centre{-}réduire un vecteur}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} Transforme linéairement un vecteur numérique afin qu\textquotesingle{}il soit de moyenne 0}
+\CommentTok{\#\textquotesingle{} et d\textquotesingle{}écart{-}type 1.}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @param x Un vecteur numérique.}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @return Un vecteur numérique de même longueur que \textasciigrave{}x\textasciigrave{}.}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @examples}
+\CommentTok{\#\textquotesingle{} CR(c(10, 20, 30))}
+\CommentTok{\#\textquotesingle{}}
+\CommentTok{\#\textquotesingle{} @export}
+\NormalTok{CR }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  (x }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(x)) }\SpecialCharTok{/} \FunctionTok{sd}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Nous pouvons ensuite générer la documentation grâce à la libraire
+\texttt{devtools} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{document}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Cette commande crée notamment un répertoire :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{man/}
+\end{Highlighting}
+\end{Shaded}
+
+contenant les pages d'aide de notre librairie.
+
+Bon, on se rapelle notre boucle de développement, allons-y:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modifier le code}
+\NormalTok{       ↓}
+\NormalTok{   load\_all()}
+\NormalTok{       ↓}
+\NormalTok{tester la fonction}
+\NormalTok{       ↓}
+\NormalTok{modifier le code}
+\NormalTok{       ↓}
+\NormalTok{   load\_all()}
+\NormalTok{       ↓}
+\NormalTok{      ...}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{load\_all}\NormalTok{()}
+\NormalTok{?CR}
+\end{Highlighting}
+\end{Shaded}
+
+Notre fonction possède maintenant une documentation!
+
+Il s'agit peut-être de bon moment pour utiliser Git et laisser une trace
+des ces premières modifications.
+
+\section*{Git}\label{git}
+\addcontentsline{toc}{section}{Git}
+
+\markright{Git}
+
+On va \emph{staged} les documents modifiés que nous désirons sauvegarder
+et étiquette comme provenant de la même ronde de modification.
+
+Puis quand ces documents furent bien choisies, nous allons \emph{commit}
+les changement et les décrire à l'aide de commentaires.
+
+Finalement, lorsque l'on \emph{push} ces modifications, la sauvegarde
+est déployé!
+
+\section{Ajouter un test}\label{ajouter-un-test}
+
+Pour l'instant, nous avons testé notre fonction manuellement.
+
+Mais comment savoir si une modification future brise accidentellement
+son comportement?
+
+Nous allons ajouter des \textbf{tests automatisés}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_testthat}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Puis créons un fichier de tests associé à notre fonction :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_test}\NormalTok{(}\StringTok{"CR"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Nous pouvons y écrire :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{test\_that}\NormalTok{(}\StringTok{"CR transforme correctement un vecteur"}\NormalTok{, \{}
+
+  \FunctionTok{expect\_equal}\NormalTok{(}
+    \FunctionTok{CR}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{)),}
+    \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+
+\NormalTok{\})}
+\end{Highlighting}
+\end{Shaded}
+
+Nous lançons ensuite les tests avec :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{test}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Si notre fonction est modifiée plus tard et ne produit plus le résultat
+attendu, le test nous avertira.
+
+\section{Utiliser une autre
+librairie}\label{utiliser-une-autre-librairie}
+
+Une librairie R n'a évidemment pas besoin de tout réimplémenter
+elle-même.
+
+Elle peut utiliser des fonctions provenant d'autres librairies, on
+appele ça des dépendances. Ici, c'est une des grandes forces des
+librairies R (en contraste avec Python), la gestion des dépendances.
+
+Supposons par exemple que nous souhaitions utiliser la librairie
+\texttt{scales}.
+
+Nous pouvons déclarer cette dépendance avec :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_package}\NormalTok{(}\StringTok{"plyr"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Cette commande ajoute notamment \texttt{plyr} au fichier
+\texttt{DESCRIPTION}.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Le brio des dépendances R}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-tip-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm]
+
+Nous pouvons spécifier une version spécifique de la dépendance et R peut
+gérer plusieurs versions de la même librairie pour satisfaire les
+dépendances si nécessaire.
+
+\end{tcolorbox}
+
+Nous pourrions ensuite écrire une fonction qui centre-réduit chaque
+colonne d'une base de données comme :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CR}\SpecialCharTok{{-}}\NormalTok{Donnee }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(X) \{}
+  \FunctionTok{apply}\NormalTok{(x, }\DecValTok{2}\NormalTok{,CR)}
+\NormalTok{\}}
+
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_r}\NormalTok{(}\StringTok{"CR{-}Donnee"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Et maintenant?
+
+Nous relançons notre cycle :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{load\_all}\NormalTok{()}
+
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{test}\NormalTok{()}
+
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{check}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Nos tests nous permettent de vérifier que le comportement de notre
+fonction n'a pas changé, même si son implémentation interne est
+maintenant différente.
+
+\section{Installer notre librairie}\label{installer-notre-librairie}
+
+Jusqu'à maintenant, \texttt{load\_all()} nous permettait de simuler le
+chargement de notre librairie pendant son développement.
+
+Nous pouvons maintenant réellement l'installer :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{install}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Après avoir redémarré R, nous pouvons l'utiliser comme n'importe quelle
+autre librairie :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(mat8186demo)}
+
+\FunctionTok{CR}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{15}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+C'est une étape importante.
+
+Nous ne possédons plus simplement \textbf{un fichier \texttt{.R}
+contenant une fonction}.
+
+Nous avons une \textbf{librairie R installable}.
+
+\section*{Une dernière
+vérification}\label{une-derniuxe8re-vuxe9rification}
+\addcontentsline{toc}{section}{Une dernière vérification}
+
+\markright{Une dernière vérification}
+
+Nous avons maintenant ajouté plusieurs composantes à notre librairie.
+
+Faisons donc une nouvelle vérification :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{devtools}\SpecialCharTok{::}\FunctionTok{check}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Nous avons donc déjà :
+
+\begin{itemize}
+\tightlist
+\item
+  une librairie R;
+\item
+  deux fonctions;
+\item
+  de la documentation;
+\item
+  une licence;
+\item
+  des tests;
+\item
+  une dépendance;
+\item
+  un historique Git.
+\end{itemize}
+
+\section{Et GitHub?}\label{et-github}
+
+Notre dépôt Git existe actuellement \textbf{sur notre ordinateur}.
+
+Une prochaine étape consistera à créer une copie distante de ce dépôt
+sur \textbf{GitHub}.
+
+Conceptuellement :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Notre ordinateur}
+\NormalTok{     │}
+\NormalTok{     │  Git}
+\NormalTok{     ▼}
+\NormalTok{Historique local}
+\NormalTok{     │}
+\NormalTok{     │  push / pull}
+\NormalTok{     ▼}
+\NormalTok{    GitHub}
+\end{Highlighting}
+\end{Shaded}
+
+Nous verrons dans quelques instants comment mettre cela en place.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Git n'est pas GitHub}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-warning-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, leftrule=.75mm]
+
+\textbf{Git} est le système qui permet de conserver l'historique des
+versions de notre projet.
+
+\textbf{GitHub} est un service en ligne qui permet notamment d'héberger
+des dépôts Git et de collaborer avec d'autres personnes.
+
+On peut utiliser Git sans GitHub.
+
+\end{tcolorbox}
+
+\section{Le cycle de développement}\label{le-cycle-de-duxe9veloppement}
+
+Nous venons de voir énormément de choses très rapidement.
+
+Le but n'était pas de mémoriser toutes les commandes.
+
+Le message principal est de comprendre le \textbf{cycle général de
+développement} d'une librairie :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Créer la librairie}
+\NormalTok{        ↓}
+\NormalTok{Écrire une fonction}
+\NormalTok{        ↓}
+\NormalTok{    load\_all()}
+\NormalTok{        ↓}
+\NormalTok{Tester manuellement}
+\NormalTok{        ↓}
+\NormalTok{Documenter}
+\NormalTok{        ↓}
+\NormalTok{Tester automatiquement}
+\NormalTok{        ↓}
+\NormalTok{     check()}
+\NormalTok{        ↓}
+\NormalTok{     commit}
+\NormalTok{        ↓}
+\NormalTok{Modifier le code}
+\NormalTok{        ↓}
+\NormalTok{     recommencer}
+\end{Highlighting}
+\end{Shaded}
+
+Une librairie n'est donc pas simplement \textbf{la forme finale que l'on
+donne à notre code lorsqu'il est terminé}.
+
+La librairie devient elle-même \textbf{l'environnement dans lequel nous
+développons notre code}.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Pour résumer}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-tip-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm]
+
+Nous venons essentiellement de faire le cours au complet en accéléré.
+
+Maintenant, nous allons revenir en arrière et apprendre à faire chacune
+de ces étapes correctement.
+
+\end{tcolorbox}
+
+\section*{Et maintenant?}\label{et-maintenant}
+\addcontentsline{toc}{section}{Et maintenant?}
+
+\markright{Et maintenant?}
+
+Avant de poursuivre le développement de notre librairie, nous allons
+revenir sur deux concepts que nous venons déjà d'utiliser sans vraiment
+les expliquer :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  les \textbf{projets RStudio et l'organisation des fichiers};
+\item
+  \textbf{Git et GitHub}.
+\end{enumerate}
+
+Nous pourrons ensuite revenir au développement de notre librairie avec
+une meilleure compréhension de notre environnement de travail.
 
 \bookmarksetup{startatroot}
 
-\chapter{Summary}\label{summary}
+\chapter{Projet R}\label{projet-r}
 
-In summary, this book has no content whatsoever.
+Avant d'introduire GitHub et la publication en ligne de notre librairie,
+discutons rapidement d'un outil qui nous sera très utile pour organiser
+notre travail : le \textbf{projet RStudio}.
+
+\section{Le problème}\label{le-probluxe8me}
+
+On commence souvent un projet en définissant manuellement notre
+répertoire de travail :
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DecValTok{1} \SpecialCharTok{+} \DecValTok{1}
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"C:/Users/MYPC/Desktop/MAT8186"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{verbatim}
-[1] 2
-\end{verbatim}
+Ça fonctionne très bien\ldots{} sur mon ordinateur!
+
+Le problème apparaît rapidement lorsque :
+
+\begin{itemize}
+\tightlist
+\item
+  le projet est déplacé vers un autre répertoire;
+\item
+  le projet est synchronisé avec un service infonuagique;
+\item
+  le projet est partagé avec un collègue;
+\item
+  le projet est téléchargé sur un autre ordinateur.
+\end{itemize}
+
+Par exemple, le chemin
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C:/Users/MYPC/Desktop/MAT8186}
+\end{Highlighting}
+\end{Shaded}
+
+n'existe probablement pas sur votre ordinateur.
+
+On aimerait donc que notre code puisse fonctionner
+\textbf{indépendamment de l'endroit où le projet est enregistré}.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Un principe important}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-important-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm]
+
+Notre code ne devrait pas dépendre de l'emplacement exact du projet sur
+notre ordinateur.
+
+\end{tcolorbox}
+
+\section{Le projet RStudio}\label{le-projet-rstudio}
+
+Un \textbf{projet RStudio} permet de regrouper dans un même répertoire
+tout ce qui est associé à une tâche :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mon\_projet/}
+\NormalTok{├── mon\_projet.Rproj}
+\NormalTok{├── R/}
+\NormalTok{├── data/}
+\NormalTok{├── figures/}
+\NormalTok{└── notes.qmd}
+\end{Highlighting}
+\end{Shaded}
+
+Le fichier \texttt{.Rproj} identifie ce répertoire comme un projet
+RStudio.
+
+Lorsque nous ouvrons ce fichier, RStudio ouvre le projet et utilise
+automatiquement \textbf{la racine du projet comme répertoire de
+travail}.
+
+Autrement dit, si notre projet est :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C:/Users/MYPC/Desktop/MAT8186/}
+\end{Highlighting}
+\end{Shaded}
+
+alors :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{getwd}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+retournera quelque chose comme :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C:/Users/MYPC/Desktop/MAT8186}
+\end{Highlighting}
+\end{Shaded}
+
+Mais si un autre utilisateur place exactement le même projet dans :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C:/Users/YOURPC/Documents/MAT8186/}
+\end{Highlighting}
+\end{Shaded}
+
+la racine de son projet sera automatiquement :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C:/Users/YOURPC/Documents/MAT8186}
+\end{Highlighting}
+\end{Shaded}
+
+Il n'est donc plus nécessaire d'écrire un \texttt{setwd()} spécifique à
+chaque ordinateur.
+
+\section*{Les chemins relatifs}\label{les-chemins-relatifs}
+\addcontentsline{toc}{section}{Les chemins relatifs}
+
+\markright{Les chemins relatifs}
+
+C'est ici qu'apparaît l'un des principaux avantages du projet.
+
+Supposons que notre structure soit :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{MAT8186/}
+\NormalTok{├── MAT8186.Rproj}
+\NormalTok{├── data/}
+\NormalTok{│   └── donnees.csv}
+\NormalTok{├── R/}
+\NormalTok{│   └── analyse.R}
+\NormalTok{└── notes.qmd}
+\end{Highlighting}
+\end{Shaded}
+
+Plutôt que d'écrire :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{read.csv}\NormalTok{(}
+  \StringTok{"C:/Users/MYPC/Desktop/MAT8186/data/donnees.csv"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+nous pouvons simplement écrire :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/donnees.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Le chemin est maintenant \textbf{relatif à la racine du projet}.
+
+Si nous déplaçons tout le projet ailleurs, le chemin
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data/donnees.csv}
+\end{Highlighting}
+\end{Shaded}
+
+demeure valide.
+
+Il fonctionnera également sur l'ordinateur d'un collègue qui possède la
+même structure de projet.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Une bonne règle}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-tip-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm]
+
+Si votre code contient :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"C:/Users/mon\_nom/..."}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+ou un autre chemin propre à votre ordinateur, demandez-vous s'il ne
+serait pas préférable de travailler à partir d'un projet et d'utiliser
+un chemin relatif.
+
+\end{tcolorbox}
+
+\section{Partir à neuf}\label{partir-uxe0-neuf}
+
+R et RStudio peuvent conserver automatiquement une partie de notre
+environnement de travail entre deux sessions.
+
+Deux fichiers que vous avez peut-être déjà rencontrés sont :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{.RData}
+\NormalTok{.Rhistory}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{.RData} peut contenir les objets présents dans notre
+environnement R à la fin d'une session, tandis que \texttt{.Rhistory}
+peut conserver l'historique des commandes exécutées.
+
+Cela peut sembler pratique.
+
+Cependant, dans un projet reproductible, nous voulons idéalement être
+capables de reconstruire notre environnement \textbf{à partir de notre
+code}.
+
+Par exemple, si notre analyse nécessite l'objet \texttt{donnees}, nous
+préférons avoir :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{donnees }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/donnees.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+dans notre code plutôt que de dépendre d'un objet \texttt{donnees} qui
+serait mystérieusement réapparu depuis une ancienne session R.
+
+L'idée est donc de travailler \textbf{avec intention} : les objets
+nécessaires à notre analyse devraient pouvoir être recréés à partir des
+fichiers et du code contenus dans notre projet.
+
+Pour cette raison, il est généralement recommandé de ne pas restaurer
+automatiquement \texttt{.RData} au démarrage et de ne pas sauvegarder
+automatiquement l'environnement de travail à la fermeture de RStudio.
+
+Nous pouvons configurer ce comportement dans :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Tools {-}\textgreater{} Global Options {-}\textgreater{} General}
+\end{Highlighting}
+\end{Shaded}
+
+et choisir notamment :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Restore .RData into workspace at startup : NON}
+
+\NormalTok{Save workspace to .RData on exit : Never}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Reproductibilité}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm]
+
+Une bonne question à se poser est :
+
+\begin{quote}
+Si je ferme complètement RStudio, que je rouvre mon projet et que je
+réexécute mon code, est-ce que je peux reproduire mes résultats?
+\end{quote}
+
+Si la réponse est oui, nous sommes sur la bonne voie.
+
+\end{tcolorbox}
+
+\section{Créer un projet}\label{cruxe9er-un-projet}
+
+Lorsque nous commençons sérieusement une nouvelle tâche -- une analyse
+de données, la rédaction de notes Quarto ou le développement d'une
+librairie -- nous pouvons créer un projet avec :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{File {-}\textgreater{} New Project}
+\end{Highlighting}
+\end{Shaded}
+
+RStudio nous offre notamment trois possibilités :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{New Directory}
+\NormalTok{Existing Directory}
+\NormalTok{Version Control}
+\end{Highlighting}
+\end{Shaded}
+
+Nous pouvons donc :
+
+\begin{itemize}
+\tightlist
+\item
+  créer simultanément un nouveau répertoire et un nouveau projet;
+\item
+  transformer un répertoire existant en projet RStudio;
+\item
+  récupérer un projet existant à partir d'un dépôt Git.
+\end{itemize}
+
+Lors de la création du projet, RStudio crée notamment un fichier :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nom\_du\_projet.Rproj}
+\end{Highlighting}
+\end{Shaded}
+
+Par la suite, lorsque nous voulons travailler sur ce projet, nous
+ouvrons \textbf{le projet lui-même} plutôt que d'ouvrir RStudio puis de
+chercher nos fichiers.
+
+Nous obtenons ainsi un environnement de travail bien délimité :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Projet A}
+\NormalTok{├── données}
+\NormalTok{├── code}
+\NormalTok{├── résultats}
+\NormalTok{└── environnement de travail}
+
+\NormalTok{Projet B}
+\NormalTok{├── données}
+\NormalTok{├── code}
+\NormalTok{├── résultats}
+\NormalTok{└── environnement de travail}
+\end{Highlighting}
+\end{Shaded}
+
+Les différents projets demeurent ainsi bien séparés les uns des autres.
+
+\section*{Et notre librairie?}\label{et-notre-librairie}
+\addcontentsline{toc}{section}{Et notre librairie?}
+
+\markright{Et notre librairie?}
+
+Nous avons en fait déjà utilisé un projet RStudio!
+
+Lorsque nous avons créé notre librairie avec :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{create\_package}\NormalTok{(}\StringTok{"mat8186demo"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+nous avons obtenu quelque chose comme :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat8186demo/}
+\NormalTok{├── mat8186demo.Rproj}
+\NormalTok{├── DESCRIPTION}
+\NormalTok{├── NAMESPACE}
+\NormalTok{└── R/}
+\end{Highlighting}
+\end{Shaded}
+
+Notre librairie est donc également un \textbf{projet RStudio}.
+
+Et lors de notre survol du développement d'une librairie, nous avons
+ajouté :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_git}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Notre même répertoire est maintenant :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{un répertoire}
+\NormalTok{      +}
+\NormalTok{un projet RStudio}
+\NormalTok{      +}
+\NormalTok{une librairie R}
+\NormalTok{      +}
+\NormalTok{un dépôt Git}
+\end{Highlighting}
+\end{Shaded}
+
+Il nous reste maintenant à comprendre un peu mieux ce dernier élément.
+
+\section{Git et GitHub}\label{git-et-github}
+
+Nous avons déjà créé un dépôt Git sans vraiment expliquer ce que cela
+signifie.
+
+Il est maintenant temps de revenir sur \textbf{Git}, puis de comprendre
+son lien avec \textbf{GitHub}.
+
+\bookmarksetup{startatroot}
+
+\chapter{Git : garder une trace de notre
+travail}\label{git-garder-une-trace-de-notre-travail}
+
+Nous venons de créer une librairie et d'utiliser Git presque
+immédiatement avec :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{usethis}\SpecialCharTok{::}\FunctionTok{use\_git}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+Mais qu'avons-nous réellement fait?
+
+Git est un \textbf{système de contrôle des versions} (\emph{version
+control system}).
+
+Son rôle est de conserver de manière structurée l'évolution d'un
+ensemble de fichiers.
+
+Une excellente référence pour Git dans le contexte de R est le livre
+\href{https://happygitwithr.com/}{Happy Git and GitHub for the useR} de
+Jenny Bryan et collaborateurs. Nous avons conçu ce chapitre en
+s'inspirant de cette source.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Une approche volontairement minimale}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm]
+
+Git est un outil extrêmement puissant et possède énormément de
+fonctionnalités.
+
+Dans ce cours, notre objectif n'est pas de devenir experts de Git.
+
+Nous voulons apprendre \textbf{le plus petit nombre d'opérations
+nécessaires pour intégrer Git naturellement à notre travail de
+mise-au-point de librairie}.
+
+\end{tcolorbox}
+
+\section*{Pourquoi utiliser un système de contrôle des
+versions?}\label{pourquoi-utiliser-un-systuxe8me-de-contruxf4le-des-versions}
+\addcontentsline{toc}{section}{Pourquoi utiliser un système de contrôle
+des versions?}
+
+\markright{Pourquoi utiliser un système de contrôle des versions?}
+
+Vous avez probablement déjà utilisé un système de contrôle des versions
+artisanal :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{analyse.R}
+\NormalTok{analyse\_final.R}
+\NormalTok{analyse\_final2.R}
+\NormalTok{analyse\_final\_VRAIMENT\_FINAL.R}
+\NormalTok{analyse\_final\_VRAIMENT\_FINAL\_corrige.R}
+\end{Highlighting}
+\end{Shaded}
+
+Après quelques semaines, il devient difficile de répondre à des
+questions simples :
+
+\begin{itemize}
+\tightlist
+\item
+  Quelle est la version actuelle?
+\item
+  Qu'est-ce qui a changé entre deux versions?
+\item
+  Pourquoi avons-nous effectué cette modification?
+\item
+  Qui a effectué la modification?
+\item
+  Est-il possible de revenir à une version antérieure?
+\item
+  Est-ce que cette ancienne version fonctionnait mieux?
+\end{itemize}
+
+Git propose une solution structurée à ce problème.
+
+Plutôt que de créer continuellement de nouvelles copies du même fichier,
+nous en conservons qu'un seul et nous conservons, par Git, son
+évolution.
+
+\section{Un répertoire Git}\label{un-ruxe9pertoire-git}
+
+L'unité fondamentale de Git est le \textbf{répertoire}
+(\emph{repository} ou simplement \emph{repo}).
+
+Un répertoire Git est essentiellement un fichier dont Git suit
+l'évolution.
+
+Par exemple :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat8186demo/}
+\NormalTok{├── DESCRIPTION}
+\NormalTok{├── NAMESPACE}
+\NormalTok{├── R/}
+\NormalTok{│   └── rescale01.R}
+\NormalTok{├── tests/}
+\NormalTok{├── man/}
+\NormalTok{└── .git/}
+\end{Highlighting}
+\end{Shaded}
+
+Le répertoire caché :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{.git/}
+\end{Highlighting}
+\end{Shaded}
+
+contient l'information dont Git a besoin pour conserver l'historique du
+projet.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Un dépôt reste un répertoire}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-tip-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm]
+
+Transformer un répertoire en dépôt Git ne change pas fondamentalement
+vos fichiers.
+
+Vous pouvez toujours ouvrir, modifier, déplacer et utiliser vos fichiers
+normalement.
+
+Git ajoute simplement une couche permettant d'en conserver l'historique.
+
+\end{tcolorbox}
+
+Dans notre cas :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mat8186demo/}
+\end{Highlighting}
+\end{Shaded}
+
+est donc simultanément :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{un répertoire}
+\NormalTok{      +}
+\NormalTok{un projet RStudio}
+\NormalTok{      +}
+\NormalTok{une librairie R}
+\NormalTok{      +}
+\NormalTok{un dépôt Git}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Le commit}\label{le-commit}
+
+Git ne conserve pas automatiquement chaque caractère que vous tapez.
+
+Vous décidez plutôt quand une étape de votre travail mérite d'être
+enregistrée.
+
+Cet enregistrement s'appelle un \textbf{commit}.
+
+On peut voir un commit comme une photographie de l'état du projet à un
+moment jugé important.
+
+Par exemple :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{A    Initial package structure}
+
+\NormalTok{B    Add CR function}
+
+\NormalTok{C    Add documentation}
+
+\NormalTok{D    Add tests for CR}
+\end{Highlighting}
+\end{Shaded}
+
+Chaque commit représente donc une étape identifiable du développement de
+notre librairie.
+
+\section*{Pourquoi ne pas simplement
+sauvegarder?}\label{pourquoi-ne-pas-simplement-sauvegarder}
+\addcontentsline{toc}{section}{Pourquoi ne pas simplement sauvegarder?}
+
+\markright{Pourquoi ne pas simplement sauvegarder?}
+
+Sauvegarder un fichier et créer un commit sont deux choses différentes.
+
+Lorsque nous sauvegardons un document (\texttt{Ctrl\ +\ S}), nous
+remplaçons sa version précédente.
+
+Un commit sauvegarde la version actuelle du fichier tout en conservant
+la liste de toutes les modifications faites sur ce fichier. Si nos
+fichiers sont constamment sauvegarder par un \textbf{commit}, nous
+pouvons donc observer la liste complète des modifications faites sur ce
+document.
+
+\section*{Un commit concerne le
+projet}\label{un-commit-concerne-le-projet}
+\addcontentsline{toc}{section}{Un commit concerne le projet}
+
+\markright{Un commit concerne le projet}
+
+Un aspect important de Git est qu'un commit peut contenir des
+modifications apportées à \textbf{plusieurs fichiers simultanément}.
+
+Supposons que nous modifions :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R/CR.R}
+\NormalTok{tests/testthat/CR.R}
+\NormalTok{DESCRIPTION}
+\end{Highlighting}
+\end{Shaded}
+
+Ces trois changements peuvent faire partie du même commit si, ensemble,
+ils représentent une modification logique du projet.
+
+Par exemple :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Improve CR and update DESCRIPTION}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Les trois états qui nous
+intéressent}\label{les-trois-uxe9tats-qui-nous-intuxe9ressent}
+
+Pour commencer, nous pouvons utiliser un modèle mental très simple.
+
+Un fichier peut être :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{modifié}
+\NormalTok{   ↓}
+\NormalTok{staged}
+\NormalTok{   ↓}
+\NormalTok{committed}
+\end{Highlighting}
+\end{Shaded}
+
+\section*{Étape 1: Modifié}\label{uxe9tape-1-modifiuxe9}
+\addcontentsline{toc}{section}{Étape 1: Modifié}
+
+\markright{Étape 1: Modifié}
+
+Nous changeons un fichier normalement dans RStudio.
+
+Git remarque :
+
+\begin{quote}
+Ce fichier est différent de la dernière version enregistrée.
+\end{quote}
+
+Mais rien n'a encore été ajouté à l'historique.
+
+\section*{Étape 2: Staged}\label{uxe9tape-2-staged}
+\addcontentsline{toc}{section}{Étape 2: Staged}
+
+\markright{Étape 2: Staged}
+
+Avant de faire un commit, nous choisissons les changements que nous
+voulons inclure.
+
+Cette étape s'appelle \textbf{staging}.
+
+Dans l'onglet Git de RStudio, cela correspond essentiellement à cocher
+la case \textbf{Staged} devant un fichier.
+
+Nous disons alors à Git :
+
+\begin{quote}
+Je veux que cette modification fasse partie de mon prochain commit.
+\end{quote}
+
+\section*{Étape 3: Committed}\label{uxe9tape-3-committed}
+\addcontentsline{toc}{section}{Étape 3: Committed}
+
+\markright{Étape 3: Committed}
+
+Lorsque nous créons le commit, les changements sélectionnés sont ajoutés
+à l'historique du projet.
+
+Nous devons également donner un message au commit.
+
+Par exemple :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Add rescale01 function}
+\end{Highlighting}
+\end{Shaded}
+
+Notre cycle devient donc :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Modifier}
+\NormalTok{   ↓}
+\NormalTok{Sauvegarder}
+\NormalTok{   ↓}
+\NormalTok{Examiner les changements}
+\NormalTok{   ↓}
+\NormalTok{Stage}
+\NormalTok{   ↓}
+\NormalTok{Commit}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Le message de commit}\label{le-message-de-commit}
+
+Chaque commit doit avoir un court message.
+
+Un bon message explique principalement \textbf{l'objectif de la
+modification}.
+
+C'est plus difficile que ça en a l'aire\ldots.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Une bonne habitude}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-tip-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm]
+
+Faire plus de plus petit commit\ldots{} (\textbf{petits, fréquents et
+cohérents}).
+
+Un commit devrait idéalement représenter une étape logique que vous
+pouvez décrire simplement.
+
+\end{tcolorbox}
+
+\section{Git dans RStudio}\label{git-dans-rstudio}
+
+Nous pouvons utiliser Git directement dans le terminal :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ status}
+\FunctionTok{git}\NormalTok{ add}
+\FunctionTok{git}\NormalTok{ commit}
+\end{Highlighting}
+\end{Shaded}
+
+mais RStudio offre une interface graphique pour les opérations que nous
+utiliserons le plus souvent.
+
+Lorsqu'un projet RStudio est également un dépôt Git, un onglet
+\textbf{Git} apparaît dans RStudio.
+
+Cet onglet nous permet notamment de :
+
+\begin{itemize}
+\tightlist
+\item
+  voir les fichiers modifiés;
+\item
+  examiner les différences;
+\item
+  sélectionner les fichiers à inclure dans un commit;
+\item
+  créer un commit;
+\item
+  consulter l'historique;
+\item
+  éventuellement envoyer et recevoir des modifications avec GitHub.
+\end{itemize}
+
+\section*{\texorpdfstring{\texttt{git\ status}}{git status}}\label{git-status}
+\addcontentsline{toc}{section}{\texttt{git\ status}}
+
+\markright{\texttt{git\ status}}
+
+Même si nous utiliserons principalement l'interface RStudio, une
+commande mérite d'être connue dès maintenant :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ status}
+\end{Highlighting}
+\end{Shaded}
+
+Elle répond essentiellement à la question :
+
+\begin{quote}
+Dans quel état se trouve actuellement mon dépôt?
+\end{quote}
+
+On pourrait obtenir :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{On branch main}
+
+\NormalTok{Changes not staged for commit:}
+\NormalTok{    modified: R/rescale01.R}
+\end{Highlighting}
+\end{Shaded}
+
+Git nous indique donc qu'un fichier a été modifié depuis le dernier
+commit.
+
+Après avoir commité toutes nos modifications :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{On branch main}
+
+\NormalTok{nothing to commit, working tree clean}
+\end{Highlighting}
+\end{Shaded}
+
+L'expression :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{working tree clean}
+\end{Highlighting}
+\end{Shaded}
+
+signifie simplement que notre répertoire de travail ne contient
+actuellement aucune modification non enregistrée par Git.
+
+\section{Git n'est pas GitHub}\label{git-nest-pas-github-1}
+
+Il est essentiel de distinguer \textbf{Git} et \textbf{GitHub}.
+
+Git fonctionne entièrement sur votre ordinateur. Nous pourrions utiliser
+Git pendant des années sans jamais créer de compte GitHub.
+
+GitHub est essentiellement un service en ligne (\emph{cloud}) qui permet
+d'héberger des dépôts Git.
+
+Lorsque nous ajoutons GitHub :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{       ordinateur}
+\NormalTok{           │}
+\NormalTok{           │}
+\NormalTok{           ▼}
+\NormalTok{      dépôt Git local}
+\NormalTok{           │}
+\NormalTok{      push │ │ pull}
+\NormalTok{           │}
+\NormalTok{           ▼}
+\NormalTok{        GitHub}
+\end{Highlighting}
+\end{Shaded}
+
+Git conserve donc l'historique (localement).
+
+GitHub nous permet notamment de :
+
+\begin{itemize}
+\tightlist
+\item
+  conserver une copie distante du dépôt;
+\item
+  partager notre code;
+\item
+  collaborer;
+\item
+  consulter l'historique dans une interface web;
+\item
+  distribuer notre librairie;
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Deux concepts différents}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-important-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm]
+
+\textbf{Git = contrôle des versions}
+
+\textbf{GitHub = hébergement et collaboration autour de dépôts Git}
+
+\end{tcolorbox}
+
+\bookmarksetup{startatroot}
+
+\chapter{Le dépôt local et le dépôt
+distant}\label{le-duxe9puxf4t-local-et-le-duxe9puxf4t-distant}
+
+Lorsque notre projet existe également sur GitHub, nous avons
+essentiellement \textbf{deux copies du dépôt} :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LOCAL                         DISTANT}
+
+\NormalTok{Votre ordinateur              GitHub}
+\NormalTok{MAT8186/                       github.com/...}
+\NormalTok{    │                              │}
+\NormalTok{    └── dépôt Git                  └── dépôt Git}
+\end{Highlighting}
+\end{Shaded}
+
+Ces deux dépôts peuvent évoluer indépendamment.
+
+Il faut donc parfois transmettre les modifications d'un endroit à
+l'autre.
+
+Deux opérations seront particulièrement importantes :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{push}
+\NormalTok{pull}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Push}\label{push}
+
+Un \textbf{push} envoie nos nouveaux commits locaux vers GitHub.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ordinateur}
+\NormalTok{    │}
+\NormalTok{    │ push}
+\NormalTok{    ▼}
+\NormalTok{ GitHub}
+\end{Highlighting}
+\end{Shaded}
+
+Un \texttt{push} ne signifie donc pas simplement de sauvegarder un
+fichier sur Internet mais bien de transmettre l'historique complet des
+modifications de ce fichier sur la version en ligne de ce répertoire
+Git.
+
+\section{Pull}\label{pull}
+
+Un \textbf{pull} récupère les nouveaux commits présents sur GitHub.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ordinateur}
+\NormalTok{    ▲}
+\NormalTok{    │ pull}
+\NormalTok{    │}
+\NormalTok{ GitHub}
+\end{Highlighting}
+\end{Shaded}
+
+Cela devient particulièrement important lorsque :
+
+\begin{itemize}
+\tightlist
+\item
+  nous travaillons sur plusieurs ordinateurs;
+\item
+  plusieurs personnes collaborent sur le même projet;
+\item
+  des modifications ont été effectuées directement sur GitHub.
+\end{itemize}
+
+\section{Notre cycle de travail
+quotidien}\label{notre-cycle-de-travail-quotidien}
+
+Pour un projet simple, notre cycle Git/GitHub ressemblera souvent à :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PULL}
+\NormalTok{  ↓}
+\NormalTok{Modifier des fichiers}
+\NormalTok{  ↓}
+\NormalTok{Sauvegarder}
+\NormalTok{  ↓}
+\NormalTok{Examiner les modifications}
+\NormalTok{  ↓}
+\NormalTok{STAGE}
+\NormalTok{  ↓}
+\NormalTok{COMMIT}
+\NormalTok{  ↓}
+\NormalTok{PUSH}
+\end{Highlighting}
+\end{Shaded}
+
+Puis nous recommençons.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Une règle simple pour commencer}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-tip-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm]
+
+Lorsque vous travaillez avec un dépôt distant :
+
+\textbf{Pull avant de commencer, commit lorsque vous avez accompli une
+petite étape cohérente, push régulièrement.}
+
+\end{tcolorbox}
+
+\bookmarksetup{startatroot}
+
+\chapter{Petit exercice}\label{petit-exercice}
+
+Prenons notre librairie \texttt{mat8186demo}.
+
+\subsection{Étape 1}\label{uxe9tape-1}
+
+Ouvrez :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R/CR.R}
+\end{Highlighting}
+\end{Shaded}
+
+et ajoutez un commentaire :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Ma premiere fonction pour centrer{-}réduire!}
+
+\NormalTok{CR }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  (x }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(x)) }\SpecialCharTok{/} \FunctionTok{sd}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Sauvegardez le fichier.
+
+\subsection{Étape 2}\label{uxe9tape-2}
+
+Regardez l'onglet \textbf{Git} de RStudio.
+
+Le fichier devrait apparaître comme modifié.
+
+\subsection{Étape 3}\label{uxe9tape-3}
+
+Examinez le \textbf{Diff}.
+
+Pouvez-vous identifier exactement la ligne ajoutée?
+
+\subsection{Étape 4}\label{uxe9tape-4}
+
+Cochez \textbf{Staged}.
+
+\subsection{Étape 5}\label{uxe9tape-5}
+
+Créez un commit avec le message :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Add comment to CR}
+\end{Highlighting}
+\end{Shaded}
+
+Nous venons de créer une nouvelle version identifiable de notre projet.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{La suite}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm]
+
+Nous savons maintenant ce que Git cherche à accomplir.
+
+La prochaine étape consiste à connecter concrètement :
+
+\textbf{RStudio → Git → GitHub}
+
+et à effectuer nous-mêmes le cycle :
+
+\textbf{modifier → commit → push → pull}.
+
+\end{tcolorbox}
+
+\section{Préparer son
+environnement}\label{pruxe9parer-son-environnement}
+
+Avant d'aller plus loin, assurons-nous que tout le monde possède les
+outils nécessaires.
+
+Nous aurons besoin de :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Git} installé sur notre ordinateur;
+\item
+  un \textbf{compte GitHub};
+\item
+  une configuration minimale permettant à Git d'identifier l'auteur des
+  modifications.
+\end{enumerate}
+
+\section*{Installer Git sous Windows}\label{installer-git-sous-windows}
+\addcontentsline{toc}{section}{Installer Git sous Windows}
+
+\markright{Installer Git sous Windows}
+
+Sous Windows, nous utiliserons \textbf{Git for Windows}.
+
+\subsection{Étape 1 --- Télécharger
+Git}\label{uxe9tape-1-tuxe9luxe9charger-git}
+
+Rendez-vous sur le site officiel de \textbf{Git} et téléchargez la
+version de \textbf{Git for Windows} correspondant à votre ordinateur.
+
+Pour la majorité des ordinateurs récents, il s'agira de la version
+\textbf{64 bits (x64)}.
+
+\subsection{Étape 2 --- Installer Git}\label{uxe9tape-2-installer-git}
+
+Lancez l'installateur.
+
+Pour ce cours, les \textbf{options proposées par défaut conviennent
+généralement}. Il n'est donc pas nécessaire de modifier toutes les
+options de l'installateur.
+
+L'installation ajoute notamment :
+
+\begin{itemize}
+\tightlist
+\item
+  Git;
+\item
+  les commandes Git accessibles dans le terminal;
+\item
+  \textbf{Git Bash}, un terminal permettant d'utiliser Git sous Windows.
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Pas besoin de devenir expert de Git Bash}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-tip-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm]
+
+Nous utiliserons principalement Git à travers \textbf{RStudio}.
+
+Le terminal nous servira surtout à vérifier certaines configurations ou
+à comprendre ce que RStudio fait derrière son interface.
+
+\end{tcolorbox}
+
+\subsection{Étape 3 --- Vérifier
+l'installation}\label{uxe9tape-3-vuxe9rifier-linstallation}
+
+Une fois Git installé, \textbf{redémarrez RStudio}.
+
+Ouvrez ensuite :
+
+\textbf{Tools → Global Options → Git/SVN}
+
+RStudio devrait afficher un chemin dans le champ :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Git executable}
+\end{Highlighting}
+\end{Shaded}
+
+On peut également ouvrir le terminal de RStudio et exécuter :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git} \AttributeTok{{-}{-}version}
+\end{Highlighting}
+\end{Shaded}
+
+Vous devriez obtenir quelque chose comme :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{git version 2.x.x}
+\end{Highlighting}
+\end{Shaded}
+
+La version exacte n'est pas importante.
+
+Si une version est affichée, Git est correctement installé.
+
+\bookmarksetup{startatroot}
+
+\chapter{Créer un compte GitHub}\label{cruxe9er-un-compte-github}
+
+Git fonctionne localement et ne nécessite aucun compte.
+
+Par contre, pour partager nos dépôts et collaborer, nous utiliserons
+\textbf{GitHub}.
+
+\section*{Créer le compte}\label{cruxe9er-le-compte}
+\addcontentsline{toc}{section}{Créer le compte}
+
+\markright{Créer le compte}
+
+Rendez-vous sur \textbf{GitHub} et créez un compte personnel gratuit.
+
+Vous devrez notamment choisir :
+
+\begin{itemize}
+\tightlist
+\item
+  une adresse courriel;
+\item
+  un mot de passe;
+\item
+  un \textbf{nom d'utilisateur GitHub}.
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Choisissez bien votre nom d'utilisateur}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-important-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, leftrule=.75mm]
+
+Votre nom d'utilisateur GitHub sera visible dans l'adresse de vos
+projets et potentiellement dans vos contributions publiques.
+
+Il est donc préférable de choisir un nom relativement professionnel et
+que vous serez confortable d'utiliser à long terme.
+
+\end{tcolorbox}
+
+\bookmarksetup{startatroot}
+
+\chapter{Présenter Git à GitHub\ldots{} et à
+vous-même}\label{pruxe9senter-git-uxe0-github-et-uxe0-vous-muxeame}
+
+Git doit savoir \textbf{qui effectue les commits}.
+
+Cette information est enregistrée dans la configuration de Git.
+
+Dans le terminal de RStudio, exécutez :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ config }\AttributeTok{{-}{-}global}\NormalTok{ user.name }\StringTok{"Votre Nom"}
+\end{Highlighting}
+\end{Shaded}
+
+Par exemple :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ config }\AttributeTok{{-}{-}global}\NormalTok{ user.name }\StringTok{"Jean Tremblay"}
+\end{Highlighting}
+\end{Shaded}
+
+Puis indiquez votre adresse courriel :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ config }\AttributeTok{{-}{-}global}\NormalTok{ user.email }\StringTok{"votre.adresse@courriel.ca"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Quelle adresse utiliser?}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-note-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, leftrule=.75mm]
+
+Idéalement, utilisez une adresse courriel associée à votre compte
+GitHub.
+
+Cela permettra à GitHub d'associer correctement vos commits à votre
+profil.
+
+\end{tcolorbox}
+
+Nous pouvons vérifier notre configuration :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ config }\AttributeTok{{-}{-}global}\NormalTok{ user.name}
+\FunctionTok{git}\NormalTok{ config }\AttributeTok{{-}{-}global}\NormalTok{ user.email}
+\end{Highlighting}
+\end{Shaded}
+
+Git devrait alors retourner les informations que nous venons d'entrer.
+
+\bookmarksetup{startatroot}
+
+\chapter{Vérification finale}\label{vuxe9rification-finale}
+
+Avant de poursuivre, assurez-vous que les trois éléments suivants
+fonctionnent.
+
+Dans le terminal :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git} \AttributeTok{{-}{-}version}
+\end{Highlighting}
+\end{Shaded}
+
+doit retourner une version de Git.
+
+Puis :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ config }\AttributeTok{{-}{-}global}\NormalTok{ user.name}
+\end{Highlighting}
+\end{Shaded}
+
+et :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{git}\NormalTok{ config }\AttributeTok{{-}{-}global}\NormalTok{ user.email}
+\end{Highlighting}
+\end{Shaded}
+
+doivent retourner vos informations.
+
+Finalement, vous devez être capable de vous connecter à votre compte
+\textbf{GitHub} dans votre navigateur.
+
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Nous sommes prêts}, colback=white, left=2mm, rightrule=.15mm, toptitle=1mm, opacityback=0, bottomtitle=1mm, breakable, colframe=quarto-callout-tip-color-frame, coltitle=black, toprule=.15mm, titlerule=0mm, opacitybacktitle=0.6, bottomrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, leftrule=.75mm]
+
+À ce stade :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Git est installé}
+\NormalTok{       +}
+\NormalTok{Git connaît notre identité}
+\NormalTok{       +}
+\NormalTok{notre compte GitHub existe}
+\end{Highlighting}
+\end{Shaded}
+
+Nous pouvons maintenant connecter un \textbf{dépôt Git local} à un
+\textbf{dépôt GitHub distant} et effectuer notre premier \texttt{push}.
+
+\end{tcolorbox}
+
+\section{Première partie du projet
+(évaluation)}\label{premiuxe8re-partie-du-projet-uxe9valuation}
+
+Une partie de la première évaluation consiste à crée votre compte GitHub
+et y héberger votre librairie R!
 
 \bookmarksetup{startatroot}
 
@@ -290,11 +2621,7 @@ In summary, this book has no content whatsoever.
 \markboth{References}{References}
 
 \phantomsection\label{refs}
-\begin{CSLReferences}{1}{0}
-\bibitem[\citeproctext]{ref-knuth84}
-Knuth, Donald E. 1984. {``Literate Programming.''} \emph{Comput. J.} 27
-(2): 97--111. \url{https://doi.org/10.1093/comjnl/27.2.97}.
-
+\begin{CSLReferences}{0}{1}
 \end{CSLReferences}
 
 

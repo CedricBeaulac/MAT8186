@@ -1,0 +1,677 @@
+# Git : garder une trace de notre travail
+
+Nous venons de créer une librairie et d'utiliser Git presque immédiatement avec :
+
+```{r}
+#| eval: false
+
+usethis::use_git()
+```
+
+Mais qu'avons-nous réellement fait?
+
+Git est un **système de contrôle des versions** (*version control system*).
+
+Son rôle est de conserver de manière structurée l'évolution d'un ensemble de fichiers.
+
+Une excellente référence pour Git dans le contexte de R est le livre [Happy Git and GitHub for the useR](https://happygitwithr.com/) de Jenny Bryan et collaborateurs. Nous avons conçu ce chapitre en s'inspirant de cette source. 
+
+::: {.callout-note}
+## Une approche volontairement minimale
+
+Git est un outil extrêmement puissant et possède énormément de fonctionnalités.
+
+Dans ce cours, notre objectif n'est pas de devenir experts de Git.
+
+Nous voulons apprendre **le plus petit nombre d'opérations nécessaires pour intégrer Git naturellement à notre travail de mise-au-point de librairie**.
+:::
+
+## Pourquoi utiliser un système de contrôle des versions? {.unnumbered}
+
+Vous avez probablement déjà utilisé un système de contrôle des versions artisanal :
+
+```text
+analyse.R
+analyse_final.R
+analyse_final2.R
+analyse_final_VRAIMENT_FINAL.R
+analyse_final_VRAIMENT_FINAL_corrige.R
+```
+
+Après quelques semaines, il devient difficile de répondre à des questions simples :
+
+* Quelle est la version actuelle?
+* Qu'est-ce qui a changé entre deux versions?
+* Pourquoi avons-nous effectué cette modification?
+* Qui a effectué la modification?
+* Est-il possible de revenir à une version antérieure?
+* Est-ce que cette ancienne version fonctionnait mieux?
+
+Git propose une solution structurée à ce problème.
+
+Plutôt que de créer continuellement de nouvelles copies du même fichier, nous en conservons qu'un seul et nous conservons, par Git, son évolution.
+
+## Un répertoire Git
+
+L'unité fondamentale de Git est le **répertoire** (*repository* ou simplement *repo*).
+
+Un répertoire Git est essentiellement un fichier dont Git suit l'évolution.
+
+Par exemple :
+
+```text
+mat8186demo/
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+│   └── rescale01.R
+├── tests/
+├── man/
+└── .git/
+```
+
+Le répertoire caché :
+
+```text
+.git/
+```
+
+contient l'information dont Git a besoin pour conserver l'historique du projet.
+
+::: {.callout-tip}
+## Un dépôt reste un répertoire
+
+Transformer un répertoire en dépôt Git ne change pas fondamentalement vos fichiers.
+
+Vous pouvez toujours ouvrir, modifier, déplacer et utiliser vos fichiers normalement.
+
+Git ajoute simplement une couche permettant d'en conserver l'historique.
+:::
+
+Dans notre cas :
+
+```text
+mat8186demo/
+```
+
+est donc simultanément :
+
+```text
+un répertoire
+      +
+un projet RStudio
+      +
+une librairie R
+      +
+un dépôt Git
+```
+
+## Le commit
+
+Git ne conserve pas automatiquement chaque caractère que vous tapez.
+
+Vous décidez plutôt quand une étape de votre travail mérite d'être enregistrée.
+
+Cet enregistrement s'appelle un **commit**.
+
+On peut voir un commit comme une photographie de l'état du projet à un moment jugé important.
+
+Par exemple :
+
+```text
+A    Initial package structure
+
+B    Add CR function
+
+C    Add documentation
+
+D    Add tests for CR
+```
+
+Chaque commit représente donc une étape identifiable du développement de notre librairie.
+
+## Pourquoi ne pas simplement sauvegarder? {.unnumbered}
+
+Sauvegarder un fichier et créer un commit sont deux choses différentes.
+
+Lorsque nous sauvegardons un document (`Ctrl + S`), nous remplaçons sa version précédente.
+
+Un commit sauvegarde la version actuelle du fichier tout en conservant la liste de toutes les modifications faites sur ce fichier. Si nos fichiers sont constamment sauvegarder par un **commit**, nous pouvons donc observer la liste complète des modifications faites sur ce document.
+
+## Un commit concerne le projet {.unnumbered}
+
+Un aspect important de Git est qu'un commit peut contenir des modifications apportées à **plusieurs fichiers simultanément**.
+
+Supposons que nous modifions :
+
+```text
+R/CR.R
+tests/testthat/CR.R
+DESCRIPTION
+```
+
+Ces trois changements peuvent faire partie du même commit si, ensemble, ils représentent une modification logique du projet.
+
+Par exemple :
+
+```text
+Improve CR and update DESCRIPTION
+```
+
+## Les trois états qui nous intéressent
+
+Pour commencer, nous pouvons utiliser un modèle mental très simple.
+
+Un fichier peut être :
+
+```text
+modifié
+   ↓
+staged
+   ↓
+committed
+```
+
+## Étape 1: Modifié {.unnumbered}
+
+Nous changeons un fichier normalement dans RStudio.
+
+Git remarque :
+
+> Ce fichier est différent de la dernière version enregistrée.
+
+Mais rien n'a encore été ajouté à l'historique.
+
+## Étape 2: Staged {.unnumbered}
+
+Avant de faire un commit, nous choisissons les changements que nous voulons inclure.
+
+Cette étape s'appelle **staging**.
+
+Dans l'onglet Git de RStudio, cela correspond essentiellement à cocher la case **Staged** devant un fichier.
+
+Nous disons alors à Git :
+
+> Je veux que cette modification fasse partie de mon prochain commit.
+
+## Étape 3: Committed {.unnumbered}
+
+Lorsque nous créons le commit, les changements sélectionnés sont ajoutés à l'historique du projet.
+
+Nous devons également donner un message au commit.
+
+Par exemple :
+
+```text
+Add rescale01 function
+```
+
+Notre cycle devient donc :
+
+```text
+Modifier
+   ↓
+Sauvegarder
+   ↓
+Examiner les changements
+   ↓
+Stage
+   ↓
+Commit
+```
+
+## Le message de commit
+
+Chaque commit doit avoir un court message.
+
+Un bon message explique principalement **l'objectif de la modification**.
+
+C'est plus difficile que ça en a l'aire....
+
+::: {.callout-tip}
+## Une bonne habitude
+
+Faire plus de plus petit commit... (**petits, fréquents et cohérents**).
+
+Un commit devrait idéalement représenter une étape logique que vous pouvez décrire simplement.
+:::
+
+## Git dans RStudio
+
+Nous pouvons utiliser Git directement dans le terminal :
+
+```bash
+git status
+git add
+git commit
+```
+
+mais RStudio offre une interface graphique pour les opérations que nous utiliserons le plus souvent.
+
+Lorsqu'un projet RStudio est également un dépôt Git, un onglet **Git** apparaît dans RStudio.
+
+Cet onglet nous permet notamment de :
+
+* voir les fichiers modifiés;
+* examiner les différences;
+* sélectionner les fichiers à inclure dans un commit;
+* créer un commit;
+* consulter l'historique;
+* éventuellement envoyer et recevoir des modifications avec GitHub.
+
+## `git status` {.unnumbered}
+
+Même si nous utiliserons principalement l'interface RStudio, une commande mérite d'être connue dès maintenant :
+
+```bash
+git status
+```
+
+Elle répond essentiellement à la question :
+
+> Dans quel état se trouve actuellement mon dépôt?
+
+On pourrait obtenir :
+
+```text
+On branch main
+
+Changes not staged for commit:
+    modified: R/rescale01.R
+```
+
+Git nous indique donc qu'un fichier a été modifié depuis le dernier commit.
+
+Après avoir commité toutes nos modifications :
+
+```text
+On branch main
+
+nothing to commit, working tree clean
+```
+
+L'expression :
+
+```text
+working tree clean
+```
+
+signifie simplement que notre répertoire de travail ne contient actuellement aucune modification non enregistrée par Git.
+
+## Git n'est pas GitHub
+
+Il est essentiel de distinguer **Git** et **GitHub**.
+
+Git fonctionne entièrement sur votre ordinateur. Nous pourrions utiliser Git pendant des années sans jamais créer de compte GitHub.
+
+GitHub est essentiellement un service en ligne (*cloud*) qui permet d'héberger des dépôts Git.
+
+Lorsque nous ajoutons GitHub :
+
+```text
+       ordinateur
+           │
+           │
+           ▼
+      dépôt Git local
+           │
+      push │ │ pull
+           │
+           ▼
+        GitHub
+```
+
+Git conserve donc l'historique (localement).
+
+GitHub nous permet notamment de :
+
+* conserver une copie distante du dépôt;
+* partager notre code;
+* collaborer;
+* consulter l'historique dans une interface web;
+* distribuer notre librairie;
+
+
+::: {.callout-important}
+## Deux concepts différents
+
+**Git = contrôle des versions**
+
+**GitHub = hébergement et collaboration autour de dépôts Git**
+:::
+
+# Le dépôt local et le dépôt distant
+
+Lorsque notre projet existe également sur GitHub, nous avons essentiellement **deux copies du dépôt** :
+
+```text
+LOCAL                         DISTANT
+
+Votre ordinateur              GitHub
+MAT8186/                       github.com/...
+    │                              │
+    └── dépôt Git                  └── dépôt Git
+```
+
+Ces deux dépôts peuvent évoluer indépendamment.
+
+Il faut donc parfois transmettre les modifications d'un endroit à l'autre.
+
+Deux opérations seront particulièrement importantes :
+
+```text
+push
+pull
+```
+
+## Push
+
+Un **push** envoie nos nouveaux commits locaux vers GitHub.
+
+```text
+ordinateur
+    │
+    │ push
+    ▼
+ GitHub
+```
+
+Un `push` ne signifie donc pas simplement de sauvegarder un fichier sur Internet mais bien de transmettre l'historique complet des modifications de ce fichier sur la version en ligne de ce répertoire Git. 
+
+
+## Pull
+
+Un **pull** récupère les nouveaux commits présents sur GitHub.
+
+```text
+ordinateur
+    ▲
+    │ pull
+    │
+ GitHub
+```
+
+Cela devient particulièrement important lorsque :
+
+* nous travaillons sur plusieurs ordinateurs;
+* plusieurs personnes collaborent sur le même projet;
+* des modifications ont été effectuées directement sur GitHub.
+
+## Notre cycle de travail quotidien
+
+Pour un projet simple, notre cycle Git/GitHub ressemblera souvent à :
+
+```text
+PULL
+  ↓
+Modifier des fichiers
+  ↓
+Sauvegarder
+  ↓
+Examiner les modifications
+  ↓
+STAGE
+  ↓
+COMMIT
+  ↓
+PUSH
+```
+
+Puis nous recommençons.
+
+::: {.callout-tip}
+## Une règle simple pour commencer
+
+Lorsque vous travaillez avec un dépôt distant :
+
+**Pull avant de commencer, commit lorsque vous avez accompli une petite étape cohérente, push régulièrement.**
+:::
+
+# Petit exercice
+
+Prenons notre librairie `mat8186demo`.
+
+### Étape 1
+
+Ouvrez :
+
+```text
+R/CR.R
+```
+
+et ajoutez un commentaire :
+
+```{r}
+#| eval: false
+
+# Ma premiere fonction pour centrer-réduire!
+
+CR <- function(x) {
+  (x - mean(x)) / sd(x)
+}
+```
+
+Sauvegardez le fichier.
+
+### Étape 2
+
+Regardez l'onglet **Git** de RStudio.
+
+Le fichier devrait apparaître comme modifié.
+
+### Étape 3
+
+Examinez le **Diff**.
+
+Pouvez-vous identifier exactement la ligne ajoutée?
+
+### Étape 4
+
+Cochez **Staged**.
+
+### Étape 5
+
+Créez un commit avec le message :
+
+```text
+Add comment to CR
+```
+
+Nous venons de créer une nouvelle version identifiable de notre projet.
+
+::: {.callout-note}
+## La suite
+
+Nous savons maintenant ce que Git cherche à accomplir.
+
+La prochaine étape consiste à connecter concrètement :
+
+**RStudio → Git → GitHub**
+
+et à effectuer nous-mêmes le cycle :
+
+**modifier → commit → push → pull**.
+:::
+
+## Préparer son environnement
+
+Avant d'aller plus loin, assurons-nous que tout le monde possède les outils nécessaires.
+
+Nous aurons besoin de :
+
+1. **Git** installé sur notre ordinateur;
+2. un **compte GitHub**;
+3. une configuration minimale permettant à Git d'identifier l'auteur des modifications.
+
+## Installer Git sous Windows {.unnumbered}
+
+Sous Windows, nous utiliserons **Git for Windows**.
+
+### Étape 1 — Télécharger Git
+
+Rendez-vous sur le site officiel de **Git** et téléchargez la version de **Git for Windows** correspondant à votre ordinateur.
+
+Pour la majorité des ordinateurs récents, il s'agira de la version **64 bits (x64)**.
+
+### Étape 2 — Installer Git
+
+Lancez l'installateur.
+
+Pour ce cours, les **options proposées par défaut conviennent généralement**. Il n'est donc pas nécessaire de modifier toutes les options de l'installateur.
+
+L'installation ajoute notamment :
+
+* Git;
+* les commandes Git accessibles dans le terminal;
+* **Git Bash**, un terminal permettant d'utiliser Git sous Windows.
+
+::: {.callout-tip}
+## Pas besoin de devenir expert de Git Bash
+
+Nous utiliserons principalement Git à travers **RStudio**.
+
+Le terminal nous servira surtout à vérifier certaines configurations ou à comprendre ce que RStudio fait derrière son interface.
+:::
+
+### Étape 3 — Vérifier l'installation
+
+Une fois Git installé, **redémarrez RStudio**.
+
+Ouvrez ensuite :
+
+**Tools → Global Options → Git/SVN**
+
+RStudio devrait afficher un chemin dans le champ :
+
+```text
+Git executable
+```
+
+On peut également ouvrir le terminal de RStudio et exécuter :
+
+```bash
+git --version
+```
+
+Vous devriez obtenir quelque chose comme :
+
+```text
+git version 2.x.x
+```
+
+La version exacte n'est pas importante.
+
+Si une version est affichée, Git est correctement installé.
+
+# Créer un compte GitHub
+
+Git fonctionne localement et ne nécessite aucun compte.
+
+Par contre, pour partager nos dépôts et collaborer, nous utiliserons **GitHub**.
+
+## Créer le compte {.unnumbered}
+
+Rendez-vous sur **GitHub** et créez un compte personnel gratuit.
+
+Vous devrez notamment choisir :
+
+* une adresse courriel;
+* un mot de passe;
+* un **nom d'utilisateur GitHub**.
+
+::: {.callout-important}
+## Choisissez bien votre nom d'utilisateur
+
+Votre nom d'utilisateur GitHub sera visible dans l'adresse de vos projets et potentiellement dans vos contributions publiques.
+
+Il est donc préférable de choisir un nom relativement professionnel et que vous serez confortable d'utiliser à long terme.
+:::
+
+# Présenter Git à GitHub... et à vous-même
+
+Git doit savoir **qui effectue les commits**.
+
+Cette information est enregistrée dans la configuration de Git.
+
+Dans le terminal de RStudio, exécutez :
+
+```bash
+git config --global user.name "Votre Nom"
+```
+
+Par exemple :
+
+```bash
+git config --global user.name "Jean Tremblay"
+```
+
+Puis indiquez votre adresse courriel :
+
+```bash
+git config --global user.email "votre.adresse@courriel.ca"
+```
+
+::: {.callout-note}
+## Quelle adresse utiliser?
+
+Idéalement, utilisez une adresse courriel associée à votre compte GitHub.
+
+Cela permettra à GitHub d'associer correctement vos commits à votre profil.
+:::
+
+Nous pouvons vérifier notre configuration :
+
+```bash
+git config --global user.name
+git config --global user.email
+```
+
+Git devrait alors retourner les informations que nous venons d'entrer.
+
+# Vérification finale
+
+Avant de poursuivre, assurez-vous que les trois éléments suivants fonctionnent.
+
+Dans le terminal :
+
+```bash
+git --version
+```
+
+doit retourner une version de Git.
+
+Puis :
+
+```bash
+git config --global user.name
+```
+
+et :
+
+```bash
+git config --global user.email
+```
+
+doivent retourner vos informations.
+
+Finalement, vous devez être capable de vous connecter à votre compte **GitHub** dans votre navigateur.
+
+::: {.callout-tip}
+## Nous sommes prêts
+
+À ce stade :
+
+```text
+Git est installé
+       +
+Git connaît notre identité
+       +
+notre compte GitHub existe
+```
+
+Nous pouvons maintenant connecter un **dépôt Git local** à un **dépôt GitHub distant** et effectuer notre premier `push`.
+:::
+
+## Première partie du projet (évaluation)
+
+Une partie de la première évaluation consiste à crée votre compte GitHub et y héberger votre librairie R!

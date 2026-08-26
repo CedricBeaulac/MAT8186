@@ -10,6 +10,7 @@ book:
     - index.qmd
     - survol.qmd
     - Rproject.qmd
+    - Git.qmd
     - references.qmd
 
 bibliography: references.bib

@@ -1,4 +1,5 @@
 # Index {.unnumbered}
 
-Il s'agit d'un livre Quarto contenant le matériel du cours MAT8186. 
+Il s'agit d'un livre Quarto contenant le matériel du cours MAT8186.
 
+Ce matériel fut conçu pour un cours de 15 heures organisé en 5 séances de 3 heures. L'objectif du cours est d'amener les étudiants à développer leur propres librairies R et s'inspire fortement du livre [R Packages](https://r-pkgs.org).

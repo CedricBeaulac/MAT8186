@@ -541,7 +541,7 @@ Il s'agit peut-être de bon moment pour utiliser Git et laisser une trace des ce
 
 ## Git {.unnumbered}
 
-On va *staged* les documents modifiés que nous désirons sauvegarder et étiquette comme provenant de la même ronde de modification. 
+On va *staged* les documents modifiés que nous désirons sauvegarder et étiquette comme provenant de la même ronde de modification.
 
 Puis quand ces documents furent bien choisies, nous allons *commit* les changement et les décrire à l'aide de commentaires.
 
