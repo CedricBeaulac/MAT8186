@@ -123,8 +123,8 @@
     "objectID": "survol.html#ajoutons-git",
     "href": "survol.html#ajoutons-git",
     "title": "1  Un survol rapide",
-    "section": "3.1 Ajoutons Git",
-    "text": "3.1 Ajoutons Git\nAvant même d’écrire notre première fonction, nous pouvons commencer à conserver un historique de notre travail.\n\nusethis::use_git()\n\nNotre même dossier est maintenant :\nun répertoire\n      +\nun projet RStudio\n      +\nune librairie R\n      +\nun dépôt Git\nGit peut maintenant conserver les différentes versions de notre travail.\nNous pourrions immédiatement enregistrer cette première étape avec un commit :\nInitial package structure\nNous reviendrons beaucoup plus en détail sur Git et GitHub plus tard dans cette séance.\nPour l’instant, Git conserve toute les version du répertoire nous permettant de conserver une trace de toute les modifications faites.",
+    "section": "1.3 Ajoutons Git",
+    "text": "1.3 Ajoutons Git\nAvant même d’écrire notre première fonction, nous pouvons commencer à conserver un historique de notre travail.\n\nusethis::use_git()\n\nNotre même dossier est maintenant :\nun répertoire\n      +\nun projet RStudio\n      +\nune librairie R\n      +\nun dépôt Git\nGit peut maintenant conserver les différentes versions de notre travail.\nNous pourrions immédiatement enregistrer cette première étape avec un commit :\nInitial package structure\nNous reviendrons beaucoup plus en détail sur Git et GitHub plus tard dans cette séance.\nPour l’instant, Git conserve toute les version du répertoire nous permettant de conserver une trace de toute les modifications faites.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
@@ -134,7 +134,257 @@
     "href": "Rproject.html",
     "title": "2  Projet R",
     "section": "",
-    "text": "2.1 Le problème\nOn commence toujours avec un beau répertoire de travail:\nsetwd(\"C:/Users/TheBeast3.0/Desktop/MAT8186\")\nmais c’est pas pratique si notre projet est dans un service infonuagique (cloud) ou bien si on partage ce projet.",
+    "text": "2.1 Le problème\nOn commence souvent un projet en définissant manuellement notre répertoire de travail :\nsetwd(\"C:/Users/MYPC/Desktop/MAT8186\")\nÇa fonctionne très bien… sur mon ordinateur!\nLe problème apparaît rapidement lorsque :\nPar exemple, le chemin\nn’existe probablement pas sur votre ordinateur.\nOn aimerait donc que notre code puisse fonctionner indépendamment de l’endroit où le projet est enregistré.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#le-concept-de-a-à-z",
+    "href": "survol.html#le-concept-de-a-à-z",
+    "title": "1  Un survol rapide",
+    "section": "1.1 Le concept de A à Z",
+    "text": "1.1 Le concept de A à Z\nDans cette première partie du cours, nous allons parcourir très rapidement l’ensemble du processus de mise au point d’une librairie R.\nL’objectif n’est pas de comprendre immédiatement toutes les commandes, tous les fichiers et toutes les conventions que nous allons rencontrer.\nNous allons plutôt commencer par voir le chemin de A à Z.\nÀ la fin, nous aurons :\n\ncréé une librairie R;\ncréé un dépôt Git;\najouté une première fonction;\nchargé notre librairie pendant son développement;\nvérifié sa structure;\najouté une licence;\ndocumenté notre fonction;\najouté un test;\ndéclaré une dépendance;\ninstallé notre librairie;\nvu comment elle pourra éventuellement être partagée.\n\n\n\n\n\n\n\nUne première visite\n\n\n\nIl n’est pas attendu que vous reteniez toutes les commandes présentées dans cette section.\nNous allons revenir beaucoup plus en détail sur chacune des étapes au cours des prochaines séances.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#créons-une-librairie",
+    "href": "survol.html#créons-une-librairie",
+    "title": "1  Un survol rapide",
+    "section": "1.2 Créons une librairie",
+    "text": "1.2 Créons une librairie\nNous allons développer une petite librairie appelée :\nmat8186demo\nElle ne fera rien de particulièrement révolutionnaire.\nSon objectif sera simplement de nous permettre de parcourir une première fois toutes les étapes du développement d’une librairie R.\nComme d’habitude, commencez par crée un répertoire et l’identifier comme répertoir de travail:\n\nsetwd(\"C:/VotreRepertoire\")",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#une-première-fonction",
+    "href": "survol.html#une-première-fonction",
+    "title": "1  Un survol rapide",
+    "section": "1.4 Une première fonction",
+    "text": "1.4 Une première fonction\nUne librairie R contient principalement des fonctions. C’est par un ensemble de fonction que l’on peut encoder des méthodes plus complexes, l’atome d’une libraire est donc la fonction.\nCréons une petite fonction permettant de centrer-réduire un vecteur numérique.\nNous aimerions pouvoir faire :\n\nCR(c(10, 20, 30))\n\net obtenir :\n[1] -1 0 1\nUne première version de notre fonction pourrait être :\n\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}\n\nDans une librairie, notre code R est placé dans le répertoire :\nR/\nNous pouvons créer un fichier pour notre fonction avec :\n\nusethis::use_r(\"CR\")\n\nCette commande crée :\nR/CR.R\nNous pouvons alors y placer notre fonction :\n\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#vérifier-notre-librairie",
+    "href": "survol.html#vérifier-notre-librairie",
+    "title": "1  Un survol rapide",
+    "section": "1.6 Vérifier notre librairie",
+    "text": "1.6 Vérifier notre librairie\nUne librairie R doit respecter plusieurs conventions, normes afin d’opérer. Ces normes et standards sont la raison principale pourquoi aurjourd’hui il est beaucoup plus facile d’utiliser des librairies R que des paquet Python.\nHeureusement, nous n’avons pas besoin de tous vérifier manuellement grâce à devtools. Nous pouvons demander à R de vérifier notre librairie avec :\n\ndevtools::check()\n\nCette commande réalise une série de vérifications sur notre librairie.\nLe résultat peut contenir trois types de problèmes :\nERROR\nWARNING\nNOTE\nÀ terme, nous aimerions obtenir :\n0 errors ✔\n0 warnings ✔\n0 notes ✔\n\n\n\n\n\n\nVérifier régulièrement\n\n\n\nIl est beaucoup plus facile de corriger un problème lorsqu’il vient d’apparaître que lorsqu’on a modifié vingt fichiers depuis notre dernière vérification.\nNous utiliserons donc check() régulièrement pendant le développement.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#le-fichier-description",
+    "href": "survol.html#le-fichier-description",
+    "title": "1  Un survol rapide",
+    "section": "1.7 Le fichier DESCRIPTION",
+    "text": "1.7 Le fichier DESCRIPTION\nNotre librairie possède déjà un fichier nommé :\nDESCRIPTION\nCe fichier contient les principales métadonnées de notre librairie.\nIl ressemble initialement à ceci :\nPackage: mat8186demo\nTitle: What the Package Does\nVersion: 0.0.0.9000\nAuthors@R: ...\nDescription: What the package does.\nLicense: ...\nEncoding: UTF-8\nOn y retrouvera notamment :\n\nle nom de la librairie;\nson titre;\nsa version;\nses auteurs;\nsa description;\nsa licence;\nses dépendances.\n\nNous pourrions par exemple remplacer les informations génériques par :\nPackage: mat8186demo\nTitle: Demonstration for MAT8186\nVersion: 0.0.0.9000\nAuthors@R:\n    person(\"Cedric\", \"Beaulac\",\n           email = \"beaulac.cedric@uqam.ca\",\n           role = c(\"aut\", \"cre\"))\nDescription: Small functions used to demonstrate the development\n    of an R library in MAT8186.\nEncoding: UTF-8\nNous reviendrons plus tard sur la structure exacte du fichier DESCRIPTION, concentrons sur un élément d’intérêt de ce fichier, la licence.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#ajouter-une-licence",
+    "href": "survol.html#ajouter-une-licence",
+    "title": "1  Un survol rapide",
+    "section": "1.8 Ajouter une licence",
+    "text": "1.8 Ajouter une licence\nSi nous distribuons notre librairie, nous devons également indiquer ce que les autres utilisateurs ont le droit de faire avec notre code.\nPar exemple, nous pouvons choisir une licence MIT :\n\nusethis::use_mit_license()\n\nusethis crée et modifie automatiquement les fichiers nécessaires.\nLes licences sont expliqués en plus grand détail au chapitre 12 du manuel de référence, nous n’en reparlons pas vraiment dans ce cours.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#git",
+    "href": "survol.html#git",
+    "title": "1  Un survol rapide",
+    "section": "Git",
+    "text": "Git\nOn va staged les documents modifiés que nous désirons sauvegarder et étiquette comme provenant de la même ronde de modification.\nPuis quand ces documents furent bien choisies, nous allons commit les changement et les décrire à l’aide de commentaires.\nFinalement, lorsque l’on push ces modifications, la sauvegarde est déployé!",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#ajouter-un-test",
+    "href": "survol.html#ajouter-un-test",
+    "title": "1  Un survol rapide",
+    "section": "1.10 Ajouter un test",
+    "text": "1.10 Ajouter un test\nPour l’instant, nous avons testé notre fonction manuellement.\nMais comment savoir si une modification future brise accidentellement son comportement?\nNous allons ajouter des tests automatisés.\n\nusethis::use_testthat()\n\nPuis créons un fichier de tests associé à notre fonction :\n\nusethis::use_test(\"CR\")\n\nNous pouvons y écrire :\n\ntest_that(\"CR transforme correctement un vecteur\", {\n\n  expect_equal(\n    CR(c(10, 20, 30)),\n    c(-1, 0, 1)\n  )\n\n})\n\nNous lançons ensuite les tests avec :\n\ndevtools::test()\n\nSi notre fonction est modifiée plus tard et ne produit plus le résultat attendu, le test nous avertira.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#utiliser-une-autre-librairie",
+    "href": "survol.html#utiliser-une-autre-librairie",
+    "title": "1  Un survol rapide",
+    "section": "1.11 Utiliser une autre librairie",
+    "text": "1.11 Utiliser une autre librairie\nUne librairie R n’a évidemment pas besoin de tout réimplémenter elle-même.\nElle peut utiliser des fonctions provenant d’autres librairies, on appele ça des dépendances. Ici, c’est une des grandes forces des librairies R (en contraste avec Python), la gestion des dépendances.\nSupposons par exemple que nous souhaitions utiliser la librairie scales.\nNous pouvons déclarer cette dépendance avec :\n\nusethis::use_package(\"plyr\")\n\nCette commande ajoute notamment plyr au fichier DESCRIPTION.\n\n\n\n\n\n\nLe brio des dépendances R\n\n\n\nNous pouvons spécifier une version spécifique de la dépendance et R peut gérer plusieurs versions de la même librairie pour satisfaire les dépendances si nécessaire.\n\n\nNous pourrions ensuite écrire une fonction qui centre-réduit chaque colonne d’une base de données comme :\n\nCR-Donnee &lt;- function(X) {\n  apply(x, 2,CR)\n}\n\nusethis::use_r(\"CR-Donnee\")\n\nEt maintenant?\nNous relançons notre cycle :\n\ndevtools::load_all()\n\ndevtools::test()\n\ndevtools::check()\n\nNos tests nous permettent de vérifier que le comportement de notre fonction n’a pas changé, même si son implémentation interne est maintenant différente.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#installer-notre-librairie",
+    "href": "survol.html#installer-notre-librairie",
+    "title": "1  Un survol rapide",
+    "section": "1.12 Installer notre librairie",
+    "text": "1.12 Installer notre librairie\nJusqu’à maintenant, load_all() nous permettait de simuler le chargement de notre librairie pendant son développement.\nNous pouvons maintenant réellement l’installer :\n\ndevtools::install()\n\nAprès avoir redémarré R, nous pouvons l’utiliser comme n’importe quelle autre librairie :\n\nlibrary(mat8186demo)\n\nCR(c(5, 10, 15))\n\nC’est une étape importante.\nNous ne possédons plus simplement un fichier .R contenant une fonction.\nNous avons une librairie R installable.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#et-github",
+    "href": "survol.html#et-github",
+    "title": "1  Un survol rapide",
+    "section": "1.13 Et GitHub?",
+    "text": "1.13 Et GitHub?\nNotre dépôt Git existe actuellement sur notre ordinateur.\nUne prochaine étape consistera à créer une copie distante de ce dépôt sur GitHub.\nConceptuellement :\nNotre ordinateur\n     │\n     │  Git\n     ▼\nHistorique local\n     │\n     │  push / pull\n     ▼\n    GitHub\nNous verrons dans quelques instants comment mettre cela en place.\n\n\n\n\n\n\nGit n’est pas GitHub\n\n\n\nGit est le système qui permet de conserver l’historique des versions de notre projet.\nGitHub est un service en ligne qui permet notamment d’héberger des dépôts Git et de collaborer avec d’autres personnes.\nOn peut utiliser Git sans GitHub.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#et-maintenant",
+    "href": "survol.html#et-maintenant",
+    "title": "1  Un survol rapide",
+    "section": "Et maintenant?",
+    "text": "Et maintenant?\nAvant de poursuivre le développement de notre librairie, nous allons revenir sur deux concepts que nous venons déjà d’utiliser sans vraiment les expliquer :\n\nles projets RStudio et l’organisation des fichiers;\nGit et GitHub.\n\nNous pourrons ensuite revenir au développement de notre librairie avec une meilleure compréhension de notre environnement de travail.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#projet-r",
+    "href": "Rproject.html#projet-r",
+    "title": "2  Projet R",
+    "section": "2.1 Projet R",
+    "text": "2.1 Projet R\nLe projet R est en quelque sorte la solution simple à ce problème… qui reglèra d’autres problèmes aussi. En y ajoutant une étiquette d’ouverture de projet et de sauvegarde on gardera notre environnement de travail sous contrôle et on va se garantir que le comportement de notre libraire soit reproductible.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#partir-à-neuf",
+    "href": "Rproject.html#partir-à-neuf",
+    "title": "2  Projet R",
+    "section": "2.3 Partir à neuf",
+    "text": "2.3 Partir à neuf\nR et RStudio peuvent conserver automatiquement une partie de notre environnement de travail entre deux sessions.\nDeux fichiers que vous avez peut-être déjà rencontrés sont :\n.RData\n.Rhistory\n.RData peut contenir les objets présents dans notre environnement R à la fin d’une session, tandis que .Rhistory peut conserver l’historique des commandes exécutées.\nCela peut sembler pratique.\nCependant, dans un projet reproductible, nous voulons idéalement être capables de reconstruire notre environnement à partir de notre code.\nPar exemple, si notre analyse nécessite l’objet donnees, nous préférons avoir :\n\ndonnees &lt;- read.csv(\"data/donnees.csv\")\n\ndans notre code plutôt que de dépendre d’un objet donnees qui serait mystérieusement réapparu depuis une ancienne session R.\nL’idée est donc de travailler avec intention : les objets nécessaires à notre analyse devraient pouvoir être recréés à partir des fichiers et du code contenus dans notre projet.\nPour cette raison, il est généralement recommandé de ne pas restaurer automatiquement .RData au démarrage et de ne pas sauvegarder automatiquement l’environnement de travail à la fermeture de RStudio.\nNous pouvons configurer ce comportement dans :\nTools -&gt; Global Options -&gt; General\net choisir notamment :\nRestore .RData into workspace at startup : NON\n\nSave workspace to .RData on exit : Never\n\n\n\n\n\n\nReproductibilité\n\n\n\nUne bonne question à se poser est :\n\nSi je ferme complètement RStudio, que je rouvre mon projet et que je réexécute mon code, est-ce que je peux reproduire mes résultats?\n\nSi la réponse est oui, nous sommes sur la bonne voie.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#un-projet-r",
+    "href": "Rproject.html#un-projet-r",
+    "title": "2  Projet R",
+    "section": "2.3 Un projet R",
+    "text": "2.3 Un projet R\nMaintenant, lorsque nous voulons entemmer sérieusement un projet d’analyse de données, d’écriture de diapostive RMD, ou bien de développement de librairie nous créons un projet R avec File -&gt; New Project.\nLa création d’un projet créer automatique un répertoire avec un document .Rproj. En ouvrant ce document, un l’édituer RStudio ouvre et le répertoire de travail est déjà bien identifié, on peut changer les paramèetre de sauvegarder et de chargement spécifiquement pour ce projet dans Tools -&gt; Project Options, y définir de nombre document .R ou autres format. Le principe est que désormais nous ouvrirons directement le projet (document .Rproj) lorsque nous voudrons y travailler.\nUn gain majeur et que les répertoire, donnée R (.RData) et autres structures sont maintenant relatives à ce projet ce qui crée de bon silos de travialle séparé.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#utiliser-notre-librairie-pendant-son-développement",
+    "href": "survol.html#utiliser-notre-librairie-pendant-son-développement",
+    "title": "1  Un survol rapide",
+    "section": "1.5 Utiliser notre librairie pendant son développement",
+    "text": "1.5 Utiliser notre librairie pendant son développement\nNotre fonction est maintenant enregistrée dans :\nR/CR.R\nComment pouvons-nous l’utiliser?\nNous pouvons faire :\n\nsource(\"R/CR.R\")\n\net c’est en fait ce que nous faisons au premier cycle quand nous codons nos propres fonctions. Ce n’est pas la façon privilégiée de travailler lorsqu’on développe une librairie; nous allons installer la librairie.\nNous allons plutôt utiliser :\n\ndevtools::load_all()\n\nload_all() charge temporairement notre librairie en cours de développement.\nNous pouvons alors utiliser :\n\nCR(c(10, 20, 30))\n\ncomme si notre librairie était déjà installée.\nNous obtenons notre premier cycle de développement :\nmodifier le code\n       ↓\n   load_all()\n       ↓\ntester la fonction\n       ↓\nmodifier le code\n       ↓\n   load_all()\n       ↓\n      ...\nCe cycle reviendra constamment pendant le cours.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#documenter-notre-fonction",
+    "href": "survol.html#documenter-notre-fonction",
+    "title": "1  Un survol rapide",
+    "section": "1.9 Documenter notre fonction",
+    "text": "1.9 Documenter notre fonction\nNotre fonction fonctionne mais un utilisateur qui découvre notre librairie doit également pouvoir comprendre :\n\nce que fait la fonction;\nquels arguments elle prend;\nce qu’elle retourne;\ncomment l’utiliser.\n\nSouvenez-vous que lorsque vous approchez une nouvelle libraire, nous utilisons la documentation R ?Library::function pour mieux comprendre son fonctionnement.\nQuand nous mettons au point une libraire, c’est à nous d’écrire la documentation.\nNous allons utiliser roxygen2 pour documenter notre fonction directement dans son fichier R.\nIl faut ouvrir le fichier R en question ~\\mat8186\\CR.R, cliquer l’onglet Code puis insert roxygen skeleton. Ça va crée une entête vide, que l’on pourra remplir.\n\n#' Centre-réduire un vecteur\n#'\n#' Transforme linéairement un vecteur numérique afin qu'il soit de moyenne 0\n#' et d'écart-type 1.\n#'\n#' @param x Un vecteur numérique.\n#'\n#' @return Un vecteur numérique de même longueur que `x`.\n#'\n#' @examples\n#' CR(c(10, 20, 30))\n#'\n#' @export\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}\n\nNous pouvons ensuite générer la documentation grâce à la libraire devtools :\n\ndevtools::document()\n\nCette commande crée notamment un répertoire :\nman/\ncontenant les pages d’aide de notre librairie.\nBon, on se rapelle notre boucle de développement, allons-y:\nmodifier le code\n       ↓\n   load_all()\n       ↓\ntester la fonction\n       ↓\nmodifier le code\n       ↓\n   load_all()\n       ↓\n      ...\n\ndevtools::load_all()\n?CR\n\nNotre fonction possède maintenant une documentation!\nIl s’agit peut-être de bon moment pour utiliser Git et laisser une trace des ces premières modifications.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#une-dernière-vérification",
+    "href": "survol.html#une-dernière-vérification",
+    "title": "1  Un survol rapide",
+    "section": "Une dernière vérification",
+    "text": "Une dernière vérification\nNous avons maintenant ajouté plusieurs composantes à notre librairie.\nFaisons donc une nouvelle vérification :\n\ndevtools::check()\n\nNous avons donc déjà :\n\nune librairie R;\ndeux fonctions;\nde la documentation;\nune licence;\ndes tests;\nune dépendance;\nun historique Git.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "survol.html#le-cycle-de-développement",
+    "href": "survol.html#le-cycle-de-développement",
+    "title": "1  Un survol rapide",
+    "section": "1.14 Le cycle de développement",
+    "text": "1.14 Le cycle de développement\nNous venons de voir énormément de choses très rapidement.\nLe but n’était pas de mémoriser toutes les commandes.\nLe message principal est de comprendre le cycle général de développement d’une librairie :\nCréer la librairie\n        ↓\nÉcrire une fonction\n        ↓\n    load_all()\n        ↓\nTester manuellement\n        ↓\nDocumenter\n        ↓\nTester automatiquement\n        ↓\n     check()\n        ↓\n     commit\n        ↓\nModifier le code\n        ↓\n     recommencer\nUne librairie n’est donc pas simplement la forme finale que l’on donne à notre code lorsqu’il est terminé.\nLa librairie devient elle-même l’environnement dans lequel nous développons notre code.\n\n\n\n\n\n\nPour résumer\n\n\n\nNous venons essentiellement de faire le cours au complet en accéléré.\nMaintenant, nous allons revenir en arrière et apprendre à faire chacune de ces étapes correctement.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#le-problème",
+    "href": "Rproject.html#le-problème",
+    "title": "2  Projet R",
+    "section": "",
+    "text": "le projet est déplacé vers un autre répertoire;\nle projet est synchronisé avec un service infonuagique;\nle projet est partagé avec un collègue;\nle projet est téléchargé sur un autre ordinateur.\n\n\nC:/Users/MYPC/Desktop/MAT8186\n\n\n\n\n\n\n\n\nUn principe important\n\n\n\nNotre code ne devrait pas dépendre de l’emplacement exact du projet sur notre ordinateur.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#le-projet-rstudio",
+    "href": "Rproject.html#le-projet-rstudio",
+    "title": "2  Projet R",
+    "section": "2.2 Le projet RStudio",
+    "text": "2.2 Le projet RStudio\nUn projet RStudio permet de regrouper dans un même répertoire tout ce qui est associé à une tâche :\nmon_projet/\n├── mon_projet.Rproj\n├── R/\n├── data/\n├── figures/\n└── notes.qmd\nLe fichier .Rproj identifie ce répertoire comme un projet RStudio.\nLorsque nous ouvrons ce fichier, RStudio ouvre le projet et utilise automatiquement la racine du projet comme répertoire de travail.\nAutrement dit, si notre projet est :\nC:/Users/MYPC/Desktop/MAT8186/\nalors :\n\ngetwd()\n\nretournera quelque chose comme :\nC:/Users/MYPC/Desktop/MAT8186\nMais si un autre utilisateur place exactement le même projet dans :\nC:/Users/YOURPC/Documents/MAT8186/\nla racine de son projet sera automatiquement :\nC:/Users/YOURPC/Documents/MAT8186\nIl n’est donc plus nécessaire d’écrire un setwd() spécifique à chaque ordinateur.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#les-chemins-relatifs",
+    "href": "Rproject.html#les-chemins-relatifs",
+    "title": "2  Projet R",
+    "section": "Les chemins relatifs",
+    "text": "Les chemins relatifs\nC’est ici qu’apparaît l’un des principaux avantages du projet.\nSupposons que notre structure soit :\nMAT8186/\n├── MAT8186.Rproj\n├── data/\n│   └── donnees.csv\n├── R/\n│   └── analyse.R\n└── notes.qmd\nPlutôt que d’écrire :\n\nread.csv(\n  \"C:/Users/MYPC/Desktop/MAT8186/data/donnees.csv\"\n)\n\nnous pouvons simplement écrire :\n\nread.csv(\"data/donnees.csv\")\n\nLe chemin est maintenant relatif à la racine du projet.\nSi nous déplaçons tout le projet ailleurs, le chemin\ndata/donnees.csv\ndemeure valide.\nIl fonctionnera également sur l’ordinateur d’un collègue qui possède la même structure de projet.\n\n\n\n\n\n\nUne bonne règle\n\n\n\nSi votre code contient :\nsetwd(\"C:/Users/mon_nom/...\")\nou un autre chemin propre à votre ordinateur, demandez-vous s’il ne serait pas préférable de travailler à partir d’un projet et d’utiliser un chemin relatif.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#créer-un-projet",
+    "href": "Rproject.html#créer-un-projet",
+    "title": "2  Projet R",
+    "section": "2.4 Créer un projet",
+    "text": "2.4 Créer un projet\nLorsque nous commençons sérieusement une nouvelle tâche – une analyse de données, la rédaction de notes Quarto ou le développement d’une librairie – nous pouvons créer un projet avec :\nFile -&gt; New Project\nRStudio nous offre notamment trois possibilités :\nNew Directory\nExisting Directory\nVersion Control\nNous pouvons donc :\n\ncréer simultanément un nouveau répertoire et un nouveau projet;\ntransformer un répertoire existant en projet RStudio;\nrécupérer un projet existant à partir d’un dépôt Git.\n\nLors de la création du projet, RStudio crée notamment un fichier :\nnom_du_projet.Rproj\nPar la suite, lorsque nous voulons travailler sur ce projet, nous ouvrons le projet lui-même plutôt que d’ouvrir RStudio puis de chercher nos fichiers.\nNous obtenons ainsi un environnement de travail bien délimité :\nProjet A\n├── données\n├── code\n├── résultats\n└── environnement de travail\n\nProjet B\n├── données\n├── code\n├── résultats\n└── environnement de travail\nLes différents projets demeurent ainsi bien séparés les uns des autres.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#et-notre-librairie",
+    "href": "Rproject.html#et-notre-librairie",
+    "title": "2  Projet R",
+    "section": "Et notre librairie?",
+    "text": "Et notre librairie?\nNous avons en fait déjà utilisé un projet RStudio!\nLorsque nous avons créé notre librairie avec :\n\nusethis::create_package(\"mat8186demo\")\n\nnous avons obtenu quelque chose comme :\nmat8186demo/\n├── mat8186demo.Rproj\n├── DESCRIPTION\n├── NAMESPACE\n└── R/\nNotre librairie est donc également un projet RStudio.\nEt lors de notre survol du développement d’une librairie, nous avons ajouté :\n\nusethis::use_git()\n\nNotre même répertoire est maintenant :\nun répertoire\n      +\nun projet RStudio\n      +\nune librairie R\n      +\nun dépôt Git\nIl nous reste maintenant à comprendre un peu mieux ce dernier élément.",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
+    "objectID": "Rproject.html#git-et-github",
+    "href": "Rproject.html#git-et-github",
+    "title": "2  Projet R",
+    "section": "2.5 Git et GitHub",
+    "text": "2.5 Git et GitHub\nNous avons déjà créé un dépôt Git sans vraiment expliquer ce que cela signifie.\nIl est maintenant temps de revenir sur Git, puis de comprendre son lien avec GitHub.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
     ]

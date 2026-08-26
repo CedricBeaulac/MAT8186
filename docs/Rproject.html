@@ -175,7 +175,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#le-problème" id="toc-le-problème" class="nav-link active" data-scroll-target="#le-problème"><span class="header-section-number">2.1</span> Le problème</a></li>
-  <li><a href="#projet-r" id="toc-projet-r" class="nav-link" data-scroll-target="#projet-r"><span class="header-section-number">3</span> Projet R</a></li>
+  <li><a href="#le-projet-rstudio" id="toc-le-projet-rstudio" class="nav-link" data-scroll-target="#le-projet-rstudio"><span class="header-section-number">2.2</span> Le projet RStudio</a></li>
+  <li><a href="#les-chemins-relatifs" id="toc-les-chemins-relatifs" class="nav-link" data-scroll-target="#les-chemins-relatifs">Les chemins relatifs</a></li>
+  <li><a href="#partir-à-neuf" id="toc-partir-à-neuf" class="nav-link" data-scroll-target="#partir-à-neuf"><span class="header-section-number">2.3</span> Partir à neuf</a></li>
+  <li><a href="#créer-un-projet" id="toc-créer-un-projet" class="nav-link" data-scroll-target="#créer-un-projet"><span class="header-section-number">2.4</span> Créer un projet</a></li>
+  <li><a href="#et-notre-librairie" id="toc-et-notre-librairie" class="nav-link" data-scroll-target="#et-notre-librairie">Et notre librairie?</a></li>
+  <li><a href="#git-et-github" id="toc-git-et-github" class="nav-link" data-scroll-target="#git-et-github"><span class="header-section-number">2.5</span> Git et GitHub</a></li>
   </ul>
 </nav>
     </div>
@@ -201,18 +206,209 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Avant d’introduire GitHub et la publication en ligne de notre librairie, discutons rapidement d’une infrastructure R qui peut nous être utile; la projet R.</p>
+<p>Avant d’introduire GitHub et la publication en ligne de notre librairie, discutons rapidement d’un outil qui nous sera très utile pour organiser notre travail : le <strong>projet RStudio</strong>.</p>
 <section id="le-problème" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="le-problème"><span class="header-section-number">2.1</span> Le problème</h2>
-<p>On commence toujours avec un beau répertoire de travail:</p>
+<p>On commence souvent un projet en définissant manuellement notre répertoire de travail :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/TheBeast3.0/Desktop/MAT8186"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/MYPC/Desktop/MAT8186"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>mais c’est pas pratique si notre projet est dans un service infonuagique (<em>cloud</em>) ou bien si on partage ce projet.</p>
+<p>Ça fonctionne très bien… sur mon ordinateur!</p>
+<p>Le problème apparaît rapidement lorsque :</p>
+<ul>
+<li>le projet est déplacé vers un autre répertoire;</li>
+<li>le projet est synchronisé avec un service infonuagique;</li>
+<li>le projet est partagé avec un collègue;</li>
+<li>le projet est téléchargé sur un autre ordinateur.</li>
+</ul>
+<p>Par exemple, le chemin</p>
+<pre class="text"><code>C:/Users/MYPC/Desktop/MAT8186</code></pre>
+<p>n’existe probablement pas sur votre ordinateur.</p>
+<p>On aimerait donc que notre code puisse fonctionner <strong>indépendamment de l’endroit où le projet est enregistré</strong>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Un principe important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notre code ne devrait pas dépendre de l’emplacement exact du projet sur notre ordinateur.</p>
+</div>
+</div>
 </section>
-<section id="projet-r" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Projet R</h1>
-<p>Le projet R est en quelque sorte la solution simple à ce problème… qui reglèra d’autres problèmes aussi. En y ajoutant une étiquette d’ouverture de projet et de sauvegarde on gardera notre environnement de travail sous contrôle et on va se garantir que le comportement de notre libraire soit reproductible.</p>
+<section id="le-projet-rstudio" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="le-projet-rstudio"><span class="header-section-number">2.2</span> Le projet RStudio</h2>
+<p>Un <strong>projet RStudio</strong> permet de regrouper dans un même répertoire tout ce qui est associé à une tâche :</p>
+<pre class="text"><code>mon_projet/
+├── mon_projet.Rproj
+├── R/
+├── data/
+├── figures/
+└── notes.qmd</code></pre>
+<p>Le fichier <code>.Rproj</code> identifie ce répertoire comme un projet RStudio.</p>
+<p>Lorsque nous ouvrons ce fichier, RStudio ouvre le projet et utilise automatiquement <strong>la racine du projet comme répertoire de travail</strong>.</p>
+<p>Autrement dit, si notre projet est :</p>
+<pre class="text"><code>C:/Users/MYPC/Desktop/MAT8186/</code></pre>
+<p>alors :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>retournera quelque chose comme :</p>
+<pre class="text"><code>C:/Users/MYPC/Desktop/MAT8186</code></pre>
+<p>Mais si un autre utilisateur place exactement le même projet dans :</p>
+<pre class="text"><code>C:/Users/YOURPC/Documents/MAT8186/</code></pre>
+<p>la racine de son projet sera automatiquement :</p>
+<pre class="text"><code>C:/Users/YOURPC/Documents/MAT8186</code></pre>
+<p>Il n’est donc plus nécessaire d’écrire un <code>setwd()</code> spécifique à chaque ordinateur.</p>
+</section>
+<section id="les-chemins-relatifs" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="les-chemins-relatifs">Les chemins relatifs</h2>
+<p>C’est ici qu’apparaît l’un des principaux avantages du projet.</p>
+<p>Supposons que notre structure soit :</p>
+<pre class="text"><code>MAT8186/
+├── MAT8186.Rproj
+├── data/
+│   └── donnees.csv
+├── R/
+│   └── analyse.R
+└── notes.qmd</code></pre>
+<p>Plutôt que d’écrire :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"C:/Users/MYPC/Desktop/MAT8186/data/donnees.csv"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>nous pouvons simplement écrire :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="st">"data/donnees.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Le chemin est maintenant <strong>relatif à la racine du projet</strong>.</p>
+<p>Si nous déplaçons tout le projet ailleurs, le chemin</p>
+<pre class="text"><code>data/donnees.csv</code></pre>
+<p>demeure valide.</p>
+<p>Il fonctionnera également sur l’ordinateur d’un collègue qui possède la même structure de projet.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Une bonne règle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si votre code contient :</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/mon_nom/..."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ou un autre chemin propre à votre ordinateur, demandez-vous s’il ne serait pas préférable de travailler à partir d’un projet et d’utiliser un chemin relatif.</p>
+</div>
+</div>
+</section>
+<section id="partir-à-neuf" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="partir-à-neuf"><span class="header-section-number">2.3</span> Partir à neuf</h2>
+<p>R et RStudio peuvent conserver automatiquement une partie de notre environnement de travail entre deux sessions.</p>
+<p>Deux fichiers que vous avez peut-être déjà rencontrés sont :</p>
+<pre class="text"><code>.RData
+.Rhistory</code></pre>
+<p><code>.RData</code> peut contenir les objets présents dans notre environnement R à la fin d’une session, tandis que <code>.Rhistory</code> peut conserver l’historique des commandes exécutées.</p>
+<p>Cela peut sembler pratique.</p>
+<p>Cependant, dans un projet reproductible, nous voulons idéalement être capables de reconstruire notre environnement <strong>à partir de notre code</strong>.</p>
+<p>Par exemple, si notre analyse nécessite l’objet <code>donnees</code>, nous préférons avoir :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>donnees <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/donnees.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>dans notre code plutôt que de dépendre d’un objet <code>donnees</code> qui serait mystérieusement réapparu depuis une ancienne session R.</p>
+<p>L’idée est donc de travailler <strong>avec intention</strong> : les objets nécessaires à notre analyse devraient pouvoir être recréés à partir des fichiers et du code contenus dans notre projet.</p>
+<p>Pour cette raison, il est généralement recommandé de ne pas restaurer automatiquement <code>.RData</code> au démarrage et de ne pas sauvegarder automatiquement l’environnement de travail à la fermeture de RStudio.</p>
+<p>Nous pouvons configurer ce comportement dans :</p>
+<pre class="text"><code>Tools -&gt; Global Options -&gt; General</code></pre>
+<p>et choisir notamment :</p>
+<pre class="text"><code>Restore .RData into workspace at startup : NON
+
+Save workspace to .RData on exit : Never</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reproductibilité
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une bonne question à se poser est :</p>
+<blockquote class="blockquote">
+<p>Si je ferme complètement RStudio, que je rouvre mon projet et que je réexécute mon code, est-ce que je peux reproduire mes résultats?</p>
+</blockquote>
+<p>Si la réponse est oui, nous sommes sur la bonne voie.</p>
+</div>
+</div>
+</section>
+<section id="créer-un-projet" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="créer-un-projet"><span class="header-section-number">2.4</span> Créer un projet</h2>
+<p>Lorsque nous commençons sérieusement une nouvelle tâche – une analyse de données, la rédaction de notes Quarto ou le développement d’une librairie – nous pouvons créer un projet avec :</p>
+<pre class="text"><code>File -&gt; New Project</code></pre>
+<p>RStudio nous offre notamment trois possibilités :</p>
+<pre class="text"><code>New Directory
+Existing Directory
+Version Control</code></pre>
+<p>Nous pouvons donc :</p>
+<ul>
+<li>créer simultanément un nouveau répertoire et un nouveau projet;</li>
+<li>transformer un répertoire existant en projet RStudio;</li>
+<li>récupérer un projet existant à partir d’un dépôt Git.</li>
+</ul>
+<p>Lors de la création du projet, RStudio crée notamment un fichier :</p>
+<pre class="text"><code>nom_du_projet.Rproj</code></pre>
+<p>Par la suite, lorsque nous voulons travailler sur ce projet, nous ouvrons <strong>le projet lui-même</strong> plutôt que d’ouvrir RStudio puis de chercher nos fichiers.</p>
+<p>Nous obtenons ainsi un environnement de travail bien délimité :</p>
+<pre class="text"><code>Projet A
+├── données
+├── code
+├── résultats
+└── environnement de travail
+
+Projet B
+├── données
+├── code
+├── résultats
+└── environnement de travail</code></pre>
+<p>Les différents projets demeurent ainsi bien séparés les uns des autres.</p>
+</section>
+<section id="et-notre-librairie" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="et-notre-librairie">Et notre librairie?</h2>
+<p>Nous avons en fait déjà utilisé un projet RStudio!</p>
+<p>Lorsque nous avons créé notre librairie avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_package</span>(<span class="st">"mat8186demo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>nous avons obtenu quelque chose comme :</p>
+<pre class="text"><code>mat8186demo/
+├── mat8186demo.Rproj
+├── DESCRIPTION
+├── NAMESPACE
+└── R/</code></pre>
+<p>Notre librairie est donc également un <strong>projet RStudio</strong>.</p>
+<p>Et lors de notre survol du développement d’une librairie, nous avons ajouté :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notre même répertoire est maintenant :</p>
+<pre class="text"><code>un répertoire
+      +
+un projet RStudio
+      +
+une librairie R
+      +
+un dépôt Git</code></pre>
+<p>Il nous reste maintenant à comprendre un peu mieux ce dernier élément.</p>
+</section>
+<section id="git-et-github" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="git-et-github"><span class="header-section-number">2.5</span> Git et GitHub</h2>
+<p>Nous avons déjà créé un dépôt Git sans vraiment expliquer ce que cela signifie.</p>
+<p>Il est maintenant temps de revenir sur <strong>Git</strong>, puis de comprendre son lien avec <strong>GitHub</strong>.</p>
 
 
 </section>

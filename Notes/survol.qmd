@@ -297,7 +297,7 @@ ma_fonction <- function(x) {
 
 Nous passons progressivement d'une logique de **script d'analyse** à une logique de **développement logiciel**.
 
-# Utiliser notre librairie pendant son développement
+## Utiliser notre librairie pendant son développement
 
 Notre fonction est maintenant enregistrée dans :
 
@@ -458,7 +458,7 @@ usethis::use_mit_license()
 
 Les licences sont expliqués en plus grand détail au [chapitre 12 du manuel de référence](https://r-pkgs.org/license.html), nous n'en reparlons pas vraiment dans ce cours.
 
-# Documenter notre fonction
+## Documenter notre fonction
 
 Notre fonction fonctionne mais un utilisateur qui découvre notre librairie doit également pouvoir comprendre :
 
@@ -674,7 +674,7 @@ Nous ne possédons plus simplement **un fichier `.R` contenant une fonction**.
 
 Nous avons une **librairie R installable**.
 
-# Une dernière vérification
+## Une dernière vérification {.unnumbered}
 
 Nous avons maintenant ajouté plusieurs composantes à notre librairie.
 
@@ -728,7 +728,7 @@ Nous verrons dans quelques instants comment mettre cela en place.
 On peut utiliser Git sans GitHub.
 :::
 
-# Le cycle de développement
+## Le cycle de développement
 
 Nous venons de voir énormément de choses très rapidement.
 
@@ -763,14 +763,14 @@ Une librairie n'est donc pas simplement **la forme finale que l'on donne à notr
 La librairie devient elle-même **l'environnement dans lequel nous développons notre code**.
 
 ::: callout-tip
-## Pour résumer
+## Pour résumer {.unnumbered}
 
 Nous venons essentiellement de faire le cours au complet en accéléré.
 
 Maintenant, nous allons revenir en arrière et apprendre à faire chacune de ces étapes correctement.
 :::
 
-## Et maintenant?
+## Et maintenant? {.unnumbered}
 
 Avant de poursuivre le développement de notre librairie, nous allons revenir sur deux concepts que nous venons déjà d'utiliser sans vraiment les expliquer :
 
