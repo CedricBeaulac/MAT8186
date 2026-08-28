@@ -778,3 +778,7 @@ Avant de poursuivre le développement de notre librairie, nous allons revenir su
 2.  **Git et GitHub**.
 
 Nous pourrons ensuite revenir au développement de notre librairie avec une meilleure compréhension de notre environnement de travail.
+
+## Plus de lecture {.unnumbered}
+
+Je vous recommande de lire [l'introduction](https://r-pkgs.org/introduction.html) et le [Chapitre 1](https://r-pkgs.org/whole-game.html) du manuel de référence. 

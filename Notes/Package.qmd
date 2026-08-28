@@ -1,0 +1,40 @@
+# Conception d'une librairie.
+
+Ce chapitre marque le début de la deuxième séance. Durant cette séance, nous allons voir en profondeur en quoi consiste la structure d’une librairie R et discuter longuement de la conception de fonctions. Si nous aonvs survolé le tout rapidement lors de la première séance, ici nous discuterons en détail des éléments les plus importants de la conception d'une librairie.
+
+## Se demander pourquoi. {.unnumbered}
+
+C'est important de d'abord se poser pourquoi on met au point une librairie. On peut vouloir simplement se faire une librairie pour nous-même; ceci a pour objectif de se doter de nos propres fonctions que l'on désire utiliser régulièrement au fil de nombreuses années. Dans la pluspart des cas, nous désirons malgré tout mettre une librairie au point à fin de la partage; à fin de distribuer de nouvelles méthodes d'analyse de données. 
+
+## Est-ce que ça existe déjà ? {.unnumbered}
+
+Quel que soit la raison qui motive la conception d'une librairie il en vaut la peine de se questionner d'abord s'il y existe déjà une librairie qui accomplit le travaille... et ce n'est pas une tâche facile...
+
+La [source](https://journal.r-project.org/articles/RJ-2018-058/RJ-2018-058.pdf) suivante peut vous guide un peu.
+
+## Nommer sa librairie.
+
+En supposant que votre objectif est claire et qu'il n'y existe pas déjà une libraire capable de faire ce que vous voulez, il semble donc approprié de mettre au point une nouvelle librairie et de s'assurer, au nom de la science, que celle-ci soit éventuellement distribué publiquement.
+
+Vous devrez, à un certains moment, **nommer** votre librairie. Voici quelques règles:
+
+- Seulement des lettres, des chiffres et '.'
+- Doit commencer par une lettre
+- Ne peut pas finir avec '.'
+
+et des considérations:
+
+- Ne copier par de nom existant
+- Garder le nom court
+- Choisissez un nom évocateur, un bon accronym
+- R pour référer au langage.
+
+À travers la librairie `available` on peut vérifier si une librairie porte déjà ce nom:
+
+```{r}
+#| eval: false
+
+library(available)
+
+available("BESTree")
+```

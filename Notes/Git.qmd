@@ -675,3 +675,7 @@ Nous pouvons maintenant connecter un **dépôt Git local** à un **dépôt GitHu
 ## Première partie du projet (évaluation)
 
 Une partie de la première évaluation consiste à crée votre compte GitHub et y héberger votre librairie R!
+
+## Plus de lecture {.unnumbered}
+
+[Ma référence sur le sujet!](https://happygitwithr.com)

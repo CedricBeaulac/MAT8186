@@ -250,6 +250,16 @@
     ]
   },
   {
+    "objectID": "survol.html#plus-de-lecture",
+    "href": "survol.html#plus-de-lecture",
+    "title": "1  Un survol rapide",
+    "section": "Plus de lecture",
+    "text": "Plus de lecture\nJe vous recommande de lire l’introduction et le Chapitre 1 du manuel de référence.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
+    ]
+  },
+  {
     "objectID": "Rproject.html",
     "href": "Rproject.html",
     "title": "2  Projet R",
@@ -587,6 +597,46 @@
     "text": "3.16 Première partie du projet (évaluation)\nUne partie de la première évaluation consiste à crée votre compte GitHub et y héberger votre librairie R!",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Git.html#plus-de-lecture",
+    "href": "Git.html#plus-de-lecture",
+    "title": "3  Git : garder une trace de notre travail",
+    "section": "Plus de lecture",
+    "text": "Plus de lecture\nMa référence sur le sujet!",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html",
+    "href": "Package.html",
+    "title": "4  Conception d’une librairie.",
+    "section": "",
+    "text": "Se demander pourquoi.\nC’est important de d’abord se poser pourquoi on met au point une librairie. On peut vouloir simplement se faire une librairie pour nous-même; ceci a pour objectif de se doter de nos propres fonctions que l’on désire utiliser régulièrement au fil de nombreuses années. Dans la pluspart des cas, nous désirons malgré tout mettre une librairie au point à fin de la partage; à fin de distribuer de nouvelles méthodes d’analyse de données.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#est-ce-que-ça-existe-déjà",
+    "href": "Package.html#est-ce-que-ça-existe-déjà",
+    "title": "4  Conception d’une librairie.",
+    "section": "Est-ce que ça existe déjà ?",
+    "text": "Est-ce que ça existe déjà ?\nQuel que soit la raison qui motive la conception d’une librairie il en vaut la peine de se questionner d’abord s’il y existe déjà une librairie qui accomplit le travaille… et ce n’est pas une tâche facile…\nLa source suivante peut vous guide un peu.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#nommer-sa-librairie.",
+    "href": "Package.html#nommer-sa-librairie.",
+    "title": "4  Conception d’une librairie.",
+    "section": "4.1 Nommer sa librairie.",
+    "text": "4.1 Nommer sa librairie.\nEn supposant que votre objectif est claire et qu’il n’y existe pas déjà une libraire capable de faire ce que vous voulez, il semble donc approprié de mettre au point une nouvelle librairie et de s’assurer, au nom de la science, que celle-ci soit éventuellement distribué publiquement.\nVous devrez, à un certains moment, nommer votre librairie. Voici quelques règles:\n\nSeulement des lettres, des chiffres et ‘.’\nDoit commencer par une lettre\nNe peut pas finir avec ‘.’\n\net des considérations:\n\nNe copier par de nom existant\nGarder le nom court\nChoisissez un nom évocateur, un bon accronym\nR pour référer au langage.\n\nÀ travers la librairie available on peut vérifier si une librairie porte déjà ce nom:\n\nlibrary(available)\n\navailable(\"BESTree\")",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
     ]
   }
 ]

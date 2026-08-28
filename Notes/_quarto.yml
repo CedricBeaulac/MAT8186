@@ -11,6 +11,7 @@ book:
     - survol.qmd
     - Rproject.qmd
     - Git.qmd
+    - Package.qmd
     - references.qmd
 
 bibliography: references.bib
