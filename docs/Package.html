@@ -189,6 +189,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#se-demander-pourquoi." id="toc-se-demander-pourquoi." class="nav-link active" data-scroll-target="#se-demander-pourquoi.">Se demander pourquoi.</a></li>
   <li><a href="#est-ce-que-ça-existe-déjà" id="toc-est-ce-que-ça-existe-déjà" class="nav-link" data-scroll-target="#est-ce-que-ça-existe-déjà">Est-ce que ça existe déjà ?</a></li>
   <li><a href="#nommer-sa-librairie." id="toc-nommer-sa-librairie." class="nav-link" data-scroll-target="#nommer-sa-librairie."><span class="header-section-number">4.1</span> Nommer sa librairie.</a></li>
+  <li><a href="#procédure-de-vérification" id="toc-procédure-de-vérification" class="nav-link" data-scroll-target="#procédure-de-vérification"><span class="header-section-number">4.2</span> Procédure de vérification</a></li>
   </ul>
 </nav>
     </div>
@@ -246,6 +247,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">available</span>(<span class="st">"BESTree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="procédure-de-vérification" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="procédure-de-vérification"><span class="header-section-number">4.2</span> Procédure de vérification</h2>
+<p>Une fois que l’on travaille sur notre librairie, on va régulièrement vérifié que nos fonctions performent les opérations qu’elles doivent. Une manière <strong>d’installer</strong> la version en développement de notre librairie est par la commande <code>load_all()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with devtools attached and</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># working directory set to top-level of your source package ...</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ... now experiment with the functions in your package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cela motive une approche itérative pour le développement de librairie:</p>
+<ol type="1">
+<li>Modifie la fonction</li>
+<li><code>load_all()</code></li>
+<li>Utilise la fonction pour voir l’effet de la modification</li>
+</ol>
+<p>En installant la version en développement de notre librairie on peut tester divers fonctionnalités. Une fois que tout fonctionne comme on le veu, on vérifie si le tout peut être déployé en utilisant <code>check()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>S’ajoute alors les étapes suivantes pour le déploiement:</p>
+<ol type="1">
+<li>Utilise <code>devtools::check()</code></li>
+<li>Résoudre les problèmes soulevés</li>
+<li>Répété jusqu’à ce qu’il n’y aie pu de problème.</li>
+</ol>
 
 
 </section>

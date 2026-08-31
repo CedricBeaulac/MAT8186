@@ -16,14 +16,14 @@ setwd("C:/Users/MYPC/Desktop/MAT8186")
 
 Le problème apparaît rapidement lorsque :
 
-* le projet est déplacé vers un autre répertoire;
-* le projet est synchronisé avec un service infonuagique;
-* le projet est partagé avec un collègue;
-* le projet est téléchargé sur un autre ordinateur.
+- le projet est déplacé vers un autre répertoire;
+- le projet est synchronisé avec un service infonuagique;
+- le projet est partagé avec un collègue;
+- le projet est téléchargé sur un autre ordinateur.
 
 Par exemple, le chemin
 
-```text
+``` text
 C:/Users/MYPC/Desktop/MAT8186
 ```
 
@@ -31,7 +31,7 @@ n'existe probablement pas sur votre ordinateur.
 
 On aimerait donc que notre code puisse fonctionner **indépendamment de l'endroit où le projet est enregistré**.
 
-::: {.callout-important}
+::: callout-important
 ## Un principe important
 
 Notre code ne devrait pas dépendre de l'emplacement exact du projet sur notre ordinateur.
@@ -41,7 +41,7 @@ Notre code ne devrait pas dépendre de l'emplacement exact du projet sur notre o
 
 Un **projet RStudio** permet de regrouper dans un même répertoire tout ce qui est associé à une tâche :
 
-```text
+``` text
 mon_projet/
 ├── mon_projet.Rproj
 ├── R/
@@ -56,7 +56,7 @@ Lorsque nous ouvrons ce fichier, RStudio ouvre le projet et utilise automatiquem
 
 Autrement dit, si notre projet est :
 
-```text
+``` text
 C:/Users/MYPC/Desktop/MAT8186/
 ```
 
@@ -70,19 +70,19 @@ getwd()
 
 retournera quelque chose comme :
 
-```text
+``` text
 C:/Users/MYPC/Desktop/MAT8186
 ```
 
 Mais si un autre utilisateur place exactement le même projet dans :
 
-```text
+``` text
 C:/Users/YOURPC/Documents/MAT8186/
 ```
 
 la racine de son projet sera automatiquement :
 
-```text
+``` text
 C:/Users/YOURPC/Documents/MAT8186
 ```
 
@@ -94,7 +94,7 @@ C'est ici qu'apparaît l'un des principaux avantages du projet.
 
 Supposons que notre structure soit :
 
-```text
+``` text
 MAT8186/
 ├── MAT8186.Rproj
 ├── data/
@@ -126,7 +126,7 @@ Le chemin est maintenant **relatif à la racine du projet**.
 
 Si nous déplaçons tout le projet ailleurs, le chemin
 
-```text
+``` text
 data/donnees.csv
 ```
 
@@ -134,12 +134,12 @@ demeure valide.
 
 Il fonctionnera également sur l'ordinateur d'un collègue qui possède la même structure de projet.
 
-::: {.callout-tip}
+::: callout-tip
 ## Une bonne règle
 
 Si votre code contient :
 
-```r
+``` r
 setwd("C:/Users/mon_nom/...")
 ```
 
@@ -152,7 +152,7 @@ R et RStudio peuvent conserver automatiquement une partie de notre environnement
 
 Deux fichiers que vous avez peut-être déjà rencontrés sont :
 
-```text
+``` text
 .RData
 .Rhistory
 ```
@@ -179,19 +179,19 @@ Pour cette raison, il est généralement recommandé de ne pas restaurer automat
 
 Nous pouvons configurer ce comportement dans :
 
-```text
+``` text
 Tools -> Global Options -> General
 ```
 
 et choisir notamment :
 
-```text
+``` text
 Restore .RData into workspace at startup : NON
 
 Save workspace to .RData on exit : Never
 ```
 
-::: {.callout-note}
+::: callout-note
 ## Reproductibilité
 
 Une bonne question à se poser est :
@@ -201,17 +201,17 @@ Une bonne question à se poser est :
 Si la réponse est oui, nous sommes sur la bonne voie.
 :::
 
-## Créer un projet 
+## Créer un projet
 
 Lorsque nous commençons sérieusement une nouvelle tâche -- une analyse de données, la rédaction de notes Quarto ou le développement d'une librairie -- nous pouvons créer un projet avec :
 
-```text
+``` text
 File -> New Project
 ```
 
 RStudio nous offre notamment trois possibilités :
 
-```text
+``` text
 New Directory
 Existing Directory
 Version Control
@@ -219,13 +219,13 @@ Version Control
 
 Nous pouvons donc :
 
-* créer simultanément un nouveau répertoire et un nouveau projet;
-* transformer un répertoire existant en projet RStudio;
-* récupérer un projet existant à partir d'un dépôt Git.
+- créer simultanément un nouveau répertoire et un nouveau projet;
+- transformer un répertoire existant en projet RStudio;
+- récupérer un projet existant à partir d'un dépôt Git.
 
 Lors de la création du projet, RStudio crée notamment un fichier :
 
-```text
+``` text
 nom_du_projet.Rproj
 ```
 
@@ -233,7 +233,7 @@ Par la suite, lorsque nous voulons travailler sur ce projet, nous ouvrons **le p
 
 Nous obtenons ainsi un environnement de travail bien délimité :
 
-```text
+``` text
 Projet A
 ├── données
 ├── code
@@ -249,6 +249,12 @@ Projet B
 
 Les différents projets demeurent ainsi bien séparés les uns des autres.
 
+## En résumé {.unnumbered}
+
+* Facile à ouvrir
+* Isolé
+* Gère bien le répertoire
+
 ## Et notre librairie? {.unnumbered}
 
 Nous avons en fait déjà utilisé un projet RStudio!
@@ -263,7 +269,7 @@ usethis::create_package("mat8186demo")
 
 nous avons obtenu quelque chose comme :
 
-```text
+``` text
 mat8186demo/
 ├── mat8186demo.Rproj
 ├── DESCRIPTION
@@ -283,7 +289,7 @@ usethis::use_git()
 
 Notre même répertoire est maintenant :
 
-```text
+``` text
 un répertoire
       +
 un projet RStudio

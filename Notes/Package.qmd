@@ -38,3 +38,36 @@ library(available)
 
 available("BESTree")
 ```
+
+## Procédure de vérification
+
+Une fois que l'on travaille sur notre librairie, on va régulièrement vérifié que nos fonctions performent les opérations qu'elles doivent. Une manière **d'installer** la version en développement de notre librairie est par la commande `load_all()`:
+
+```{r}
+#| eval: false
+# with devtools attached and
+# working directory set to top-level of your source package ...
+
+load_all()
+
+# ... now experiment with the functions in your package
+```
+
+Cela motive une approche itérative pour le développement de librairie:
+
+1. Modifie la fonction
+2. `load_all()`
+3. Utilise la fonction pour voir l'effet de la modification
+
+En installant la version en développement de notre librairie on peut tester divers fonctionnalités. Une fois que tout fonctionne comme on le veu, on vérifie si le tout peut être déployé en utilisant `check()`:
+
+```{r}
+#| eval: false
+devtools::check()
+```
+
+S'ajoute alors les étapes suivantes pour le déploiement:
+
+1. Utilise `devtools::check()`
+2. Résoudre les problèmes soulevés
+3. Répété jusqu'à ce qu'il n'y aie pu de problème.

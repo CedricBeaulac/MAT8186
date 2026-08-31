@@ -320,6 +320,16 @@
     ]
   },
   {
+    "objectID": "Rproject.html#en-résumé",
+    "href": "Rproject.html#en-résumé",
+    "title": "2  Projet R",
+    "section": "En résumé",
+    "text": "En résumé\n\nFacile à ouvrir\nIsolé\nGère bien le répertoire",
+    "crumbs": [
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
+    ]
+  },
+  {
     "objectID": "Rproject.html#et-notre-librairie",
     "href": "Rproject.html#et-notre-librairie",
     "title": "2  Projet R",
@@ -635,6 +645,16 @@
     "title": "4  Conception d’une librairie.",
     "section": "4.1 Nommer sa librairie.",
     "text": "4.1 Nommer sa librairie.\nEn supposant que votre objectif est claire et qu’il n’y existe pas déjà une libraire capable de faire ce que vous voulez, il semble donc approprié de mettre au point une nouvelle librairie et de s’assurer, au nom de la science, que celle-ci soit éventuellement distribué publiquement.\nVous devrez, à un certains moment, nommer votre librairie. Voici quelques règles:\n\nSeulement des lettres, des chiffres et ‘.’\nDoit commencer par une lettre\nNe peut pas finir avec ‘.’\n\net des considérations:\n\nNe copier par de nom existant\nGarder le nom court\nChoisissez un nom évocateur, un bon accronym\nR pour référer au langage.\n\nÀ travers la librairie available on peut vérifier si une librairie porte déjà ce nom:\n\nlibrary(available)\n\navailable(\"BESTree\")",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#procédure-de-vérification",
+    "href": "Package.html#procédure-de-vérification",
+    "title": "4  Conception d’une librairie.",
+    "section": "4.2 Procédure de vérification",
+    "text": "4.2 Procédure de vérification\nUne fois que l’on travaille sur notre librairie, on va régulièrement vérifié que nos fonctions performent les opérations qu’elles doivent. Une manière d’installer la version en développement de notre librairie est par la commande load_all():\n\n# with devtools attached and\n# working directory set to top-level of your source package ...\n\nload_all()\n\n# ... now experiment with the functions in your package\n\nCela motive une approche itérative pour le développement de librairie:\n\nModifie la fonction\nload_all()\nUtilise la fonction pour voir l’effet de la modification\n\nEn installant la version en développement de notre librairie on peut tester divers fonctionnalités. Une fois que tout fonctionne comme on le veu, on vérifie si le tout peut être déployé en utilisant check():\n\ndevtools::check()\n\nS’ajoute alors les étapes suivantes pour le déploiement:\n\nUtilise devtools::check()\nRésoudre les problèmes soulevés\nRépété jusqu’à ce qu’il n’y aie pu de problème.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
     ]
