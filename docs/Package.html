@@ -189,7 +189,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#se-demander-pourquoi." id="toc-se-demander-pourquoi." class="nav-link active" data-scroll-target="#se-demander-pourquoi.">Se demander pourquoi.</a></li>
   <li><a href="#est-ce-que-ça-existe-déjà" id="toc-est-ce-que-ça-existe-déjà" class="nav-link" data-scroll-target="#est-ce-que-ça-existe-déjà">Est-ce que ça existe déjà ?</a></li>
   <li><a href="#nommer-sa-librairie." id="toc-nommer-sa-librairie." class="nav-link" data-scroll-target="#nommer-sa-librairie."><span class="header-section-number">4.1</span> Nommer sa librairie.</a></li>
-  <li><a href="#procédure-de-vérification" id="toc-procédure-de-vérification" class="nav-link" data-scroll-target="#procédure-de-vérification"><span class="header-section-number">4.2</span> Procédure de vérification</a></li>
+  <li><a href="#organisation-des-fonctions" id="toc-organisation-des-fonctions" class="nav-link" data-scroll-target="#organisation-des-fonctions"><span class="header-section-number">4.2</span> Organisation des fonctions</a></li>
+  <li><a href="#procédure-de-vérification" id="toc-procédure-de-vérification" class="nav-link" data-scroll-target="#procédure-de-vérification"><span class="header-section-number">4.3</span> Procédure de vérification</a></li>
   </ul>
 </nav>
     </div>
@@ -247,17 +248,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">available</span>(<span class="st">"BESTree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Une fois que nous avons déterminer un nom et crée notre répertoire (projet R), on va de l’avant et on crée notre librairie:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_package</span>(<span class="st">"MaLibrairie"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="procédure-de-vérification" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="procédure-de-vérification"><span class="header-section-number">4.2</span> Procédure de vérification</h2>
+<section id="organisation-des-fonctions" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="organisation-des-fonctions"><span class="header-section-number">4.2</span> Organisation des fonctions</h2>
+<p>En général, une librairie est la mise en opération de plusieurs fonctions R. Il est donc naturel de discuter de ces fonctions et de leur organisations. Pour l’instant, ce que nous appelons une fonctions R à la forme suivante:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>addition <span class="ot">&lt;-</span> <span class="cf">function</span>(x,y){</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(x<span class="sc">+</span>y)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous verrons prochainement, comment appelé des fonctions d’autres librairies (dépendances), ou bien de d’autres languages (intégrations).</p>
+<p>Pour l’instant, on va surtout se concentrer sur l’organisation de ces fonctions. Tout d’abord, il y a très peu de <em>règles</em> en ce qui concerne la librairie:</p>
+<ul>
+<li>Toutes les fonctions de la librairies doivent être sauvegarder dans des documents R (.R)</li>
+<li>Tout ces documents doivent être dans le répertoire R/ de la librairie.</li>
+</ul>
+<p>Maintenant, nous pouvons nommes ces documents .R comme nous le voulons et ceux-ci peuvent contenir plus d’une fonction. À vrai dire, c’est un défi intéressant d’organiser de déterminer combien de document .R nous avons, comment appelé ces documents, combien de fonctions ils contiennent, etc..</p>
+<p>En pratique, on recommande un <em>juste milieu</em> entre les deux extrêmes, soit un document contenant toutes les fonctions et un document par fonction.</p>
+<p>Un structure courante est de séparer les fonctions dites <em>visibles</em> des fonctions <em>invisibles</em>. Les fonctions visibles peuvent être appelés par les utilisateurs de la libraires, souvent organisé dans un fichier <code>fonctions.R</code> alors que les fonctions dites invisibles servent au bon fonctionnement de la libraires et sont souvent appelé par les fonctions visibles organisé dans un fichier <code>utils.R</code>.</p>
+<p>Les fonctions des divers documents .R peuvent tous être appelé sans aucune configuration spéciale.</p>
+</section>
+<section id="procédure-de-vérification" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="procédure-de-vérification"><span class="header-section-number">4.3</span> Procédure de vérification</h2>
 <p>Une fois que l’on travaille sur notre librairie, on va régulièrement vérifié que nos fonctions performent les opérations qu’elles doivent. Une manière <strong>d’installer</strong> la version en développement de notre librairie est par la commande <code>load_all()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with devtools attached and</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># working directory set to top-level of your source package ...</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ... now experiment with the functions in your package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># with devtools attached and</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># working directory set to top-level of your source package ...</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">load_all</span>()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># ... now experiment with the functions in your package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Cela motive une approche itérative pour le développement de librairie:</p>
 <ol type="1">
@@ -267,7 +291,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>En installant la version en développement de notre librairie on peut tester divers fonctionnalités. Une fois que tout fonctionne comme on le veu, on vérifie si le tout peut être déployé en utilisant <code>check()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>S’ajoute alors les étapes suivantes pour le déploiement:</p>
 <ol type="1">

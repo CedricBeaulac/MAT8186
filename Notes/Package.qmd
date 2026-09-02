@@ -39,6 +39,39 @@ library(available)
 available("BESTree")
 ```
 
+Une fois que nous avons déterminer un nom et crée notre répertoire (projet R), on va de l'avant et on crée notre librairie:
+
+```{r}
+#| eval: false
+
+create_package("MaLibrairie")
+```
+
+## Organisation des fonctions
+
+En général, une librairie est la mise en opération de plusieurs fonctions R. Il est donc naturel de discuter de ces fonctions et de leur organisations. Pour l'instant, ce que nous appelons une fonctions R à la forme suivante:
+
+```{r}
+addition <- function(x,y){
+  return(x+y)
+}
+```
+
+Nous verrons prochainement, comment appelé des fonctions d'autres librairies (dépendances), ou bien de d'autres languages (intégrations). 
+
+Pour l'instant, on va surtout se concentrer sur l'organisation de ces fonctions. Tout d'abord, il y a très peu de *règles* en ce qui concerne la librairie:
+
+* Toutes les fonctions de la librairies doivent être sauvegarder dans des documents R (.R)
+* Tout ces documents doivent être dans le répertoire R/ de la librairie.
+
+Maintenant, nous pouvons nommes ces documents .R comme nous le voulons et ceux-ci peuvent contenir plus d'une fonction. À vrai dire, c'est un défi intéressant d'organiser de déterminer combien de document .R nous avons, comment appelé ces documents, combien de fonctions ils contiennent, etc..
+
+En pratique, on recommande un *juste milieu* entre les deux extrêmes, soit un document contenant toutes les fonctions et un document par fonction. 
+
+Un structure courante est de séparer les fonctions dites *visibles* des fonctions *invisibles*. Les fonctions visibles peuvent être appelés par les utilisateurs de la libraires, souvent organisé dans un fichier `fonctions.R` alors que les fonctions dites invisibles servent au bon fonctionnement de la libraires et sont souvent appelé par les fonctions visibles organisé dans un fichier `utils.R`. 
+
+Les fonctions des divers documents .R peuvent tous être appelé sans aucune configuration spéciale.
+
 ## Procédure de vérification
 
 Une fois que l'on travaille sur notre librairie, on va régulièrement vérifié que nos fonctions performent les opérations qu'elles doivent. Une manière **d'installer** la version en développement de notre librairie est par la commande `load_all()`:
@@ -71,3 +104,4 @@ S'ajoute alors les étapes suivantes pour le déploiement:
 1. Utilise `devtools::check()`
 2. Résoudre les problèmes soulevés
 3. Répété jusqu'à ce qu'il n'y aie pu de problème.
+
