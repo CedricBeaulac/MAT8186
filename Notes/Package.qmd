@@ -72,6 +72,16 @@ Un structure courante est de séparer les fonctions dites *visibles* des fonctio
 
 Les fonctions des divers documents .R peuvent tous être appelé sans aucune configuration spéciale.
 
+::: callout-important
+## Sur CRAN
+
+Si vous désirez publier la librairie sur CRAN vous êtes limité dans les charactères que vous pouvez utilisez dans l'écriture de vos fonctions. 
+
+In practice, this means you are limited to the digits 0 to 9, lowercase letters ‘a’ to ‘z’, uppercase letters ‘A’ to ‘Z’, and common punctuation.
+
+But sometimes you need to inline a small bit of character data that includes, e.g., a Greek letter (µ), an accented character (ü), or a symbol (30°). You can use any Unicode character as long as you specify it in the special Unicode escape "\u1234" format. 
+:::
+
 ## Procédure de vérification
 
 Une fois que l'on travaille sur notre librairie, on va régulièrement vérifié que nos fonctions performent les opérations qu'elles doivent. Une manière **d'installer** la version en développement de notre librairie est par la commande `load_all()`:

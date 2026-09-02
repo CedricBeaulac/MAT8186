@@ -271,6 +271,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>En pratique, on recommande un <em>juste milieu</em> entre les deux extrêmes, soit un document contenant toutes les fonctions et un document par fonction.</p>
 <p>Un structure courante est de séparer les fonctions dites <em>visibles</em> des fonctions <em>invisibles</em>. Les fonctions visibles peuvent être appelés par les utilisateurs de la libraires, souvent organisé dans un fichier <code>fonctions.R</code> alors que les fonctions dites invisibles servent au bon fonctionnement de la libraires et sont souvent appelé par les fonctions visibles organisé dans un fichier <code>utils.R</code>.</p>
 <p>Les fonctions des divers documents .R peuvent tous être appelé sans aucune configuration spéciale.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sur CRAN
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si vous désirez publier la librairie sur CRAN vous êtes limité dans les charactères que vous pouvez utilisez dans l’écriture de vos fonctions.</p>
+<p>In practice, this means you are limited to the digits 0 to 9, lowercase letters ‘a’ to ‘z’, uppercase letters ‘A’ to ‘Z’, and common punctuation.</p>
+<p>But sometimes you need to inline a small bit of character data that includes, e.g., a Greek letter (µ), an accented character (ü), or a symbol (30°). You can use any Unicode character as long as you specify it in the special Unicode escape “234” format.</p>
+</div>
+</div>
 </section>
 <section id="procédure-de-vérification" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="procédure-de-vérification"><span class="header-section-number">4.3</span> Procédure de vérification</h2>
