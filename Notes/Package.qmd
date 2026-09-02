@@ -1171,7 +1171,7 @@ Ctrl + Shift + D
 
 pour générer la documentation.
 
-# Voir la documentation
+## Voir la documentation
 
 Après :
 
@@ -1293,7 +1293,7 @@ Nous placerons nos tests dans :
 tests/testthat/
 ```
 
-# Créer un premier fichier de tests
+## Créer un premier fichier de tests
 
 Pour créer des tests correspondant à :
 

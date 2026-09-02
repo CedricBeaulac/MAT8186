@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Notes de cours - MAT8186",
     "section": "",
-    "text": "Index\nIl s’agit d’un livre Quarto contenant le matériel du cours MAT8186.\nCe matériel fut conçu pour un cours de 15 heures organisé en 5 séances de 3 heures. L’objectif du cours est d’amener les étudiants à développer leur propres librairies R et s’inspire fortement du livre R Packages.",
+    "text": "Index\nIl s’agit d’un livre Quarto contenant le matériel du cours MAT8186.\nCe matériel fut conçu pour un cours de 15 heures organisé en 5 séances de 3 heures. L’objectif du cours est d’amener les étudiants à développer leur propres librairies R et s’inspire fortement du livre R Packages.\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
     "crumbs": [
       "Index"
     ]
@@ -254,7 +254,7 @@
     "href": "survol.html#plus-de-lecture",
     "title": "1  Un survol rapide",
     "section": "Plus de lecture",
-    "text": "Plus de lecture\nJe vous recommande de lire l’introduction et le Chapitre 1 du manuel de référence.",
+    "text": "Plus de lecture\nJe vous recommande de lire l’introduction et le Chapitre 1 du manuel de référence.\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Un survol rapide</span>"
     ]
@@ -344,7 +344,7 @@
     "href": "Rproject.html#git-et-github",
     "title": "2  Projet R",
     "section": "2.5 Git et GitHub",
-    "text": "2.5 Git et GitHub\nNous avons déjà créé un dépôt Git sans vraiment expliquer ce que cela signifie.\nIl est maintenant temps de revenir sur Git, puis de comprendre son lien avec GitHub.",
+    "text": "2.5 Git et GitHub\nNous avons déjà créé un dépôt Git sans vraiment expliquer ce que cela signifie.\nIl est maintenant temps de revenir sur Git, puis de comprendre son lien avec GitHub.\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Projet R</span>"
     ]
@@ -614,7 +614,7 @@
     "href": "Git.html#plus-de-lecture",
     "title": "3  Git : garder une trace de notre travail",
     "section": "Plus de lecture",
-    "text": "Plus de lecture\nMa référence sur le sujet!",
+    "text": "Plus de lecture\nMa référence sur le sujet!\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Git : garder une trace de notre travail</span>"
     ]
@@ -930,11 +930,21 @@
     ]
   },
   {
+    "objectID": "Package.html#voir-la-documentation",
+    "href": "Package.html#voir-la-documentation",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.17 Voir la documentation",
+    "text": "4.17 Voir la documentation\nAprès :\n\ndevtools::document()\n\ndevtools::load_all()\n\nnous pouvons utiliser :\n\n?rescale01\n\nLa page d’aide devrait apparaître exactement comme pour une fonction provenant d’une librairie installée depuis CRAN.\nNous obtenons donc un deuxième cycle de développement :\nModifier la fonction\n        ↓\nModifier sa documentation\n        ↓\n    document()\n        ↓\n    load_all()\n        ↓\n  consulter ?fonction\n        ↓\n     recommencer\n\n\n\n\n\n\nRStudio peut nous aider\n\n\n\nLorsque le curseur est placé dans une fonction, RStudio permet de créer automatiquement une structure de documentation avec :\nCode → Insert Roxygen Skeleton\nCela peut être particulièrement pratique pour une fonction avec plusieurs arguments.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
     "objectID": "Package.html#tester-nos-fonctions",
     "href": "Package.html#tester-nos-fonctions",
     "title": "4  Conception d’une librairie R",
-    "section": "5.1 Tester nos fonctions",
-    "text": "5.1 Tester nos fonctions\nNous avons maintenant :\n\nécrit une fonction;\nessayé cette fonction;\ndocumenté cette fonction.\n\nMais il manque encore une étape importante.\nComment savoir si notre fonction continuera à fonctionner demain?\nSupposons que notre fonction soit :\n\nCR &lt;- function(x) { (x - mean(x)) / sd(x) }\n\nNous pouvons essayer manuellement :\n\nCR(c(10, 20, 30))\n\net vérifier que le résultat est :\n-1 0 1\nMais si nous modifions la fonction dans six mois, nous devrons nous souvenir de refaire manuellement ce test.\nCe n’est pas réaliste pour une librairie contenant des dizaines ou des centaines de fonctions.\nNous allons donc automatiser nos vérifications.",
+    "section": "4.18 Tester nos fonctions",
+    "text": "4.18 Tester nos fonctions\nNous avons maintenant :\n\nécrit une fonction;\nessayé cette fonction;\ndocumenté cette fonction.\n\nMais il manque encore une étape importante.\nComment savoir si notre fonction continuera à fonctionner demain?\nSupposons que notre fonction soit :\n\nCR &lt;- function(x) { (x - mean(x)) / sd(x) }\n\nNous pouvons essayer manuellement :\n\nCR(c(10, 20, 30))\n\net vérifier que le résultat est :\n-1 0 1\nMais si nous modifions la fonction dans six mois, nous devrons nous souvenir de refaire manuellement ce test.\nCe n’est pas réaliste pour une librairie contenant des dizaines ou des centaines de fonctions.\nNous allons donc automatiser nos vérifications.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
@@ -943,8 +953,18 @@
     "objectID": "Package.html#tests-unitaires",
     "href": "Package.html#tests-unitaires",
     "title": "4  Conception d’une librairie R",
-    "section": "5.2 Tests unitaires",
-    "text": "5.2 Tests unitaires\nUn test unitaire vérifie qu’une petite partie de notre code possède le comportement attendu.\nPour nos librairies R, nous utiliserons principalement :\ntestthat\ntestthat est intégré naturellement au workflow devtools.\nPour ajouter l’infrastructure de tests à notre librairie :\n\nusethis::use_testthat()\n\nCette commande crée notamment :\ntests/\n├── testthat.R\n└── testthat/\nNous placerons nos tests dans :\ntests/testthat/",
+    "section": "4.19 Tests unitaires",
+    "text": "4.19 Tests unitaires\nUn test unitaire vérifie qu’une petite partie de notre code possède le comportement attendu.\nPour nos librairies R, nous utiliserons principalement :\ntestthat\ntestthat est intégré naturellement au workflow devtools.\nPour ajouter l’infrastructure de tests à notre librairie :\n\nusethis::use_testthat()\n\nCette commande crée notamment :\ntests/\n├── testthat.R\n└── testthat/\nNous placerons nos tests dans :\ntests/testthat/",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#créer-un-premier-fichier-de-tests",
+    "href": "Package.html#créer-un-premier-fichier-de-tests",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.20 Créer un premier fichier de tests",
+    "text": "4.20 Créer un premier fichier de tests\nPour créer des tests correspondant à :\nR/CR.R\nnous pouvons utiliser :\n\nusethis::use_test(\"CR\")\n\nCette commande crée :\ntests/testthat/test-CR.R\nUne organisation pratique consiste donc à avoir :\nR/\n└── rescale01.R\n\ntests/\n└── testthat/\n    └── test-rescale01.R\nLes fichiers de tests doivent commencer par :\ntest-",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
@@ -963,8 +983,8 @@
     "objectID": "Package.html#les-attentes",
     "href": "Package.html#les-attentes",
     "title": "4  Conception d’une librairie R",
-    "section": "6.1 Les attentes",
-    "text": "6.1 Les attentes\ntestthat fournit plusieurs fonctions commençant par :\nexpect_\nPar exemple :\n\nexpect_equal(x, y)\n\nexpect_true(x)\n\nexpect_false(x)\n\nexpect_null(x)\n\nexpect_error(expression)\n\nexpect_warning(expression)\n\nexpect_type(x, \"double\")\n\nLe choix dépend du comportement que nous voulons vérifier.\nPar exemple :\n\ntest_that(\"addition retourne la bonne valeur\", {\n\n  expect_equal(\n    addition(2, 3),\n    5\n  )\n\n})\n\nou :\n\ntest_that(\"addition refuse les caractères\", {\n\n  expect_error(\n    addition(\"bonjour\", 3)\n  )\n\n})",
+    "section": "4.21 Les attentes",
+    "text": "4.21 Les attentes\ntestthat fournit plusieurs fonctions commençant par :\nexpect_\nPar exemple :\n\nexpect_equal(x, y)\n\nexpect_true(x)\n\nexpect_false(x)\n\nexpect_null(x)\n\nexpect_error(expression)\n\nexpect_warning(expression)\n\nexpect_type(x, \"double\")\n\nLe choix dépend du comportement que nous voulons vérifier.\nPar exemple :\n\ntest_that(\"addition retourne la bonne valeur\", {\n\n  expect_equal(\n    addition(2, 3),\n    5\n  )\n\n})\n\nou :\n\ntest_that(\"addition refuse les caractères\", {\n\n  expect_error(\n    addition(\"bonjour\", 3)\n  )\n\n})",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
@@ -973,8 +993,8 @@
     "objectID": "Package.html#tester-plusieurs-comportements",
     "href": "Package.html#tester-plusieurs-comportements",
     "title": "4  Conception d’une librairie R",
-    "section": "6.2 Tester plusieurs comportements",
-    "text": "6.2 Tester plusieurs comportements\nUn fichier peut contenir plusieurs tests :\n\ntest_that(\"CR transforme la moyenne du vecteur et la variance\", {\n\n  resultat &lt;- CR(c(10, 20, 30))\n\n  expect_equal(mean(resultat), 0)\n  expect_equal(var(resultat), 1)\n\n})\n\n\ntest_that(\"CR conserve la longueur du vecteur\", {\n\n  x &lt;- c(10, 20, 30, 40)\n\n  expect_length(\n    rescale01(x),\n    length(x)\n  )\n\n})\n\nRemarquons ici une idée importante.\nNous ne testons pas nécessairement comment la fonction effectue son calcul.\nNous testons plutôt le comportement que nous voulons garantir.\nCette distinction devient très importante lorsque nous modifions l’implémentation d’une fonction.",
+    "section": "4.22 Tester plusieurs comportements",
+    "text": "4.22 Tester plusieurs comportements\nUn fichier peut contenir plusieurs tests :\n\ntest_that(\"CR transforme la moyenne du vecteur et la variance\", {\n\n  resultat &lt;- CR(c(10, 20, 30))\n\n  expect_equal(mean(resultat), 0)\n  expect_equal(var(resultat), 1)\n\n})\n\n\ntest_that(\"CR conserve la longueur du vecteur\", {\n\n  x &lt;- c(10, 20, 30, 40)\n\n  expect_length(\n    rescale01(x),\n    length(x)\n  )\n\n})\n\nRemarquons ici une idée importante.\nNous ne testons pas nécessairement comment la fonction effectue son calcul.\nNous testons plutôt le comportement que nous voulons garantir.\nCette distinction devient très importante lorsque nous modifions l’implémentation d’une fonction.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
@@ -983,8 +1003,8 @@
     "objectID": "Package.html#exécuter-les-tests",
     "href": "Package.html#exécuter-les-tests",
     "title": "4  Conception d’une librairie R",
-    "section": "6.3 Exécuter les tests",
-    "text": "6.3 Exécuter les tests\nPour lancer tous les tests de la librairie :\n\ndevtools::test()\n\nSi les tests fonctionnent, testthat nous indiquera que les attentes ont été satisfaites.\nSi un test échoue, nous obtenons de l’information sur :\n\nle test qui a échoué;\nle résultat attendu;\nle résultat obtenu.\n\nNous pouvons donc corriger notre code immédiatement.",
+    "section": "4.23 Exécuter les tests",
+    "text": "4.23 Exécuter les tests\nPour lancer tous les tests de la librairie :\n\ndevtools::test()\n\nSi les tests fonctionnent, testthat nous indiquera que les attentes ont été satisfaites.\nSi un test échoue, nous obtenons de l’information sur :\n\nle test qui a échoué;\nle résultat attendu;\nle résultat obtenu.\n\nNous pouvons donc corriger notre code immédiatement.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
@@ -993,8 +1013,8 @@
     "objectID": "Package.html#pourquoi-tester",
     "href": "Package.html#pourquoi-tester",
     "title": "4  Conception d’une librairie R",
-    "section": "6.4 Pourquoi tester?",
-    "text": "6.4 Pourquoi tester?\nLes tests peuvent sembler représenter du travail supplémentaire.\nAprès tout, nous devons :\n\nécrire la fonction;\nécrire la documentation;\nécrire des tests.\n\nCependant, les tests deviennent particulièrement utiles lorsque :\n\nla librairie grossit;\nplusieurs personnes collaborent;\nnous modifions une fonction existante;\nnous corrigeons un bogue;\nnous changeons une dépendance;\nnous ajoutons de nouvelles fonctionnalités.\n\nSupposons que nous modifiions complètement l’implémentation de :\nCR()\nSi tous les tests continuent à réussir, nous gagnons rapidement de la confiance que le comportement attendu de la fonction n’a pas changé.\n\n\n\n\n\n\nUn bogue est une excellente occasion d’écrire un test\n\n\n\nLorsqu’un utilisateur découvre un bogue :\n\nécrivez un test reproduisant le bogue;\nvérifiez que le test échoue;\ncorrigez le code;\nvérifiez que le test réussit.\n\nLe test empêche ensuite le même bogue de réapparaître silencieusement dans une version future.",
+    "section": "4.24 Pourquoi tester?",
+    "text": "4.24 Pourquoi tester?\nLes tests peuvent sembler représenter du travail supplémentaire.\nAprès tout, nous devons :\n\nécrire la fonction;\nécrire la documentation;\nécrire des tests.\n\nCependant, les tests deviennent particulièrement utiles lorsque :\n\nla librairie grossit;\nplusieurs personnes collaborent;\nnous modifions une fonction existante;\nnous corrigeons un bogue;\nnous changeons une dépendance;\nnous ajoutons de nouvelles fonctionnalités.\n\nSupposons que nous modifiions complètement l’implémentation de :\nCR()\nSi tous les tests continuent à réussir, nous gagnons rapidement de la confiance que le comportement attendu de la fonction n’a pas changé.\n\n\n\n\n\n\nUn bogue est une excellente occasion d’écrire un test\n\n\n\nLorsqu’un utilisateur découvre un bogue :\n\nécrivez un test reproduisant le bogue;\nvérifiez que le test échoue;\ncorrigez le code;\nvérifiez que le test réussit.\n\nLe test empêche ensuite le même bogue de réapparaître silencieusement dans une version future.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
@@ -1003,8 +1023,8 @@
     "objectID": "Package.html#que-faut-il-tester",
     "href": "Package.html#que-faut-il-tester",
     "title": "4  Conception d’une librairie R",
-    "section": "6.5 Que faut-il tester?",
-    "text": "6.5 Que faut-il tester?\nIl n’est pas nécessaire de tester chaque ligne de code.\nNous voulons surtout tester les comportements importants.\nPar exemple :\nCas normal\nCas limite\nEntrée invalide\nValeurs manquantes\nObjet vide\nValeurs extrêmes\nPour une fonction :\nmoyenne_robuste(x)\nnous pourrions tester :\n\ntest_that(\"moyenne_robuste fonctionne sur un vecteur standard\", {\n\n  expect_equal(\n    moyenne_robuste(c(1, 2, 3)),\n    2\n  )\n\n})\n\n\ntest_that(\"moyenne_robuste gère les NA\", {\n\n  expect_equal(\n    moyenne_robuste(c(1, NA, 3)),\n    2\n  )\n\n})\n\n\ntest_that(\"moyenne_robuste refuse les caractères\", {\n\n  expect_error(\n    moyenne_robuste(c(\"a\", \"b\"))\n  )\n\n})",
+    "section": "4.25 Que faut-il tester?",
+    "text": "4.25 Que faut-il tester?\nIl n’est pas nécessaire de tester chaque ligne de code.\nNous voulons surtout tester les comportements importants.\nPar exemple :\nCas normal\nCas limite\nEntrée invalide\nValeurs manquantes\nObjet vide\nValeurs extrêmes\nPour une fonction :\nmoyenne_robuste(x)\nnous pourrions tester :\n\ntest_that(\"moyenne_robuste fonctionne sur un vecteur standard\", {\n\n  expect_equal(\n    moyenne_robuste(c(1, 2, 3)),\n    2\n  )\n\n})\n\n\ntest_that(\"moyenne_robuste gère les NA\", {\n\n  expect_equal(\n    moyenne_robuste(c(1, NA, 3)),\n    2\n  )\n\n})\n\n\ntest_that(\"moyenne_robuste refuse les caractères\", {\n\n  expect_error(\n    moyenne_robuste(c(\"a\", \"b\"))\n  )\n\n})",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
@@ -1013,8 +1033,8 @@
     "objectID": "Package.html#notre-cycle-de-développement-complet",
     "href": "Package.html#notre-cycle-de-développement-complet",
     "title": "4  Conception d’une librairie R",
-    "section": "6.6 Notre cycle de développement complet",
-    "text": "6.6 Notre cycle de développement complet\nNous pouvons maintenant améliorer notre cycle de développement.\nAu lieu de simplement :\nmodifier\n   ↓\nload_all()\n   ↓\nessayer\nnous avons maintenant :\nModifier le code\n        ↓\n    load_all()\n        ↓\nEssayer la fonction\n        ↓\n    document()\n        ↓\n      test()\n        ↓\n      check()\n        ↓\n      commit\n        ↓\n    recommencer\nCes commandes ont des rôles différents.",
+    "section": "4.26 Notre cycle de développement complet",
+    "text": "4.26 Notre cycle de développement complet\nNous pouvons maintenant améliorer notre cycle de développement.\nAu lieu de simplement :\nmodifier\n   ↓\nload_all()\n   ↓\nessayer\nnous avons maintenant :\nModifier le code\n        ↓\n    load_all()\n        ↓\nEssayer la fonction\n        ↓\n    document()\n        ↓\n      test()\n        ↓\n      check()\n        ↓\n      commit\n        ↓\n    recommencer\nCes commandes ont des rôles différents.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
@@ -1073,8 +1093,8 @@
     "objectID": "Package.html#inclure-des-données-dans-une-librairie",
     "href": "Package.html#inclure-des-données-dans-une-librairie",
     "title": "4  Conception d’une librairie R",
-    "section": "6.7 Inclure des données dans une librairie",
-    "text": "6.7 Inclure des données dans une librairie\nUne librairie R peut également contenir des données.\nCela peut être utile pour plusieurs raisons :\n\nfournir un jeu de données permettant d’illustrer les fonctions de la librairie;\nfournir des données utilisées dans les exemples ou les tests;\ndistribuer directement un jeu de données (peut-être l’objectif principal);\nconserver certaines données nécessaires au fonctionnement interne de la librairie.\n\nLa manière d’inclure les données dépend de leur rôle.",
+    "section": "4.27 Inclure des données dans une librairie",
+    "text": "4.27 Inclure des données dans une librairie\nUne librairie R peut également contenir des données.\nCela peut être utile pour plusieurs raisons :\n\nfournir un jeu de données permettant d’illustrer les fonctions de la librairie;\nfournir des données utilisées dans les exemples ou les tests;\ndistribuer directement un jeu de données (peut-être l’objectif principal);\nconserver certaines données nécessaires au fonctionnement interne de la librairie.\n\nLa manière d’inclure les données dépend de leur rôle.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
@@ -1123,10 +1143,20 @@
     "objectID": "Package.html#résumé-de-la-séance",
     "href": "Package.html#résumé-de-la-séance",
     "title": "4  Conception d’une librairie R",
-    "section": "6.8 Résumé de la séance",
-    "text": "6.8 Résumé de la séance\nNous sommes maintenant passés d’une vision très rapide de la conception d’une librairie à un véritable workflow de développement.\nNous avons vu qu’une librairie R est beaucoup plus qu’un ensemble de fichiers .R.\nElle nous fournit une structure permettant d’organiser :\nCode\n │\n ├── fonctions\n │\n ├── documentation\n │\n ├── tests\n │\n └── métadonnées\nPour l’instant, notre librairie pourrait ressembler à :\nMaLibrairie/\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n│   ├── statistiques.R\n│   └── utils.R\n├── man/\n│   ├── fonction1.Rd\n│   └── fonction2.Rd\n├── tests/\n│   ├── testthat.R\n│   └── testthat/\n│       ├── test-statistiques.R\n│       └── test-utils.R\n└── MaLibrairie.Rproj\nNous savons maintenant :\n\ncréer une librairie;\norganiser ses fonctions;\nréfléchir à leur conception;\ncharger la librairie avec load_all();\ndocumenter les fonctions avec roxygen2;\ngénérer la documentation avec document();\nécrire des tests avec testthat;\nexécuter ces tests avec test();\nvérifier l’ensemble de la librairie avec check().\n\nLors de la prochaine séance, nous examinerons plus précisément ce qui se passe entre notre librairie et le reste de l’écosystème R.\nNous discuterons notamment :\n\ndu fichier DESCRIPTION;\ndes dépendances;\ndu fichier NAMESPACE;\ndes fonctions exportées et internes;\nde l’utilisation de fonctions provenant d’autres librairies;\npuis de l’intégration de code provenant d’autres langages.\n\n\n\n\n\n\n\nL’idée principale\n\n\n\nUne bonne librairie ne contient pas seulement du code qui fonctionne.\nElle contient du code organisé, documenté, testé et maintenable.",
+    "section": "4.28 Résumé de la séance",
+    "text": "4.28 Résumé de la séance\nNous sommes maintenant passés d’une vision très rapide de la conception d’une librairie à un véritable workflow de développement.\nNous avons vu qu’une librairie R est beaucoup plus qu’un ensemble de fichiers .R.\nElle nous fournit une structure permettant d’organiser :\nCode\n │\n ├── fonctions\n │\n ├── documentation\n │\n ├── tests\n │\n └── métadonnées\nPour l’instant, notre librairie pourrait ressembler à :\nMaLibrairie/\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n│   ├── statistiques.R\n│   └── utils.R\n├── man/\n│   ├── fonction1.Rd\n│   └── fonction2.Rd\n├── tests/\n│   ├── testthat.R\n│   └── testthat/\n│       ├── test-statistiques.R\n│       └── test-utils.R\n└── MaLibrairie.Rproj\nNous savons maintenant :\n\ncréer une librairie;\norganiser ses fonctions;\nréfléchir à leur conception;\ncharger la librairie avec load_all();\ndocumenter les fonctions avec roxygen2;\ngénérer la documentation avec document();\nécrire des tests avec testthat;\nexécuter ces tests avec test();\nvérifier l’ensemble de la librairie avec check().\n\nLors de la prochaine séance, nous examinerons plus précisément ce qui se passe entre notre librairie et le reste de l’écosystème R.\nNous discuterons notamment :\n\ndu fichier DESCRIPTION;\ndes dépendances;\ndu fichier NAMESPACE;\ndes fonctions exportées et internes;\nde l’utilisation de fonctions provenant d’autres librairies;\npuis de l’intégration de code provenant d’autres langages.\n\n\n\n\n\n\n\nL’idée principale\n\n\n\nUne bonne librairie ne contient pas seulement du code qui fonctionne.\nElle contient du code organisé, documenté, testé et maintenable.\n\n\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Bryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024.\nWhat They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and\nShare Your Code. \" O’Reilly Media, Inc.\".",
+    "crumbs": [
+      "References"
     ]
   }
 ]

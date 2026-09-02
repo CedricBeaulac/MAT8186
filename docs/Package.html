@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -216,32 +236,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><code>@examples</code></a></li>
   <li><a href="#export" id="toc-export" class="nav-link" data-scroll-target="#export"><code>@export</code></a></li>
   <li><a href="#générer-la-documentation" id="toc-générer-la-documentation" class="nav-link" data-scroll-target="#générer-la-documentation"><span class="header-section-number">4.16</span> Générer la documentation</a></li>
-  <li><a href="#voir-la-documentation" id="toc-voir-la-documentation" class="nav-link" data-scroll-target="#voir-la-documentation"><span class="header-section-number">5</span> Voir la documentation</a>
-  <ul class="collapse">
-  <li><a href="#tester-nos-fonctions" id="toc-tester-nos-fonctions" class="nav-link" data-scroll-target="#tester-nos-fonctions"><span class="header-section-number">5.1</span> Tester nos fonctions</a></li>
-  <li><a href="#tests-unitaires" id="toc-tests-unitaires" class="nav-link" data-scroll-target="#tests-unitaires"><span class="header-section-number">5.2</span> Tests unitaires</a></li>
-  </ul></li>
-  <li><a href="#créer-un-premier-fichier-de-tests" id="toc-créer-un-premier-fichier-de-tests" class="nav-link" data-scroll-target="#créer-un-premier-fichier-de-tests"><span class="header-section-number">6</span> Créer un premier fichier de tests</a>
-  <ul class="collapse">
+  <li><a href="#voir-la-documentation" id="toc-voir-la-documentation" class="nav-link" data-scroll-target="#voir-la-documentation"><span class="header-section-number">4.17</span> Voir la documentation</a></li>
+  <li><a href="#tester-nos-fonctions" id="toc-tester-nos-fonctions" class="nav-link" data-scroll-target="#tester-nos-fonctions"><span class="header-section-number">4.18</span> Tester nos fonctions</a></li>
+  <li><a href="#tests-unitaires" id="toc-tests-unitaires" class="nav-link" data-scroll-target="#tests-unitaires"><span class="header-section-number">4.19</span> Tests unitaires</a></li>
+  <li><a href="#créer-un-premier-fichier-de-tests" id="toc-créer-un-premier-fichier-de-tests" class="nav-link" data-scroll-target="#créer-un-premier-fichier-de-tests"><span class="header-section-number">4.20</span> Créer un premier fichier de tests</a></li>
   <li><a href="#notre-premier-test" id="toc-notre-premier-test" class="nav-link" data-scroll-target="#notre-premier-test">Notre premier test</a></li>
-  <li><a href="#les-attentes" id="toc-les-attentes" class="nav-link" data-scroll-target="#les-attentes"><span class="header-section-number">6.1</span> Les attentes</a></li>
-  <li><a href="#tester-plusieurs-comportements" id="toc-tester-plusieurs-comportements" class="nav-link" data-scroll-target="#tester-plusieurs-comportements"><span class="header-section-number">6.2</span> Tester plusieurs comportements</a></li>
-  <li><a href="#exécuter-les-tests" id="toc-exécuter-les-tests" class="nav-link" data-scroll-target="#exécuter-les-tests"><span class="header-section-number">6.3</span> Exécuter les tests</a></li>
-  <li><a href="#pourquoi-tester" id="toc-pourquoi-tester" class="nav-link" data-scroll-target="#pourquoi-tester"><span class="header-section-number">6.4</span> Pourquoi tester?</a></li>
-  <li><a href="#que-faut-il-tester" id="toc-que-faut-il-tester" class="nav-link" data-scroll-target="#que-faut-il-tester"><span class="header-section-number">6.5</span> Que faut-il tester?</a></li>
-  <li><a href="#notre-cycle-de-développement-complet" id="toc-notre-cycle-de-développement-complet" class="nav-link" data-scroll-target="#notre-cycle-de-développement-complet"><span class="header-section-number">6.6</span> Notre cycle de développement complet</a></li>
+  <li><a href="#les-attentes" id="toc-les-attentes" class="nav-link" data-scroll-target="#les-attentes"><span class="header-section-number">4.21</span> Les attentes</a></li>
+  <li><a href="#tester-plusieurs-comportements" id="toc-tester-plusieurs-comportements" class="nav-link" data-scroll-target="#tester-plusieurs-comportements"><span class="header-section-number">4.22</span> Tester plusieurs comportements</a></li>
+  <li><a href="#exécuter-les-tests" id="toc-exécuter-les-tests" class="nav-link" data-scroll-target="#exécuter-les-tests"><span class="header-section-number">4.23</span> Exécuter les tests</a></li>
+  <li><a href="#pourquoi-tester" id="toc-pourquoi-tester" class="nav-link" data-scroll-target="#pourquoi-tester"><span class="header-section-number">4.24</span> Pourquoi tester?</a></li>
+  <li><a href="#que-faut-il-tester" id="toc-que-faut-il-tester" class="nav-link" data-scroll-target="#que-faut-il-tester"><span class="header-section-number">4.25</span> Que faut-il tester?</a></li>
+  <li><a href="#notre-cycle-de-développement-complet" id="toc-notre-cycle-de-développement-complet" class="nav-link" data-scroll-target="#notre-cycle-de-développement-complet"><span class="header-section-number">4.26</span> Notre cycle de développement complet</a></li>
   <li><a href="#load_all" id="toc-load_all" class="nav-link" data-scroll-target="#load_all"><code>load_all()</code></a></li>
   <li><a href="#document" id="toc-document" class="nav-link" data-scroll-target="#document"><code>document()</code></a></li>
   <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test"><code>test()</code></a></li>
   <li><a href="#check" id="toc-check" class="nav-link" data-scroll-target="#check"><code>check()</code></a></li>
   <li><a href="#un-workflow-raisonnable" id="toc-un-workflow-raisonnable" class="nav-link" data-scroll-target="#un-workflow-raisonnable">Un workflow raisonnable</a></li>
-  <li><a href="#inclure-des-données-dans-une-librairie" id="toc-inclure-des-données-dans-une-librairie" class="nav-link" data-scroll-target="#inclure-des-données-dans-une-librairie"><span class="header-section-number">6.7</span> Inclure des données dans une librairie</a></li>
+  <li><a href="#inclure-des-données-dans-une-librairie" id="toc-inclure-des-données-dans-une-librairie" class="nav-link" data-scroll-target="#inclure-des-données-dans-une-librairie"><span class="header-section-number">4.27</span> Inclure des données dans une librairie</a></li>
   <li><a href="#données-accessibles-aux-utilisateurs" id="toc-données-accessibles-aux-utilisateurs" class="nav-link" data-scroll-target="#données-accessibles-aux-utilisateurs">Données accessibles aux utilisateurs</a></li>
   <li><a href="#données-internes-invisible" id="toc-données-internes-invisible" class="nav-link" data-scroll-target="#données-internes-invisible">Données internes (invisible)</a></li>
   <li><a href="#fichiers-de-données-brutes" id="toc-fichiers-de-données-brutes" class="nav-link" data-scroll-target="#fichiers-de-données-brutes">Fichiers de données brutes</a></li>
   <li><a href="#résumé" id="toc-résumé" class="nav-link" data-scroll-target="#résumé">Résumé</a></li>
-  <li><a href="#résumé-de-la-séance" id="toc-résumé-de-la-séance" class="nav-link" data-scroll-target="#résumé-de-la-séance"><span class="header-section-number">6.8</span> Résumé de la séance</a></li>
-  </ul></li>
+  <li><a href="#résumé-de-la-séance" id="toc-résumé-de-la-séance" class="nav-link" data-scroll-target="#résumé-de-la-séance"><span class="header-section-number">4.28</span> Résumé de la séance</a></li>
   </ul>
 </nav>
     </div>
@@ -1127,8 +1143,8 @@ Ne modifiez pas les <code>.Rd</code> directement
 <pre class="text"><code>Ctrl + Shift + D</code></pre>
 <p>pour générer la documentation.</p>
 </section>
-<section id="voir-la-documentation" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Voir la documentation</h1>
+<section id="voir-la-documentation" class="level2" data-number="4.17">
+<h2 data-number="4.17" class="anchored" data-anchor-id="voir-la-documentation"><span class="header-section-number">4.17</span> Voir la documentation</h2>
 <p>Après :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span>
@@ -1167,8 +1183,9 @@ RStudio peut nous aider
 <p>Cela peut être particulièrement pratique pour une fonction avec plusieurs arguments.</p>
 </div>
 </div>
-<section id="tester-nos-fonctions" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="tester-nos-fonctions"><span class="header-section-number">5.1</span> Tester nos fonctions</h2>
+</section>
+<section id="tester-nos-fonctions" class="level2" data-number="4.18">
+<h2 data-number="4.18" class="anchored" data-anchor-id="tester-nos-fonctions"><span class="header-section-number">4.18</span> Tester nos fonctions</h2>
 <p>Nous avons maintenant :</p>
 <ul>
 <li>écrit une fonction;</li>
@@ -1191,8 +1208,8 @@ RStudio peut nous aider
 <p>Ce n’est pas réaliste pour une librairie contenant des dizaines ou des centaines de fonctions.</p>
 <p>Nous allons donc automatiser nos vérifications.</p>
 </section>
-<section id="tests-unitaires" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="tests-unitaires"><span class="header-section-number">5.2</span> Tests unitaires</h2>
+<section id="tests-unitaires" class="level2" data-number="4.19">
+<h2 data-number="4.19" class="anchored" data-anchor-id="tests-unitaires"><span class="header-section-number">4.19</span> Tests unitaires</h2>
 <p>Un <strong>test unitaire</strong> vérifie qu’une petite partie de notre code possède le comportement attendu.</p>
 <p>Pour nos librairies R, nous utiliserons principalement :</p>
 <pre class="text"><code>testthat</code></pre>
@@ -1208,9 +1225,8 @@ RStudio peut nous aider
 <p>Nous placerons nos tests dans :</p>
 <pre class="text"><code>tests/testthat/</code></pre>
 </section>
-</section>
-<section id="créer-un-premier-fichier-de-tests" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Créer un premier fichier de tests</h1>
+<section id="créer-un-premier-fichier-de-tests" class="level2" data-number="4.20">
+<h2 data-number="4.20" class="anchored" data-anchor-id="créer-un-premier-fichier-de-tests"><span class="header-section-number">4.20</span> Créer un premier fichier de tests</h2>
 <p>Pour créer des tests correspondant à :</p>
 <pre class="text"><code>R/CR.R</code></pre>
 <p>nous pouvons utiliser :</p>
@@ -1228,6 +1244,7 @@ tests/
     └── test-rescale01.R</code></pre>
 <p>Les fichiers de tests doivent commencer par :</p>
 <pre class="text"><code>test-</code></pre>
+</section>
 <section id="notre-premier-test" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="notre-premier-test">Notre premier test</h2>
 <p>Nous pouvons écrire :</p>
@@ -1251,8 +1268,8 @@ tests/
 <pre class="text"><code>expect_equal()</code></pre>
 <p>vérifie que le résultat obtenu est égal au résultat attendu.</p>
 </section>
-<section id="les-attentes" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="les-attentes"><span class="header-section-number">6.1</span> Les attentes</h2>
+<section id="les-attentes" class="level2" data-number="4.21">
+<h2 data-number="4.21" class="anchored" data-anchor-id="les-attentes"><span class="header-section-number">4.21</span> Les attentes</h2>
 <p><code>testthat</code> fournit plusieurs fonctions commençant par :</p>
 <pre class="text"><code>expect_</code></pre>
 <p>Par exemple :</p>
@@ -1294,8 +1311,8 @@ tests/
 <span id="cb102-7"><a href="#cb102-7" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="tester-plusieurs-comportements" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="tester-plusieurs-comportements"><span class="header-section-number">6.2</span> Tester plusieurs comportements</h2>
+<section id="tester-plusieurs-comportements" class="level2" data-number="4.22">
+<h2 data-number="4.22" class="anchored" data-anchor-id="tester-plusieurs-comportements"><span class="header-section-number">4.22</span> Tester plusieurs comportements</h2>
 <p>Un fichier peut contenir plusieurs tests :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"CR transforme la moyenne du vecteur et la variance"</span>, {</span>
@@ -1324,8 +1341,8 @@ tests/
 <p>Nous testons plutôt <strong>le comportement que nous voulons garantir</strong>.</p>
 <p>Cette distinction devient très importante lorsque nous modifions l’implémentation d’une fonction.</p>
 </section>
-<section id="exécuter-les-tests" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="exécuter-les-tests"><span class="header-section-number">6.3</span> Exécuter les tests</h2>
+<section id="exécuter-les-tests" class="level2" data-number="4.23">
+<h2 data-number="4.23" class="anchored" data-anchor-id="exécuter-les-tests"><span class="header-section-number">4.23</span> Exécuter les tests</h2>
 <p>Pour lancer tous les tests de la librairie :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1339,8 +1356,8 @@ tests/
 </ul>
 <p>Nous pouvons donc corriger notre code immédiatement.</p>
 </section>
-<section id="pourquoi-tester" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="pourquoi-tester"><span class="header-section-number">6.4</span> Pourquoi tester?</h2>
+<section id="pourquoi-tester" class="level2" data-number="4.24">
+<h2 data-number="4.24" class="anchored" data-anchor-id="pourquoi-tester"><span class="header-section-number">4.24</span> Pourquoi tester?</h2>
 <p>Les tests peuvent sembler représenter du travail supplémentaire.</p>
 <p>Après tout, nous devons :</p>
 <ol type="1">
@@ -1381,8 +1398,8 @@ Un bogue est une excellente occasion d’écrire un test
 </div>
 </div>
 </section>
-<section id="que-faut-il-tester" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="que-faut-il-tester"><span class="header-section-number">6.5</span> Que faut-il tester?</h2>
+<section id="que-faut-il-tester" class="level2" data-number="4.25">
+<h2 data-number="4.25" class="anchored" data-anchor-id="que-faut-il-tester"><span class="header-section-number">4.25</span> Que faut-il tester?</h2>
 <p>Il n’est pas nécessaire de tester chaque ligne de code.</p>
 <p>Nous voulons surtout tester les <strong>comportements importants</strong>.</p>
 <p>Par exemple :</p>
@@ -1425,8 +1442,8 @@ Valeurs extrêmes</code></pre>
 <span id="cb108-27"><a href="#cb108-27" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="notre-cycle-de-développement-complet" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="notre-cycle-de-développement-complet"><span class="header-section-number">6.6</span> Notre cycle de développement complet</h2>
+<section id="notre-cycle-de-développement-complet" class="level2" data-number="4.26">
+<h2 data-number="4.26" class="anchored" data-anchor-id="notre-cycle-de-développement-complet"><span class="header-section-number">4.26</span> Notre cycle de développement complet</h2>
 <p>Nous pouvons maintenant améliorer notre cycle de développement.</p>
 <p>Au lieu de simplement :</p>
 <pre class="text"><code>modifier
@@ -1534,8 +1551,8 @@ Documenter
 <p>Puis :</p>
 <pre class="text"><code>recommencer</code></pre>
 </section>
-<section id="inclure-des-données-dans-une-librairie" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="inclure-des-données-dans-une-librairie"><span class="header-section-number">6.7</span> Inclure des données dans une librairie</h2>
+<section id="inclure-des-données-dans-une-librairie" class="level2" data-number="4.27">
+<h2 data-number="4.27" class="anchored" data-anchor-id="inclure-des-données-dans-une-librairie"><span class="header-section-number">4.27</span> Inclure des données dans une librairie</h2>
 <p>Une librairie R peut également contenir des <strong>données</strong>.</p>
 <p>Cela peut être utile pour plusieurs raisons :</p>
 <ul>
@@ -1693,8 +1710,8 @@ fichiers d'exemple</code></pre>
 </div>
 </div>
 </section>
-<section id="résumé-de-la-séance" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="résumé-de-la-séance"><span class="header-section-number">6.8</span> Résumé de la séance</h2>
+<section id="résumé-de-la-séance" class="level2" data-number="4.28">
+<h2 data-number="4.28" class="anchored" data-anchor-id="résumé-de-la-séance"><span class="header-section-number">4.28</span> Résumé de la séance</h2>
 <p>Nous sommes maintenant passés d’une vision très rapide de la conception d’une librairie à un véritable workflow de développement.</p>
 <p>Nous avons vu qu’une librairie R est beaucoup plus qu’un ensemble de fichiers <code>.R</code>.</p>
 <p>Elle nous fournit une structure permettant d’organiser :</p>
@@ -1761,7 +1778,17 @@ L’idée principale
 </div>
 
 
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-bryan2024wtf" class="csl-entry" role="listitem">
+Bryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. <em>What They Forgot to Teach You about r</em>. <a href="https://rstats.wtf/">https://rstats.wtf/</a>.
+</div>
+<div id="ref-posit2026rstudioprojects" class="csl-entry" role="listitem">
+Posit Software, PBC. 2026. <span>“RStudio Projects.”</span> 2026. <a href="https://docs.posit.co/ide/user/ide/guide/code/projects.html">https://docs.posit.co/ide/user/ide/guide/code/projects.html</a>.
+</div>
+<div id="ref-wickham2015r" class="csl-entry" role="listitem">
+Wickham, Hadley. 2015. <em>R Packages: Organize, Test, Document, and Share Your Code</em>. " O’Reilly Media, Inc.".
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
