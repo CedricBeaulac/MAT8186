@@ -1,117 +1,1968 @@
-# Conception d'une librairie.
+# Conception d'une librairie R
 
-Ce chapitre marque le début de la deuxième séance. Durant cette séance, nous allons voir en profondeur en quoi consiste la structure d’une librairie R et discuter longuement de la conception de fonctions. Si nous aonvs survolé le tout rapidement lors de la première séance, ici nous discuterons en détail des éléments les plus importants de la conception d'une librairie.
+Ce chapitre marque le début de notre deuxième séance. Durant cette séance, nous allons examiner plus en profondeur la structure d'une librairie R et discuter de la conception des fonctions qui la composent.
 
-## Se demander pourquoi. {.unnumbered}
+Lors de la première séance, nous avons parcouru très rapidement l'ensemble du processus de développement d'une librairie avec notre version du *Whole Game*. Nous avons créé une librairie, ajouté une fonction, produit de la documentation, ajouté un test et utilisé `check()`.
 
-C'est important de d'abord se poser pourquoi on met au point une librairie. On peut vouloir simplement se faire une librairie pour nous-même; ceci a pour objectif de se doter de nos propres fonctions que l'on désire utiliser régulièrement au fil de nombreuses années. Dans la pluspart des cas, nous désirons malgré tout mettre une librairie au point à fin de la partage; à fin de distribuer de nouvelles méthodes d'analyse de données. 
+Cette fois-ci, nous allons ralentir.
 
-## Est-ce que ça existe déjà ? {.unnumbered}
+L'objectif de cette séance est de comprendre plus précisément :
 
-Quel que soit la raison qui motive la conception d'une librairie il en vaut la peine de se questionner d'abord s'il y existe déjà une librairie qui accomplit le travaille... et ce n'est pas une tâche facile...
+- pourquoi nous voulons créer une librairie;
+- comment choisir et vérifier son nom;
+- comment une librairie R est structurée;
+- comment organiser les fichiers contenant nos fonctions;
+- comment concevoir des fonctions destinées à être réutilisées;
+- comment documenter ces fonctions avec `roxygen2`;
+- comment vérifier automatiquement leur comportement avec `testthat`;
+- comment utiliser `load_all()`, `test()` et `check()` dans un cycle de développement.
 
-La [source](https://journal.r-project.org/articles/RJ-2018-058/RJ-2018-058.pdf) suivante peut vous guide un peu.
+::: {.callout-note}
+## Notre objectif
 
-## Nommer sa librairie.
+À la fin de cette séance, nous voulons être capables de passer de quelques fonctions contenues dans un script `.R` à une **petite librairie structurée, documentée et testée**.
+:::
 
-En supposant que votre objectif est claire et qu'il n'y existe pas déjà une libraire capable de faire ce que vous voulez, il semble donc approprié de mettre au point une nouvelle librairie et de s'assurer, au nom de la science, que celle-ci soit éventuellement distribué publiquement.
+## Se demander pourquoi {.unnumbered}
 
-Vous devrez, à un certains moment, **nommer** votre librairie. Voici quelques règles:
+Avant de créer une librairie, il est important de commencer par se demander :
 
-- Seulement des lettres, des chiffres et '.'
-- Doit commencer par une lettre
-- Ne peut pas finir avec '.'
+> **Pourquoi voulons-nous mettre au point une librairie?**
 
-et des considérations:
+Il n'est pas nécessaire que toutes les librairies soient destinées à être publiées sur CRAN.
 
-- Ne copier par de nom existant
-- Garder le nom court
-- Choisissez un nom évocateur, un bon accronym
-- R pour référer au langage.
+On peut vouloir créer une librairie simplement **pour soi-même**.
 
-À travers la librairie `available` on peut vérifier si une librairie porte déjà ce nom:
-
-```{r}
-#| eval: false
-
-library(available)
-
-available("BESTree")
-```
-
-Une fois que nous avons déterminer un nom et crée notre répertoire (projet R), on va de l'avant et on crée notre librairie:
+Par exemple, au fil de plusieurs projets de recherche, vous pourriez remarquer que vous utilisez régulièrement les mêmes fonctions :
 
 ```{r}
 #| eval: false
 
-create_package("MaLibrairie")
+nettoyer_donnees()
+faire_figure()
+calculer_indice()
+ajuster_modele()
 ```
 
-## Organisation des fonctions
+Plutôt que de copier ces fonctions d'un projet à l'autre, il peut être avantageux de les regrouper dans une librairie personnelle.
 
-En général, une librairie est la mise en opération de plusieurs fonctions R. Il est donc naturel de discuter de ces fonctions et de leur organisations. Pour l'instant, ce que nous appelons une fonctions R à la forme suivante:
+On obtient alors :
+
+```text
+Projet A ──┐
+Projet B ──┼──> maLibrairie
+Projet C ──┘
+```
+
+Une librairie permet donc de centraliser du code qui doit être réutilisé.
+
+Dans un contexte de recherche scientifique, l'objectif est souvent différent.
+
+Nous pouvons développer :
+
+- une nouvelle méthode statistique;
+- un nouvel algorithme;
+- une nouvelle procédure de visualisation;
+- une nouvelle méthode de traitement des données;
+- des outils permettant de reproduire les résultats d'un article.
+
+Dans ce contexte, la librairie devient un **moyen de diffusion scientifique**.
+
+Au lieu de fournir à nos utilisateurs :
+
+```text
+method_final_v2.R
+```
+
+nous pouvons fournir :
+
+```r
+install.packages("maLibrairie")
+
+library(maLibrairie)
+
+nouvelle_methode(x)
+```
+
+La différence est importante.
+
+Une librairie bien conçue fournit non seulement du code, mais également :
+
+- une structure;
+- une interface;
+- de la documentation;
+- des tests;
+- une gestion des dépendances;
+- des exemples;
+- éventuellement des vignettes;
+- un mécanisme standard d'installation.
+
+::: {.callout-tip}
+## Une librairie comme produit de recherche {.unnumbered}
+
+Dans plusieurs domaines de la statistique et de la science des données, le code constitue une partie importante du résultat scientifique.
+
+Une librairie permet de transformer une implémentation utilisée par les auteurs en un outil pouvant être utilisé et évalué par d'autres chercheurs.
+:::
+
+## Est-ce que cela existe déjà? {.unnumbered}
+
+Une fois l'objectif déterminé, une deuxième question devrait venir immédiatement :
+
+> **Est-ce que quelqu'un a déjà fait le travail?**
+
+L'écosystème R est très vaste.
+
+CRAN contient des milliers de librairies, auxquelles s'ajoutent notamment :
+
+- Bioconductor;
+- GitHub;
+- R-universe;
+- les librairies privées développées dans les entreprises et les laboratoires de recherche.
+
+Il n'est donc pas toujours facile de déterminer si une librairie répondant à notre besoin existe déjà.
+
+Avant de commencer un nouveau projet, il est utile de chercher :
+
+- sur CRAN;
+- sur Google;
+- sur GitHub;
+- dans les articles scientifiques associés au domaine;
+- dans les listes de librairies spécialisées.
+
+Une ressource intéressante sur la recherche de librairies R est présentée dans l'article suivant :
+
+[Finding the right R package](https://journal.r-project.org/articles/RJ-2018-058/RJ-2018-058.pdf)
+
+Il faut également garder en tête qu'une librairie existante ne doit pas nécessairement effectuer **exactement** ce que nous désirons.
+
+Il peut être préférable :
+
+1. d'utiliser une librairie existante;
+2. de contribuer à une librairie existante;
+3. d'écrire une fonction complémentaire;
+4. ou seulement ensuite de créer une nouvelle librairie.
+
+::: {.callout-important}
+## Ne pas réinventer inutilement la roue
+
+Créer une nouvelle librairie demande du temps.
+
+Une librairie destinée à d'autres utilisateurs devra éventuellement être :
+
+- maintenue;
+- documentée;
+- testée;
+- mise à jour lorsque R ou ses dépendances évoluent.
+
+Avant de commencer, il vaut donc la peine de vérifier que le projet répond réellement à un besoin.
+:::
+
+## Nommer sa librairie
+
+En supposant que notre objectif soit clair et qu'aucune librairie existante ne réponde adéquatement à notre besoin, il faut maintenant trouver un nom.
+
+Ce problème semble trivial.
+
+Il ne l'est pas nécessairement!
+
+## Quelques règles {.unnumbered}
+
+Un nom de librairie R doit respecter quelques règles formelles.
+
+Le nom :
+
+- peut contenir des lettres;
+- peut contenir des chiffres;
+- peut contenir le caractère `.`;
+- doit commencer par une lettre;
+- ne peut pas se terminer par `.`.
+
+Par exemple :
+
+```text
+BESTree
+shapeR
+fdaTools
+imageAnalysis
+```
+
+sont des noms possibles.
+
+Les noms suivants ne sont pas valides :
+
+```text
+2methods
+my-package
+my_package
+```
+
+Même si le caractère `.` est permis, son utilisation est souvent déconseillée, entre autres parce qu'il peut créer de la confusion avec la convention utilisée par les méthodes S3.
+
+## Quelques considérations supplémentaires {.unnumbered}
+
+Un bon nom devrait idéalement être :
+
+- relativement court;
+- facile à écrire;
+- facile à prononcer;
+- facile à rechercher sur Internet;
+- évocateur de l'objectif de la librairie;
+- suffisamment distinctif pour ne pas être confondu avec une autre librairie.
+
+Il peut s'agir :
+
+- d'un mot;
+- d'une combinaison de mots;
+- d'un acronyme;
+- d'un jeu de mots;
+- d'un nom contenant `R` pour rappeler le langage.
+
+Attention cependant à ne pas systématiquement ajouter un `R` à tout!
+
+## Vérifier la disponibilité d'un nom {.unnumbered}
+
+La librairie `available` permet de vérifier si un nom potentiel est déjà utilisé, notamment sur CRAN, Bioconductor et GitHub.
+
+On peut l'installer avec :
 
 ```{r}
-addition <- function(x,y){
-  return(x+y)
+#| eval: false
+
+install.packages("available")
+```
+
+Puis :
+
+```{r}
+#| eval: false
+
+available::available("BESTree")
+```
+
+La fonction vérifie notamment :
+
+- si le nom est valide;
+- s'il existe déjà sur CRAN;
+- s'il existe sur Bioconductor;
+- s'il est déjà utilisé sur GitHub.
+
+Elle effectue également quelques vérifications additionnelles sur le nom proposé.
+
+::: {.callout-note}
+## Un outil, pas une garantie
+
+Le fait que `available()` considère un nom comme disponible ne garantit pas qu'il s'agit d'un bon nom.
+
+Le choix final demeure une décision humaine.
+:::
+
+## Créer notre librairie
+
+Une fois le nom choisi, nous pouvons créer la librairie.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+usethis::create_package("MaLibrairie")
+```
+
+Il est également possible de fournir un chemin complet :
+
+```{r}
+#| eval: false
+
+usethis::create_package(
+  "~/Documents/MAT8186/MaLibrairie"
+)
+```
+
+`create_package()` crée automatiquement la structure minimale nécessaire.
+
+On obtient quelque chose ressemblant à :
+
+```text
+MaLibrairie/
+├── .Rbuildignore
+├── .gitignore
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+└── MaLibrairie.Rproj
+```
+
+Nous avons déjà rencontré cette structure dans @sec-survol.
+
+Nous allons maintenant commencer à comprendre davantage le rôle de chacun de ces éléments.
+
+## Le répertoire `R/` {.unnumbered}
+
+Pour cette séance, le répertoire le plus important est :
+
+```text
+R/
+```
+
+C'est ici que sera placé **le code R qui définit les fonctions de notre librairie**.
+
+Par exemple :
+
+```text
+MaLibrairie/
+└── R/
+    ├── statistiques.R
+    ├── visualisation.R
+    └── utils.R
+```
+
+Nous reviendrons lors de la prochaine séance sur certains des autres fichiers, notamment :
+
+```text
+DESCRIPTION
+NAMESPACE
+```
+
+qui jouent un rôle particulièrement important dans la gestion des dépendances et de l'interface publique de la librairie.
+
+## Organisation des fonctions 
+
+Une librairie est généralement composée d'un ensemble de fonctions R.
+
+Une fonction possède la forme générale :
+
+```{r}
+
+addition <- function(x, y) {
+  x + y
 }
 ```
 
-Nous verrons prochainement, comment appelé des fonctions d'autres librairies (dépendances), ou bien de d'autres languages (intégrations). 
-
-Pour l'instant, on va surtout se concentrer sur l'organisation de ces fonctions. Tout d'abord, il y a très peu de *règles* en ce qui concerne la librairie:
-
-* Toutes les fonctions de la librairies doivent être sauvegarder dans des documents R (.R)
-* Tout ces documents doivent être dans le répertoire R/ de la librairie.
-
-Maintenant, nous pouvons nommes ces documents .R comme nous le voulons et ceux-ci peuvent contenir plus d'une fonction. À vrai dire, c'est un défi intéressant d'organiser de déterminer combien de document .R nous avons, comment appelé ces documents, combien de fonctions ils contiennent, etc..
-
-En pratique, on recommande un *juste milieu* entre les deux extrêmes, soit un document contenant toutes les fonctions et un document par fonction. 
-
-Un structure courante est de séparer les fonctions dites *visibles* des fonctions *invisibles*. Les fonctions visibles peuvent être appelés par les utilisateurs de la libraires, souvent organisé dans un fichier `fonctions.R` alors que les fonctions dites invisibles servent au bon fonctionnement de la libraires et sont souvent appelé par les fonctions visibles organisé dans un fichier `utils.R`. 
-
-Les fonctions des divers documents .R peuvent tous être appelé sans aucune configuration spéciale.
-
-::: callout-important
-## Sur CRAN
-
-Si vous désirez publier la librairie sur CRAN vous êtes limité dans les charactères que vous pouvez utilisez dans l'écriture de vos fonctions. 
-
-In practice, this means you are limited to the digits 0 to 9, lowercase letters ‘a’ to ‘z’, uppercase letters ‘A’ to ‘Z’, and common punctuation.
-
-But sometimes you need to inline a small bit of character data that includes, e.g., a Greek letter (µ), an accented character (ü), or a symbol (30°). You can use any Unicode character as long as you specify it in the special Unicode escape "\u1234" format. 
-:::
-
-## Procédure de vérification
-
-Une fois que l'on travaille sur notre librairie, on va régulièrement vérifié que nos fonctions performent les opérations qu'elles doivent. Une manière **d'installer** la version en développement de notre librairie est par la commande `load_all()`:
+On peut ensuite l'utiliser avec :
 
 ```{r}
-#| eval: false
-# with devtools attached and
-# working directory set to top-level of your source package ...
 
-load_all()
-
-# ... now experiment with the functions in your package
+addition(2, 3)
 ```
 
-Cela motive une approche itérative pour le développement de librairie:
+Cette fonction est évidemment très simple, mais elle possède déjà les trois composantes fondamentales d'une fonction :
 
-1. Modifie la fonction
-2. `load_all()`
-3. Utilise la fonction pour voir l'effet de la modification
+```text
+nom
+ ↓
+addition <- function(x, y) {
+                     ↑
+                 arguments
 
-En installant la version en développement de notre librairie on peut tester divers fonctionnalités. Une fois que tout fonctionne comme on le veu, on vérifie si le tout peut être déployé en utilisant `check()`:
+  x + y
+    ↑
+ résultat retourné
+}
+```
+
+Dans une librairie, la réflexion sur la conception des fonctions devient particulièrement importante puisqu'elles constituent généralement **l'interface entre notre code et l'utilisateur**.
+
+## Où placer les fonctions?
+
+Il existe une règle fondamentale :
+
+> Le code R d'une librairie doit être placé dans des fichiers `.R` contenus dans le répertoire `R/`.
+
+Par exemple :
+
+```text
+MaLibrairie/
+└── R/
+    ├── addition.R
+    ├── statistiques.R
+    └── utils.R
+```
+
+Il n'est pas nécessaire qu'un fichier corresponde à une seule fonction.
+
+Par exemple :
+
+```text
+R/statistiques.R
+```
+
+pourrait contenir :
 
 ```{r}
 #| eval: false
+
+moyenne_robuste <- function(x) {
+  ...
+}
+
+variance_robuste <- function(x) {
+  ...
+}
+
+ecart_type_robuste <- function(x) {
+  ...
+}
+```
+
+Toutes les fonctions définies dans les différents fichiers du répertoire `R/` appartiennent au même espace de la librairie.
+
+Ainsi, une fonction définie dans :
+
+```text
+R/statistiques.R
+```
+
+peut utiliser une fonction définie dans :
+
+```text
+R/utils.R
+```
+
+sans avoir besoin de faire :
+
+```r
+source("R/utils.R")
+```
+
+::: {.callout-important}
+## Pas de `source()` dans une librairie
+
+Il n'est normalement pas nécessaire d'utiliser `source()` pour charger les différents fichiers du répertoire `R/`.
+
+R prend en charge l'ensemble des fichiers du répertoire lors du chargement de la librairie.
+:::
+
+## Comment organiser les fichiers?
+
+Il existe énormément de liberté dans l'organisation des fichiers `.R`.
+
+À un extrême, on pourrait avoir :
+
+```text
+R/
+└── fonctions.R
+```
+
+contenant 150 fonctions.
+
+À l'autre extrême :
+
+```text
+R/
+├── fonction1.R
+├── fonction2.R
+├── fonction3.R
+├── fonction4.R
+├── fonction5.R
+├── ...
+```
+
+avec un fichier différent pour chaque petite fonction.
+
+Les deux approches deviennent rapidement difficiles à maintenir.
+
+Une approche plus raisonnable consiste à regrouper les fonctions selon leur **rôle logique**.
+
+Par exemple :
+
+```text
+R/
+├── nettoyage.R
+├── modeles.R
+├── graphiques.R
+├── prediction.R
+└── utils.R
+```
+
+Le fichier :
+
+```text
+utils.R
+```
+
+est souvent utilisé pour regrouper de petites fonctions auxiliaires utilisées par plusieurs autres fonctions.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+verifier_vecteur <- function(x) {
+  if (!is.numeric(x)) {
+    stop("x doit être un vecteur numérique.")
+  }
+}
+```
+
+Cette fonction pourrait être utilisée par plusieurs fonctions de la librairie.
+
+::: {.callout-note}
+## Fonctions publiques (visible) et fonctions internes (invisble)
+
+Une librairie contient souvent deux types de fonctions :
+
+- des fonctions destinées à être directement utilisées par les utilisateurs;
+- des fonctions internes (invisble) servant uniquement au fonctionnement de la librairie.
+
+**Cette distinction n'est pas déterminée par le fichier dans lequel la fonction est placée,** mais il peut être naturel d'organiser nos fonctions en considerant si elle seront visibles ou invisbles.
+
+Elle est déterminée par le mécanisme d'**exportation** de la librairie.
+
+Nous étudierons ce mécanisme plus en détail lors de la prochaine séance lorsque nous discuterons de `NAMESPACE`.
+:::
+
+## Concevoir une bonne fonction
+
+Écrire une fonction qui fonctionne est relativement facile.
+
+Écrire une fonction qui sera utilisée pendant plusieurs années par plusieurs personnes est plus difficile.
+
+Une bonne fonction devrait généralement :
+
+- accomplir une tâche clairement définie;
+- avoir un nom informatif;
+- avoir des arguments compréhensibles;
+- retourner un résultat prévisible;
+- gérer raisonnablement les entrées incorrectes;
+- éviter de modifier inutilement l'environnement de l'utilisateur;
+- être documentée;
+- être testée.
+
+## Une fonction devrait accomplir une tâche claire
+
+Considérons :
+
+```{r}
+#| eval: false
+
+analyse_complete <- function(x) {
+
+  # nettoyer les données
+
+  # ajuster trois modèles
+
+  # sauvegarder les résultats
+
+  # créer six figures
+
+  # envoyer un courriel
+
+  # préparer mon café
+
+}
+```
+
+Cette fonction essaie probablement d'en faire trop.
+
+Il est souvent préférable de créer plusieurs fonctions simples :
+
+```{r}
+#| eval: false
+
+nettoyer_donnees()
+
+ajuster_modele()
+
+calculer_prediction()
+
+creer_graphique()
+```
+
+puis, si nécessaire, une fonction de niveau supérieur qui les combine.
+
+Cette approche facilite :
+
+- la compréhension;
+- la réutilisation;
+- les tests;
+- la correction des erreurs;
+- la maintenance.
+
+## Nommer les fonctions
+
+Le nom d'une fonction devrait idéalement décrire **une action**.
+
+Par exemple :
+
+```r
+calculer_moyenne()
+ajuster_modele()
+predire_classe()
+tracer_surface()
+```
+
+Les arguments représentent plutôt les objets sur lesquels cette action est effectuée :
+
+```r
+calculer_moyenne(x)
+
+ajuster_modele(x, y)
+
+predire_classe(modele, nouvelles_donnees)
+```
+
+Il est également utile d'être cohérent à travers une librairie.
+
+Évitez par exemple de mélanger sans raison :
+
+```text
+get_mean()
+computeVariance()
+calcul_median()
+sd.estimation()
+```
+
+Une convention cohérente rend l'interface beaucoup plus facile à apprendre.
+
+## Arguments et valeurs par défaut
+
+Les valeurs par défaut peuvent rendre une fonction agréable à utiliser.
+
+Par exemple :
+
+```{r}
+
+moyenne <- function(x, retirer_na = TRUE) {
+
+  mean(x, na.rm = retirer_na)
+
+}
+```
+
+L'utilisateur peut simplement faire :
+
+```{r}
+
+moyenne(c(1, 2, NA, 4))
+```
+
+mais peut modifier le comportement :
+
+```{r}
+
+moyenne(
+  c(1, 2, NA, 4),
+  retirer_na = FALSE
+)
+```
+
+Les valeurs par défaut devraient représenter un comportement :
+
+- raisonnable;
+- prévisible;
+- fréquent.
+
+## Retourner un résultat
+
+En R, la dernière expression évaluée par une fonction est automatiquement retournée.
+
+Ainsi :
+
+```{r}
+
+addition <- function(x, y) {
+  x + y
+}
+```
+
+est équivalent à :
+
+```{r}
+
+addition <- function(x, y) {
+  return(x + y)
+}
+```
+
+Les deux sont valides.
+
+Dans la majorité des fonctions simples, il n'est donc pas nécessaire d'utiliser explicitement `return()` à la fin.
+
+`return()` peut cependant être utile lorsqu'on veut quitter une fonction avant la fin.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+inverse <- function(x) {
+
+  if (x == 0) {
+    return(Inf)
+  }
+
+  1 / x
+}
+```
+
+## Vérifier les entrées
+
+Une fonction destinée à être réutilisée devrait généralement réagir de manière informative lorsqu'elle reçoit une entrée invalide.
+
+Considérons :
+
+```{r}
+#| eval: false
+
+addition <- function(x, y) {
+  x + y
+}
+```
+
+Que se passe-t-il si l'utilisateur fait :
+
+```r
+addition("bonjour", 3)
+```
+
+R produira une erreur, mais celle-ci n'est pas nécessairement formulée dans le contexte de notre fonction.
+
+Nous pouvons vérifier explicitement certains arguments :
+
+```{r}
+#| eval: false
+
+addition <- function(x, y) {
+
+  if (!is.numeric(x)) {
+    stop("`x` doit être numérique.")
+  }
+
+  if (!is.numeric(y)) {
+    stop("`y` doit être numérique.")
+  }
+
+  x + y
+}
+```
+
+L'utilisateur reçoit alors une erreur plus informative.
+
+::: {.callout-tip}
+## Jusqu'où faut-il vérifier?
+
+Il n'est pas nécessaire de vérifier absolument toutes les situations imaginables.
+
+L'objectif est surtout de détecter les erreurs :
+
+- probables;
+- importantes;
+- difficiles à comprendre autrement.
+:::
+
+## Éviter les effets de bord {.unnumbered}
+
+Une fonction est généralement plus facile à utiliser si elle :
+
+1. reçoit des arguments;
+2. effectue un calcul;
+3. retourne un résultat.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+carre <- function(x) {
+  x^2
+}
+```
+
+est très prévisible.
+
+Une fonction qui modifie silencieusement l'environnement de l'utilisateur est plus difficile à comprendre :
+
+```{r}
+#| eval: false
+
+mauvaise_fonction <- function(x) {
+
+  setwd("C:/nouveau/repertoire")
+
+  options(digits = 3)
+
+  x^2
+}
+```
+
+Après l'utilisation de cette fonction :
+
+- le répertoire de travail a changé;
+- les options de R ont changé.
+
+Cela peut affecter le reste de la session de l'utilisateur.
+
+::: callout-note
+## Un beau style et une belle indentation {.unnumbered}
+
+Que vous developpez pour vous-même ou a des fin de publication, une belle indentation peut aider la lecture des fonctions. Il y existe plusieurs manières de procéder mais la librairie `styler` peut s'en occuper pour vous! 
+::
+
+## Quelques contraintes pour CRAN {.unnumbered}
+
+Si nous souhaitons éventuellement publier notre librairie sur CRAN, certaines contraintes additionnelles doivent être respectées.
+
+En particulier, le code contenu dans les fichiers `.R` devrait utiliser des caractères ASCII pour maximiser la portabilité.
+
+Cela comprend principalement :
+
+```text
+a-z
+A-Z
+0-9
+```
+
+ainsi que la ponctuation courante.
+
+Il faut donc être prudent avec certains caractères copiés depuis un traitement de texte, par exemple :
+
+```text
+“ ”
+‘ ’
+µ
+°
+```
+
+Si un caractère Unicode est nécessaire dans une chaîne de caractères, il peut être représenté avec une séquence Unicode.
+
+Par exemple :
+
+```{r}
+
+x <- "30\u00B0"
+
+x
+```
+
+::: {.callout-note}
+## Attention
+
+Cette contrainte concerne principalement le **code R distribué dans les fichiers `.R`**.
+
+Elle ne signifie évidemment pas que toute la documentation d'une librairie doit être rédigée sans accents.
+:::
+
+## Développer de manière itérative
+
+Nous avons maintenant plusieurs fonctions dans notre répertoire :
+
+```text
+R/
+```
+
+Comment les utiliser pendant que nous les développons?
+
+Une première tentation serait :
+
+```r
+source("R/fonction.R")
+```
+
+Mais nous voulons tester notre code dans le contexte de la librairie complète.
+
+Nous utilisons donc :
+
+```{r}
+#| eval: false
+
+devtools::load_all()
+```
+
+`load_all()` **n'installe pas réellement la librairie**.
+
+Il simule le processus de chargement de la librairie en développement et rend ses fonctions disponibles dans notre session R.
+
+Nous pouvons alors essayer :
+
+```{r}
+#| eval: false
+
+addition(2, 3)
+```
+
+Cela mène à notre premier cycle de développement :
+
+```text
+Modifier une fonction
+        ↓
+   sauvegarder
+        ↓
+   load_all()
+        ↓
+essayer la fonction
+        ↓
+   recommencer
+```
+
+## Documenter nos fonctions
+
+Une fonction peut être parfaitement écrite et complètement inutilisable pour quelqu'un qui ne sait pas ce qu'elle fait.
+
+Considérons :
+
+```{r}
+#| eval: false
+
+CR <- function(x) {
+  (x - mean(x)) / sd(x)
+}
+```
+
+Nous savons peut-être aujourd'hui exactement ce que fait cette fonction.
+
+Mais :
+
+- le saurons-nous encore dans deux ans?
+- un collaborateur le saura-t-il?
+- un utilisateur de notre librairie le saura-t-il?
+
+Une librairie doit donc fournir de la documentation.
+
+En R, cette documentation est normalement accessible avec :
+
+```r
+?CR
+```
+
+ou :
+
+```r
+help("CR")
+```
+
+## Les fichiers `.Rd`
+
+R utilise traditionnellement des fichiers de documentation avec l'extension :
+
+```text
+.Rd
+```
+
+Ces fichiers sont placés dans :
+
+```text
+man/
+```
+
+Par exemple :
+
+```text
+MaLibrairie/
+├── R/
+│   └── CR.R
+└── man/
+    └── CR.Rd
+```
+
+Nous **n'allons cependant pas écrire les fichiers `.Rd` directement**.
+
+Nous utiliserons plutôt la librairie :
+
+```text
+roxygen2
+```
+
+## Documentation avec `roxygen2`
+
+`roxygen2` permet d'écrire la documentation directement au-dessus de la fonction concernée.
+
+Les commentaires de documentation commencent par :
+
+```text
+#'
+```
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+#' Recalibrer un vecteur entre 0 et 1
+#'
+#' Transforme linéairement les valeurs d'un vecteur numérique
+#' afin qu'il aie une moyenne de 0 et une variance unitaire. 
+#'
+#' @param x Un vecteur numérique.
+#'
+#' @returns Un vecteur numérique de même longueur que `x`.
+#'
+#' @examples
+#' CR(c(10, 20, 30))
+#'
+#' @export
+CR <- function(x) {
+  (x - mean(x)) / sd(x)
+}
+```
+
+Plusieurs éléments apparaissent dans cette documentation.
+
+## Le titre {.unnumbered}
+
+La première ligne constitue généralement le titre :
+
+```text
+#' Recalibrer un vecteur entre 0 et 1
+```
+
+Il devrait être court et décrire clairement l'objectif de la fonction.
+
+## La description {.unnumbered}
+
+Le paragraphe suivant fournit une description plus détaillée :
+
+```text
+#' Transforme linéairement les valeurs d'un vecteur numérique
+#' afin qu'il aie une moyenne de 0 et une variance unitaire. 
+```
+
+Si ici qu'on met tous les détails, et qu'on explique longuement ce que fait la fonction.
+
+## `@param` {.unnumbered}
+
+Chaque entrée de la fonction est décrite brièvement. 
+
+```text
+#' @param x Un vecteur numérique.
+```
+
+Pour une fonction :
+
+```r
+ma_fonction <- function(x, y, methode)
+```
+
+nous aurons généralement :
+
+```text
+#' @param x ...
+#' @param y ...
+#' @param methode ...
+```
+
+On ce soucis souvent du format (vecteur, matrice, etc..) de l'entré mais une bonne documentation explique également **le rôle de l'entrée**.
+
+Par exemple, plutôt que :
+
+```text
+@param alpha Un nombre.
+```
+
+nous pourrions écrire :
+
+```text
+@param alpha Valeur positive contrôlant l'intensité de la pénalisation.
+```
+
+## `@returns` {.unnumbered}
+
+Le marqueur :
+
+```text
+@returns
+```
+
+décrit ce que retourne la fonction.
+
+Par exemple :
+
+```text
+#' @returns Un vecteur numérique de même longueur que `x`.
+```
+
+Pour une fonction plus complexe :
+
+```text
+#' @returns Une liste contenant :
+#'
+#' - `coefficients` : les coefficients estimés;
+#' - `fitted` : les valeurs ajustées;
+#' - `residuals` : les résidus du modèle.
+```
+
+Cette partie est particulièrement importante lorsque la fonction retourne une structure complexe.
+
+## `@examples` {.unnumbered}
+
+La section :
+
+```text
+@examples
+```
+
+permet de montrer comment utiliser la fonction.
+
+```text
+#' @examples
+#' CR(c(10, 20, 30))
+```
+
+Les exemples ont deux rôles :
+
+1. aider l'utilisateur à comprendre la fonction;
+2. fournir du code pouvant être exécuté lors de la vérification de la librairie.
+
+Les exemples devraient donc idéalement être :
+
+- courts;
+- reproductibles;
+- faciles à comprendre.
+
+## `@export` {.unnumbered}
+
+Nous avons également écrit :
+
+```text
+#' @export
+```
+
+Cette instruction indique que la fonction doit faire partie de l'interface publique de la librairie. Ce que nous 
+
+Nous allons utiliser `@export` aujourd'hui, mais nous examinerons **plus précisément son fonctionnement lors de la prochaine séance**, lorsque nous discuterons du fichier `NAMESPACE` et de la distinction entre fonctions internes et fonctions exportées.
+
+## Générer la documentation
+
+Une fois les commentaires `roxygen2` écrits, nous exécutons :
+
+```{r}
+#| eval: false
+
+devtools::document()
+```
+
+Cette commande génère ou met à jour les fichiers de documentation.
+
+Dans notre exemple, elle créera notamment :
+
+```text
+man/rescale01.Rd
+```
+
+Elle mettra également à jour le fichier :
+
+```text
+NAMESPACE
+```
+
+::: {.callout-important}
+## Ne modifiez pas les `.Rd` directement
+
+Lorsque nous utilisons `roxygen2`, les fichiers du répertoire `man/` sont **générés automatiquement**.
+
+Si nous voulons modifier la documentation, nous modifions :
+
+```text
+R/rescale01.R
+```
+
+puis nous relançons :
+
+```r
+devtools::document()
+```
+:::
+
+Dans RStudio, nous pouvons également utiliser :
+
+```text
+Ctrl + Shift + D
+```
+
+pour générer la documentation.
+
+# Voir la documentation
+
+Après :
+
+```{r}
+#| eval: false
+
+devtools::document()
+
+devtools::load_all()
+```
+
+nous pouvons utiliser :
+
+```{r}
+#| eval: false
+
+?rescale01
+```
+
+La page d'aide devrait apparaître exactement comme pour une fonction provenant d'une librairie installée depuis CRAN.
+
+Nous obtenons donc un deuxième cycle de développement :
+
+```text
+Modifier la fonction
+        ↓
+Modifier sa documentation
+        ↓
+    document()
+        ↓
+    load_all()
+        ↓
+  consulter ?fonction
+        ↓
+     recommencer
+```
+
+::: {.callout-tip}
+## RStudio peut nous aider
+
+Lorsque le curseur est placé dans une fonction, RStudio permet de créer automatiquement une structure de documentation avec :
+
+**Code → Insert Roxygen Skeleton**
+
+Cela peut être particulièrement pratique pour une fonction avec plusieurs arguments.
+:::
+
+## Tester nos fonctions
+
+Nous avons maintenant :
+
+- écrit une fonction;
+- essayé cette fonction;
+- documenté cette fonction.
+
+Mais il manque encore une étape importante.
+
+Comment savoir si notre fonction **continuera à fonctionner demain**?
+
+Supposons que notre fonction soit :
+
+```{r}
+#| eval: false
+
+CR <- function(x) { (x - mean(x)) / sd(x) }
+```
+
+Nous pouvons essayer manuellement :
+
+```{r}
+#| eval: false
+
+CR(c(10, 20, 30))
+```
+
+et vérifier que le résultat est :
+
+```text
+-1 0 1
+```
+
+Mais si nous modifions la fonction dans six mois, nous devrons nous souvenir de refaire manuellement ce test.
+
+Ce n'est pas réaliste pour une librairie contenant des dizaines ou des centaines de fonctions.
+
+Nous allons donc automatiser nos vérifications.
+
+## Tests unitaires
+
+Un **test unitaire** vérifie qu'une petite partie de notre code possède le comportement attendu.
+
+Pour nos librairies R, nous utiliserons principalement :
+
+```text
+testthat
+```
+
+`testthat` est intégré naturellement au workflow `devtools`.
+
+Pour ajouter l'infrastructure de tests à notre librairie :
+
+```{r}
+#| eval: false
+
+usethis::use_testthat()
+```
+
+Cette commande crée notamment :
+
+```text
+tests/
+├── testthat.R
+└── testthat/
+```
+
+Nous placerons nos tests dans :
+
+```text
+tests/testthat/
+```
+
+# Créer un premier fichier de tests
+
+Pour créer des tests correspondant à :
+
+```text
+R/CR.R
+```
+
+nous pouvons utiliser :
+
+```{r}
+#| eval: false
+
+usethis::use_test("CR")
+```
+
+Cette commande crée :
+
+```text
+tests/testthat/test-CR.R
+```
+
+Une organisation pratique consiste donc à avoir :
+
+```text
+R/
+└── rescale01.R
+
+tests/
+└── testthat/
+    └── test-rescale01.R
+```
+
+Les fichiers de tests doivent commencer par :
+
+```text
+test-
+```
+
+## Notre premier test {.unnumbered}
+
+Nous pouvons écrire :
+
+```{r}
+#| eval: false
+
+test_that("CR transforme correctement un vecteur", {
+
+  expect_equal(
+    CR(c(10, 20, 30)),
+    c(-1, 0, 1)
+  )
+
+})
+```
+
+La structure générale est :
+
+```r
+test_that("description du comportement", {
+
+  expectation
+
+})
+```
+
+Dans notre cas :
+
+```text
+expect_equal()
+```
+
+vérifie que le résultat obtenu est égal au résultat attendu.
+
+## Les attentes
+
+`testthat` fournit plusieurs fonctions commençant par :
+
+```text
+expect_
+```
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+expect_equal(x, y)
+
+expect_true(x)
+
+expect_false(x)
+
+expect_null(x)
+
+expect_error(expression)
+
+expect_warning(expression)
+
+expect_type(x, "double")
+```
+
+Le choix dépend du comportement que nous voulons vérifier.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+test_that("addition retourne la bonne valeur", {
+
+  expect_equal(
+    addition(2, 3),
+    5
+  )
+
+})
+```
+
+ou :
+
+```{r}
+#| eval: false
+
+test_that("addition refuse les caractères", {
+
+  expect_error(
+    addition("bonjour", 3)
+  )
+
+})
+```
+
+## Tester plusieurs comportements
+
+Un fichier peut contenir plusieurs tests :
+
+```{r}
+#| eval: false
+
+test_that("CR transforme la moyenne du vecteur et la variance", {
+
+  resultat <- CR(c(10, 20, 30))
+
+  expect_equal(mean(resultat), 0)
+  expect_equal(var(resultat), 1)
+
+})
+
+
+test_that("CR conserve la longueur du vecteur", {
+
+  x <- c(10, 20, 30, 40)
+
+  expect_length(
+    rescale01(x),
+    length(x)
+  )
+
+})
+```
+
+Remarquons ici une idée importante.
+
+Nous ne testons pas nécessairement **comment** la fonction effectue son calcul.
+
+Nous testons plutôt **le comportement que nous voulons garantir**.
+
+Cette distinction devient très importante lorsque nous modifions l'implémentation d'une fonction.
+
+## Exécuter les tests
+
+Pour lancer tous les tests de la librairie :
+
+```{r}
+#| eval: false
+
+devtools::test()
+```
+
+Si les tests fonctionnent, `testthat` nous indiquera que les attentes ont été satisfaites.
+
+Si un test échoue, nous obtenons de l'information sur :
+
+- le test qui a échoué;
+- le résultat attendu;
+- le résultat obtenu.
+
+Nous pouvons donc corriger notre code immédiatement.
+
+## Pourquoi tester?
+
+Les tests peuvent sembler représenter du travail supplémentaire.
+
+Après tout, nous devons :
+
+1. écrire la fonction;
+2. écrire la documentation;
+3. écrire des tests.
+
+Cependant, les tests deviennent particulièrement utiles lorsque :
+
+- la librairie grossit;
+- plusieurs personnes collaborent;
+- nous modifions une fonction existante;
+- nous corrigeons un bogue;
+- nous changeons une dépendance;
+- nous ajoutons de nouvelles fonctionnalités.
+
+Supposons que nous modifiions complètement l'implémentation de :
+
+```r
+CR()
+```
+
+Si tous les tests continuent à réussir, nous gagnons rapidement de la confiance que le comportement attendu de la fonction n'a pas changé.
+
+::: {.callout-tip}
+## Un bogue est une excellente occasion d'écrire un test
+
+Lorsqu'un utilisateur découvre un bogue :
+
+1. écrivez un test reproduisant le bogue;
+2. vérifiez que le test échoue;
+3. corrigez le code;
+4. vérifiez que le test réussit.
+
+Le test empêche ensuite le même bogue de réapparaître silencieusement dans une version future.
+:::
+
+## Que faut-il tester?
+
+Il n'est pas nécessaire de tester chaque ligne de code.
+
+Nous voulons surtout tester les **comportements importants**.
+
+Par exemple :
+
+```text
+Cas normal
+Cas limite
+Entrée invalide
+Valeurs manquantes
+Objet vide
+Valeurs extrêmes
+```
+
+Pour une fonction :
+
+```r
+moyenne_robuste(x)
+```
+
+nous pourrions tester :
+
+```{r}
+#| eval: false
+
+test_that("moyenne_robuste fonctionne sur un vecteur standard", {
+
+  expect_equal(
+    moyenne_robuste(c(1, 2, 3)),
+    2
+  )
+
+})
+
+
+test_that("moyenne_robuste gère les NA", {
+
+  expect_equal(
+    moyenne_robuste(c(1, NA, 3)),
+    2
+  )
+
+})
+
+
+test_that("moyenne_robuste refuse les caractères", {
+
+  expect_error(
+    moyenne_robuste(c("a", "b"))
+  )
+
+})
+```
+
+
+## Notre cycle de développement complet
+
+Nous pouvons maintenant améliorer notre cycle de développement.
+
+Au lieu de simplement :
+
+```text
+modifier
+   ↓
+load_all()
+   ↓
+essayer
+```
+
+nous avons maintenant :
+
+```text
+Modifier le code
+        ↓
+    load_all()
+        ↓
+Essayer la fonction
+        ↓
+    document()
+        ↓
+      test()
+        ↓
+      check()
+        ↓
+      commit
+        ↓
+    recommencer
+```
+
+Ces commandes ont des rôles différents.
+
+## `load_all()` {.unnumbered}
+
+```{r}
+#| eval: false
+
+devtools::load_all()
+```
+
+permet d'obtenir un retour très rapide pendant le développement.
+
+## `document()` {.unnumbered}
+
+```{r}
+#| eval: false
+
+devtools::document()
+```
+
+génère ou met à jour la documentation et certains éléments de `NAMESPACE`.
+
+## `test()` {.unnumbered}
+
+```{r}
+#| eval: false
+
+devtools::test()
+```
+
+exécute les tests automatisés.
+
+## `check()` {.unnumbered}
+
+```{r}
+#| eval: false
+
 devtools::check()
 ```
 
-S'ajoute alors les étapes suivantes pour le déploiement:
+effectue une vérification beaucoup plus générale de la librairie.
 
-1. Utilise `devtools::check()`
-2. Résoudre les problèmes soulevés
-3. Répété jusqu'à ce qu'il n'y aie pu de problème.
+`check()` vérifie notamment :
 
+- la structure de la librairie;
+- certains éléments de `DESCRIPTION`;
+- le code R;
+- la documentation;
+- les dépendances;
+- les tests;
+- les exemples;
+- la capacité de construire et d'installer correctement la librairie.
+
+Nous visons éventuellement :
+
+```text
+0 errors
+0 warnings
+0 notes
+```
+
+::: {.callout-important}
+## `check()` n'est pas seulement pour la fin
+
+Une erreur fréquente serait d'attendre que la librairie soit « terminée » avant d'utiliser `check()`.
+
+Il est préférable de l'exécuter régulièrement.
+
+Il est beaucoup plus facile de corriger **un problème que nous venons de créer** que dix problèmes accumulés pendant plusieurs semaines.
+:::
+
+## Un workflow raisonnable {.unnumbered}
+
+Il n'est pas nécessaire d'exécuter `check()` après chaque caractère modifié.
+
+Un workflow réaliste pourrait ressembler à :
+
+```text
+Écrire quelques lignes
+        ↓
+    load_all()
+        ↓
+Essayer rapidement
+        ↓
+Écrire/modifier tests
+        ↓
+      test()
+        ↓
+Documenter
+        ↓
+    document()
+        ↓
+      check()
+        ↓
+      commit
+```
+
+Puis :
+
+```text
+recommencer
+```
+## Inclure des données dans une librairie
+
+Une librairie R peut également contenir des **données**.
+
+Cela peut être utile pour plusieurs raisons :
+
+- fournir un jeu de données permettant d'illustrer les fonctions de la librairie;
+- fournir des données utilisées dans les exemples ou les tests;
+- distribuer directement un jeu de données (peut-être l'objectif principal);
+- conserver certaines données nécessaires au fonctionnement interne de la librairie.
+
+La manière d'inclure les données dépend de **leur rôle**.
+
+## Données accessibles aux utilisateurs {.unnumbered}
+
+Si nous voulons inclure un objet R directement accessible aux utilisateurs, nous le plaçons dans le répertoire :
+
+```text
+data/
+```
+
+Supposons par exemple que nous possédions un jeu de données :
+
+```{r}
+#| eval: false
+
+exemple <- data.frame(
+  x = 1:5,
+  y = c(2, 4, 3, 7, 6)
+)
+```
+
+La manière recommandée de l'ajouter à notre librairie est :
+
+```{r}
+#| eval: false
+
+usethis::use_data(exemple)
+```
+
+Cette commande crée notamment :
+
+```text
+data/exemple.rda
+```
+
+L'objet pourra ensuite être utilisé directement par les utilisateurs de la librairie.
+
+```{r}
+#| eval: false
+
+library(MaLibrairie)
+
+exemple
+```
+
+ou encore :
+
+```{r}
+#| eval: false
+
+MaLibrairie::exemple
+```
+
+Les jeux de données distribués de cette manière devraient également être **documentés**, exactement comme les fonctions de la librairie.
+
+::: {.callout-tip}
+## Données d'exemple
+
+Les données contenues dans `data/` devraient généralement être relativement petites.
+
+Elles sont particulièrement utiles lorsqu'elles permettent de montrer clairement comment utiliser les principales fonctions de la librairie.
+:::
+
+## Données internes (invisible) {.unnumbered}
+
+Certaines données peuvent être nécessaires au fonctionnement de la librairie sans être destinées aux utilisateurs.
+
+Par exemple :
+
+- une table de correspondance;
+- des coefficients pré-calculés;
+- des valeurs de référence;
+- une petite structure utilisée par plusieurs fonctions.
+
+Ces objets peuvent être enregistrés comme **données internes** avec :
+
+```{r}
+#| eval: false
+
+usethis::use_data(
+  objet_interne,
+  internal = TRUE
+)
+```
+
+Ils seront alors enregistrés dans :
+
+```text
+R/sysdata.rda
+```
+
+Ces objets peuvent être utilisés par les fonctions de la librairie, mais ils ne font pas partie de son interface publique.
+
+## Fichiers de données brutes {.unnumbered}
+
+Il arrive finalement que nous voulions distribuer un véritable fichier plutôt qu'un objet R.
+
+Par exemple :
+
+```text
+.csv
+.xlsx
+.json
+.txt
+.jpg
+```
+
+Cela peut être particulièrement utile si notre librairie contient une fonction dont le rôle est justement de **lire ou traiter ce type de fichier**.
+
+Dans ce cas, les fichiers peuvent être placés dans :
+
+```text
+inst/extdata/
+```
+
+Par exemple :
+
+```text
+MaLibrairie/
+└── inst/
+    └── extdata/
+        └── exemple.csv
+```
+
+Une fois la librairie installée, nous pouvons retrouver le chemin du fichier avec :
+
+```{r}
+#| eval: false
+
+system.file(
+  "extdata",
+  "exemple.csv",
+  package = "MaLibrairie"
+)
+```
+
+Cela permet notamment d'utiliser de vrais fichiers dans les exemples, les tests et les vignettes sans dépendre d'un chemin particulier sur l'ordinateur de l'utilisateur.
+
+## Résumé {.unnumbered}
+
+Nous pouvons donc distinguer trois situations principales :
+
+| Type de données | Emplacement | Utilisation |
+|---|---|---|
+| Objets R destinés aux utilisateurs | `data/` | Exemples ou données distribuées |
+| Objets R internes | `R/sysdata.rda` | Fonctionnement interne |
+| Fichiers bruts | `inst/extdata/` | Exemples, tests ou lecture de fichiers |
+
+Le répertoire `data-raw/`, quant à lui, contient le **code utilisé pour créer les données**, mais n'est pas distribué avec la librairie.
+
+::: {.callout-note}
+## À retenir
+
+Une librairie peut donc distribuer beaucoup plus que des fonctions.
+
+Elle peut regrouper dans une même structure :
+
+```text
+fonctions
+documentation
+tests
+données
+fichiers d'exemple
+```
+
+tout en conservant un workflow reproductible pour leur création et leur utilisation.
+:::
+
+## Résumé de la séance
+
+Nous sommes maintenant passés d'une vision très rapide de la conception d'une librairie à un véritable workflow de développement.
+
+Nous avons vu qu'une librairie R est beaucoup plus qu'un ensemble de fichiers `.R`.
+
+Elle nous fournit une structure permettant d'organiser :
+
+```text
+Code
+ │
+ ├── fonctions
+ │
+ ├── documentation
+ │
+ ├── tests
+ │
+ └── métadonnées
+```
+
+Pour l'instant, notre librairie pourrait ressembler à :
+
+```text
+MaLibrairie/
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+│   ├── statistiques.R
+│   └── utils.R
+├── man/
+│   ├── fonction1.Rd
+│   └── fonction2.Rd
+├── tests/
+│   ├── testthat.R
+│   └── testthat/
+│       ├── test-statistiques.R
+│       └── test-utils.R
+└── MaLibrairie.Rproj
+```
+
+Nous savons maintenant :
+
+- créer une librairie;
+- organiser ses fonctions;
+- réfléchir à leur conception;
+- charger la librairie avec `load_all()`;
+- documenter les fonctions avec `roxygen2`;
+- générer la documentation avec `document()`;
+- écrire des tests avec `testthat`;
+- exécuter ces tests avec `test()`;
+- vérifier l'ensemble de la librairie avec `check()`.
+
+Lors de la prochaine séance, nous examinerons plus précisément ce qui se passe **entre notre librairie et le reste de l'écosystème R**.
+
+Nous discuterons notamment :
+
+- du fichier `DESCRIPTION`;
+- des dépendances;
+- du fichier `NAMESPACE`;
+- des fonctions exportées et internes;
+- de l'utilisation de fonctions provenant d'autres librairies;
+- puis de l'intégration de code provenant d'autres langages.
+
+::: {.callout-tip}
+## L'idée principale
+
+Une bonne librairie ne contient pas seulement du code qui fonctionne.
+
+Elle contient du code **organisé, documenté, testé et maintenable**.
+:::

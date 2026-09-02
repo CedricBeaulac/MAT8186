@@ -622,51 +622,511 @@
   {
     "objectID": "Package.html",
     "href": "Package.html",
-    "title": "4  Conception d’une librairie.",
+    "title": "4  Conception d’une librairie R",
     "section": "",
-    "text": "Se demander pourquoi.\nC’est important de d’abord se poser pourquoi on met au point une librairie. On peut vouloir simplement se faire une librairie pour nous-même; ceci a pour objectif de se doter de nos propres fonctions que l’on désire utiliser régulièrement au fil de nombreuses années. Dans la pluspart des cas, nous désirons malgré tout mettre une librairie au point à fin de la partage; à fin de distribuer de nouvelles méthodes d’analyse de données.",
+    "text": "Se demander pourquoi\nAvant de créer une librairie, il est important de commencer par se demander :\nIl n’est pas nécessaire que toutes les librairies soient destinées à être publiées sur CRAN.\nOn peut vouloir créer une librairie simplement pour soi-même.\nPar exemple, au fil de plusieurs projets de recherche, vous pourriez remarquer que vous utilisez régulièrement les mêmes fonctions :\nnettoyer_donnees()\nfaire_figure()\ncalculer_indice()\najuster_modele()\nPlutôt que de copier ces fonctions d’un projet à l’autre, il peut être avantageux de les regrouper dans une librairie personnelle.\nOn obtient alors :\nUne librairie permet donc de centraliser du code qui doit être réutilisé.\nDans un contexte de recherche scientifique, l’objectif est souvent différent.\nNous pouvons développer :\nDans ce contexte, la librairie devient un moyen de diffusion scientifique.\nAu lieu de fournir à nos utilisateurs :\nnous pouvons fournir :\nLa différence est importante.\nUne librairie bien conçue fournit non seulement du code, mais également :",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
   },
   {
-    "objectID": "Package.html#est-ce-que-ça-existe-déjà",
-    "href": "Package.html#est-ce-que-ça-existe-déjà",
-    "title": "4  Conception d’une librairie.",
-    "section": "Est-ce que ça existe déjà ?",
-    "text": "Est-ce que ça existe déjà ?\nQuel que soit la raison qui motive la conception d’une librairie il en vaut la peine de se questionner d’abord s’il y existe déjà une librairie qui accomplit le travaille… et ce n’est pas une tâche facile…\nLa source suivante peut vous guide un peu.",
+    "objectID": "Package.html#se-demander-pourquoi",
+    "href": "Package.html#se-demander-pourquoi",
+    "title": "4  Conception d’une librairie R",
+    "section": "",
+    "text": "Pourquoi voulons-nous mettre au point une librairie?\n\n\n\n\n\n\n\nProjet A ──┐\nProjet B ──┼──&gt; maLibrairie\nProjet C ──┘\n\n\n\n\nune nouvelle méthode statistique;\nun nouvel algorithme;\nune nouvelle procédure de visualisation;\nune nouvelle méthode de traitement des données;\ndes outils permettant de reproduire les résultats d’un article.\n\n\n\nmethod_final_v2.R\n\ninstall.packages(\"maLibrairie\")\n\nlibrary(maLibrairie)\n\nnouvelle_methode(x)\n\n\n\nune structure;\nune interface;\nde la documentation;\ndes tests;\nune gestion des dépendances;\ndes exemples;\néventuellement des vignettes;\nun mécanisme standard d’installation.\n\n\n\n\n\n\n\nUne librairie comme produit de recherche\n\n\n\nDans plusieurs domaines de la statistique et de la science des données, le code constitue une partie importante du résultat scientifique.\nUne librairie permet de transformer une implémentation utilisée par les auteurs en un outil pouvant être utilisé et évalué par d’autres chercheurs.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
   },
   {
-    "objectID": "Package.html#nommer-sa-librairie.",
-    "href": "Package.html#nommer-sa-librairie.",
-    "title": "4  Conception d’une librairie.",
-    "section": "4.1 Nommer sa librairie.",
-    "text": "4.1 Nommer sa librairie.\nEn supposant que votre objectif est claire et qu’il n’y existe pas déjà une libraire capable de faire ce que vous voulez, il semble donc approprié de mettre au point une nouvelle librairie et de s’assurer, au nom de la science, que celle-ci soit éventuellement distribué publiquement.\nVous devrez, à un certains moment, nommer votre librairie. Voici quelques règles:\n\nSeulement des lettres, des chiffres et ‘.’\nDoit commencer par une lettre\nNe peut pas finir avec ‘.’\n\net des considérations:\n\nNe copier par de nom existant\nGarder le nom court\nChoisissez un nom évocateur, un bon accronym\nR pour référer au langage.\n\nÀ travers la librairie available on peut vérifier si une librairie porte déjà ce nom:\n\nlibrary(available)\n\navailable(\"BESTree\")\n\nUne fois que nous avons déterminer un nom et crée notre répertoire (projet R), on va de l’avant et on crée notre librairie:\n\ncreate_package(\"MaLibrairie\")",
+    "objectID": "Package.html#est-ce-que-cela-existe-déjà",
+    "href": "Package.html#est-ce-que-cela-existe-déjà",
+    "title": "4  Conception d’une librairie R",
+    "section": "Est-ce que cela existe déjà?",
+    "text": "Est-ce que cela existe déjà?\nUne fois l’objectif déterminé, une deuxième question devrait venir immédiatement :\n\nEst-ce que quelqu’un a déjà fait le travail?\n\nL’écosystème R est très vaste.\nCRAN contient des milliers de librairies, auxquelles s’ajoutent notamment :\n\nBioconductor;\nGitHub;\nR-universe;\nles librairies privées développées dans les entreprises et les laboratoires de recherche.\n\nIl n’est donc pas toujours facile de déterminer si une librairie répondant à notre besoin existe déjà.\nAvant de commencer un nouveau projet, il est utile de chercher :\n\nsur CRAN;\nsur Google;\nsur GitHub;\ndans les articles scientifiques associés au domaine;\ndans les listes de librairies spécialisées.\n\nUne ressource intéressante sur la recherche de librairies R est présentée dans l’article suivant :\nFinding the right R package\nIl faut également garder en tête qu’une librairie existante ne doit pas nécessairement effectuer exactement ce que nous désirons.\nIl peut être préférable :\n\nd’utiliser une librairie existante;\nde contribuer à une librairie existante;\nd’écrire une fonction complémentaire;\nou seulement ensuite de créer une nouvelle librairie.\n\n\n\n\n\n\n\nNe pas réinventer inutilement la roue\n\n\n\nCréer une nouvelle librairie demande du temps.\nUne librairie destinée à d’autres utilisateurs devra éventuellement être :\n\nmaintenue;\ndocumentée;\ntestée;\nmise à jour lorsque R ou ses dépendances évoluent.\n\nAvant de commencer, il vaut donc la peine de vérifier que le projet répond réellement à un besoin.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#nommer-sa-librairie",
+    "href": "Package.html#nommer-sa-librairie",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.1 Nommer sa librairie",
+    "text": "4.1 Nommer sa librairie\nEn supposant que notre objectif soit clair et qu’aucune librairie existante ne réponde adéquatement à notre besoin, il faut maintenant trouver un nom.\nCe problème semble trivial.\nIl ne l’est pas nécessairement!",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#quelques-règles",
+    "href": "Package.html#quelques-règles",
+    "title": "4  Conception d’une librairie R",
+    "section": "Quelques règles",
+    "text": "Quelques règles\nUn nom de librairie R doit respecter quelques règles formelles.\nLe nom :\n\npeut contenir des lettres;\npeut contenir des chiffres;\npeut contenir le caractère .;\ndoit commencer par une lettre;\nne peut pas se terminer par ..\n\nPar exemple :\nBESTree\nshapeR\nfdaTools\nimageAnalysis\nsont des noms possibles.\nLes noms suivants ne sont pas valides :\n2methods\nmy-package\nmy_package\nMême si le caractère . est permis, son utilisation est souvent déconseillée, entre autres parce qu’il peut créer de la confusion avec la convention utilisée par les méthodes S3.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#quelques-considérations-supplémentaires",
+    "href": "Package.html#quelques-considérations-supplémentaires",
+    "title": "4  Conception d’une librairie R",
+    "section": "Quelques considérations supplémentaires",
+    "text": "Quelques considérations supplémentaires\nUn bon nom devrait idéalement être :\n\nrelativement court;\nfacile à écrire;\nfacile à prononcer;\nfacile à rechercher sur Internet;\névocateur de l’objectif de la librairie;\nsuffisamment distinctif pour ne pas être confondu avec une autre librairie.\n\nIl peut s’agir :\n\nd’un mot;\nd’une combinaison de mots;\nd’un acronyme;\nd’un jeu de mots;\nd’un nom contenant R pour rappeler le langage.\n\nAttention cependant à ne pas systématiquement ajouter un R à tout!",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#vérifier-la-disponibilité-dun-nom",
+    "href": "Package.html#vérifier-la-disponibilité-dun-nom",
+    "title": "4  Conception d’une librairie R",
+    "section": "Vérifier la disponibilité d’un nom",
+    "text": "Vérifier la disponibilité d’un nom\nLa librairie available permet de vérifier si un nom potentiel est déjà utilisé, notamment sur CRAN, Bioconductor et GitHub.\nOn peut l’installer avec :\n\ninstall.packages(\"available\")\n\nPuis :\n\navailable::available(\"BESTree\")\n\nLa fonction vérifie notamment :\n\nsi le nom est valide;\ns’il existe déjà sur CRAN;\ns’il existe sur Bioconductor;\ns’il est déjà utilisé sur GitHub.\n\nElle effectue également quelques vérifications additionnelles sur le nom proposé.\n\n\n\n\n\n\nUn outil, pas une garantie\n\n\n\nLe fait que available() considère un nom comme disponible ne garantit pas qu’il s’agit d’un bon nom.\nLe choix final demeure une décision humaine.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#créer-notre-librairie",
+    "href": "Package.html#créer-notre-librairie",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.2 Créer notre librairie",
+    "text": "4.2 Créer notre librairie\nUne fois le nom choisi, nous pouvons créer la librairie.\nPar exemple :\n\nusethis::create_package(\"MaLibrairie\")\n\nIl est également possible de fournir un chemin complet :\n\nusethis::create_package(\n  \"~/Documents/MAT8186/MaLibrairie\"\n)\n\ncreate_package() crée automatiquement la structure minimale nécessaire.\nOn obtient quelque chose ressemblant à :\nMaLibrairie/\n├── .Rbuildignore\n├── .gitignore\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n└── MaLibrairie.Rproj\nNous avons déjà rencontré cette structure dans Chapter 1.\nNous allons maintenant commencer à comprendre davantage le rôle de chacun de ces éléments.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#le-répertoire-r",
+    "href": "Package.html#le-répertoire-r",
+    "title": "4  Conception d’une librairie R",
+    "section": "Le répertoire R/",
+    "text": "Le répertoire R/\nPour cette séance, le répertoire le plus important est :\nR/\nC’est ici que sera placé le code R qui définit les fonctions de notre librairie.\nPar exemple :\nMaLibrairie/\n└── R/\n    ├── statistiques.R\n    ├── visualisation.R\n    └── utils.R\nNous reviendrons lors de la prochaine séance sur certains des autres fichiers, notamment :\nDESCRIPTION\nNAMESPACE\nqui jouent un rôle particulièrement important dans la gestion des dépendances et de l’interface publique de la librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
   },
   {
     "objectID": "Package.html#organisation-des-fonctions",
     "href": "Package.html#organisation-des-fonctions",
-    "title": "4  Conception d’une librairie.",
-    "section": "4.2 Organisation des fonctions",
-    "text": "4.2 Organisation des fonctions\nEn général, une librairie est la mise en opération de plusieurs fonctions R. Il est donc naturel de discuter de ces fonctions et de leur organisations. Pour l’instant, ce que nous appelons une fonctions R à la forme suivante:\n\naddition &lt;- function(x,y){\n  return(x+y)\n}\n\nNous verrons prochainement, comment appelé des fonctions d’autres librairies (dépendances), ou bien de d’autres languages (intégrations).\nPour l’instant, on va surtout se concentrer sur l’organisation de ces fonctions. Tout d’abord, il y a très peu de règles en ce qui concerne la librairie:\n\nToutes les fonctions de la librairies doivent être sauvegarder dans des documents R (.R)\nTout ces documents doivent être dans le répertoire R/ de la librairie.\n\nMaintenant, nous pouvons nommes ces documents .R comme nous le voulons et ceux-ci peuvent contenir plus d’une fonction. À vrai dire, c’est un défi intéressant d’organiser de déterminer combien de document .R nous avons, comment appelé ces documents, combien de fonctions ils contiennent, etc..\nEn pratique, on recommande un juste milieu entre les deux extrêmes, soit un document contenant toutes les fonctions et un document par fonction.\nUn structure courante est de séparer les fonctions dites visibles des fonctions invisibles. Les fonctions visibles peuvent être appelés par les utilisateurs de la libraires, souvent organisé dans un fichier fonctions.R alors que les fonctions dites invisibles servent au bon fonctionnement de la libraires et sont souvent appelé par les fonctions visibles organisé dans un fichier utils.R.\nLes fonctions des divers documents .R peuvent tous être appelé sans aucune configuration spéciale.\n\n\n\n\n\n\nSur CRAN\n\n\n\nSi vous désirez publier la librairie sur CRAN vous êtes limité dans les charactères que vous pouvez utilisez dans l’écriture de vos fonctions.\nIn practice, this means you are limited to the digits 0 to 9, lowercase letters ‘a’ to ‘z’, uppercase letters ‘A’ to ‘Z’, and common punctuation.\nBut sometimes you need to inline a small bit of character data that includes, e.g., a Greek letter (µ), an accented character (ü), or a symbol (30°). You can use any Unicode character as long as you specify it in the special Unicode escape “234” format.",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.3 Organisation des fonctions",
+    "text": "4.3 Organisation des fonctions\nUne librairie est généralement composée d’un ensemble de fonctions R.\nUne fonction possède la forme générale :\n\naddition &lt;- function(x, y) {\n  x + y\n}\n\nOn peut ensuite l’utiliser avec :\n\naddition(2, 3)\n\nCette fonction est évidemment très simple, mais elle possède déjà les trois composantes fondamentales d’une fonction :\nnom\n ↓\naddition &lt;- function(x, y) {\n                     ↑\n                 arguments\n\n  x + y\n    ↑\n résultat retourné\n}\nDans une librairie, la réflexion sur la conception des fonctions devient particulièrement importante puisqu’elles constituent généralement l’interface entre notre code et l’utilisateur.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
   },
   {
-    "objectID": "Package.html#procédure-de-vérification",
-    "href": "Package.html#procédure-de-vérification",
-    "title": "4  Conception d’une librairie.",
-    "section": "4.3 Procédure de vérification",
-    "text": "4.3 Procédure de vérification\nUne fois que l’on travaille sur notre librairie, on va régulièrement vérifié que nos fonctions performent les opérations qu’elles doivent. Une manière d’installer la version en développement de notre librairie est par la commande load_all():\n\n# with devtools attached and\n# working directory set to top-level of your source package ...\n\nload_all()\n\n# ... now experiment with the functions in your package\n\nCela motive une approche itérative pour le développement de librairie:\n\nModifie la fonction\nload_all()\nUtilise la fonction pour voir l’effet de la modification\n\nEn installant la version en développement de notre librairie on peut tester divers fonctionnalités. Une fois que tout fonctionne comme on le veu, on vérifie si le tout peut être déployé en utilisant check():\n\ndevtools::check()\n\nS’ajoute alors les étapes suivantes pour le déploiement:\n\nUtilise devtools::check()\nRésoudre les problèmes soulevés\nRépété jusqu’à ce qu’il n’y aie pu de problème.",
+    "objectID": "Package.html#où-placer-les-fonctions",
+    "href": "Package.html#où-placer-les-fonctions",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.4 Où placer les fonctions?",
+    "text": "4.4 Où placer les fonctions?\nIl existe une règle fondamentale :\n\nLe code R d’une librairie doit être placé dans des fichiers .R contenus dans le répertoire R/.\n\nPar exemple :\nMaLibrairie/\n└── R/\n    ├── addition.R\n    ├── statistiques.R\n    └── utils.R\nIl n’est pas nécessaire qu’un fichier corresponde à une seule fonction.\nPar exemple :\nR/statistiques.R\npourrait contenir :\n\nmoyenne_robuste &lt;- function(x) {\n  ...\n}\n\nvariance_robuste &lt;- function(x) {\n  ...\n}\n\necart_type_robuste &lt;- function(x) {\n  ...\n}\n\nToutes les fonctions définies dans les différents fichiers du répertoire R/ appartiennent au même espace de la librairie.\nAinsi, une fonction définie dans :\nR/statistiques.R\npeut utiliser une fonction définie dans :\nR/utils.R\nsans avoir besoin de faire :\nsource(\"R/utils.R\")\n\n\n\n\n\n\nPas de source() dans une librairie\n\n\n\nIl n’est normalement pas nécessaire d’utiliser source() pour charger les différents fichiers du répertoire R/.\nR prend en charge l’ensemble des fichiers du répertoire lors du chargement de la librairie.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie.</span>"
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#comment-organiser-les-fichiers",
+    "href": "Package.html#comment-organiser-les-fichiers",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.5 Comment organiser les fichiers?",
+    "text": "4.5 Comment organiser les fichiers?\nIl existe énormément de liberté dans l’organisation des fichiers .R.\nÀ un extrême, on pourrait avoir :\nR/\n└── fonctions.R\ncontenant 150 fonctions.\nÀ l’autre extrême :\nR/\n├── fonction1.R\n├── fonction2.R\n├── fonction3.R\n├── fonction4.R\n├── fonction5.R\n├── ...\navec un fichier différent pour chaque petite fonction.\nLes deux approches deviennent rapidement difficiles à maintenir.\nUne approche plus raisonnable consiste à regrouper les fonctions selon leur rôle logique.\nPar exemple :\nR/\n├── nettoyage.R\n├── modeles.R\n├── graphiques.R\n├── prediction.R\n└── utils.R\nLe fichier :\nutils.R\nest souvent utilisé pour regrouper de petites fonctions auxiliaires utilisées par plusieurs autres fonctions.\nPar exemple :\n\nverifier_vecteur &lt;- function(x) {\n  if (!is.numeric(x)) {\n    stop(\"x doit être un vecteur numérique.\")\n  }\n}\n\nCette fonction pourrait être utilisée par plusieurs fonctions de la librairie.\n\n\n\n\n\n\nFonctions publiques (visible) et fonctions internes (invisble)\n\n\n\nUne librairie contient souvent deux types de fonctions :\n\ndes fonctions destinées à être directement utilisées par les utilisateurs;\ndes fonctions internes (invisble) servant uniquement au fonctionnement de la librairie.\n\nCette distinction n’est pas déterminée par le fichier dans lequel la fonction est placée, mais il peut être naturel d’organiser nos fonctions en considerant si elle seront visibles ou invisbles.\nElle est déterminée par le mécanisme d’exportation de la librairie.\nNous étudierons ce mécanisme plus en détail lors de la prochaine séance lorsque nous discuterons de NAMESPACE.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#concevoir-une-bonne-fonction",
+    "href": "Package.html#concevoir-une-bonne-fonction",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.6 Concevoir une bonne fonction",
+    "text": "4.6 Concevoir une bonne fonction\nÉcrire une fonction qui fonctionne est relativement facile.\nÉcrire une fonction qui sera utilisée pendant plusieurs années par plusieurs personnes est plus difficile.\nUne bonne fonction devrait généralement :\n\naccomplir une tâche clairement définie;\navoir un nom informatif;\navoir des arguments compréhensibles;\nretourner un résultat prévisible;\ngérer raisonnablement les entrées incorrectes;\néviter de modifier inutilement l’environnement de l’utilisateur;\nêtre documentée;\nêtre testée.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#une-fonction-devrait-accomplir-une-tâche-claire",
+    "href": "Package.html#une-fonction-devrait-accomplir-une-tâche-claire",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.7 Une fonction devrait accomplir une tâche claire",
+    "text": "4.7 Une fonction devrait accomplir une tâche claire\nConsidérons :\n\nanalyse_complete &lt;- function(x) {\n\n  # nettoyer les données\n\n  # ajuster trois modèles\n\n  # sauvegarder les résultats\n\n  # créer six figures\n\n  # envoyer un courriel\n\n  # préparer mon café\n\n}\n\nCette fonction essaie probablement d’en faire trop.\nIl est souvent préférable de créer plusieurs fonctions simples :\n\nnettoyer_donnees()\n\najuster_modele()\n\ncalculer_prediction()\n\ncreer_graphique()\n\npuis, si nécessaire, une fonction de niveau supérieur qui les combine.\nCette approche facilite :\n\nla compréhension;\nla réutilisation;\nles tests;\nla correction des erreurs;\nla maintenance.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#nommer-les-fonctions",
+    "href": "Package.html#nommer-les-fonctions",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.8 Nommer les fonctions",
+    "text": "4.8 Nommer les fonctions\nLe nom d’une fonction devrait idéalement décrire une action.\nPar exemple :\ncalculer_moyenne()\najuster_modele()\npredire_classe()\ntracer_surface()\nLes arguments représentent plutôt les objets sur lesquels cette action est effectuée :\ncalculer_moyenne(x)\n\najuster_modele(x, y)\n\npredire_classe(modele, nouvelles_donnees)\nIl est également utile d’être cohérent à travers une librairie.\nÉvitez par exemple de mélanger sans raison :\nget_mean()\ncomputeVariance()\ncalcul_median()\nsd.estimation()\nUne convention cohérente rend l’interface beaucoup plus facile à apprendre.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#arguments-et-valeurs-par-défaut",
+    "href": "Package.html#arguments-et-valeurs-par-défaut",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.9 Arguments et valeurs par défaut",
+    "text": "4.9 Arguments et valeurs par défaut\nLes valeurs par défaut peuvent rendre une fonction agréable à utiliser.\nPar exemple :\n\nmoyenne &lt;- function(x, retirer_na = TRUE) {\n\n  mean(x, na.rm = retirer_na)\n\n}\n\nL’utilisateur peut simplement faire :\n\nmoyenne(c(1, 2, NA, 4))\n\nmais peut modifier le comportement :\n\nmoyenne(\n  c(1, 2, NA, 4),\n  retirer_na = FALSE\n)\n\nLes valeurs par défaut devraient représenter un comportement :\n\nraisonnable;\nprévisible;\nfréquent.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#retourner-un-résultat",
+    "href": "Package.html#retourner-un-résultat",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.10 Retourner un résultat",
+    "text": "4.10 Retourner un résultat\nEn R, la dernière expression évaluée par une fonction est automatiquement retournée.\nAinsi :\n\naddition &lt;- function(x, y) {\n  x + y\n}\n\nest équivalent à :\n\naddition &lt;- function(x, y) {\n  return(x + y)\n}\n\nLes deux sont valides.\nDans la majorité des fonctions simples, il n’est donc pas nécessaire d’utiliser explicitement return() à la fin.\nreturn() peut cependant être utile lorsqu’on veut quitter une fonction avant la fin.\nPar exemple :\n\ninverse &lt;- function(x) {\n\n  if (x == 0) {\n    return(Inf)\n  }\n\n  1 / x\n}",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#vérifier-les-entrées",
+    "href": "Package.html#vérifier-les-entrées",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.11 Vérifier les entrées",
+    "text": "4.11 Vérifier les entrées\nUne fonction destinée à être réutilisée devrait généralement réagir de manière informative lorsqu’elle reçoit une entrée invalide.\nConsidérons :\n\naddition &lt;- function(x, y) {\n  x + y\n}\n\nQue se passe-t-il si l’utilisateur fait :\naddition(\"bonjour\", 3)\nR produira une erreur, mais celle-ci n’est pas nécessairement formulée dans le contexte de notre fonction.\nNous pouvons vérifier explicitement certains arguments :\n\naddition &lt;- function(x, y) {\n\n  if (!is.numeric(x)) {\n    stop(\"`x` doit être numérique.\")\n  }\n\n  if (!is.numeric(y)) {\n    stop(\"`y` doit être numérique.\")\n  }\n\n  x + y\n}\n\nL’utilisateur reçoit alors une erreur plus informative.\n\n\n\n\n\n\nJusqu’où faut-il vérifier?\n\n\n\nIl n’est pas nécessaire de vérifier absolument toutes les situations imaginables.\nL’objectif est surtout de détecter les erreurs :\n\nprobables;\nimportantes;\ndifficiles à comprendre autrement.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#éviter-les-effets-de-bord",
+    "href": "Package.html#éviter-les-effets-de-bord",
+    "title": "4  Conception d’une librairie R",
+    "section": "Éviter les effets de bord",
+    "text": "Éviter les effets de bord\nUne fonction est généralement plus facile à utiliser si elle :\n\nreçoit des arguments;\neffectue un calcul;\nretourne un résultat.\n\nPar exemple :\n\ncarre &lt;- function(x) {\n  x^2\n}\n\nest très prévisible.\nUne fonction qui modifie silencieusement l’environnement de l’utilisateur est plus difficile à comprendre :\n\nmauvaise_fonction &lt;- function(x) {\n\n  setwd(\"C:/nouveau/repertoire\")\n\n  options(digits = 3)\n\n  x^2\n}\n\nAprès l’utilisation de cette fonction :\n\nle répertoire de travail a changé;\nles options de R ont changé.\n\nCela peut affecter le reste de la session de l’utilisateur.\n::: callout-note ## Un beau style et une belle indentation {.unnumbered}\nQue vous developpez pour vous-même ou a des fin de publication, une belle indentation peut aider la lecture des fonctions. Il y existe plusieurs manières de procéder mais la librairie styler peut s’en occuper pour vous! ::",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#quelques-contraintes-pour-cran",
+    "href": "Package.html#quelques-contraintes-pour-cran",
+    "title": "4  Conception d’une librairie R",
+    "section": "Quelques contraintes pour CRAN",
+    "text": "Quelques contraintes pour CRAN\nSi nous souhaitons éventuellement publier notre librairie sur CRAN, certaines contraintes additionnelles doivent être respectées.\nEn particulier, le code contenu dans les fichiers .R devrait utiliser des caractères ASCII pour maximiser la portabilité.\nCela comprend principalement :\na-z\nA-Z\n0-9\nainsi que la ponctuation courante.\nIl faut donc être prudent avec certains caractères copiés depuis un traitement de texte, par exemple :\n“ ”\n‘ ’\nµ\n°\nSi un caractère Unicode est nécessaire dans une chaîne de caractères, il peut être représenté avec une séquence Unicode.\nPar exemple :\n\nx &lt;- \"30\\u00B0\"\n\nx\n\n\n\n\n\n\n\nAttention\n\n\n\nCette contrainte concerne principalement le code R distribué dans les fichiers .R.\nElle ne signifie évidemment pas que toute la documentation d’une librairie doit être rédigée sans accents.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#développer-de-manière-itérative",
+    "href": "Package.html#développer-de-manière-itérative",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.12 Développer de manière itérative",
+    "text": "4.12 Développer de manière itérative\nNous avons maintenant plusieurs fonctions dans notre répertoire :\nR/\nComment les utiliser pendant que nous les développons?\nUne première tentation serait :\nsource(\"R/fonction.R\")\nMais nous voulons tester notre code dans le contexte de la librairie complète.\nNous utilisons donc :\n\ndevtools::load_all()\n\nload_all() n’installe pas réellement la librairie.\nIl simule le processus de chargement de la librairie en développement et rend ses fonctions disponibles dans notre session R.\nNous pouvons alors essayer :\n\naddition(2, 3)\n\nCela mène à notre premier cycle de développement :\nModifier une fonction\n        ↓\n   sauvegarder\n        ↓\n   load_all()\n        ↓\nessayer la fonction\n        ↓\n   recommencer",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#documenter-nos-fonctions",
+    "href": "Package.html#documenter-nos-fonctions",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.13 Documenter nos fonctions",
+    "text": "4.13 Documenter nos fonctions\nUne fonction peut être parfaitement écrite et complètement inutilisable pour quelqu’un qui ne sait pas ce qu’elle fait.\nConsidérons :\n\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}\n\nNous savons peut-être aujourd’hui exactement ce que fait cette fonction.\nMais :\n\nle saurons-nous encore dans deux ans?\nun collaborateur le saura-t-il?\nun utilisateur de notre librairie le saura-t-il?\n\nUne librairie doit donc fournir de la documentation.\nEn R, cette documentation est normalement accessible avec :\n?CR\nou :\nhelp(\"CR\")",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#les-fichiers-.rd",
+    "href": "Package.html#les-fichiers-.rd",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.14 Les fichiers .Rd",
+    "text": "4.14 Les fichiers .Rd\nR utilise traditionnellement des fichiers de documentation avec l’extension :\n.Rd\nCes fichiers sont placés dans :\nman/\nPar exemple :\nMaLibrairie/\n├── R/\n│   └── CR.R\n└── man/\n    └── CR.Rd\nNous n’allons cependant pas écrire les fichiers .Rd directement.\nNous utiliserons plutôt la librairie :\nroxygen2",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#documentation-avec-roxygen2",
+    "href": "Package.html#documentation-avec-roxygen2",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.15 Documentation avec roxygen2",
+    "text": "4.15 Documentation avec roxygen2\nroxygen2 permet d’écrire la documentation directement au-dessus de la fonction concernée.\nLes commentaires de documentation commencent par :\n#'\nPar exemple :\n\n#' Recalibrer un vecteur entre 0 et 1\n#'\n#' Transforme linéairement les valeurs d'un vecteur numérique\n#' afin qu'il aie une moyenne de 0 et une variance unitaire. \n#'\n#' @param x Un vecteur numérique.\n#'\n#' @returns Un vecteur numérique de même longueur que `x`.\n#'\n#' @examples\n#' CR(c(10, 20, 30))\n#'\n#' @export\nCR &lt;- function(x) {\n  (x - mean(x)) / sd(x)\n}\n\nPlusieurs éléments apparaissent dans cette documentation.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#le-titre",
+    "href": "Package.html#le-titre",
+    "title": "4  Conception d’une librairie R",
+    "section": "Le titre",
+    "text": "Le titre\nLa première ligne constitue généralement le titre :\n#' Recalibrer un vecteur entre 0 et 1\nIl devrait être court et décrire clairement l’objectif de la fonction.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#la-description",
+    "href": "Package.html#la-description",
+    "title": "4  Conception d’une librairie R",
+    "section": "La description",
+    "text": "La description\nLe paragraphe suivant fournit une description plus détaillée :\n#' Transforme linéairement les valeurs d'un vecteur numérique\n#' afin qu'il aie une moyenne de 0 et une variance unitaire. \nSi ici qu’on met tous les détails, et qu’on explique longuement ce que fait la fonction.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#param",
+    "href": "Package.html#param",
+    "title": "4  Conception d’une librairie R",
+    "section": "@param",
+    "text": "@param\nChaque entrée de la fonction est décrite brièvement.\n#' @param x Un vecteur numérique.\nPour une fonction :\nma_fonction &lt;- function(x, y, methode)\nnous aurons généralement :\n#' @param x ...\n#' @param y ...\n#' @param methode ...\nOn ce soucis souvent du format (vecteur, matrice, etc..) de l’entré mais une bonne documentation explique également le rôle de l’entrée.\nPar exemple, plutôt que :\n@param alpha Un nombre.\nnous pourrions écrire :\n@param alpha Valeur positive contrôlant l'intensité de la pénalisation.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#returns",
+    "href": "Package.html#returns",
+    "title": "4  Conception d’une librairie R",
+    "section": "@returns",
+    "text": "@returns\nLe marqueur :\n@returns\ndécrit ce que retourne la fonction.\nPar exemple :\n#' @returns Un vecteur numérique de même longueur que `x`.\nPour une fonction plus complexe :\n#' @returns Une liste contenant :\n#'\n#' - `coefficients` : les coefficients estimés;\n#' - `fitted` : les valeurs ajustées;\n#' - `residuals` : les résidus du modèle.\nCette partie est particulièrement importante lorsque la fonction retourne une structure complexe.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#examples",
+    "href": "Package.html#examples",
+    "title": "4  Conception d’une librairie R",
+    "section": "@examples",
+    "text": "@examples\nLa section :\n@examples\npermet de montrer comment utiliser la fonction.\n#' @examples\n#' CR(c(10, 20, 30))\nLes exemples ont deux rôles :\n\naider l’utilisateur à comprendre la fonction;\nfournir du code pouvant être exécuté lors de la vérification de la librairie.\n\nLes exemples devraient donc idéalement être :\n\ncourts;\nreproductibles;\nfaciles à comprendre.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#export",
+    "href": "Package.html#export",
+    "title": "4  Conception d’une librairie R",
+    "section": "@export",
+    "text": "@export\nNous avons également écrit :\n#' @export\nCette instruction indique que la fonction doit faire partie de l’interface publique de la librairie. Ce que nous\nNous allons utiliser @export aujourd’hui, mais nous examinerons plus précisément son fonctionnement lors de la prochaine séance, lorsque nous discuterons du fichier NAMESPACE et de la distinction entre fonctions internes et fonctions exportées.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#générer-la-documentation",
+    "href": "Package.html#générer-la-documentation",
+    "title": "4  Conception d’une librairie R",
+    "section": "4.16 Générer la documentation",
+    "text": "4.16 Générer la documentation\nUne fois les commentaires roxygen2 écrits, nous exécutons :\n\ndevtools::document()\n\nCette commande génère ou met à jour les fichiers de documentation.\nDans notre exemple, elle créera notamment :\nman/rescale01.Rd\nElle mettra également à jour le fichier :\nNAMESPACE\n\n\n\n\n\n\nNe modifiez pas les .Rd directement\n\n\n\nLorsque nous utilisons roxygen2, les fichiers du répertoire man/ sont générés automatiquement.\nSi nous voulons modifier la documentation, nous modifions :\nR/rescale01.R\npuis nous relançons :\ndevtools::document()\n\n\nDans RStudio, nous pouvons également utiliser :\nCtrl + Shift + D\npour générer la documentation.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#tester-nos-fonctions",
+    "href": "Package.html#tester-nos-fonctions",
+    "title": "4  Conception d’une librairie R",
+    "section": "5.1 Tester nos fonctions",
+    "text": "5.1 Tester nos fonctions\nNous avons maintenant :\n\nécrit une fonction;\nessayé cette fonction;\ndocumenté cette fonction.\n\nMais il manque encore une étape importante.\nComment savoir si notre fonction continuera à fonctionner demain?\nSupposons que notre fonction soit :\n\nCR &lt;- function(x) { (x - mean(x)) / sd(x) }\n\nNous pouvons essayer manuellement :\n\nCR(c(10, 20, 30))\n\net vérifier que le résultat est :\n-1 0 1\nMais si nous modifions la fonction dans six mois, nous devrons nous souvenir de refaire manuellement ce test.\nCe n’est pas réaliste pour une librairie contenant des dizaines ou des centaines de fonctions.\nNous allons donc automatiser nos vérifications.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#tests-unitaires",
+    "href": "Package.html#tests-unitaires",
+    "title": "4  Conception d’une librairie R",
+    "section": "5.2 Tests unitaires",
+    "text": "5.2 Tests unitaires\nUn test unitaire vérifie qu’une petite partie de notre code possède le comportement attendu.\nPour nos librairies R, nous utiliserons principalement :\ntestthat\ntestthat est intégré naturellement au workflow devtools.\nPour ajouter l’infrastructure de tests à notre librairie :\n\nusethis::use_testthat()\n\nCette commande crée notamment :\ntests/\n├── testthat.R\n└── testthat/\nNous placerons nos tests dans :\ntests/testthat/",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#notre-premier-test",
+    "href": "Package.html#notre-premier-test",
+    "title": "4  Conception d’une librairie R",
+    "section": "Notre premier test",
+    "text": "Notre premier test\nNous pouvons écrire :\n\ntest_that(\"CR transforme correctement un vecteur\", {\n\n  expect_equal(\n    CR(c(10, 20, 30)),\n    c(-1, 0, 1)\n  )\n\n})\n\nLa structure générale est :\ntest_that(\"description du comportement\", {\n\n  expectation\n\n})\nDans notre cas :\nexpect_equal()\nvérifie que le résultat obtenu est égal au résultat attendu.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#les-attentes",
+    "href": "Package.html#les-attentes",
+    "title": "4  Conception d’une librairie R",
+    "section": "6.1 Les attentes",
+    "text": "6.1 Les attentes\ntestthat fournit plusieurs fonctions commençant par :\nexpect_\nPar exemple :\n\nexpect_equal(x, y)\n\nexpect_true(x)\n\nexpect_false(x)\n\nexpect_null(x)\n\nexpect_error(expression)\n\nexpect_warning(expression)\n\nexpect_type(x, \"double\")\n\nLe choix dépend du comportement que nous voulons vérifier.\nPar exemple :\n\ntest_that(\"addition retourne la bonne valeur\", {\n\n  expect_equal(\n    addition(2, 3),\n    5\n  )\n\n})\n\nou :\n\ntest_that(\"addition refuse les caractères\", {\n\n  expect_error(\n    addition(\"bonjour\", 3)\n  )\n\n})",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#tester-plusieurs-comportements",
+    "href": "Package.html#tester-plusieurs-comportements",
+    "title": "4  Conception d’une librairie R",
+    "section": "6.2 Tester plusieurs comportements",
+    "text": "6.2 Tester plusieurs comportements\nUn fichier peut contenir plusieurs tests :\n\ntest_that(\"CR transforme la moyenne du vecteur et la variance\", {\n\n  resultat &lt;- CR(c(10, 20, 30))\n\n  expect_equal(mean(resultat), 0)\n  expect_equal(var(resultat), 1)\n\n})\n\n\ntest_that(\"CR conserve la longueur du vecteur\", {\n\n  x &lt;- c(10, 20, 30, 40)\n\n  expect_length(\n    rescale01(x),\n    length(x)\n  )\n\n})\n\nRemarquons ici une idée importante.\nNous ne testons pas nécessairement comment la fonction effectue son calcul.\nNous testons plutôt le comportement que nous voulons garantir.\nCette distinction devient très importante lorsque nous modifions l’implémentation d’une fonction.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#exécuter-les-tests",
+    "href": "Package.html#exécuter-les-tests",
+    "title": "4  Conception d’une librairie R",
+    "section": "6.3 Exécuter les tests",
+    "text": "6.3 Exécuter les tests\nPour lancer tous les tests de la librairie :\n\ndevtools::test()\n\nSi les tests fonctionnent, testthat nous indiquera que les attentes ont été satisfaites.\nSi un test échoue, nous obtenons de l’information sur :\n\nle test qui a échoué;\nle résultat attendu;\nle résultat obtenu.\n\nNous pouvons donc corriger notre code immédiatement.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#pourquoi-tester",
+    "href": "Package.html#pourquoi-tester",
+    "title": "4  Conception d’une librairie R",
+    "section": "6.4 Pourquoi tester?",
+    "text": "6.4 Pourquoi tester?\nLes tests peuvent sembler représenter du travail supplémentaire.\nAprès tout, nous devons :\n\nécrire la fonction;\nécrire la documentation;\nécrire des tests.\n\nCependant, les tests deviennent particulièrement utiles lorsque :\n\nla librairie grossit;\nplusieurs personnes collaborent;\nnous modifions une fonction existante;\nnous corrigeons un bogue;\nnous changeons une dépendance;\nnous ajoutons de nouvelles fonctionnalités.\n\nSupposons que nous modifiions complètement l’implémentation de :\nCR()\nSi tous les tests continuent à réussir, nous gagnons rapidement de la confiance que le comportement attendu de la fonction n’a pas changé.\n\n\n\n\n\n\nUn bogue est une excellente occasion d’écrire un test\n\n\n\nLorsqu’un utilisateur découvre un bogue :\n\nécrivez un test reproduisant le bogue;\nvérifiez que le test échoue;\ncorrigez le code;\nvérifiez que le test réussit.\n\nLe test empêche ensuite le même bogue de réapparaître silencieusement dans une version future.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#que-faut-il-tester",
+    "href": "Package.html#que-faut-il-tester",
+    "title": "4  Conception d’une librairie R",
+    "section": "6.5 Que faut-il tester?",
+    "text": "6.5 Que faut-il tester?\nIl n’est pas nécessaire de tester chaque ligne de code.\nNous voulons surtout tester les comportements importants.\nPar exemple :\nCas normal\nCas limite\nEntrée invalide\nValeurs manquantes\nObjet vide\nValeurs extrêmes\nPour une fonction :\nmoyenne_robuste(x)\nnous pourrions tester :\n\ntest_that(\"moyenne_robuste fonctionne sur un vecteur standard\", {\n\n  expect_equal(\n    moyenne_robuste(c(1, 2, 3)),\n    2\n  )\n\n})\n\n\ntest_that(\"moyenne_robuste gère les NA\", {\n\n  expect_equal(\n    moyenne_robuste(c(1, NA, 3)),\n    2\n  )\n\n})\n\n\ntest_that(\"moyenne_robuste refuse les caractères\", {\n\n  expect_error(\n    moyenne_robuste(c(\"a\", \"b\"))\n  )\n\n})",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#notre-cycle-de-développement-complet",
+    "href": "Package.html#notre-cycle-de-développement-complet",
+    "title": "4  Conception d’une librairie R",
+    "section": "6.6 Notre cycle de développement complet",
+    "text": "6.6 Notre cycle de développement complet\nNous pouvons maintenant améliorer notre cycle de développement.\nAu lieu de simplement :\nmodifier\n   ↓\nload_all()\n   ↓\nessayer\nnous avons maintenant :\nModifier le code\n        ↓\n    load_all()\n        ↓\nEssayer la fonction\n        ↓\n    document()\n        ↓\n      test()\n        ↓\n      check()\n        ↓\n      commit\n        ↓\n    recommencer\nCes commandes ont des rôles différents.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#load_all",
+    "href": "Package.html#load_all",
+    "title": "4  Conception d’une librairie R",
+    "section": "load_all()",
+    "text": "load_all()\n\ndevtools::load_all()\n\npermet d’obtenir un retour très rapide pendant le développement.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#document",
+    "href": "Package.html#document",
+    "title": "4  Conception d’une librairie R",
+    "section": "document()",
+    "text": "document()\n\ndevtools::document()\n\ngénère ou met à jour la documentation et certains éléments de NAMESPACE.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#test",
+    "href": "Package.html#test",
+    "title": "4  Conception d’une librairie R",
+    "section": "test()",
+    "text": "test()\n\ndevtools::test()\n\nexécute les tests automatisés.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#check",
+    "href": "Package.html#check",
+    "title": "4  Conception d’une librairie R",
+    "section": "check()",
+    "text": "check()\n\ndevtools::check()\n\neffectue une vérification beaucoup plus générale de la librairie.\ncheck() vérifie notamment :\n\nla structure de la librairie;\ncertains éléments de DESCRIPTION;\nle code R;\nla documentation;\nles dépendances;\nles tests;\nles exemples;\nla capacité de construire et d’installer correctement la librairie.\n\nNous visons éventuellement :\n0 errors\n0 warnings\n0 notes\n\n\n\n\n\n\ncheck() n’est pas seulement pour la fin\n\n\n\nUne erreur fréquente serait d’attendre que la librairie soit « terminée » avant d’utiliser check().\nIl est préférable de l’exécuter régulièrement.\nIl est beaucoup plus facile de corriger un problème que nous venons de créer que dix problèmes accumulés pendant plusieurs semaines.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#un-workflow-raisonnable",
+    "href": "Package.html#un-workflow-raisonnable",
+    "title": "4  Conception d’une librairie R",
+    "section": "Un workflow raisonnable",
+    "text": "Un workflow raisonnable\nIl n’est pas nécessaire d’exécuter check() après chaque caractère modifié.\nUn workflow réaliste pourrait ressembler à :\nÉcrire quelques lignes\n        ↓\n    load_all()\n        ↓\nEssayer rapidement\n        ↓\nÉcrire/modifier tests\n        ↓\n      test()\n        ↓\nDocumenter\n        ↓\n    document()\n        ↓\n      check()\n        ↓\n      commit\nPuis :\nrecommencer",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#inclure-des-données-dans-une-librairie",
+    "href": "Package.html#inclure-des-données-dans-une-librairie",
+    "title": "4  Conception d’une librairie R",
+    "section": "6.7 Inclure des données dans une librairie",
+    "text": "6.7 Inclure des données dans une librairie\nUne librairie R peut également contenir des données.\nCela peut être utile pour plusieurs raisons :\n\nfournir un jeu de données permettant d’illustrer les fonctions de la librairie;\nfournir des données utilisées dans les exemples ou les tests;\ndistribuer directement un jeu de données (peut-être l’objectif principal);\nconserver certaines données nécessaires au fonctionnement interne de la librairie.\n\nLa manière d’inclure les données dépend de leur rôle.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#données-accessibles-aux-utilisateurs",
+    "href": "Package.html#données-accessibles-aux-utilisateurs",
+    "title": "4  Conception d’une librairie R",
+    "section": "Données accessibles aux utilisateurs",
+    "text": "Données accessibles aux utilisateurs\nSi nous voulons inclure un objet R directement accessible aux utilisateurs, nous le plaçons dans le répertoire :\ndata/\nSupposons par exemple que nous possédions un jeu de données :\n\nexemple &lt;- data.frame(\n  x = 1:5,\n  y = c(2, 4, 3, 7, 6)\n)\n\nLa manière recommandée de l’ajouter à notre librairie est :\n\nusethis::use_data(exemple)\n\nCette commande crée notamment :\ndata/exemple.rda\nL’objet pourra ensuite être utilisé directement par les utilisateurs de la librairie.\n\nlibrary(MaLibrairie)\n\nexemple\n\nou encore :\n\nMaLibrairie::exemple\n\nLes jeux de données distribués de cette manière devraient également être documentés, exactement comme les fonctions de la librairie.\n\n\n\n\n\n\nDonnées d’exemple\n\n\n\nLes données contenues dans data/ devraient généralement être relativement petites.\nElles sont particulièrement utiles lorsqu’elles permettent de montrer clairement comment utiliser les principales fonctions de la librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#données-internes-invisible",
+    "href": "Package.html#données-internes-invisible",
+    "title": "4  Conception d’une librairie R",
+    "section": "Données internes (invisible)",
+    "text": "Données internes (invisible)\nCertaines données peuvent être nécessaires au fonctionnement de la librairie sans être destinées aux utilisateurs.\nPar exemple :\n\nune table de correspondance;\ndes coefficients pré-calculés;\ndes valeurs de référence;\nune petite structure utilisée par plusieurs fonctions.\n\nCes objets peuvent être enregistrés comme données internes avec :\n\nusethis::use_data(\n  objet_interne,\n  internal = TRUE\n)\n\nIls seront alors enregistrés dans :\nR/sysdata.rda\nCes objets peuvent être utilisés par les fonctions de la librairie, mais ils ne font pas partie de son interface publique.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#fichiers-de-données-brutes",
+    "href": "Package.html#fichiers-de-données-brutes",
+    "title": "4  Conception d’une librairie R",
+    "section": "Fichiers de données brutes",
+    "text": "Fichiers de données brutes\nIl arrive finalement que nous voulions distribuer un véritable fichier plutôt qu’un objet R.\nPar exemple :\n.csv\n.xlsx\n.json\n.txt\n.jpg\nCela peut être particulièrement utile si notre librairie contient une fonction dont le rôle est justement de lire ou traiter ce type de fichier.\nDans ce cas, les fichiers peuvent être placés dans :\ninst/extdata/\nPar exemple :\nMaLibrairie/\n└── inst/\n    └── extdata/\n        └── exemple.csv\nUne fois la librairie installée, nous pouvons retrouver le chemin du fichier avec :\n\nsystem.file(\n  \"extdata\",\n  \"exemple.csv\",\n  package = \"MaLibrairie\"\n)\n\nCela permet notamment d’utiliser de vrais fichiers dans les exemples, les tests et les vignettes sans dépendre d’un chemin particulier sur l’ordinateur de l’utilisateur.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#résumé",
+    "href": "Package.html#résumé",
+    "title": "4  Conception d’une librairie R",
+    "section": "Résumé",
+    "text": "Résumé\nNous pouvons donc distinguer trois situations principales :\n\n\n\n\n\n\n\n\nType de données\nEmplacement\nUtilisation\n\n\n\n\nObjets R destinés aux utilisateurs\ndata/\nExemples ou données distribuées\n\n\nObjets R internes\nR/sysdata.rda\nFonctionnement interne\n\n\nFichiers bruts\ninst/extdata/\nExemples, tests ou lecture de fichiers\n\n\n\nLe répertoire data-raw/, quant à lui, contient le code utilisé pour créer les données, mais n’est pas distribué avec la librairie.\n\n\n\n\n\n\nÀ retenir\n\n\n\nUne librairie peut donc distribuer beaucoup plus que des fonctions.\nElle peut regrouper dans une même structure :\nfonctions\ndocumentation\ntests\ndonnées\nfichiers d'exemple\ntout en conservant un workflow reproductible pour leur création et leur utilisation.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
+    ]
+  },
+  {
+    "objectID": "Package.html#résumé-de-la-séance",
+    "href": "Package.html#résumé-de-la-séance",
+    "title": "4  Conception d’une librairie R",
+    "section": "6.8 Résumé de la séance",
+    "text": "6.8 Résumé de la séance\nNous sommes maintenant passés d’une vision très rapide de la conception d’une librairie à un véritable workflow de développement.\nNous avons vu qu’une librairie R est beaucoup plus qu’un ensemble de fichiers .R.\nElle nous fournit une structure permettant d’organiser :\nCode\n │\n ├── fonctions\n │\n ├── documentation\n │\n ├── tests\n │\n └── métadonnées\nPour l’instant, notre librairie pourrait ressembler à :\nMaLibrairie/\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n│   ├── statistiques.R\n│   └── utils.R\n├── man/\n│   ├── fonction1.Rd\n│   └── fonction2.Rd\n├── tests/\n│   ├── testthat.R\n│   └── testthat/\n│       ├── test-statistiques.R\n│       └── test-utils.R\n└── MaLibrairie.Rproj\nNous savons maintenant :\n\ncréer une librairie;\norganiser ses fonctions;\nréfléchir à leur conception;\ncharger la librairie avec load_all();\ndocumenter les fonctions avec roxygen2;\ngénérer la documentation avec document();\nécrire des tests avec testthat;\nexécuter ces tests avec test();\nvérifier l’ensemble de la librairie avec check().\n\nLors de la prochaine séance, nous examinerons plus précisément ce qui se passe entre notre librairie et le reste de l’écosystème R.\nNous discuterons notamment :\n\ndu fichier DESCRIPTION;\ndes dépendances;\ndu fichier NAMESPACE;\ndes fonctions exportées et internes;\nde l’utilisation de fonctions provenant d’autres librairies;\npuis de l’intégration de code provenant d’autres langages.\n\n\n\n\n\n\n\nL’idée principale\n\n\n\nUne bonne librairie ne contient pas seulement du code qui fonctionne.\nElle contient du code organisé, documenté, testé et maintenable.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Conception d'une librairie R</span>"
     ]
   }
 ]

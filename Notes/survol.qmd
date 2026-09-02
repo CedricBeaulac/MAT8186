@@ -1,4 +1,4 @@
-# Un survol rapide
+# Un survol rapide {#sec-survol}
 
 Dans ce cours, nous apprendrons comment mettre au point une librairie R.
 
