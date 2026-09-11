@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notes de cours - MAT8186 - 4&nbsp; Conception d’une librairie R</title>
+<title>Notes de cours - MAT8186 - 4&nbsp; La fonction au coeur de nos librairies</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,7 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./description.html" rel="next">
 <link href="./Git.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -135,7 +135,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Package.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conception d’une librairie R</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Package.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">La fonction au coeur de nos librairies</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -187,7 +187,19 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Package.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conception d’une librairie R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">La fonction au coeur de nos librairies</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./description.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Métadonnées d’une librairie</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rcpp.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Intégration avec d’autres langages de programmation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -258,6 +270,7 @@ div.csl-indent {
   <li><a href="#fichiers-de-données-brutes" id="toc-fichiers-de-données-brutes" class="nav-link" data-scroll-target="#fichiers-de-données-brutes">Fichiers de données brutes</a></li>
   <li><a href="#résumé" id="toc-résumé" class="nav-link" data-scroll-target="#résumé">Résumé</a></li>
   <li><a href="#résumé-de-la-séance" id="toc-résumé-de-la-séance" class="nav-link" data-scroll-target="#résumé-de-la-séance"><span class="header-section-number">4.28</span> Résumé de la séance</a></li>
+  <li><a href="#plus-de-lecture" id="toc-plus-de-lecture" class="nav-link" data-scroll-target="#plus-de-lecture">Plus de lecture</a></li>
   </ul>
 </nav>
     </div>
@@ -266,7 +279,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Conception d’une librairie R</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">La fonction au coeur de nos librairies</span></h1>
 </div>
 
 
@@ -1776,6 +1789,10 @@ L’idée principale
 <p>Elle contient du code <strong>organisé, documenté, testé et maintenable</strong>.</p>
 </div>
 </div>
+</section>
+<section id="plus-de-lecture" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="plus-de-lecture">Plus de lecture</h2>
+<p>Je vous recommande de lire le <a href="https://r-pkgs.org/code.html">Chapitre 6</a> et le <a href="https://r-pkgs.org/data.html">Chapitre 7</a> du manuel de référence.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -2208,8 +2225,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./description.html" class="pagination-link" aria-label="Métadonnées d'une librairie">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Métadonnées d’une librairie</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

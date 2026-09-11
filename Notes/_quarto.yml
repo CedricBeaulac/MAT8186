@@ -12,6 +12,8 @@ book:
     - Rproject.qmd
     - Git.qmd
     - Package.qmd
+    - description.qmd
+    - rcpp.qmd
     - references.qmd
 
 bibliography: references.bib

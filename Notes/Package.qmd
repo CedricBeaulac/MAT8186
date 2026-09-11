@@ -1,4 +1,4 @@
-# Conception d'une librairie R
+# La fonction au coeur de nos librairies
 
 Ce chapitre marque le début de notre deuxième séance. Durant cette séance, nous allons examiner plus en profondeur la structure d'une librairie R et discuter de la conception des fonctions qui la composent.
 
@@ -1966,3 +1966,7 @@ Une bonne librairie ne contient pas seulement du code qui fonctionne.
 
 Elle contient du code **organisé, documenté, testé et maintenable**.
 :::
+
+## Plus de lecture {.unnumbered}
+
+Je vous recommande de lire le [Chapitre 6](https://r-pkgs.org/code.html) et le [Chapitre 7](https://r-pkgs.org/data.html) du manuel de référence. 

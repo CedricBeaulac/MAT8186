@@ -1,0 +1,20 @@
+# Métadonnées d'une librairie {#desc}
+
+Une librairies contient des fonctions et nous avons vu précédemment comment écrire, décrire, tester et finalement ajouter nos fonctions à une librairie R en suivant un cycle de codage efficace pour la diffusion de fonctions.
+
+Pour bien des librairies simples dédiées à un usage personnel, peut-être que le matériel vue précédemment suffit. Nous allons maintenant nous concentrer sur des approches qui permettent de rendrent bien plus puisante nos librairies et de les distribuer à un plus large publique.
+
+Les *métedonnées* d'une librairie forment un ensemble de descripteurs d'une librairies et des ces dépendances essentiellement contenue dans 2 fichiers  `DESCRIPTION` et `NAMESPACE`. 
+
+## DESCRIPTION 
+
+Parlons plus précisément du `DESCRIPTION` et de son contenue. Lors de la création d'une librairie (`usethis::create_package("mypackage")`), un fichier `DESCRIPTION` est automatique créé. Bien qu'il soit essentiellement vide, cela nous fournit un squelette simple à remplir.
+
+Notez aussi qu'il est possible de personaliser de squelette, mais dans le cadre de cours nous n'allons s'aventurer dans ce projet. 
+ 
+## Titre et description {.unnumbered}
+
+C'est deux entréd doivent essentiellement **décrire le contenue de la libraire et l'objectif des fonctions qui s'y trouvent**. Ils diffèrente principalement de par leur taille.
+
+Le titre (`Title`) est une description en une ligne 
+
