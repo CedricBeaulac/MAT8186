@@ -1,20 +1,665 @@
 # Métadonnées d'une librairie {#desc}
 
-Une librairies contient des fonctions et nous avons vu précédemment comment écrire, décrire, tester et finalement ajouter nos fonctions à une librairie R en suivant un cycle de codage efficace pour la diffusion de fonctions.
+Une librairie contient des fonctions et nous avons vu précédemment comment écrire, documenter, tester et finalement intégrer nos fonctions à une librairie R, en suivant un cycle de développement efficace et reproductible.
 
-Pour bien des librairies simples dédiées à un usage personnel, peut-être que le matériel vue précédemment suffit. Nous allons maintenant nous concentrer sur des approches qui permettent de rendrent bien plus puisante nos librairies et de les distribuer à un plus large publique.
+Pour certaines librairies simples destinées à un usage personnel, le matériel présenté jusqu'ici pourrait déjà être suffisant. Nous allons maintenant nous concentrer sur des éléments qui permettent de rendre nos librairies plus puissantes, mieux structurées et surtout plus faciles à distribuer à un plus large public.
 
-Les *métedonnées* d'une librairie forment un ensemble de descripteurs d'une librairies et des ces dépendances essentiellement contenue dans 2 fichiers  `DESCRIPTION` et `NAMESPACE`. 
+Les *métadonnées* d'une librairie regroupent un ensemble d'informations qui décrivent la librairie elle-même, son contenu et ses interactions avec d'autres librairies. Elles sont principalement contenues dans deux fichiers importants :
 
-## DESCRIPTION 
+```text
+DESCRIPTION
+NAMESPACE
+```
 
-Parlons plus précisément du `DESCRIPTION` et de son contenue. Lors de la création d'une librairie (`usethis::create_package("mypackage")`), un fichier `DESCRIPTION` est automatique créé. Bien qu'il soit essentiellement vide, cela nous fournit un squelette simple à remplir.
+Le fichier `DESCRIPTION` contient notamment des informations sur la librairie, ses auteurs, sa version et ses dépendances. Le fichier `NAMESPACE`, quant à lui, contrôle principalement les fonctions rendues accessibles aux utilisateurs et les fonctions importées depuis d'autres librairies.
 
-Notez aussi qu'il est possible de personaliser de squelette, mais dans le cadre de cours nous n'allons s'aventurer dans ce projet. 
+Nous allons commencer par examiner `DESCRIPTION`, puis nous reviendrons sur `NAMESPACE` lorsque nous discuterons plus précisément des dépendances et des fonctions exportées.
+
+## DESCRIPTION
+
+Parlons maintenant plus précisément du fichier `DESCRIPTION` et de son contenu.
+
+Lors de la création d'une librairie avec :
+
+```{r}
+#| eval: false
+
+usethis::create_package("mypackage")
+```
+
+un fichier `DESCRIPTION` est automatiquement créé.
+
+Celui-ci contient déjà un squelette minimal que nous devons compléter. Il ressemble généralement à quelque chose comme :
+
+```text
+Package: mypackage
+Title: What the Package Does
+Version: 0.0.0.9000
+Authors@R:
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+Description: What the package does.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: ...
+```
+
+Certaines informations sont déjà remplies automatiquement, alors que d'autres servent simplement d'indications à remplacer.
+
+Le fichier `DESCRIPTION` est donc beaucoup plus qu'une courte description textuelle de la librairie. Il agit comme une véritable **carte d'identité** du projet.
+
+Il permet notamment de préciser :
+
+- le nom de la librairie;
+- sa version;
+- son titre;
+- ses auteurs;
+- une description générale;
+- sa licence;
+- les versions de R nécessaires;
+- les autres librairies dont elle dépend;
+- certaines informations utilisées lors de sa construction et de sa distribution.
+
+Il est possible de personnaliser le squelette utilisé lors de la création de nouvelles librairies. Cela peut être utile pour une personne ou une organisation qui développe régulièrement plusieurs librairies et souhaite standardiser certaines informations. Dans le cadre de ce cours, nous conserverons toutefois le squelette proposé par défaut et nous nous concentrerons plutôt sur les champs les plus importants du fichier `DESCRIPTION`.
+
+Quand nous visitons la page principale d'une librairie sur CRAN, nous visualisons ce document `DESCRIPTION`. Par exemple, la librairie [ggplot2](https://cran.r-project.org/web/packages/ggplot2/index.html).
  
-## Titre et description {.unnumbered}
+## Titre et description
 
-C'est deux entréd doivent essentiellement **décrire le contenue de la libraire et l'objectif des fonctions qui s'y trouvent**. Ils diffèrente principalement de par leur taille.
+Ces deux entrées doivent essentiellement **décrire le contenu de la librairie et l'objectif des fonctions qui s'y trouvent**. Elles diffèrent principalement par leur longueur et leur niveau de détail.
 
-Le titre (`Title`) est une description en une ligne 
+Le titre (`Title`) est une description en une ligne de la librairie. Il doit être rédigé comme un titre, ne doit pas se terminer par un point et devrait demeurer relativement court. En pratique, il est recommandé de rester sous environ 65 caractères, puisque les titres plus longs peuvent être tronqués dans certaines listes de librairies.
+
+Il est donc important de mettre l'accent sur l'essentiel.
+
+La description (`Description`) est plus détaillée, mais demeure limitée à un seul paragraphe. Elle peut contenir plusieurs phrases. Lorsque la description s'étend sur plusieurs lignes dans le fichier `DESCRIPTION`, chaque ligne devrait contenir au plus 80 caractères et les lignes suivant la première doivent être indentées.
+
+Par exemple, voici le titre et la description de `ggplot2` :
+
+```text
+Title: Create Elegant Data Visualisations Using the Grammar of Graphics
+Description: A system for 'declaratively' creating graphics,
+    based on "The Grammar of Graphics". You provide the data, tell 'ggplot2'
+    how to map variables to aesthetics, what graphical primitives to use,
+    and it takes care of the details.
+```
+
+Le titre et la description sont parmi les éléments les plus importants pour permettre à un utilisateur d'identifier rapidement ce que fait une librairie. Il est donc primordial de les rédiger avec soin.
+
+::: {.callout-warning}
+## Pour CRAN
+
+Pour soumettre une librairie sur CRAN, plusieurs petites règles additionnelles doivent être respectées pour les champs `Title` et `Description`.
+
+Par exemple :
+
+- les noms de librairies R, de logiciels et d'API devraient être placés entre apostrophes simples;
+- il est préférable d'éviter les acronymes dans le titre;
+- le nom de la librairie ne devrait généralement pas être répété dans le titre;
+- il faut éviter de commencer par des formulations comme *"A package for..."* ou *"This package..."*.
+
+Je vous invite à consulter le [chapitre 9 de *R Packages*](https://r-pkgs.org/description.html) ainsi que le manuel de référence de CRAN avant une éventuelle soumission.
+:::
+
+## Auteurs, contributeurs et responsables
+
+Le champ `Authors@R` sert à identifier les personnes et les organisations ayant contribué à la librairie ainsi que la personne responsable de son maintien.
+
+Une personne peut être définie avec la fonction R `person()` :
+
+```text
+Authors@R: person(
+    "Prénom",
+    "Nom",
+    email = "monemail@courrier.com",
+    role = c("aut", "cre")
+)
+```
+
+Les deux premiers arguments correspondent respectivement au prénom et au nom de la personne. L'argument `email` permet d'indiquer une adresse courriel, alors que `role` précise le rôle joué dans le développement de la librairie.
+
+Une librairie doit notamment identifier au moins :
+
+- un auteur (`aut`);
+- un responsable ou mainteneur (`cre`).
+
+Ces deux rôles peuvent évidemment être occupés par la même personne.
+
+Si une librairie possède plusieurs auteurs ou contributeurs, on peut simplement combiner plusieurs appels à `person()` avec la fonction R `c()` :
+
+```text
+Authors@R: c(
+    person(
+        "Prénom",
+        "Nom",
+        email = "monemail@courrier.com",
+        role = c("aut", "cre")
+    ),
+    person(
+        "Autre",
+        "Personne",
+        role = "aut"
+    )
+)
+```
+
+L'adresse courriel est particulièrement importante pour la personne ayant le rôle `cre`. Il s'agit de la personne responsable de la librairie et de celle que CRAN contactera en cas de problème. Cette personne doit donc fournir une adresse valide et suffisamment stable dans le temps.
+
+Dans le contexte de CRAN, le rôle `cre` signifie essentiellement **responsable ou mainteneur actuel de la librairie**, même si l'abréviation provient historiquement du mot *creator*.
+
+L'argument `role` peut prendre plusieurs valeurs. Parmi les plus importantes :
+
+- `cre` : responsable ou mainteneur de la librairie;
+- `aut` : auteur ayant effectué une contribution importante à la librairie;
+- `ctb` : contributeur ayant effectué une contribution plus limitée;
+- `cph` : détenteur des droits d'auteur (*copyright holder*);
+- `fnd` : personne ou organisme ayant fourni du financement pour le développement de la librairie.
+
+Le rôle `cph` est notamment utile lorsqu'une librairie est développée dans le cadre d'une entreprise ou lorsque certaines parties du code appartiennent à une organisation.
+
+Finalement, il est possible d'ajouter de l'information supplémentaire avec l'argument `comment` de `person()`.
+
+Par exemple :
+
+```text
+person(
+    "Jennifer",
+    "Bryan",
+    email = "jenny@posit.co",
+    role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0002-6983-2759")
+)
+```
+
+L'ajout d'un identifiant ORCID est un exemple particulièrement utile dans un contexte scientifique. Il permet d'associer sans ambiguïté une personne à son identité de chercheur ou de chercheuse.
+
+## URL et rapports de bogues
+
+En plus d'identifier les auteurs et la personne responsable de la librairie, il est utile d'indiquer **où les utilisateurs peuvent trouver davantage d'information sur le projet**.
+
+Deux champs de `DESCRIPTION` sont particulièrement utiles :
+
+```text
+URL:
+BugReports:
+```
+
+Le champ `URL` permet d'indiquer une ou plusieurs adresses associées à la librairie. On y retrouve généralement :
+
+- le site web de la librairie;
+- le répertoire GitHub contenant son code source.
+
+Par exemple :
+
+```text
+URL: https://devtools.r-lib.org/,
+    https://github.com/r-lib/devtools
+```
+
+Il est possible d'indiquer plusieurs adresses en les séparant par une virgule.
+
+Le champ `BugReports`, quant à lui, indique où un utilisateur devrait signaler un problème avec la librairie.
+
+Lorsqu'une librairie est développée publiquement sur GitHub, il s'agit généralement de la page **Issues** du répertoire :
+
+```text
+BugReports: https://github.com/r-lib/devtools/issues
+```
+
+Cette distinction est utile :
+
+```text
+URL
+    → Où puis-je en apprendre davantage sur la librairie?
+
+BugReports
+    → Où puis-je signaler un problème?
+```
+
+Si notre librairie est associée à un répertoire GitHub avec :
+
+```{r}
+#| eval: false
+
+usethis::use_github()
+```
+
+`usethis` peut automatiquement ajouter les champs `URL` et `BugReports` appropriés au fichier `DESCRIPTION`.
+
+Si le répertoire GitHub existe déjà, on peut également utiliser :
+
+```{r}
+#| eval: false
+
+usethis::use_github_links()
+```
+
+::: {.callout-tip}
+## GitHub comme point de contact
+
+Pour une librairie développée publiquement, GitHub peut donc jouer plusieurs rôles :
+
+- héberger le code source;
+- conserver l'historique Git;
+- fournir de l'information sur le projet;
+- recevoir les rapports de bogues;
+- permettre aux utilisateurs de proposer des modifications.
+
+Nous reviendrons plus en détail sur ces aspects lors de la diffusion de notre librairie.
+:::
+
+## Licence
+
+Le champ `License` indique **sous quelles conditions notre librairie peut être utilisée, modifiée et redistribuée**.
+
+Ce champ est obligatoire dans une librairie R.
+
+Par exemple :
+
+```text
+License: MIT + file LICENSE
+```
+
+ou :
+
+```text
+License: GPL (>= 3)
+```
+
+Il est important de comprendre que le champ `License` n'est pas simplement une description destinée aux utilisateurs.
+
+Il doit utiliser une forme standardisée que les outils de R peuvent interpréter automatiquement.
+
+Plutôt que d'écrire manuellement les fichiers nécessaires, `usethis` fournit plusieurs fonctions permettant de choisir une licence.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+usethis::use_mit_license()
+```
+
+ou :
+
+```{r}
+#| eval: false
+
+usethis::use_gpl3_license()
+```
+
+Ces fonctions créent ou modifient automatiquement les fichiers nécessaires et mettent à jour le champ `License` dans `DESCRIPTION`.
+
+::: {.callout-note}
+## Quelle licence choisir?
+
+Le choix d'une licence soulève plusieurs questions importantes concernant les droits d'utilisation et de redistribution du code.
+
+Nous reviendrons plus sérieusement sur cette question lors de la séance consacrée à la finalisation et à la diffusion de la librairie.
+
+Pour l'instant, retenons surtout qu'une librairie destinée à être distribuée doit clairement indiquer sa licence.
+:::
+
+## Dépendances
+
+Une librairie R fonctionne rarement complètement seule.
+
+Nos fonctions peuvent utiliser :
+
+- des fonctions provenant d'autres librairies R;
+- des outils utilisés uniquement pour les tests;
+- des outils utilisés pour produire la documentation;
+- du code C ou C++ provenant d'autres librairies.
+
+Ces relations sont appelées des **dépendances**.
+
+Le fichier `DESCRIPTION` permet de déclarer explicitement ces dépendances.
+
+Les champs les plus importants sont :
+
+```text
+Imports
+Suggests
+Depends
+LinkingTo
+```
+
+Ils ne signifient cependant pas tous la même chose.
+
+## `Imports`
+
+Le champ `Imports` contient les librairies dont notre librairie **a besoin pour fonctionner normalement**.
+
+Supposons par exemple que notre code utilise des fonctions de `dplyr` et `tidyr`.
+
+Nous pourrions avoir :
+
+```text
+Imports:
+    dplyr,
+    tidyr
+```
+
+Cela signifie essentiellement :
+
+> Pour que ma librairie fonctionne, `dplyr` et `tidyr` doivent être disponibles.
+
+Lorsqu'un utilisateur installe notre librairie avec les outils habituels de R, ces dépendances pourront alors être installées automatiquement si nécessaire.
+
+La manière recommandée d'ajouter une dépendance est d'utiliser :
+
+```{r}
+#| eval: false
+
+usethis::use_package("dplyr")
+```
+
+Par défaut, `use_package()` ajoute la librairie dans `Imports`.
+
+Nous pouvons ensuite utiliser une fonction provenant de cette librairie en indiquant explicitement sa provenance :
+
+```{r}
+#| eval: false
+
+dplyr::filter(...)
+```
+
+Cette notation :
+
+```text
+librairie::fonction()
+```
+
+sera particulièrement importante lorsque nous discuterons de `NAMESPACE`.
+
+::: {.callout-important}
+## Déclarer une dépendance
+
+Le fait qu'une librairie soit installée sur **notre ordinateur** ne signifie pas qu'elle sera installée sur l'ordinateur de nos utilisateurs.
+
+Si notre code dépend d'une autre librairie, cette dépendance doit être déclarée.
+:::
+
+## `Suggests`
+
+Certaines librairies peuvent être utiles au développement de notre projet sans être absolument nécessaires au fonctionnement normal de la librairie.
+
+Par exemple :
+
+- une librairie utilisée uniquement dans les tests;
+- une librairie utilisée dans une vignette;
+- une librairie permettant une fonctionnalité optionnelle;
+- une librairie utilisée uniquement dans certains exemples.
+
+Dans ces situations, on peut utiliser :
+
+```text
+Suggests:
+    ggplot2,
+    testthat
+```
+
+On peut ajouter une librairie à `Suggests` avec :
+
+```{r}
+#| eval: false
+
+usethis::use_package(
+  "ggplot2",
+  type = "Suggests"
+)
+```
+
+La distinction fondamentale est donc :
+
+```text
+Imports
+    → ma librairie en a besoin pour fonctionner
+
+Suggests
+    → ma librairie peut fonctionner sans elle,
+      mais elle est utile pour certaines tâches
+```
+
+Cette distinction est importante lorsque nous distribuons notre librairie.
+
+Ajouter inutilement une librairie à `Imports` oblige potentiellement tous nos utilisateurs à installer cette dépendance.
+
+::: {.callout-tip}
+## Limiter les dépendances obligatoires
+
+Chaque dépendance supplémentaire ajoute une certaine complexité à notre projet.
+
+Avant d'ajouter une librairie à `Imports`, il est donc raisonnable de se demander :
+
+> Est-ce que ma librairie en a réellement besoin pour son fonctionnement principal?
+:::
+
+## Versions minimales
+
+Il arrive que notre librairie nécessite une fonctionnalité introduite dans une version récente d'une dépendance.
+
+Nous pouvons alors spécifier une **version minimale**.
+
+Par exemple :
+
+```text
+Imports:
+    dplyr (>= 1.0.0),
+    tidyr (>= 1.1.0)
+```
+
+On peut également utiliser :
+
+```{r}
+#| eval: false
+
+usethis::use_package(
+  "dplyr",
+  min_version = "1.0.0"
+)
+```
+
+Il est généralement préférable d'indiquer :
+
+```text
+dplyr (>= 1.0.0)
+```
+
+plutôt que :
+
+```text
+dplyr (== 1.0.0)
+```
+
+Une version minimale indique simplement que notre librairie dépend d'une fonctionnalité disponible à partir d'une certaine version.
+
+Imposer une version exacte est beaucoup plus restrictif et peut facilement créer des conflits avec les autres librairies installées par l'utilisateur.
+
+Il faut cependant éviter d'imposer inutilement une version minimale très récente.
+
+Par exemple, si notre code fonctionne avec :
+
+```text
+dplyr 1.0.0
+```
+
+il n'y a pas nécessairement de raison d'exiger :
+
+```text
+dplyr >= 1.2.0
+```
+
+simplement parce que c'est la version installée sur notre ordinateur.
+
+## `Depends`
+
+Le nom `Depends` peut porter à confusion.
+
+Historiquement, ce champ était utilisé pour déclarer les autres librairies nécessaires au fonctionnement d'une librairie R.
+
+Aujourd'hui, dans la grande majorité des situations, nous préférons :
+
+```text
+Imports
+```
+
+à :
+
+```text
+Depends
+```
+
+Nous verrons la raison plus précisément lorsque nous discuterons des *namespaces*.
+
+Une utilisation encore courante de `Depends` consiste cependant à spécifier une version minimale de **R lui-même**.
+
+Par exemple :
+
+```text
+Depends:
+    R (>= 4.0.0)
+```
+
+Cela signifie que notre librairie nécessite au minimum R 4.0.0.
+
+::: {.callout-warning}
+## Être prudent avec la version minimale de R
+
+Exiger une version récente d'une librairie peut forcer son installation ou sa mise à jour.
+
+Exiger une version récente de **R** est beaucoup plus contraignant.
+
+Un utilisateur ne peut pas simplement installer automatiquement une nouvelle version de R au moment d'installer notre librairie.
+
+Une telle contrainte devrait donc toujours avoir une justification réelle.
+:::
+
+## `LinkingTo`
+
+Un dernier type de dépendance sera particulièrement intéressant pour nous.
+
+Le champ :
+
+```text
+LinkingTo
+```
+
+est utilisé lorsqu'une librairie doit accéder au code **C ou C++** fourni par une autre librairie.
+
+Par exemple, lorsque nous intégrerons du code C++ à notre librairie avec **Rcpp**, nous retrouverons généralement :
+
+```text
+Imports:
+    Rcpp
+
+LinkingTo:
+    Rcpp
+```
+
+Ces deux lignes n'ont pas exactement le même rôle.
+
+```text
+Imports: Rcpp
+```
+
+indique une dépendance envers la librairie Rcpp au niveau de R.
+
+```text
+LinkingTo: Rcpp
+```
+
+indique que notre code compilé a besoin des fichiers d'en-tête C++ fournis par Rcpp lors de sa compilation.
+
+Heureusement, nous n'aurons généralement pas besoin de modifier ces champs manuellement.
+
+Lorsque nous préparerons une librairie pour utiliser Rcpp avec :
+
+```{r}
+#| eval: false
+
+usethis::use_rcpp()
+```
+
+les éléments nécessaires de `DESCRIPTION` seront ajoutés automatiquement.
+
+::: {.callout-tip}
+## Une transition vers C++
+
+Nous venons donc de rencontrer une première raison pour laquelle les métadonnées sont importantes.
+
+Notre librairie peut dépendre :
+
+```text
+d'autres librairies R
+        ↓
+      Imports
+
+d'outils optionnels
+        ↓
+      Suggests
+
+d'une version de R
+        ↓
+      Depends
+
+de code C ou C++
+        ↓
+      LinkingTo
+```
+
+Cette dernière situation nous mènera directement à l'intégration de **C++ avec Rcpp** dans la deuxième partie de cette séance.
+:::
+
+## Un exemple de `DESCRIPTION`
+
+À ce stade, une librairie un peu plus complète pourrait avoir un fichier `DESCRIPTION` ressemblant à :
+
+```text
+Package: mypackage
+Title: Statistical Tools for Some Interesting Problem
+Version: 0.0.0.9000
+Authors@R:
+    person(
+        "Prénom",
+        "Nom",
+        email = "monemail@courrier.com",
+        role = c("aut", "cre")
+    )
+Description: Provides functions for fitting and evaluating statistical
+    models for some interesting problem. The package also provides tools
+    for simulation and visualization.
+License: MIT + file LICENSE
+URL: https://github.com/username/mypackage
+BugReports: https://github.com/username/mypackage/issues
+Imports:
+    Rcpp,
+    stats
+Suggests:
+    ggplot2,
+    testthat
+LinkingTo:
+    Rcpp
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: ...
+```
+
+Nous commençons ainsi à voir que `DESCRIPTION` ne sert pas simplement à **décrire** notre librairie.
+
+Il permet également aux outils de R de comprendre :
+
+- qui développe la librairie;
+- ce qu'elle fait;
+- comment elle peut être utilisée et distribuée;
+- quelles autres librairies sont nécessaires;
+- quels outils sont optionnels;
+- quelles ressources externes sont nécessaires à sa compilation.
+
+Dans la prochaine section, nous allons voir comment ces dépendances interagissent avec un autre fichier particulièrement important :
+
+```text
+NAMESPACE
+```
 

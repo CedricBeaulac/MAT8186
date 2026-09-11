@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Notes de cours - MAT8186",
     "section": "",
-    "text": "Index\nCe document est livre mise-au-point par Cédric Beaulac dans le cadre du cours MAT8186.\nCe matériel fut conçu pour un cours de 15 heures organisé en 5 séances de 3 heures. L’objectif du cours est d’amener les étudiants à développer leur propres librairies R et s’inspire fortement du livre R Packages.\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
+    "text": "Index\nCe document est un livre mise-au-point par Cédric Beaulac dans le cadre du cours MAT8186.\nCe matériel fut conçu pour un cours de 15 heures organisé en 5 séances de 3 heures. L’objectif du cours est d’amener les étudiants à développer leur propres librairies R et s’inspire fortement du livre R Packages.\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
     "crumbs": [
       "Index"
     ]
@@ -1164,7 +1164,17 @@
     "href": "description.html",
     "title": "5  Métadonnées d’une librairie",
     "section": "",
-    "text": "5.1 DESCRIPTION\nParlons plus précisément du DESCRIPTION et de son contenue. Lors de la création d’une librairie (usethis::create_package(\"mypackage\")), un fichier DESCRIPTION est automatique créé. Bien qu’il soit essentiellement vide, cela nous fournit un squelette simple à remplir.\nNotez aussi qu’il est possible de personaliser de squelette, mais dans le cadre de cours nous n’allons s’aventurer dans ce projet.",
+    "text": "5.1 DESCRIPTION\nParlons maintenant plus précisément du fichier DESCRIPTION et de son contenu.\nLors de la création d’une librairie avec :\nusethis::create_package(\"mypackage\")\nun fichier DESCRIPTION est automatiquement créé.\nCelui-ci contient déjà un squelette minimal que nous devons compléter. Il ressemble généralement à quelque chose comme :\nCertaines informations sont déjà remplies automatiquement, alors que d’autres servent simplement d’indications à remplacer.\nLe fichier DESCRIPTION est donc beaucoup plus qu’une courte description textuelle de la librairie. Il agit comme une véritable carte d’identité du projet.\nIl permet notamment de préciser :\nIl est possible de personnaliser le squelette utilisé lors de la création de nouvelles librairies. Cela peut être utile pour une personne ou une organisation qui développe régulièrement plusieurs librairies et souhaite standardiser certaines informations. Dans le cadre de ce cours, nous conserverons toutefois le squelette proposé par défaut et nous nous concentrerons plutôt sur les champs les plus importants du fichier DESCRIPTION.\nQuand nous visitons la page principale d’une librairie sur CRAN, nous visualisons ce document DESCRIPTION. Par exemple, la librairie ggplot2.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#description",
+    "href": "description.html#description",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "",
+    "text": "Package: mypackage\nTitle: What the Package Does\nVersion: 0.0.0.9000\nAuthors@R:\n    person(\"First\", \"Last\", , \"first.last@example.com\", role = c(\"aut\", \"cre\"))\nDescription: What the package does.\nLicense: `use_mit_license()`, `use_gpl3_license()` or friends to pick a\n    license\nEncoding: UTF-8\nRoxygen: list(markdown = TRUE)\nRoxygenNote: ...\n\n\n\n\nle nom de la librairie;\nsa version;\nson titre;\nses auteurs;\nune description générale;\nsa licence;\nles versions de R nécessaires;\nles autres librairies dont elle dépend;\ncertaines informations utilisées lors de sa construction et de sa distribution.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
     ]
@@ -1173,8 +1183,108 @@
     "objectID": "description.html#titre-et-description",
     "href": "description.html#titre-et-description",
     "title": "5  Métadonnées d’une librairie",
-    "section": "Titre et description",
-    "text": "Titre et description\nC’est deux entréd doivent essentiellement décrire le contenue de la libraire et l’objectif des fonctions qui s’y trouvent. Ils diffèrente principalement de par leur taille.\nLe titre (Title) est une description en une ligne\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
+    "section": "5.2 Titre et description",
+    "text": "5.2 Titre et description\nCes deux entrées doivent essentiellement décrire le contenu de la librairie et l’objectif des fonctions qui s’y trouvent. Elles diffèrent principalement par leur longueur et leur niveau de détail.\nLe titre (Title) est une description en une ligne de la librairie. Il doit être rédigé comme un titre, ne doit pas se terminer par un point et devrait demeurer relativement court. En pratique, il est recommandé de rester sous environ 65 caractères, puisque les titres plus longs peuvent être tronqués dans certaines listes de librairies.\nIl est donc important de mettre l’accent sur l’essentiel.\nLa description (Description) est plus détaillée, mais demeure limitée à un seul paragraphe. Elle peut contenir plusieurs phrases. Lorsque la description s’étend sur plusieurs lignes dans le fichier DESCRIPTION, chaque ligne devrait contenir au plus 80 caractères et les lignes suivant la première doivent être indentées.\nPar exemple, voici le titre et la description de ggplot2 :\nTitle: Create Elegant Data Visualisations Using the Grammar of Graphics\nDescription: A system for 'declaratively' creating graphics,\n    based on \"The Grammar of Graphics\". You provide the data, tell 'ggplot2'\n    how to map variables to aesthetics, what graphical primitives to use,\n    and it takes care of the details.\nLe titre et la description sont parmi les éléments les plus importants pour permettre à un utilisateur d’identifier rapidement ce que fait une librairie. Il est donc primordial de les rédiger avec soin.\n\n\n\n\n\n\nPour CRAN\n\n\n\nPour soumettre une librairie sur CRAN, plusieurs petites règles additionnelles doivent être respectées pour les champs Title et Description.\nPar exemple :\n\nles noms de librairies R, de logiciels et d’API devraient être placés entre apostrophes simples;\nil est préférable d’éviter les acronymes dans le titre;\nle nom de la librairie ne devrait généralement pas être répété dans le titre;\nil faut éviter de commencer par des formulations comme “A package for…” ou “This package…”.\n\nJe vous invite à consulter le chapitre 9 de R Packages ainsi que le manuel de référence de CRAN avant une éventuelle soumission.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#auteurs-contributeurs-et-responsables",
+    "href": "description.html#auteurs-contributeurs-et-responsables",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.3 Auteurs, contributeurs et responsables",
+    "text": "5.3 Auteurs, contributeurs et responsables\nLe champ Authors@R sert à identifier les personnes et les organisations ayant contribué à la librairie ainsi que la personne responsable de son maintien.\nUne personne peut être définie avec la fonction R person() :\nAuthors@R: person(\n    \"Prénom\",\n    \"Nom\",\n    email = \"monemail@courrier.com\",\n    role = c(\"aut\", \"cre\")\n)\nLes deux premiers arguments correspondent respectivement au prénom et au nom de la personne. L’argument email permet d’indiquer une adresse courriel, alors que role précise le rôle joué dans le développement de la librairie.\nUne librairie doit notamment identifier au moins :\n\nun auteur (aut);\nun responsable ou mainteneur (cre).\n\nCes deux rôles peuvent évidemment être occupés par la même personne.\nSi une librairie possède plusieurs auteurs ou contributeurs, on peut simplement combiner plusieurs appels à person() avec la fonction R c() :\nAuthors@R: c(\n    person(\n        \"Prénom\",\n        \"Nom\",\n        email = \"monemail@courrier.com\",\n        role = c(\"aut\", \"cre\")\n    ),\n    person(\n        \"Autre\",\n        \"Personne\",\n        role = \"aut\"\n    )\n)\nL’adresse courriel est particulièrement importante pour la personne ayant le rôle cre. Il s’agit de la personne responsable de la librairie et de celle que CRAN contactera en cas de problème. Cette personne doit donc fournir une adresse valide et suffisamment stable dans le temps.\nDans le contexte de CRAN, le rôle cre signifie essentiellement responsable ou mainteneur actuel de la librairie, même si l’abréviation provient historiquement du mot creator.\nL’argument role peut prendre plusieurs valeurs. Parmi les plus importantes :\n\ncre : responsable ou mainteneur de la librairie;\naut : auteur ayant effectué une contribution importante à la librairie;\nctb : contributeur ayant effectué une contribution plus limitée;\ncph : détenteur des droits d’auteur (copyright holder);\nfnd : personne ou organisme ayant fourni du financement pour le développement de la librairie.\n\nLe rôle cph est notamment utile lorsqu’une librairie est développée dans le cadre d’une entreprise ou lorsque certaines parties du code appartiennent à une organisation.\nFinalement, il est possible d’ajouter de l’information supplémentaire avec l’argument comment de person().\nPar exemple :\nperson(\n    \"Jennifer\",\n    \"Bryan\",\n    email = \"jenny@posit.co\",\n    role = c(\"aut\", \"cre\"),\n    comment = c(ORCID = \"0000-0002-6983-2759\")\n)\nL’ajout d’un identifiant ORCID est un exemple particulièrement utile dans un contexte scientifique. Il permet d’associer sans ambiguïté une personne à son identité de chercheur ou de chercheuse.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#url-et-rapports-de-bogues",
+    "href": "description.html#url-et-rapports-de-bogues",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.4 URL et rapports de bogues",
+    "text": "5.4 URL et rapports de bogues\nEn plus d’identifier les auteurs et la personne responsable de la librairie, il est utile d’indiquer où les utilisateurs peuvent trouver davantage d’information sur le projet.\nDeux champs de DESCRIPTION sont particulièrement utiles :\nURL:\nBugReports:\nLe champ URL permet d’indiquer une ou plusieurs adresses associées à la librairie. On y retrouve généralement :\n\nle site web de la librairie;\nle répertoire GitHub contenant son code source.\n\nPar exemple :\nURL: https://devtools.r-lib.org/,\n    https://github.com/r-lib/devtools\nIl est possible d’indiquer plusieurs adresses en les séparant par une virgule.\nLe champ BugReports, quant à lui, indique où un utilisateur devrait signaler un problème avec la librairie.\nLorsqu’une librairie est développée publiquement sur GitHub, il s’agit généralement de la page Issues du répertoire :\nBugReports: https://github.com/r-lib/devtools/issues\nCette distinction est utile :\nURL\n    → Où puis-je en apprendre davantage sur la librairie?\n\nBugReports\n    → Où puis-je signaler un problème?\nSi notre librairie est associée à un répertoire GitHub avec :\n\nusethis::use_github()\n\nusethis peut automatiquement ajouter les champs URL et BugReports appropriés au fichier DESCRIPTION.\nSi le répertoire GitHub existe déjà, on peut également utiliser :\n\nusethis::use_github_links()\n\n\n\n\n\n\n\nGitHub comme point de contact\n\n\n\nPour une librairie développée publiquement, GitHub peut donc jouer plusieurs rôles :\n\nhéberger le code source;\nconserver l’historique Git;\nfournir de l’information sur le projet;\nrecevoir les rapports de bogues;\npermettre aux utilisateurs de proposer des modifications.\n\nNous reviendrons plus en détail sur ces aspects lors de la diffusion de notre librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#licence",
+    "href": "description.html#licence",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.5 Licence",
+    "text": "5.5 Licence\nLe champ License indique sous quelles conditions notre librairie peut être utilisée, modifiée et redistribuée.\nCe champ est obligatoire dans une librairie R.\nPar exemple :\nLicense: MIT + file LICENSE\nou :\nLicense: GPL (&gt;= 3)\nIl est important de comprendre que le champ License n’est pas simplement une description destinée aux utilisateurs.\nIl doit utiliser une forme standardisée que les outils de R peuvent interpréter automatiquement.\nPlutôt que d’écrire manuellement les fichiers nécessaires, usethis fournit plusieurs fonctions permettant de choisir une licence.\nPar exemple :\n\nusethis::use_mit_license()\n\nou :\n\nusethis::use_gpl3_license()\n\nCes fonctions créent ou modifient automatiquement les fichiers nécessaires et mettent à jour le champ License dans DESCRIPTION.\n\n\n\n\n\n\nQuelle licence choisir?\n\n\n\nLe choix d’une licence soulève plusieurs questions importantes concernant les droits d’utilisation et de redistribution du code.\nNous reviendrons plus sérieusement sur cette question lors de la séance consacrée à la finalisation et à la diffusion de la librairie.\nPour l’instant, retenons surtout qu’une librairie destinée à être distribuée doit clairement indiquer sa licence.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#dépendances",
+    "href": "description.html#dépendances",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.6 Dépendances",
+    "text": "5.6 Dépendances\nUne librairie R fonctionne rarement complètement seule.\nNos fonctions peuvent utiliser :\n\ndes fonctions provenant d’autres librairies R;\ndes outils utilisés uniquement pour les tests;\ndes outils utilisés pour produire la documentation;\ndu code C ou C++ provenant d’autres librairies.\n\nCes relations sont appelées des dépendances.\nLe fichier DESCRIPTION permet de déclarer explicitement ces dépendances.\nLes champs les plus importants sont :\nImports\nSuggests\nDepends\nLinkingTo\nIls ne signifient cependant pas tous la même chose.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#imports",
+    "href": "description.html#imports",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.7 Imports",
+    "text": "5.7 Imports\nLe champ Imports contient les librairies dont notre librairie a besoin pour fonctionner normalement.\nSupposons par exemple que notre code utilise des fonctions de dplyr et tidyr.\nNous pourrions avoir :\nImports:\n    dplyr,\n    tidyr\nCela signifie essentiellement :\n\nPour que ma librairie fonctionne, dplyr et tidyr doivent être disponibles.\n\nLorsqu’un utilisateur installe notre librairie avec les outils habituels de R, ces dépendances pourront alors être installées automatiquement si nécessaire.\nLa manière recommandée d’ajouter une dépendance est d’utiliser :\n\nusethis::use_package(\"dplyr\")\n\nPar défaut, use_package() ajoute la librairie dans Imports.\nNous pouvons ensuite utiliser une fonction provenant de cette librairie en indiquant explicitement sa provenance :\n\ndplyr::filter(...)\n\nCette notation :\nlibrairie::fonction()\nsera particulièrement importante lorsque nous discuterons de NAMESPACE.\n\n\n\n\n\n\nDéclarer une dépendance\n\n\n\nLe fait qu’une librairie soit installée sur notre ordinateur ne signifie pas qu’elle sera installée sur l’ordinateur de nos utilisateurs.\nSi notre code dépend d’une autre librairie, cette dépendance doit être déclarée.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#suggests",
+    "href": "description.html#suggests",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.8 Suggests",
+    "text": "5.8 Suggests\nCertaines librairies peuvent être utiles au développement de notre projet sans être absolument nécessaires au fonctionnement normal de la librairie.\nPar exemple :\n\nune librairie utilisée uniquement dans les tests;\nune librairie utilisée dans une vignette;\nune librairie permettant une fonctionnalité optionnelle;\nune librairie utilisée uniquement dans certains exemples.\n\nDans ces situations, on peut utiliser :\nSuggests:\n    ggplot2,\n    testthat\nOn peut ajouter une librairie à Suggests avec :\n\nusethis::use_package(\n  \"ggplot2\",\n  type = \"Suggests\"\n)\n\nLa distinction fondamentale est donc :\nImports\n    → ma librairie en a besoin pour fonctionner\n\nSuggests\n    → ma librairie peut fonctionner sans elle,\n      mais elle est utile pour certaines tâches\nCette distinction est importante lorsque nous distribuons notre librairie.\nAjouter inutilement une librairie à Imports oblige potentiellement tous nos utilisateurs à installer cette dépendance.\n\n\n\n\n\n\nLimiter les dépendances obligatoires\n\n\n\nChaque dépendance supplémentaire ajoute une certaine complexité à notre projet.\nAvant d’ajouter une librairie à Imports, il est donc raisonnable de se demander :\n\nEst-ce que ma librairie en a réellement besoin pour son fonctionnement principal?",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#versions-minimales",
+    "href": "description.html#versions-minimales",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.9 Versions minimales",
+    "text": "5.9 Versions minimales\nIl arrive que notre librairie nécessite une fonctionnalité introduite dans une version récente d’une dépendance.\nNous pouvons alors spécifier une version minimale.\nPar exemple :\nImports:\n    dplyr (&gt;= 1.0.0),\n    tidyr (&gt;= 1.1.0)\nOn peut également utiliser :\n\nusethis::use_package(\n  \"dplyr\",\n  min_version = \"1.0.0\"\n)\n\nIl est généralement préférable d’indiquer :\ndplyr (&gt;= 1.0.0)\nplutôt que :\ndplyr (== 1.0.0)\nUne version minimale indique simplement que notre librairie dépend d’une fonctionnalité disponible à partir d’une certaine version.\nImposer une version exacte est beaucoup plus restrictif et peut facilement créer des conflits avec les autres librairies installées par l’utilisateur.\nIl faut cependant éviter d’imposer inutilement une version minimale très récente.\nPar exemple, si notre code fonctionne avec :\ndplyr 1.0.0\nil n’y a pas nécessairement de raison d’exiger :\ndplyr &gt;= 1.2.0\nsimplement parce que c’est la version installée sur notre ordinateur.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#depends",
+    "href": "description.html#depends",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.10 Depends",
+    "text": "5.10 Depends\nLe nom Depends peut porter à confusion.\nHistoriquement, ce champ était utilisé pour déclarer les autres librairies nécessaires au fonctionnement d’une librairie R.\nAujourd’hui, dans la grande majorité des situations, nous préférons :\nImports\nà :\nDepends\nNous verrons la raison plus précisément lorsque nous discuterons des namespaces.\nUne utilisation encore courante de Depends consiste cependant à spécifier une version minimale de R lui-même.\nPar exemple :\nDepends:\n    R (&gt;= 4.0.0)\nCela signifie que notre librairie nécessite au minimum R 4.0.0.\n\n\n\n\n\n\nÊtre prudent avec la version minimale de R\n\n\n\nExiger une version récente d’une librairie peut forcer son installation ou sa mise à jour.\nExiger une version récente de R est beaucoup plus contraignant.\nUn utilisateur ne peut pas simplement installer automatiquement une nouvelle version de R au moment d’installer notre librairie.\nUne telle contrainte devrait donc toujours avoir une justification réelle.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#linkingto",
+    "href": "description.html#linkingto",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.11 LinkingTo",
+    "text": "5.11 LinkingTo\nUn dernier type de dépendance sera particulièrement intéressant pour nous.\nLe champ :\nLinkingTo\nest utilisé lorsqu’une librairie doit accéder au code C ou C++ fourni par une autre librairie.\nPar exemple, lorsque nous intégrerons du code C++ à notre librairie avec Rcpp, nous retrouverons généralement :\nImports:\n    Rcpp\n\nLinkingTo:\n    Rcpp\nCes deux lignes n’ont pas exactement le même rôle.\nImports: Rcpp\nindique une dépendance envers la librairie Rcpp au niveau de R.\nLinkingTo: Rcpp\nindique que notre code compilé a besoin des fichiers d’en-tête C++ fournis par Rcpp lors de sa compilation.\nHeureusement, nous n’aurons généralement pas besoin de modifier ces champs manuellement.\nLorsque nous préparerons une librairie pour utiliser Rcpp avec :\n\nusethis::use_rcpp()\n\nles éléments nécessaires de DESCRIPTION seront ajoutés automatiquement.\n\n\n\n\n\n\nUne transition vers C++\n\n\n\nNous venons donc de rencontrer une première raison pour laquelle les métadonnées sont importantes.\nNotre librairie peut dépendre :\nd'autres librairies R\n        ↓\n      Imports\n\nd'outils optionnels\n        ↓\n      Suggests\n\nd'une version de R\n        ↓\n      Depends\n\nde code C ou C++\n        ↓\n      LinkingTo\nCette dernière situation nous mènera directement à l’intégration de C++ avec Rcpp dans la deuxième partie de cette séance.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
+    ]
+  },
+  {
+    "objectID": "description.html#un-exemple-de-description",
+    "href": "description.html#un-exemple-de-description",
+    "title": "5  Métadonnées d’une librairie",
+    "section": "5.12 Un exemple de DESCRIPTION",
+    "text": "5.12 Un exemple de DESCRIPTION\nÀ ce stade, une librairie un peu plus complète pourrait avoir un fichier DESCRIPTION ressemblant à :\nPackage: mypackage\nTitle: Statistical Tools for Some Interesting Problem\nVersion: 0.0.0.9000\nAuthors@R:\n    person(\n        \"Prénom\",\n        \"Nom\",\n        email = \"monemail@courrier.com\",\n        role = c(\"aut\", \"cre\")\n    )\nDescription: Provides functions for fitting and evaluating statistical\n    models for some interesting problem. The package also provides tools\n    for simulation and visualization.\nLicense: MIT + file LICENSE\nURL: https://github.com/username/mypackage\nBugReports: https://github.com/username/mypackage/issues\nImports:\n    Rcpp,\n    stats\nSuggests:\n    ggplot2,\n    testthat\nLinkingTo:\n    Rcpp\nEncoding: UTF-8\nRoxygen: list(markdown = TRUE)\nRoxygenNote: ...\nNous commençons ainsi à voir que DESCRIPTION ne sert pas simplement à décrire notre librairie.\nIl permet également aux outils de R de comprendre :\n\nqui développe la librairie;\nce qu’elle fait;\ncomment elle peut être utilisée et distribuée;\nquelles autres librairies sont nécessaires;\nquels outils sont optionnels;\nquelles ressources externes sont nécessaires à sa compilation.\n\nDans la prochaine section, nous allons voir comment ces dépendances interagissent avec un autre fichier particulièrement important :\nNAMESPACE\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Métadonnées d'une librairie</span>"
     ]

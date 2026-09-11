@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -185,7 +219,17 @@ div.csl-indent {
    
   <ul>
   <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">5.1</span> DESCRIPTION</a></li>
-  <li><a href="#titre-et-description" id="toc-titre-et-description" class="nav-link" data-scroll-target="#titre-et-description">Titre et description</a></li>
+  <li><a href="#titre-et-description" id="toc-titre-et-description" class="nav-link" data-scroll-target="#titre-et-description"><span class="header-section-number">5.2</span> Titre et description</a></li>
+  <li><a href="#auteurs-contributeurs-et-responsables" id="toc-auteurs-contributeurs-et-responsables" class="nav-link" data-scroll-target="#auteurs-contributeurs-et-responsables"><span class="header-section-number">5.3</span> Auteurs, contributeurs et responsables</a></li>
+  <li><a href="#url-et-rapports-de-bogues" id="toc-url-et-rapports-de-bogues" class="nav-link" data-scroll-target="#url-et-rapports-de-bogues"><span class="header-section-number">5.4</span> URL et rapports de bogues</a></li>
+  <li><a href="#licence" id="toc-licence" class="nav-link" data-scroll-target="#licence"><span class="header-section-number">5.5</span> Licence</a></li>
+  <li><a href="#dépendances" id="toc-dépendances" class="nav-link" data-scroll-target="#dépendances"><span class="header-section-number">5.6</span> Dépendances</a></li>
+  <li><a href="#imports" id="toc-imports" class="nav-link" data-scroll-target="#imports"><span class="header-section-number">5.7</span> <code>Imports</code></a></li>
+  <li><a href="#suggests" id="toc-suggests" class="nav-link" data-scroll-target="#suggests"><span class="header-section-number">5.8</span> <code>Suggests</code></a></li>
+  <li><a href="#versions-minimales" id="toc-versions-minimales" class="nav-link" data-scroll-target="#versions-minimales"><span class="header-section-number">5.9</span> Versions minimales</a></li>
+  <li><a href="#depends" id="toc-depends" class="nav-link" data-scroll-target="#depends"><span class="header-section-number">5.10</span> <code>Depends</code></a></li>
+  <li><a href="#linkingto" id="toc-linkingto" class="nav-link" data-scroll-target="#linkingto"><span class="header-section-number">5.11</span> <code>LinkingTo</code></a></li>
+  <li><a href="#un-exemple-de-description" id="toc-un-exemple-de-description" class="nav-link" data-scroll-target="#un-exemple-de-description"><span class="header-section-number">5.12</span> Un exemple de <code>DESCRIPTION</code></a></li>
   </ul>
 </nav>
     </div>
@@ -211,18 +255,491 @@ div.csl-indent {
 </header>
 
 
-<p>Une librairies contient des fonctions et nous avons vu précédemment comment écrire, décrire, tester et finalement ajouter nos fonctions à une librairie R en suivant un cycle de codage efficace pour la diffusion de fonctions.</p>
-<p>Pour bien des librairies simples dédiées à un usage personnel, peut-être que le matériel vue précédemment suffit. Nous allons maintenant nous concentrer sur des approches qui permettent de rendrent bien plus puisante nos librairies et de les distribuer à un plus large publique.</p>
-<p>Les <em>métedonnées</em> d’une librairie forment un ensemble de descripteurs d’une librairies et des ces dépendances essentiellement contenue dans 2 fichiers <code>DESCRIPTION</code> et <code>NAMESPACE</code>.</p>
+<p>Une librairie contient des fonctions et nous avons vu précédemment comment écrire, documenter, tester et finalement intégrer nos fonctions à une librairie R, en suivant un cycle de développement efficace et reproductible.</p>
+<p>Pour certaines librairies simples destinées à un usage personnel, le matériel présenté jusqu’ici pourrait déjà être suffisant. Nous allons maintenant nous concentrer sur des éléments qui permettent de rendre nos librairies plus puissantes, mieux structurées et surtout plus faciles à distribuer à un plus large public.</p>
+<p>Les <em>métadonnées</em> d’une librairie regroupent un ensemble d’informations qui décrivent la librairie elle-même, son contenu et ses interactions avec d’autres librairies. Elles sont principalement contenues dans deux fichiers importants :</p>
+<pre class="text"><code>DESCRIPTION
+NAMESPACE</code></pre>
+<p>Le fichier <code>DESCRIPTION</code> contient notamment des informations sur la librairie, ses auteurs, sa version et ses dépendances. Le fichier <code>NAMESPACE</code>, quant à lui, contrôle principalement les fonctions rendues accessibles aux utilisateurs et les fonctions importées depuis d’autres librairies.</p>
+<p>Nous allons commencer par examiner <code>DESCRIPTION</code>, puis nous reviendrons sur <code>NAMESPACE</code> lorsque nous discuterons plus précisément des dépendances et des fonctions exportées.</p>
 <section id="description" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="description"><span class="header-section-number">5.1</span> DESCRIPTION</h2>
-<p>Parlons plus précisément du <code>DESCRIPTION</code> et de son contenue. Lors de la création d’une librairie (<code>usethis::create_package("mypackage")</code>), un fichier <code>DESCRIPTION</code> est automatique créé. Bien qu’il soit essentiellement vide, cela nous fournit un squelette simple à remplir.</p>
-<p>Notez aussi qu’il est possible de personaliser de squelette, mais dans le cadre de cours nous n’allons s’aventurer dans ce projet.</p>
+<p>Parlons maintenant plus précisément du fichier <code>DESCRIPTION</code> et de son contenu.</p>
+<p>Lors de la création d’une librairie avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_package</span>(<span class="st">"mypackage"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>un fichier <code>DESCRIPTION</code> est automatiquement créé.</p>
+<p>Celui-ci contient déjà un squelette minimal que nous devons compléter. Il ressemble généralement à quelque chose comme :</p>
+<pre class="text"><code>Package: mypackage
+Title: What the Package Does
+Version: 0.0.0.9000
+Authors@R:
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+Description: What the package does.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: ...</code></pre>
+<p>Certaines informations sont déjà remplies automatiquement, alors que d’autres servent simplement d’indications à remplacer.</p>
+<p>Le fichier <code>DESCRIPTION</code> est donc beaucoup plus qu’une courte description textuelle de la librairie. Il agit comme une véritable <strong>carte d’identité</strong> du projet.</p>
+<p>Il permet notamment de préciser :</p>
+<ul>
+<li>le nom de la librairie;</li>
+<li>sa version;</li>
+<li>son titre;</li>
+<li>ses auteurs;</li>
+<li>une description générale;</li>
+<li>sa licence;</li>
+<li>les versions de R nécessaires;</li>
+<li>les autres librairies dont elle dépend;</li>
+<li>certaines informations utilisées lors de sa construction et de sa distribution.</li>
+</ul>
+<p>Il est possible de personnaliser le squelette utilisé lors de la création de nouvelles librairies. Cela peut être utile pour une personne ou une organisation qui développe régulièrement plusieurs librairies et souhaite standardiser certaines informations. Dans le cadre de ce cours, nous conserverons toutefois le squelette proposé par défaut et nous nous concentrerons plutôt sur les champs les plus importants du fichier <code>DESCRIPTION</code>.</p>
+<p>Quand nous visitons la page principale d’une librairie sur CRAN, nous visualisons ce document <code>DESCRIPTION</code>. Par exemple, la librairie <a href="https://cran.r-project.org/web/packages/ggplot2/index.html">ggplot2</a>.</p>
 </section>
-<section id="titre-et-description" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="titre-et-description">Titre et description</h2>
-<p>C’est deux entréd doivent essentiellement <strong>décrire le contenue de la libraire et l’objectif des fonctions qui s’y trouvent</strong>. Ils diffèrente principalement de par leur taille.</p>
-<p>Le titre (<code>Title</code>) est une description en une ligne</p>
+<section id="titre-et-description" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="titre-et-description"><span class="header-section-number">5.2</span> Titre et description</h2>
+<p>Ces deux entrées doivent essentiellement <strong>décrire le contenu de la librairie et l’objectif des fonctions qui s’y trouvent</strong>. Elles diffèrent principalement par leur longueur et leur niveau de détail.</p>
+<p>Le titre (<code>Title</code>) est une description en une ligne de la librairie. Il doit être rédigé comme un titre, ne doit pas se terminer par un point et devrait demeurer relativement court. En pratique, il est recommandé de rester sous environ 65 caractères, puisque les titres plus longs peuvent être tronqués dans certaines listes de librairies.</p>
+<p>Il est donc important de mettre l’accent sur l’essentiel.</p>
+<p>La description (<code>Description</code>) est plus détaillée, mais demeure limitée à un seul paragraphe. Elle peut contenir plusieurs phrases. Lorsque la description s’étend sur plusieurs lignes dans le fichier <code>DESCRIPTION</code>, chaque ligne devrait contenir au plus 80 caractères et les lignes suivant la première doivent être indentées.</p>
+<p>Par exemple, voici le titre et la description de <code>ggplot2</code> :</p>
+<pre class="text"><code>Title: Create Elegant Data Visualisations Using the Grammar of Graphics
+Description: A system for 'declaratively' creating graphics,
+    based on "The Grammar of Graphics". You provide the data, tell 'ggplot2'
+    how to map variables to aesthetics, what graphical primitives to use,
+    and it takes care of the details.</code></pre>
+<p>Le titre et la description sont parmi les éléments les plus importants pour permettre à un utilisateur d’identifier rapidement ce que fait une librairie. Il est donc primordial de les rédiger avec soin.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pour CRAN
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour soumettre une librairie sur CRAN, plusieurs petites règles additionnelles doivent être respectées pour les champs <code>Title</code> et <code>Description</code>.</p>
+<p>Par exemple :</p>
+<ul>
+<li>les noms de librairies R, de logiciels et d’API devraient être placés entre apostrophes simples;</li>
+<li>il est préférable d’éviter les acronymes dans le titre;</li>
+<li>le nom de la librairie ne devrait généralement pas être répété dans le titre;</li>
+<li>il faut éviter de commencer par des formulations comme <em>“A package for…”</em> ou <em>“This package…”</em>.</li>
+</ul>
+<p>Je vous invite à consulter le <a href="https://r-pkgs.org/description.html">chapitre 9 de <em>R Packages</em></a> ainsi que le manuel de référence de CRAN avant une éventuelle soumission.</p>
+</div>
+</div>
+</section>
+<section id="auteurs-contributeurs-et-responsables" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="auteurs-contributeurs-et-responsables"><span class="header-section-number">5.3</span> Auteurs, contributeurs et responsables</h2>
+<p>Le champ <code>Authors@R</code> sert à identifier les personnes et les organisations ayant contribué à la librairie ainsi que la personne responsable de son maintien.</p>
+<p>Une personne peut être définie avec la fonction R <code>person()</code> :</p>
+<pre class="text"><code>Authors@R: person(
+    "Prénom",
+    "Nom",
+    email = "monemail@courrier.com",
+    role = c("aut", "cre")
+)</code></pre>
+<p>Les deux premiers arguments correspondent respectivement au prénom et au nom de la personne. L’argument <code>email</code> permet d’indiquer une adresse courriel, alors que <code>role</code> précise le rôle joué dans le développement de la librairie.</p>
+<p>Une librairie doit notamment identifier au moins :</p>
+<ul>
+<li>un auteur (<code>aut</code>);</li>
+<li>un responsable ou mainteneur (<code>cre</code>).</li>
+</ul>
+<p>Ces deux rôles peuvent évidemment être occupés par la même personne.</p>
+<p>Si une librairie possède plusieurs auteurs ou contributeurs, on peut simplement combiner plusieurs appels à <code>person()</code> avec la fonction R <code>c()</code> :</p>
+<pre class="text"><code>Authors@R: c(
+    person(
+        "Prénom",
+        "Nom",
+        email = "monemail@courrier.com",
+        role = c("aut", "cre")
+    ),
+    person(
+        "Autre",
+        "Personne",
+        role = "aut"
+    )
+)</code></pre>
+<p>L’adresse courriel est particulièrement importante pour la personne ayant le rôle <code>cre</code>. Il s’agit de la personne responsable de la librairie et de celle que CRAN contactera en cas de problème. Cette personne doit donc fournir une adresse valide et suffisamment stable dans le temps.</p>
+<p>Dans le contexte de CRAN, le rôle <code>cre</code> signifie essentiellement <strong>responsable ou mainteneur actuel de la librairie</strong>, même si l’abréviation provient historiquement du mot <em>creator</em>.</p>
+<p>L’argument <code>role</code> peut prendre plusieurs valeurs. Parmi les plus importantes :</p>
+<ul>
+<li><code>cre</code> : responsable ou mainteneur de la librairie;</li>
+<li><code>aut</code> : auteur ayant effectué une contribution importante à la librairie;</li>
+<li><code>ctb</code> : contributeur ayant effectué une contribution plus limitée;</li>
+<li><code>cph</code> : détenteur des droits d’auteur (<em>copyright holder</em>);</li>
+<li><code>fnd</code> : personne ou organisme ayant fourni du financement pour le développement de la librairie.</li>
+</ul>
+<p>Le rôle <code>cph</code> est notamment utile lorsqu’une librairie est développée dans le cadre d’une entreprise ou lorsque certaines parties du code appartiennent à une organisation.</p>
+<p>Finalement, il est possible d’ajouter de l’information supplémentaire avec l’argument <code>comment</code> de <code>person()</code>.</p>
+<p>Par exemple :</p>
+<pre class="text"><code>person(
+    "Jennifer",
+    "Bryan",
+    email = "jenny@posit.co",
+    role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0002-6983-2759")
+)</code></pre>
+<p>L’ajout d’un identifiant ORCID est un exemple particulièrement utile dans un contexte scientifique. Il permet d’associer sans ambiguïté une personne à son identité de chercheur ou de chercheuse.</p>
+</section>
+<section id="url-et-rapports-de-bogues" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="url-et-rapports-de-bogues"><span class="header-section-number">5.4</span> URL et rapports de bogues</h2>
+<p>En plus d’identifier les auteurs et la personne responsable de la librairie, il est utile d’indiquer <strong>où les utilisateurs peuvent trouver davantage d’information sur le projet</strong>.</p>
+<p>Deux champs de <code>DESCRIPTION</code> sont particulièrement utiles :</p>
+<pre class="text"><code>URL:
+BugReports:</code></pre>
+<p>Le champ <code>URL</code> permet d’indiquer une ou plusieurs adresses associées à la librairie. On y retrouve généralement :</p>
+<ul>
+<li>le site web de la librairie;</li>
+<li>le répertoire GitHub contenant son code source.</li>
+</ul>
+<p>Par exemple :</p>
+<pre class="text"><code>URL: https://devtools.r-lib.org/,
+    https://github.com/r-lib/devtools</code></pre>
+<p>Il est possible d’indiquer plusieurs adresses en les séparant par une virgule.</p>
+<p>Le champ <code>BugReports</code>, quant à lui, indique où un utilisateur devrait signaler un problème avec la librairie.</p>
+<p>Lorsqu’une librairie est développée publiquement sur GitHub, il s’agit généralement de la page <strong>Issues</strong> du répertoire :</p>
+<pre class="text"><code>BugReports: https://github.com/r-lib/devtools/issues</code></pre>
+<p>Cette distinction est utile :</p>
+<pre class="text"><code>URL
+    → Où puis-je en apprendre davantage sur la librairie?
+
+BugReports
+    → Où puis-je signaler un problème?</code></pre>
+<p>Si notre librairie est associée à un répertoire GitHub avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>usethis</code> peut automatiquement ajouter les champs <code>URL</code> et <code>BugReports</code> appropriés au fichier <code>DESCRIPTION</code>.</p>
+<p>Si le répertoire GitHub existe déjà, on peut également utiliser :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_github_links</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+GitHub comme point de contact
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Pour une librairie développée publiquement, GitHub peut donc jouer plusieurs rôles :</p>
+<ul>
+<li>héberger le code source;</li>
+<li>conserver l’historique Git;</li>
+<li>fournir de l’information sur le projet;</li>
+<li>recevoir les rapports de bogues;</li>
+<li>permettre aux utilisateurs de proposer des modifications.</li>
+</ul>
+<p>Nous reviendrons plus en détail sur ces aspects lors de la diffusion de notre librairie.</p>
+</div>
+</div>
+</section>
+<section id="licence" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="licence"><span class="header-section-number">5.5</span> Licence</h2>
+<p>Le champ <code>License</code> indique <strong>sous quelles conditions notre librairie peut être utilisée, modifiée et redistribuée</strong>.</p>
+<p>Ce champ est obligatoire dans une librairie R.</p>
+<p>Par exemple :</p>
+<pre class="text"><code>License: MIT + file LICENSE</code></pre>
+<p>ou :</p>
+<pre class="text"><code>License: GPL (&gt;= 3)</code></pre>
+<p>Il est important de comprendre que le champ <code>License</code> n’est pas simplement une description destinée aux utilisateurs.</p>
+<p>Il doit utiliser une forme standardisée que les outils de R peuvent interpréter automatiquement.</p>
+<p>Plutôt que d’écrire manuellement les fichiers nécessaires, <code>usethis</code> fournit plusieurs fonctions permettant de choisir une licence.</p>
+<p>Par exemple :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_mit_license</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>ou :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_gpl3_license</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ces fonctions créent ou modifient automatiquement les fichiers nécessaires et mettent à jour le champ <code>License</code> dans <code>DESCRIPTION</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quelle licence choisir?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le choix d’une licence soulève plusieurs questions importantes concernant les droits d’utilisation et de redistribution du code.</p>
+<p>Nous reviendrons plus sérieusement sur cette question lors de la séance consacrée à la finalisation et à la diffusion de la librairie.</p>
+<p>Pour l’instant, retenons surtout qu’une librairie destinée à être distribuée doit clairement indiquer sa licence.</p>
+</div>
+</div>
+</section>
+<section id="dépendances" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="dépendances"><span class="header-section-number">5.6</span> Dépendances</h2>
+<p>Une librairie R fonctionne rarement complètement seule.</p>
+<p>Nos fonctions peuvent utiliser :</p>
+<ul>
+<li>des fonctions provenant d’autres librairies R;</li>
+<li>des outils utilisés uniquement pour les tests;</li>
+<li>des outils utilisés pour produire la documentation;</li>
+<li>du code C ou C++ provenant d’autres librairies.</li>
+</ul>
+<p>Ces relations sont appelées des <strong>dépendances</strong>.</p>
+<p>Le fichier <code>DESCRIPTION</code> permet de déclarer explicitement ces dépendances.</p>
+<p>Les champs les plus importants sont :</p>
+<pre class="text"><code>Imports
+Suggests
+Depends
+LinkingTo</code></pre>
+<p>Ils ne signifient cependant pas tous la même chose.</p>
+</section>
+<section id="imports" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="imports"><span class="header-section-number">5.7</span> <code>Imports</code></h2>
+<p>Le champ <code>Imports</code> contient les librairies dont notre librairie <strong>a besoin pour fonctionner normalement</strong>.</p>
+<p>Supposons par exemple que notre code utilise des fonctions de <code>dplyr</code> et <code>tidyr</code>.</p>
+<p>Nous pourrions avoir :</p>
+<pre class="text"><code>Imports:
+    dplyr,
+    tidyr</code></pre>
+<p>Cela signifie essentiellement :</p>
+<blockquote class="blockquote">
+<p>Pour que ma librairie fonctionne, <code>dplyr</code> et <code>tidyr</code> doivent être disponibles.</p>
+</blockquote>
+<p>Lorsqu’un utilisateur installe notre librairie avec les outils habituels de R, ces dépendances pourront alors être installées automatiquement si nécessaire.</p>
+<p>La manière recommandée d’ajouter une dépendance est d’utiliser :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Par défaut, <code>use_package()</code> ajoute la librairie dans <code>Imports</code>.</p>
+<p>Nous pouvons ensuite utiliser une fonction provenant de cette librairie en indiquant explicitement sa provenance :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cette notation :</p>
+<pre class="text"><code>librairie::fonction()</code></pre>
+<p>sera particulièrement importante lorsque nous discuterons de <code>NAMESPACE</code>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Déclarer une dépendance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le fait qu’une librairie soit installée sur <strong>notre ordinateur</strong> ne signifie pas qu’elle sera installée sur l’ordinateur de nos utilisateurs.</p>
+<p>Si notre code dépend d’une autre librairie, cette dépendance doit être déclarée.</p>
+</div>
+</div>
+</section>
+<section id="suggests" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="suggests"><span class="header-section-number">5.8</span> <code>Suggests</code></h2>
+<p>Certaines librairies peuvent être utiles au développement de notre projet sans être absolument nécessaires au fonctionnement normal de la librairie.</p>
+<p>Par exemple :</p>
+<ul>
+<li>une librairie utilisée uniquement dans les tests;</li>
+<li>une librairie utilisée dans une vignette;</li>
+<li>une librairie permettant une fonctionnalité optionnelle;</li>
+<li>une librairie utilisée uniquement dans certains exemples.</li>
+</ul>
+<p>Dans ces situations, on peut utiliser :</p>
+<pre class="text"><code>Suggests:
+    ggplot2,
+    testthat</code></pre>
+<p>On peut ajouter une librairie à <code>Suggests</code> avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ggplot2"</span>,</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"Suggests"</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La distinction fondamentale est donc :</p>
+<pre class="text"><code>Imports
+    → ma librairie en a besoin pour fonctionner
+
+Suggests
+    → ma librairie peut fonctionner sans elle,
+      mais elle est utile pour certaines tâches</code></pre>
+<p>Cette distinction est importante lorsque nous distribuons notre librairie.</p>
+<p>Ajouter inutilement une librairie à <code>Imports</code> oblige potentiellement tous nos utilisateurs à installer cette dépendance.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Limiter les dépendances obligatoires
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Chaque dépendance supplémentaire ajoute une certaine complexité à notre projet.</p>
+<p>Avant d’ajouter une librairie à <code>Imports</code>, il est donc raisonnable de se demander :</p>
+<blockquote class="blockquote">
+<p>Est-ce que ma librairie en a réellement besoin pour son fonctionnement principal?</p>
+</blockquote>
+</div>
+</div>
+</section>
+<section id="versions-minimales" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="versions-minimales"><span class="header-section-number">5.9</span> Versions minimales</h2>
+<p>Il arrive que notre librairie nécessite une fonctionnalité introduite dans une version récente d’une dépendance.</p>
+<p>Nous pouvons alors spécifier une <strong>version minimale</strong>.</p>
+<p>Par exemple :</p>
+<pre class="text"><code>Imports:
+    dplyr (&gt;= 1.0.0),
+    tidyr (&gt;= 1.1.0)</code></pre>
+<p>On peut également utiliser :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"dplyr"</span>,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">min_version =</span> <span class="st">"1.0.0"</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Il est généralement préférable d’indiquer :</p>
+<pre class="text"><code>dplyr (&gt;= 1.0.0)</code></pre>
+<p>plutôt que :</p>
+<pre class="text"><code>dplyr (== 1.0.0)</code></pre>
+<p>Une version minimale indique simplement que notre librairie dépend d’une fonctionnalité disponible à partir d’une certaine version.</p>
+<p>Imposer une version exacte est beaucoup plus restrictif et peut facilement créer des conflits avec les autres librairies installées par l’utilisateur.</p>
+<p>Il faut cependant éviter d’imposer inutilement une version minimale très récente.</p>
+<p>Par exemple, si notre code fonctionne avec :</p>
+<pre class="text"><code>dplyr 1.0.0</code></pre>
+<p>il n’y a pas nécessairement de raison d’exiger :</p>
+<pre class="text"><code>dplyr &gt;= 1.2.0</code></pre>
+<p>simplement parce que c’est la version installée sur notre ordinateur.</p>
+</section>
+<section id="depends" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="depends"><span class="header-section-number">5.10</span> <code>Depends</code></h2>
+<p>Le nom <code>Depends</code> peut porter à confusion.</p>
+<p>Historiquement, ce champ était utilisé pour déclarer les autres librairies nécessaires au fonctionnement d’une librairie R.</p>
+<p>Aujourd’hui, dans la grande majorité des situations, nous préférons :</p>
+<pre class="text"><code>Imports</code></pre>
+<p>à :</p>
+<pre class="text"><code>Depends</code></pre>
+<p>Nous verrons la raison plus précisément lorsque nous discuterons des <em>namespaces</em>.</p>
+<p>Une utilisation encore courante de <code>Depends</code> consiste cependant à spécifier une version minimale de <strong>R lui-même</strong>.</p>
+<p>Par exemple :</p>
+<pre class="text"><code>Depends:
+    R (&gt;= 4.0.0)</code></pre>
+<p>Cela signifie que notre librairie nécessite au minimum R 4.0.0.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Être prudent avec la version minimale de R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Exiger une version récente d’une librairie peut forcer son installation ou sa mise à jour.</p>
+<p>Exiger une version récente de <strong>R</strong> est beaucoup plus contraignant.</p>
+<p>Un utilisateur ne peut pas simplement installer automatiquement une nouvelle version de R au moment d’installer notre librairie.</p>
+<p>Une telle contrainte devrait donc toujours avoir une justification réelle.</p>
+</div>
+</div>
+</section>
+<section id="linkingto" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="linkingto"><span class="header-section-number">5.11</span> <code>LinkingTo</code></h2>
+<p>Un dernier type de dépendance sera particulièrement intéressant pour nous.</p>
+<p>Le champ :</p>
+<pre class="text"><code>LinkingTo</code></pre>
+<p>est utilisé lorsqu’une librairie doit accéder au code <strong>C ou C++</strong> fourni par une autre librairie.</p>
+<p>Par exemple, lorsque nous intégrerons du code C++ à notre librairie avec <strong>Rcpp</strong>, nous retrouverons généralement :</p>
+<pre class="text"><code>Imports:
+    Rcpp
+
+LinkingTo:
+    Rcpp</code></pre>
+<p>Ces deux lignes n’ont pas exactement le même rôle.</p>
+<pre class="text"><code>Imports: Rcpp</code></pre>
+<p>indique une dépendance envers la librairie Rcpp au niveau de R.</p>
+<pre class="text"><code>LinkingTo: Rcpp</code></pre>
+<p>indique que notre code compilé a besoin des fichiers d’en-tête C++ fournis par Rcpp lors de sa compilation.</p>
+<p>Heureusement, nous n’aurons généralement pas besoin de modifier ces champs manuellement.</p>
+<p>Lorsque nous préparerons une librairie pour utiliser Rcpp avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_rcpp</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>les éléments nécessaires de <code>DESCRIPTION</code> seront ajoutés automatiquement.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Une transition vers C++
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nous venons donc de rencontrer une première raison pour laquelle les métadonnées sont importantes.</p>
+<p>Notre librairie peut dépendre :</p>
+<pre class="text"><code>d'autres librairies R
+        ↓
+      Imports
+
+d'outils optionnels
+        ↓
+      Suggests
+
+d'une version de R
+        ↓
+      Depends
+
+de code C ou C++
+        ↓
+      LinkingTo</code></pre>
+<p>Cette dernière situation nous mènera directement à l’intégration de <strong>C++ avec Rcpp</strong> dans la deuxième partie de cette séance.</p>
+</div>
+</div>
+</section>
+<section id="un-exemple-de-description" class="level2" data-number="5.12">
+<h2 data-number="5.12" class="anchored" data-anchor-id="un-exemple-de-description"><span class="header-section-number">5.12</span> Un exemple de <code>DESCRIPTION</code></h2>
+<p>À ce stade, une librairie un peu plus complète pourrait avoir un fichier <code>DESCRIPTION</code> ressemblant à :</p>
+<pre class="text"><code>Package: mypackage
+Title: Statistical Tools for Some Interesting Problem
+Version: 0.0.0.9000
+Authors@R:
+    person(
+        "Prénom",
+        "Nom",
+        email = "monemail@courrier.com",
+        role = c("aut", "cre")
+    )
+Description: Provides functions for fitting and evaluating statistical
+    models for some interesting problem. The package also provides tools
+    for simulation and visualization.
+License: MIT + file LICENSE
+URL: https://github.com/username/mypackage
+BugReports: https://github.com/username/mypackage/issues
+Imports:
+    Rcpp,
+    stats
+Suggests:
+    ggplot2,
+    testthat
+LinkingTo:
+    Rcpp
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: ...</code></pre>
+<p>Nous commençons ainsi à voir que <code>DESCRIPTION</code> ne sert pas simplement à <strong>décrire</strong> notre librairie.</p>
+<p>Il permet également aux outils de R de comprendre :</p>
+<ul>
+<li>qui développe la librairie;</li>
+<li>ce qu’elle fait;</li>
+<li>comment elle peut être utilisée et distribuée;</li>
+<li>quelles autres librairies sont nécessaires;</li>
+<li>quels outils sont optionnels;</li>
+<li>quelles ressources externes sont nécessaires à sa compilation.</li>
+</ul>
+<p>Dans la prochaine section, nous allons voir comment ces dépendances interagissent avec un autre fichier particulièrement important :</p>
+<pre class="text"><code>NAMESPACE</code></pre>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
