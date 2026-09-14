@@ -3,3 +3,43 @@
 Ce document est un livre mise-au-point par [Cédric Beaulac](https://cedricbeaulac.github.io) dans le cadre du cours MAT8186.
 
 Ce matériel fut conçu pour un cours de 15 heures organisé en 5 séances de 3 heures. L'objectif du cours est d'amener les étudiants à développer leur propres librairies R et s'inspire fortement du livre [R Packages](https://r-pkgs.org).
+
+Dans ce cours, nous apprendrons comment mettre au point une librairie R.
+
+## Pourquoi ? {.unnumbered}
+
+La librairie (de l'anglais *package*) est le format le mieux structuré pour le partage de code. Aux cycles supérieurs, les étudiants sont appelés à entrer en contact avec la recherche scientifique. Une étape importante de la recherche est la dissémination des résultats. Dans le cadre de la recherche en science des données, il est commun de développer de nouvelles méthodologies d'analyse de données et d'implémenter celles-ci. La mise au point d'une librairie est donc une manière de diffuser ces implémentations et, conséquemment, de rendre de nouvelles méthodes d'analyse de données facilement accessibles.
+
+L'objectif est donc de remplacer le partage d'un simple document `.R` par un ensemble de fonctions réfléchies, complètes, documentées et facilement accessibles à de nouveaux utilisateurs.
+
+L'ajout constant de nouvelles librairies R sur le *Comprehensive R Archive Network* (CRAN) est l'une des raisons du succès de R au fil des années et permet à R de rester un langage utilisé et reconnu à l'ère de Python, Julia et des autres langages couramment utilisés en science des données. CRAN contient aujourd'hui près de 20 000 librairies! Vous avez sûrement déjà installé des librairies à partir de CRAN avec la commande `install.packages("x")`.
+
+## Pourquoi moi ? {.unnumbered}
+
+Je ne suis pas un expert de la mise au point de librairies, mais :
+
+- J'ai déjà mis au point une librairie!
+- Je veux mettre au point d'autres librairies!
+- J'aime R, l'enseignement et l'enseignement de R.
+- Personne d'autre ne pouvait l'enseigner.
+- Je compte sur une excellente référence pour faire une partie du travail à ma place.
+
+## Quoi ? {.unnumbered}
+
+Dans ce cours, nous allons bien entendu mettre au point une librairie R : c'est l'objectif principal. Nous verrons comment passer d'un ensemble de fonctions R à une librairie structurée, documentée, testée et pouvant être facilement partagée avec d'autres utilisateurs.
+
+Nous verrons également plusieurs outils et concepts qui accompagnent le développement moderne en R :
+
+- **Git et GitHub**, pour conserver un historique des différentes versions de notre code, partager celui-ci et collaborer avec d'autres utilisateurs;
+- les bonnes pratiques pour organiser des **projets, fichiers et fonctions R**;
+- la **documentation et les tests**, afin qu'une librairie puisse être comprise, utilisée et modifiée de manière fiable;
+- quelques notions de **programmation orientée objet**, afin de comprendre comment R permet de définir des comportements associés à différents types d'objets;
+- **Rcpp et reticulate**, qui permettent respectivement d'intégrer du code C++ et Python à un projet R, notamment lorsque certaines fonctionnalités sont plus faciles ou plus efficaces à implémenter dans un autre langage.
+
+Ces différents outils ne constituent pas des objectifs indépendants : nous les utiliserons progressivement comme des composantes du développement de notre librairie.
+
+## Comment ? {.unnumbered}
+
+Nous allons essentiellement suivre le livre [R Packages](https://r-pkgs.org) de Hadley Wickham et Jennifer Bryan. Wickham est notamment l'auteur ou le coauteur de plusieurs librairies importantes de l'écosystème R, dont *ggplot2*, et l'un des principaux contributeurs au *tidyverse* et aux outils modernes de développement de librairies R.
+
+Pour la mise au point de librairies, nous utiliserons... une librairie.

@@ -225,18 +225,26 @@ div.csl-indent {
    
   <ul>
   <li><a href="#pourquoi-utiliser-une-dépendance" id="toc-pourquoi-utiliser-une-dépendance" class="nav-link active" data-scroll-target="#pourquoi-utiliser-une-dépendance">Pourquoi utiliser une dépendance?</a></li>
-  <li><a href="#importer-une-fonction-dans-notre-espace-de-noms" id="toc-importer-une-fonction-dans-notre-espace-de-noms" class="nav-link" data-scroll-target="#importer-une-fonction-dans-notre-espace-de-noms"><span class="header-section-number">6.1</span> Importer une fonction dans notre espace de noms</a></li>
+  <li><a href="#une-dépendance-a-aussi-un-coût" id="toc-une-dépendance-a-aussi-un-coût" class="nav-link" data-scroll-target="#une-dépendance-a-aussi-un-coût">Une dépendance a aussi un coût</a></li>
+  <li><a href="#trois-relations-avec-une-dépendance" id="toc-trois-relations-avec-une-dépendance" class="nav-link" data-scroll-target="#trois-relations-avec-une-dépendance">Trois relations avec une dépendance</a></li>
+  <li><a href="#suggests-une-dépendance-optionnelle" id="toc-suggests-une-dépendance-optionnelle" class="nav-link" data-scroll-target="#suggests-une-dépendance-optionnelle"><span class="header-section-number">6.1</span> <code>Suggests</code> : une dépendance optionnelle</a></li>
+  <li><a href="#imports-une-dépendance-nécessaire" id="toc-imports-une-dépendance-nécessaire" class="nav-link" data-scroll-target="#imports-une-dépendance-nécessaire"><span class="header-section-number">6.2</span> <code>Imports</code> : une dépendance nécessaire</a></li>
+  <li><a href="#utiliser-une-fonction-dune-autre-librairie" id="toc-utiliser-une-fonction-dune-autre-librairie" class="nav-link" data-scroll-target="#utiliser-une-fonction-dune-autre-librairie">Utiliser une fonction d’une autre librairie</a></li>
+  <li><a href="#pourquoi-les-espaces-de-noms" id="toc-pourquoi-les-espaces-de-noms" class="nav-link" data-scroll-target="#pourquoi-les-espaces-de-noms">Pourquoi les espaces de noms?</a></li>
+  <li><a href="#le-fichier-namespace" id="toc-le-fichier-namespace" class="nav-link" data-scroll-target="#le-fichier-namespace">Le fichier <code>NAMESPACE</code></a></li>
+  <li><a href="#importer-une-fonction-dans-notre-espace-de-noms" id="toc-importer-une-fonction-dans-notre-espace-de-noms" class="nav-link" data-scroll-target="#importer-une-fonction-dans-notre-espace-de-noms">Importer une fonction dans notre espace de noms</a></li>
   <li><a href="#faut-il-utiliser-pkgfun-ou-importfrom" id="toc-faut-il-utiliser-pkgfun-ou-importfrom" class="nav-link" data-scroll-target="#faut-il-utiliser-pkgfun-ou-importfrom">Faut-il utiliser <code>pkg::fun()</code> ou <code>@importFrom</code>?</a></li>
-  <li><a href="#depends-attacher-une-autre-librairie" id="toc-depends-attacher-une-autre-librairie" class="nav-link" data-scroll-target="#depends-attacher-une-autre-librairie"><code>Depends</code> : attacher une autre librairie</a></li>
-  <li><a href="#exporter-nos-propres-fonctions" id="toc-exporter-nos-propres-fonctions" class="nav-link" data-scroll-target="#exporter-nos-propres-fonctions"><span class="header-section-number">6.2</span> Exporter nos propres fonctions</a></li>
-  <li><a href="#namespace-et-roxygen2" id="toc-namespace-et-roxygen2" class="nav-link" data-scroll-target="#namespace-et-roxygen2"><span class="header-section-number">6.3</span> <code>NAMESPACE</code> et <code>roxygen2</code></a></li>
-  <li><a href="#une-distinction-à-retenir" id="toc-une-distinction-à-retenir" class="nav-link" data-scroll-target="#une-distinction-à-retenir"><span class="header-section-number">6.4</span> Une distinction à retenir</a>
+  <li><a href="#depends-attacher-une-autre-librairie" id="toc-depends-attacher-une-autre-librairie" class="nav-link" data-scroll-target="#depends-attacher-une-autre-librairie"><span class="header-section-number">6.3</span> <code>Depends</code> : attacher une autre librairie</a></li>
+  <li><a href="#exporter-nos-propres-fonctions" id="toc-exporter-nos-propres-fonctions" class="nav-link" data-scroll-target="#exporter-nos-propres-fonctions"><span class="header-section-number">6.4</span> Exporter nos propres fonctions</a></li>
+  <li><a href="#namespace-et-roxygen2" id="toc-namespace-et-roxygen2" class="nav-link" data-scroll-target="#namespace-et-roxygen2"><span class="header-section-number">6.5</span> <code>NAMESPACE</code> et <code>roxygen2</code></a></li>
+  <li><a href="#une-distinction-à-retenir" id="toc-une-distinction-à-retenir" class="nav-link" data-scroll-target="#une-distinction-à-retenir"><span class="header-section-number">6.6</span> Une distinction à retenir</a>
   <ul class="collapse">
   <li><a href="#déclarer-une-dépendance" id="toc-déclarer-une-dépendance" class="nav-link" data-scroll-target="#déclarer-une-dépendance">Déclarer une dépendance</a></li>
   <li><a href="#utiliser-explicitement-une-fonction" id="toc-utiliser-explicitement-une-fonction" class="nav-link" data-scroll-target="#utiliser-explicitement-une-fonction">Utiliser explicitement une fonction</a></li>
   <li><a href="#importer-une-fonction-dans-notre-espace-de-noms-1" id="toc-importer-une-fonction-dans-notre-espace-de-noms-1" class="nav-link" data-scroll-target="#importer-une-fonction-dans-notre-espace-de-noms-1">Importer une fonction dans notre espace de noms</a></li>
   </ul></li>
-  <li><a href="#prochaine-étape-sortir-de-r" id="toc-prochaine-étape-sortir-de-r" class="nav-link" data-scroll-target="#prochaine-étape-sortir-de-r"><span class="header-section-number">6.5</span> Prochaine étape : sortir de R</a></li>
+  <li><a href="#retour-à-notre-librairie-ridge" id="toc-retour-à-notre-librairie-ridge" class="nav-link" data-scroll-target="#retour-à-notre-librairie-ridge"><span class="header-section-number">6.7</span> Retour à notre librairie Ridge</a></li>
+  <li><a href="#prochaine-étape-sortir-de-r" id="toc-prochaine-étape-sortir-de-r" class="nav-link" data-scroll-target="#prochaine-étape-sortir-de-r">Prochaine étape : sortir de R</a></li>
   <li><a href="#plus-de-lecture" id="toc-plus-de-lecture" class="nav-link" data-scroll-target="#plus-de-lecture">Plus de lecture</a></li>
   </ul>
 </nav>
@@ -300,412 +308,309 @@ div.csl-indent {
 </div>
 <p>qui effectue précisément ce travail.</p>
 <p>Par exemple :</p>
-<p>::: {.cell}</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.matrix</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x1<span class="sc">:</span>x2,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="at">data =</span> donnees</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="at">Notre librairie peut donc se concentrer sur sa véritable contribution : **l'ajustement du modèle Ridge**, plutôt que de réimplémenter le système de formules de R.</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="at">::: callout-tip</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="at">## Ne pas réinventer la roue</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="at">Prendre une dépendance permet souvent de profiter de code :</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="at">- déjà testé;</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="at">- utilisé par de nombreux utilisateurs;</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="at">- maintenu par d'autres développeurs;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="at">- capable de gérer plusieurs cas particuliers auxquels nous n'aurions pas nécessairement pensé.</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="at">Une dépendance bien choisie peut donc **réduire** la quantité de code que nous devons maintenir.</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="at">## Une dépendance a aussi un coût {.unnumbered}</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="at">Ajouter une dépendance n'est cependant pas complètement gratuit.</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="at">Une nouvelle dépendance peut :</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="at">- devoir être installée par l'utilisateur;</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="at">- posséder elle-même plusieurs dépendances;</span></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="at">- augmenter le temps d'installation;</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="at">- nécessiter de la compilation;</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="at">- nécessiter un logiciel externe;</span></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="at">- modifier son interface dans une version future;</span></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="at">- éventuellement ne plus être maintenue.</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="at">Il ne faut donc pas chercher systématiquement à minimiser le **nombre** de dépendances.</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="at">Il faut plutôt se demander :</span></span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Est-ce que les avantages apportés par cette dépendance justifient son coût?</span></span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="at">Toutes les dépendances ne représentent d'ailleurs pas le même coût.</span></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="at">Des librairies comme :</span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>stats</span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>utils</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>methods</span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="at">sont distribuées avec R et représentent donc des dépendances extrêmement légères.</span></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="at">À l'inverse, certaines librairies nécessitent plusieurs dizaines de dépendances supplémentaires ou l'installation d'outils externes.</span></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="at">::: callout-note</span></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="at">## Une décision contextuelle</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="at">Le bon nombre de dépendances n'est donc pas nécessairement zéro.</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="at">Il faut plutôt trouver un compromis entre :</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>réutiliser du code existant</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>         et</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>limiter la complexité du projet</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="at">## Trois relations avec une dépendance</span></span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="at">Dans </span><span class="st">`</span>DESCRIPTION<span class="st">`</span><span class="at">, trois champs permettent d'exprimer des relations différentes avec une autre librairie :</span></span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>Suggests</span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>Imports</span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>Depends</span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="at">Nous allons les présenter du **moins contraignant au plus contraignant**.</span></span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="at">## </span><span class="st">`</span>Suggests<span class="st">`</span><span class="at"> : une dépendance optionnelle {.unnumbered}</span></span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="at">Une librairie placée dans :</span></span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a>Suggests<span class="sc">:</span></span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="at">n'est **pas nécessaire au fonctionnement normal de notre librairie**.</span></span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a><span class="at">Elle peut être utile pour :</span></span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a><span class="at">- les tests;</span></span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="at">- les vignettes;</span></span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="at">- certains exemples;</span></span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="at">- une fonctionnalité optionnelle;</span></span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="at">- des données exemples.</span></span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="at">Nous avons déjà un excellent exemple dans notre projet :</span></span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>Suggests<span class="sc">:</span></span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>  testthat</span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="at">Notre librairie Ridge peut parfaitement être utilisée par un utilisateur qui ne possède pas </span><span class="st">`</span>testthat<span class="st">`</span><span class="at">.</span></span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="at">Par contre, </span><span class="st">`</span>testthat<span class="st">`</span><span class="at"> est nécessaire pour exécuter notre suite de tests pendant le développement.</span></span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a><span class="at">On peut ajouter une dépendance à </span><span class="st">`</span>Suggests<span class="st">`</span><span class="at"> avec :</span></span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a><span class="st">```</span>{r}</span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(</span>
-<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="st">"testthat"</span>,</span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="at">type =</span> <span class="st">"Suggests"</span></span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="at">::: callout-important</span></span>
-<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a><span class="at">## Une dépendance dans </span><span class="st">`</span>Suggests<span class="st">`</span><span class="at"> peut être absente</span></span>
-<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="at">Notre code ne peut pas supposer qu'une librairie inscrite dans </span><span class="st">`</span>Suggests<span class="st">`</span><span class="at"> est installée chez tous les utilisateurs.</span></span>
-<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span>
-<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="at">## </span><span class="st">`</span>Imports<span class="st">`</span><span class="at"> : une dépendance nécessaire {.unnumbered}</span></span>
-<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a><span class="at">Le champ :</span></span>
-<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>Imports<span class="sc">:</span></span>
-<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="at">contient les librairies nécessaires au **fonctionnement normal** de notre librairie.</span></span>
-<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="at">Pour notre librairie Ridge, nous pourrions par exemple utiliser :</span></span>
-<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>Imports<span class="sc">:</span></span>
-<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>stats</span>
-<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a><span class="at">puisque nous voulons utiliser certaines fonctions de </span><span class="st">`</span>stats<span class="st">`</span><span class="at"> pour construire notre matrice de design.</span></span>
-<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="at">On peut ajouter cette dépendance avec :</span></span>
-<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a><span class="st">```</span>{r}</span>
-<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"stats"</span>, <span class="at">type =</span> <span class="st">"Imports"</span>)</span>
-<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="at">Nous pourrions alors écrire notre fonction :</span></span>
-<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="st">```</span>{r}</span>
-<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>ridge <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data, lambda) {</span>
-<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a>mf <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.frame</span>(</span>
-<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a>  formula,</span>
-<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> data</span>
-<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.matrix</span>(</span>
-<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a>  formula,</span>
-<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mf</span>
-<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.response</span>(mf)</span>
-<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustement Ridge...</span></span>
-<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a><span class="at">Ici, notre librairie profite du système de formules déjà implanté dans R.</span></span>
-<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a><span class="at">::: callout-important</span></span>
-<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a><span class="at">## </span><span class="st">`</span>Imports<span class="st">`</span><span class="at"> ne veut pas dire « importer »</span></span>
-<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="at">Le nom du champ </span><span class="st">`</span>Imports<span class="st">`</span><span class="at"> est malheureusement un peu trompeur.</span></span>
-<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a><span class="at">Écrire :</span></span>
-<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a>Imports<span class="sc">:</span></span>
-<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a>stats</span>
-<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a><span class="at">dans </span><span class="st">`</span>DESCRIPTION<span class="st">`</span><span class="at"> garantit essentiellement que la dépendance nécessaire est disponible lorsque notre librairie est installée.</span></span>
-<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a><span class="at">Cela **ne rend pas automatiquement toutes les fonctions de </span><span class="st">`</span>stats<span class="st">`</span><span class="at"> directement disponibles dans notre code**.</span></span>
-<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a><span class="at">Autrement dit :</span></span>
-<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a>Imports dans DESCRIPTION</span>
-<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a><span class="at">et</span></span>
-<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a>import dans NAMESPACE</span>
-<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a><span class="at">sont deux concepts différents.</span></span>
-<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span>
-<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a><span class="at">C'est une distinction importante que nous allons maintenant explorer.</span></span>
-<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="at">## Utiliser une fonction d'une autre librairie {.unnumbered}</span></span>
-<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a><span class="at">La manière recommandée par défaut pour utiliser une fonction externe consiste à indiquer explicitement sa provenance avec :</span></span>
-<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a>librairie<span class="sc">::</span><span class="fu">fonction</span>()</span>
-<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a><span class="at">Par exemple :</span></span>
-<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a><span class="st">```</span>{r}</span>
-<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span>
-<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.frame</span>()</span>
-<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.response</span>()</span>
-<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a><span class="at">Cette syntaxe possède plusieurs avantages.</span></span>
-<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a><span class="at">Premièrement, lorsqu'on lit :</span></span>
-<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> r</span>
-<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span>
-<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a><span class="at">on sait immédiatement que </span><span class="st">`</span><span class="fu">model.matrix</span>()<span class="st">`</span><span class="at"> n'est pas une fonction définie dans notre propre librairie.</span></span>
-<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a><span class="at">Deuxièmement, elle évite les ambiguïtés lorsque plusieurs librairies possèdent des fonctions portant le même nom.</span></span>
-<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a><span class="at">Finalement, elle rend notre code moins dépendant de l'environnement de travail de l'utilisateur.</span></span>
-<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a><span class="at">::: callout-warning</span></span>
-<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a><span class="at">## Éviter </span><span class="st">`</span><span class="fu">library</span>()<span class="st">`</span><span class="at"> dans </span><span class="st">`</span>R<span class="sc">/</span><span class="st">`</span></span>
-<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a><span class="at">Dans le code d'une librairie, nous n'écrivons généralement pas :</span></span>
-<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> r</span>
-<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
-<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a><span class="at">ou :</span></span>
-<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> r</span>
-<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a><span class="at">dans les fichiers contenus dans </span><span class="st">`</span>R<span class="sc">/</span><span class="st">`</span><span class="at">.</span></span>
-<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a><span class="at">Notre librairie ne devrait pas modifier inutilement l'environnement global de l'utilisateur.</span></span>
-<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a><span class="at">Nous préférons :</span></span>
-<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> r</span>
-<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span>
-<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a><span class="at">ou une importation explicite dans le </span><span class="st">`</span>NAMESPACE<span class="st">`</span><span class="at">.</span></span>
-<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a><span class="at">:::</span></span>
-<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a><span class="at">## Pourquoi les espaces de noms? </span></span>
-<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a><span class="at">Supposons que deux librairies possèdent toutes les deux une fonction appelée :</span></span>
-<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>()</span>
-<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a><span class="at">Si notre code contient simplement :</span></span>
-<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> r</span>
-<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(x)</span>
-<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a><span class="at">nous devons être certains de savoir **quelle fonction </span><span class="st">`</span><span class="fu">filter</span>()<span class="st">`</span><span class="at"> sera appelée**.</span></span>
-<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a><span class="at">R utilise pour cela des **espaces de noms**, ou *namespaces*.</span></span>
-<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a><span class="at">On peut imaginer qu'une librairie possède une sorte de boîte contenant ses objets :</span></span>
-<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a>stats</span>
-<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a>├── model.matrix</span>
-<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a>├── model.frame</span>
-<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a>├── model.response</span>
-<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a>├── predict</span>
-<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a>└── ...</span>
-<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a>dplyr</span>
-<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a>├── filter</span>
-<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a>├── select</span>
-<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a>├── mutate</span>
-<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a>└── ...</span>
-<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a>NotreLibrairie</span>
-<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a>├── ridge</span>
-<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a>├── ridge_fit</span>
-<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a>├── cv_ridge</span>
-<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a>└── ...</span>
-<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a><span class="at">La notation :</span></span>
-<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> r</span>
-<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span>
-<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a><span class="at">signifie donc explicitement :</span></span>
-<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Chercher </span><span class="st">`</span><span class="fu">model.matrix</span>()<span class="st">`</span><span class="at"> dans l'espace de noms de </span><span class="st">`</span>stats<span class="st">`</span><span class="at">.</span></span>
-<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a><span class="at">Ce système est essentiel au fonctionnement de l'écosystème R.</span></span>
-<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a><span class="at">Il permet notamment à plusieurs librairies d'utiliser des fonctions portant les mêmes noms sans nécessairement entrer en conflit.</span></span>
-<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a><span class="at">## Le fichier </span><span class="st">`</span>NAMESPACE<span class="st">`</span></span>
-<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a><span class="at">Le fichier :</span></span>
-<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a>NAMESPACE</span>
-<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a><span class="at">décrit les échanges entre l'espace de noms de notre librairie et le reste de l'écosystème R.</span></span>
-<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a><span class="at">Il contrôle principalement deux directions :</span></span>
-<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a><span class="st">```</span> text</span>
-<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a>Notre librairie</span>
-<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span>               \</span>
-<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a><span class="sc">/</span>                 \</span>
-<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a>IMPORTATIONS          EXPORTATIONS</span>
-<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a>↑                    ↓</span>
-<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a>fonctions provenant        fonctions accessibles</span>
-<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a>d<span class="st">'autres librairies        aux utilisateurs</span></span>
-<span id="cb3-361"><a href="#cb3-361" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
-<span id="cb3-362"><a href="#cb3-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-363"><a href="#cb3-363" aria-hidden="true" tabindex="-1"></a><span class="st">Il faut donc distinguer :</span></span>
-<span id="cb3-364"><a href="#cb3-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-365"><a href="#cb3-365" aria-hidden="true" tabindex="-1"></a><span class="st">``` text</span></span>
-<span id="cb3-366"><a href="#cb3-366" aria-hidden="true" tabindex="-1"></a><span class="st">DESCRIPTION</span></span>
-<span id="cb3-367"><a href="#cb3-367" aria-hidden="true" tabindex="-1"></a><span class="st">  ↓</span></span>
-<span id="cb3-368"><a href="#cb3-368" aria-hidden="true" tabindex="-1"></a><span class="st">Quelles librairies sont nécessaires?</span></span>
-<span id="cb3-369"><a href="#cb3-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-370"><a href="#cb3-370" aria-hidden="true" tabindex="-1"></a><span class="st">NAMESPACE</span></span>
-<span id="cb3-371"><a href="#cb3-371" aria-hidden="true" tabindex="-1"></a><span class="st">  ↓</span></span>
-<span id="cb3-372"><a href="#cb3-372" aria-hidden="true" tabindex="-1"></a><span class="st">Quels objets entrent et sortent de</span></span>
-<span id="cb3-373"><a href="#cb3-373" aria-hidden="true" tabindex="-1"></a><span class="st">l'</span>espace de noms de notre librairie?</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>:::</p>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x1<span class="sc">:</span>x2,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> donnees</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notre librairie peut donc se concentrer sur sa véritable contribution : <strong>l’ajustement du modèle Ridge</strong>, plutôt que de réimplémenter le système de formules de R.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ne pas réinventer la roue
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prendre une dépendance permet souvent de profiter de code :</p>
+<ul>
+<li>déjà testé;</li>
+<li>utilisé par de nombreux utilisateurs;</li>
+<li>maintenu par d’autres développeurs;</li>
+<li>capable de gérer plusieurs cas particuliers auxquels nous n’aurions pas nécessairement pensé.</li>
+</ul>
+<p>Une dépendance bien choisie peut donc <strong>réduire</strong> la quantité de code que nous devons maintenir.</p>
+</div>
+</div>
 </section>
-<section id="importer-une-fonction-dans-notre-espace-de-noms" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="importer-une-fonction-dans-notre-espace-de-noms"><span class="header-section-number">6.1</span> Importer une fonction dans notre espace de noms</h2>
+<section id="une-dépendance-a-aussi-un-coût" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="une-dépendance-a-aussi-un-coût">Une dépendance a aussi un coût</h2>
+<p>Ajouter une dépendance n’est cependant pas complètement gratuit.</p>
+<p>Une nouvelle dépendance peut :</p>
+<ul>
+<li>devoir être installée par l’utilisateur;</li>
+<li>posséder elle-même plusieurs dépendances;</li>
+<li>augmenter le temps d’installation;</li>
+<li>nécessiter de la compilation;</li>
+<li>nécessiter un logiciel externe;</li>
+<li>modifier son interface dans une version future;</li>
+<li>éventuellement ne plus être maintenue.</li>
+</ul>
+<p>Il ne faut donc pas chercher systématiquement à minimiser le <strong>nombre</strong> de dépendances.</p>
+<p>Il faut plutôt se demander :</p>
+<blockquote class="blockquote">
+<p>Est-ce que les avantages apportés par cette dépendance justifient son coût?</p>
+</blockquote>
+<p>Toutes les dépendances ne représentent d’ailleurs pas le même coût.</p>
+<p>Des librairies comme :</p>
+<pre class="text"><code>stats
+utils
+methods</code></pre>
+<p>sont distribuées avec R et représentent donc des dépendances extrêmement légères.</p>
+<p>À l’inverse, certaines librairies nécessitent plusieurs dizaines de dépendances supplémentaires ou l’installation d’outils externes.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Une décision contextuelle
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le bon nombre de dépendances n’est donc pas nécessairement zéro.</p>
+<p>Il faut plutôt trouver un compromis entre :</p>
+<pre class="text"><code>réutiliser du code existant
+           et
+limiter la complexité du projet</code></pre>
+</div>
+</div>
+</section>
+<section id="trois-relations-avec-une-dépendance" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="trois-relations-avec-une-dépendance">Trois relations avec une dépendance</h2>
+<p>Dans <code>DESCRIPTION</code>, trois champs permettent d’exprimer des relations différentes avec une autre librairie :</p>
+<pre class="text"><code>Suggests
+Imports
+Depends</code></pre>
+<p>Nous allons les présenter du <strong>moins contraignant au plus contraignant</strong>.</p>
+</section>
+<section id="suggests-une-dépendance-optionnelle" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="suggests-une-dépendance-optionnelle"><span class="header-section-number">6.1</span> <code>Suggests</code> : une dépendance optionnelle</h2>
+<p>Une librairie placée dans :</p>
+<pre class="text"><code>Suggests:</code></pre>
+<p>n’est <strong>pas nécessaire au fonctionnement normal de notre librairie</strong>.</p>
+<p>Elle peut être utile pour :</p>
+<ul>
+<li>les tests;</li>
+<li>les vignettes;</li>
+<li>certains exemples;</li>
+<li>une fonctionnalité optionnelle;</li>
+<li>des données exemples.</li>
+</ul>
+<p>Nous avons déjà un excellent exemple dans notre projet :</p>
+<pre class="text"><code>Suggests:
+    testthat</code></pre>
+<p>Notre librairie Ridge peut parfaitement être utilisée par un utilisateur qui ne possède pas <code>testthat</code>.</p>
+<p>Par contre, <code>testthat</code> est nécessaire pour exécuter notre suite de tests pendant le développement.</p>
+<p>On peut ajouter une dépendance à <code>Suggests</code> avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"testthat"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"Suggests"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Une dépendance dans <code>Suggests</code> peut être absente
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notre code ne peut pas supposer qu’une librairie inscrite dans <code>Suggests</code> est installée chez tous les utilisateurs.</p>
+</div>
+</div>
+</section>
+<section id="imports-une-dépendance-nécessaire" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="imports-une-dépendance-nécessaire"><span class="header-section-number">6.2</span> <code>Imports</code> : une dépendance nécessaire</h2>
+<p>Le champ :</p>
+<pre class="text"><code>Imports:</code></pre>
+<p>contient les librairies nécessaires au <strong>fonctionnement normal</strong> de notre librairie.</p>
+<p>Pour notre librairie Ridge, nous pourrions par exemple utiliser :</p>
+<pre class="text"><code>Imports:
+  stats</code></pre>
+<p>puisque nous voulons utiliser certaines fonctions de <code>stats</code> pour construire notre matrice de design.</p>
+<p>On peut ajouter cette dépendance avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"stats"</span>, <span class="at">type =</span> <span class="st">"Imports"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous pourrions alors écrire notre fonction :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ridge <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data, lambda) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  mf <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.frame</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    formula,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> data</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.matrix</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    formula,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> mf</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.response</span>(mf)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Ajustement Ridge...</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Ici, notre librairie profite du système de formules déjà implanté dans R.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>Imports</code> ne veut pas dire « importer »
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le nom du champ <code>Imports</code> est malheureusement un peu trompeur.</p>
+<p>Écrire :</p>
+<pre class="text"><code>Imports:
+  stats</code></pre>
+<p>dans <code>DESCRIPTION</code> garantit essentiellement que la dépendance nécessaire est disponible lorsque notre librairie est installée.</p>
+<p>Cela <strong>ne rend pas automatiquement toutes les fonctions de <code>stats</code> directement disponibles dans notre code</strong>.</p>
+<p>Autrement dit :</p>
+<pre class="text"><code>Imports dans DESCRIPTION</code></pre>
+<p>et</p>
+<pre class="text"><code>import dans NAMESPACE</code></pre>
+<p>sont deux concepts différents.</p>
+</div>
+</div>
+<p>C’est une distinction importante que nous allons maintenant explorer.</p>
+</section>
+<section id="utiliser-une-fonction-dune-autre-librairie" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="utiliser-une-fonction-dune-autre-librairie">Utiliser une fonction d’une autre librairie</h2>
+<p>La manière recommandée par défaut pour utiliser une fonction externe consiste à indiquer explicitement sa provenance avec :</p>
+<pre class="text"><code>librairie::fonction()</code></pre>
+<p>Par exemple :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.frame</span>()</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.response</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cette syntaxe possède plusieurs avantages.</p>
+<p>Premièrement, lorsqu’on lit :</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>on sait immédiatement que <code>model.matrix()</code> n’est pas une fonction définie dans notre propre librairie.</p>
+<p>Deuxièmement, elle évite les ambiguïtés lorsque plusieurs librairies possèdent des fonctions portant le même nom.</p>
+<p>Finalement, elle rend notre code moins dépendant de l’environnement de travail de l’utilisateur.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Éviter <code>library()</code> dans <code>R/</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans le code d’une librairie, nous n’écrivons généralement pas :</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ou :</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>dans les fichiers contenus dans <code>R/</code>.</p>
+<p>Notre librairie ne devrait pas modifier inutilement l’environnement global de l’utilisateur.</p>
+<p>Nous préférons :</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ou une importation explicite dans le <code>NAMESPACE</code>.</p>
+</div>
+</div>
+</section>
+<section id="pourquoi-les-espaces-de-noms" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="pourquoi-les-espaces-de-noms">Pourquoi les espaces de noms?</h2>
+<p>Supposons que deux librairies possèdent toutes les deux une fonction appelée :</p>
+<pre class="text"><code>filter()</code></pre>
+<p>Si notre code contient simplement :</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filter</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>nous devons être certains de savoir <strong>quelle fonction <code>filter()</code> sera appelée</strong>.</p>
+<p>R utilise pour cela des <strong>espaces de noms</strong>, ou <em>namespaces</em>.</p>
+<p>On peut imaginer qu’une librairie possède une sorte de boîte contenant ses objets :</p>
+<pre class="text"><code>stats
+├── model.matrix
+├── model.frame
+├── model.response
+├── predict
+└── ...
+
+dplyr
+├── filter
+├── select
+├── mutate
+└── ...
+
+NotreLibrairie
+├── ridge
+├── ridge_fit
+├── cv_ridge
+└── ...</code></pre>
+<p>La notation :</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>signifie donc explicitement :</p>
+<blockquote class="blockquote">
+<p>Chercher <code>model.matrix()</code> dans l’espace de noms de <code>stats</code>.</p>
+</blockquote>
+<p>Ce système est essentiel au fonctionnement de l’écosystème R.</p>
+<p>Il permet notamment à plusieurs librairies d’utiliser des fonctions portant les mêmes noms sans nécessairement entrer en conflit.</p>
+</section>
+<section id="le-fichier-namespace" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="le-fichier-namespace">Le fichier <code>NAMESPACE</code></h2>
+<p>Le fichier :</p>
+<pre class="text"><code>NAMESPACE</code></pre>
+<p>décrit les échanges entre l’espace de noms de notre librairie et le reste de l’écosystème R.</p>
+<p>Il contrôle principalement deux directions :</p>
+<pre class="text"><code>Notre librairie
+/               \
+/                 \
+IMPORTATIONS          EXPORTATIONS
+↑                    ↓
+fonctions provenant        fonctions accessibles
+d'autres librairies        aux utilisateurs</code></pre>
+<p>Il faut donc distinguer :</p>
+<pre class="text"><code>DESCRIPTION
+    ↓
+Quelles librairies sont nécessaires?
+
+NAMESPACE
+    ↓
+Quels objets entrent et sortent de
+l'espace de noms de notre librairie?</code></pre>
+</section>
+<section id="importer-une-fonction-dans-notre-espace-de-noms" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="importer-une-fonction-dans-notre-espace-de-noms">Importer une fonction dans notre espace de noms</h2>
 <p>La syntaxe :</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>sera notre approche par défaut.</p>
 <p>Cependant, il est également possible d’importer directement une fonction externe dans l’espace de noms de notre librairie.</p>
 <p>Avec <code>roxygen2</code>, nous pouvons écrire :</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom stats model.matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom stats model.matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>puis exécuter :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Cela ajoutera automatiquement une instruction semblable à :</p>
 <pre class="text"><code>importFrom(stats,model.matrix)</code></pre>
 <p>dans <code>NAMESPACE</code>.</p>
 <p>Nous pourrions ensuite écrire directement :</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>dans notre code sans préciser <code>stats::</code>.</p>
 <p>On peut également demander à <code>usethis</code> de préparer cette importation :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_import_from</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"stats"</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"model.matrix"</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_import_from</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"stats"</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"model.matrix"</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="faut-il-utiliser-pkgfun-ou-importfrom" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="faut-il-utiliser-pkgfun-ou-importfrom">Faut-il utiliser <code>pkg::fun()</code> ou <code>@importFrom</code>?</h2>
 <p>Dans la majorité des situations, nous privilégierons :</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>L’origine de la fonction demeure alors immédiatement visible.</p>
 <p>L’utilisation de :</p>
 <pre class="text"><code>@importFrom</code></pre>
@@ -727,7 +632,7 @@ Notre approche dans ce cours
 </div>
 <div class="callout-body-container callout-body">
 <p>Par défaut :</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>pkg<span class="sc">::</span><span class="fu">fun</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>pkg<span class="sc">::</span><span class="fu">fun</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Si nous avons une bonne raison d’importer explicitement :</p>
 <pre class="text"><code>@importFrom pkg fun</code></pre>
 <p>Nous éviterons généralement d’importer l’ensemble d’une librairie avec :</p>
@@ -736,8 +641,8 @@ Notre approche dans ce cours
 </div>
 </div>
 </section>
-<section id="depends-attacher-une-autre-librairie" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="depends-attacher-une-autre-librairie"><code>Depends</code> : attacher une autre librairie</h2>
+<section id="depends-attacher-une-autre-librairie" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="depends-attacher-une-autre-librairie"><span class="header-section-number">6.3</span> <code>Depends</code> : attacher une autre librairie</h2>
 <p>Le troisième champ est :</p>
 <pre class="text"><code>Depends:</code></pre>
 <p>Une dépendance placée dans <code>Depends</code> ressemble à une dépendance placée dans <code>Imports</code> sur un point important :</p>
@@ -749,7 +654,7 @@ Notre approche dans ce cours
 <pre class="text"><code>Depends:
     uneLibrairie</code></pre>
 <p>Lorsqu’un utilisateur fait :</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MaLibrairie)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MaLibrairie)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>uneLibrairie</code> sera également attachée.</p>
 <p>Ses fonctions deviennent donc directement présentes dans le <em>search path</em> de l’utilisateur.</p>
 <p>Cela modifie davantage son environnement de travail et peut augmenter les risques de conflits entre les noms de fonctions.</p>
@@ -812,32 +717,32 @@ Le cas important de <code>Depends</code>
 </tbody>
 </table>
 </section>
-<section id="exporter-nos-propres-fonctions" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="exporter-nos-propres-fonctions"><span class="header-section-number">6.2</span> Exporter nos propres fonctions</h2>
+<section id="exporter-nos-propres-fonctions" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="exporter-nos-propres-fonctions"><span class="header-section-number">6.4</span> Exporter nos propres fonctions</h2>
 <p>Le <code>NAMESPACE</code> ne sert pas uniquement à gérer les fonctions provenant d’autres librairies.</p>
 <p>Il détermine également quelles fonctions de <strong>notre librairie</strong> sont accessibles aux utilisateurs.</p>
 <p>Considérons notre fonction :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>CR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>CR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Si nous voulons que cette fonction fasse partie de l’interface publique de notre librairie, nous pouvons ajouter :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Centrer et réduire un vecteur</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x Un vecteur numérique.</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Un vecteur centré et réduit.</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>CR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Centrer et réduire un vecteur</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x Un vecteur numérique.</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Un vecteur centré et réduit.</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>CR <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">/</span> <span class="fu">sd</span>(x)</span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Puis :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>roxygen2</code> ajoutera automatiquement :</p>
 <pre class="text"><code>export(CR)</code></pre>
@@ -845,13 +750,13 @@ Le cas important de <code>Depends</code>
 <p>La fonction pourra alors être utilisée par les utilisateurs de notre librairie.</p>
 <p>À l’inverse, considérons une petite fonction auxiliaire :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>verifier_lambda <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda) {</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">any</span>(lambda <span class="sc">&lt;</span> <span class="dv">0</span>)) {</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"`lambda` doit être positif."</span>)</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>verifier_lambda <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda) {</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">any</span>(lambda <span class="sc">&lt;</span> <span class="dv">0</span>)) {</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"`lambda` doit être positif."</span>)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Si cette fonction sert uniquement au fonctionnement interne de notre librairie, nous n’avons aucune raison de l’exporter.</p>
 <p>Nous n’ajoutons donc pas :</p>
@@ -894,22 +799,22 @@ Ne pas tout exporter
 </div>
 </div>
 </section>
-<section id="namespace-et-roxygen2" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="namespace-et-roxygen2"><span class="header-section-number">6.3</span> <code>NAMESPACE</code> et <code>roxygen2</code></h2>
+<section id="namespace-et-roxygen2" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="namespace-et-roxygen2"><span class="header-section-number">6.5</span> <code>NAMESPACE</code> et <code>roxygen2</code></h2>
 <p>Dans notre workflow, nous <strong>ne modifierons pas directement</strong> le fichier :</p>
 <pre class="text"><code>NAMESPACE</code></pre>
 <p>Il commence d’ailleurs normalement par :</p>
 <pre class="text"><code># Generated by roxygen2: do not edit by hand</code></pre>
 <p>Nous ajoutons plutôt les instructions nécessaires dans les commentaires <code>roxygen2</code>.</p>
 <p>Par exemple :</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom stats model.matrix</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>ridge <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom stats model.matrix</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>ridge <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Puis :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>met à jour simultanément :</p>
 <pre class="text"><code>man/</code></pre>
@@ -924,8 +829,8 @@ documentation
 +
   NAMESPACE</code></pre>
 </section>
-<section id="une-distinction-à-retenir" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="une-distinction-à-retenir"><span class="header-section-number">6.4</span> Une distinction à retenir</h2>
+<section id="une-distinction-à-retenir" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="une-distinction-à-retenir"><span class="header-section-number">6.6</span> Une distinction à retenir</h2>
 <p>À ce stade, trois opérations qui peuvent sembler similaires doivent être clairement distinguées :</p>
 <ol type="1">
 <li><strong>déclarer une dépendance</strong>;</li>
@@ -948,7 +853,7 @@ documentation
 <section id="utiliser-explicitement-une-fonction" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="utiliser-explicitement-une-fonction">Utiliser explicitement une fonction</h3>
 <p>Dans notre code, nous pouvons écrire :</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>stats<span class="sc">::</span><span class="fu">model.matrix</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>La notation <code>::</code> indique explicitement :</p>
 <blockquote class="blockquote">
 <p>Chercher la fonction <code>model.matrix()</code> dans l’espace de noms de <code>stats</code>.</p>
@@ -962,12 +867,12 @@ documentation
 <p>Avec <code>roxygen2</code> :</p>
 <pre class="text"><code>#' @importFrom stats model.matrix</code></pre>
 <p>puis :</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>produira une instruction du type :</p>
 <pre class="text"><code>importFrom(stats, model.matrix)</code></pre>
 <p>dans <code>NAMESPACE</code>.</p>
 <p>À partir de ce moment, notre code peut simplement écrire :</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>sans préciser <code>stats::</code>.</p>
 <p>La fonction <code>model.matrix()</code> demeure une fonction de <code>stats</code>, mais son nom est maintenant disponible directement dans l’espace de noms de notre librairie.</p>
 <p>Nous pouvons donc résumer :</p>
@@ -1017,12 +922,15 @@ documentation
         ≠
 import dans NAMESPACE</code></pre>
 <p>Une librairie peut donc être déclarée dans <code>Imports</code> tout en utilisant ses fonctions uniquement avec :</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>pkg<span class="sc">::</span><span class="fu">fun</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>pkg<span class="sc">::</span><span class="fu">fun</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>sans importer directement ces fonctions dans notre espace de noms.</p>
 <p>C’est d’ailleurs l’approche que nous privilégierons généralement dans ce cours.</p>
 </div>
 </div>
-<p>## Retour à notre librairie Ridge</p>
+</section>
+</section>
+<section id="retour-à-notre-librairie-ridge" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="retour-à-notre-librairie-ridge"><span class="header-section-number">6.7</span> Retour à notre librairie Ridge</h2>
 <p>Pour notre projet Ridge, nous pourrions donc avoir un fichier <code>DESCRIPTION</code> contenant notamment :</p>
 <pre class="text"><code>Imports:
   stats
@@ -1030,33 +938,33 @@ Suggests:
   testthat</code></pre>
 <p>Notre fonction publique pourrait utiliser explicitement les outils de <code>stats</code> :</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Ajuster un modèle Ridge</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param formula Une formule décrivant le modèle.</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data Un jeu de données.</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param lambda Paramètre de régularisation.</span></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>ridge <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data, lambda) {</span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  mf <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.frame</span>(</span>
-<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>    formula,</span>
-<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> data</span>
-<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.matrix</span>(</span>
-<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a>    formula,</span>
-<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> mf</span>
-<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-20"><a href="#cb43-20" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.response</span>(mf)</span>
-<span id="cb43-21"><a href="#cb43-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb43-22"><a href="#cb43-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ridge_fit</span>(</span>
-<span id="cb43-23"><a href="#cb43-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X,</span>
-<span id="cb43-24"><a href="#cb43-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> y,</span>
-<span id="cb43-25"><a href="#cb43-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">lambda =</span> lambda</span>
-<span id="cb43-26"><a href="#cb43-26" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb43-27"><a href="#cb43-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Ajuster un modèle Ridge</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param formula Une formule décrivant le modèle.</span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param data Un jeu de données.</span></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param lambda Paramètre de régularisation.</span></span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>ridge <span class="ot">&lt;-</span> <span class="cf">function</span>(formula, data, lambda) {</span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>  mf <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.frame</span>(</span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>    formula,</span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> data</span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb69-14"><a href="#cb69-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb69-15"><a href="#cb69-15" aria-hidden="true" tabindex="-1"></a>  X <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.matrix</span>(</span>
+<span id="cb69-16"><a href="#cb69-16" aria-hidden="true" tabindex="-1"></a>    formula,</span>
+<span id="cb69-17"><a href="#cb69-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> mf</span>
+<span id="cb69-18"><a href="#cb69-18" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb69-19"><a href="#cb69-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb69-20"><a href="#cb69-20" aria-hidden="true" tabindex="-1"></a>  y <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">model.response</span>(mf)</span>
+<span id="cb69-21"><a href="#cb69-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb69-22"><a href="#cb69-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ridge_fit</span>(</span>
+<span id="cb69-23"><a href="#cb69-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">X =</span> X,</span>
+<span id="cb69-24"><a href="#cb69-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> y,</span>
+<span id="cb69-25"><a href="#cb69-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">lambda =</span> lambda</span>
+<span id="cb69-26"><a href="#cb69-26" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb69-27"><a href="#cb69-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ici :</p>
 <pre class="text"><code>ridge()</code></pre>
@@ -1066,9 +974,8 @@ Suggests:
 <p>peut demeurer une fonction interne utilisée pour effectuer le calcul numérique.</p>
 <p>Cette distinction deviendra encore plus intéressante lorsque nous remplacerons certaines fonctions internes écrites en R par des versions écrites en <strong>C++</strong>.</p>
 </section>
-</section>
-<section id="prochaine-étape-sortir-de-r" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="prochaine-étape-sortir-de-r"><span class="header-section-number">6.5</span> Prochaine étape : sortir de R</h2>
+<section id="prochaine-étape-sortir-de-r" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="prochaine-étape-sortir-de-r">Prochaine étape : sortir de R</h2>
 <p>Jusqu’ici, nous avons considéré des dépendances vers d’autres <strong>librairies R</strong>.</p>
 <p>Notre librairie sait maintenant :</p>
 <ul>

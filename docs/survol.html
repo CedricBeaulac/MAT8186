@@ -224,11 +224,7 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pourquoi" id="toc-pourquoi" class="nav-link active" data-scroll-target="#pourquoi">Pourquoi ?</a></li>
-  <li><a href="#pourquoi-moi" id="toc-pourquoi-moi" class="nav-link" data-scroll-target="#pourquoi-moi">Pourquoi moi ?</a></li>
-  <li><a href="#quoi" id="toc-quoi" class="nav-link" data-scroll-target="#quoi">Quoi ?</a></li>
-  <li><a href="#comment" id="toc-comment" class="nav-link" data-scroll-target="#comment">Comment ?</a></li>
-  <li><a href="#le-concept-de-a-à-z" id="toc-le-concept-de-a-à-z" class="nav-link" data-scroll-target="#le-concept-de-a-à-z"><span class="header-section-number">1.1</span> Le concept de A à Z</a></li>
+  <li><a href="#le-concept-de-a-à-z" id="toc-le-concept-de-a-à-z" class="nav-link active" data-scroll-target="#le-concept-de-a-à-z"><span class="header-section-number">1.1</span> Le concept de A à Z</a></li>
   <li><a href="#nos-principaux-outils" id="toc-nos-principaux-outils" class="nav-link" data-scroll-target="#nos-principaux-outils">Nos principaux outils</a></li>
   <li><a href="#créons-une-librairie" id="toc-créons-une-librairie" class="nav-link" data-scroll-target="#créons-une-librairie"><span class="header-section-number">1.2</span> Créons une librairie</a></li>
   <li><a href="#création" id="toc-création" class="nav-link" data-scroll-target="#création">Création</a></li>
@@ -274,42 +270,6 @@ div.csl-indent {
 </header>
 
 
-<p>Dans ce cours, nous apprendrons comment mettre au point une librairie R.</p>
-<section id="pourquoi" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="pourquoi">Pourquoi ?</h2>
-<p>La librairie (de l’anglais <em>package</em>) est le format le mieux structuré pour le partage de code. Aux cycles supérieurs, les étudiants sont appelés à entrer en contact avec la recherche scientifique. Une étape importante de la recherche est la dissémination des résultats. Dans le cadre de la recherche en science des données, il est commun de développer de nouvelles méthodologies d’analyse de données et d’implémenter celles-ci. La mise au point d’une librairie est donc une manière de diffuser ces implémentations et, conséquemment, de rendre de nouvelles méthodes d’analyse de données facilement accessibles.</p>
-<p>L’objectif est donc de remplacer le partage d’un simple document <code>.R</code> par un ensemble de fonctions réfléchies, complètes, documentées et facilement accessibles à de nouveaux utilisateurs.</p>
-<p>L’ajout constant de nouvelles librairies R sur le <em>Comprehensive R Archive Network</em> (CRAN) est l’une des raisons du succès de R au fil des années et permet à R de rester un langage utilisé et reconnu à l’ère de Python, Julia et des autres langages couramment utilisés en science des données. CRAN contient aujourd’hui près de 20 000 librairies! Vous avez sûrement déjà installé des librairies à partir de CRAN avec la commande <code>install.packages("x")</code>.</p>
-</section>
-<section id="pourquoi-moi" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="pourquoi-moi">Pourquoi moi ?</h2>
-<p>Je ne suis pas un expert de la mise au point de librairies, mais :</p>
-<ul>
-<li>J’ai déjà mis au point une librairie!</li>
-<li>Je veux mettre au point d’autres librairies!</li>
-<li>J’aime R, l’enseignement et l’enseignement de R.</li>
-<li>Personne d’autre ne pouvait l’enseigner.</li>
-<li>Je compte sur une excellente référence pour faire une partie du travail à ma place.</li>
-</ul>
-</section>
-<section id="quoi" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="quoi">Quoi ?</h2>
-<p>Dans ce cours, nous allons bien entendu mettre au point une librairie R : c’est l’objectif principal. Nous verrons comment passer d’un ensemble de fonctions R à une librairie structurée, documentée, testée et pouvant être facilement partagée avec d’autres utilisateurs.</p>
-<p>Nous verrons également plusieurs outils et concepts qui accompagnent le développement moderne en R :</p>
-<ul>
-<li><strong>Git et GitHub</strong>, pour conserver un historique des différentes versions de notre code, partager celui-ci et collaborer avec d’autres utilisateurs;</li>
-<li>les bonnes pratiques pour organiser des <strong>projets, fichiers et fonctions R</strong>;</li>
-<li>la <strong>documentation et les tests</strong>, afin qu’une librairie puisse être comprise, utilisée et modifiée de manière fiable;</li>
-<li>quelques notions de <strong>programmation orientée objet</strong>, afin de comprendre comment R permet de définir des comportements associés à différents types d’objets;</li>
-<li><strong>Rcpp et reticulate</strong>, qui permettent respectivement d’intégrer du code C++ et Python à un projet R, notamment lorsque certaines fonctionnalités sont plus faciles ou plus efficaces à implémenter dans un autre langage.</li>
-</ul>
-<p>Ces différents outils ne constituent pas des objectifs indépendants : nous les utiliserons progressivement comme des composantes du développement de notre librairie.</p>
-</section>
-<section id="comment" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="comment">Comment ?</h2>
-<p>Nous allons essentiellement suivre le livre <a href="https://r-pkgs.org">R Packages</a> de Hadley Wickham et Jennifer Bryan. Wickham est notamment l’auteur ou le coauteur de plusieurs librairies importantes de l’écosystème R, dont <em>ggplot2</em>, et l’un des principaux contributeurs au <em>tidyverse</em> et aux outils modernes de développement de librairies R.</p>
-<p>Pour la mise au point de librairies, nous utiliserons… une librairie.</p>
-</section>
 <section id="le-concept-de-a-à-z" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="le-concept-de-a-à-z"><span class="header-section-number">1.1</span> Le concept de A à Z</h2>
 <p>Dans cette première partie du cours, nous allons parcourir <strong>très rapidement l’ensemble du processus de mise au point d’une librairie R</strong>.</p>

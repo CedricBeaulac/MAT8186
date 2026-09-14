@@ -10,7 +10,7 @@ Mais déclarer une dépendance soulève plusieurs nouvelles questions :
   - Comment éviter les conflits entre deux fonctions portant le même nom?
   - Quelles fonctions de **notre** librairie voulons-nous rendre accessibles aux utilisateurs?
   
-  Nous allons maintenant répondre à ces questions.
+Nous allons maintenant répondre à ces questions.
 
 ## Pourquoi utiliser une dépendance? {.unnumbered}
 
@@ -53,7 +53,7 @@ qui effectue précisément ce travail.
 
 Par exemple :
   
-  ```{r}
+```{r}
 #| eval: false
 
 X <- stats::model.matrix(
@@ -83,7 +83,7 @@ Ajouter une dépendance n'est cependant pas complètement gratuit.
 
 Une nouvelle dépendance peut :
   
-  - devoir être installée par l'utilisateur;
+- devoir être installée par l'utilisateur;
 - posséder elle-même plusieurs dépendances;
 - augmenter le temps d'installation;
 - nécessiter de la compilation;
@@ -125,7 +125,7 @@ limiter la complexité du projet
 ```
 :::
 
-## Trois relations avec une dépendance
+## Trois relations avec une dépendance {.unnumbered}
 
 Dans `DESCRIPTION`, trois champs permettent d'exprimer des relations différentes avec une autre librairie :
   
@@ -137,7 +137,7 @@ Depends
 
 Nous allons les présenter du **moins contraignant au plus contraignant**.
 
-## `Suggests` : une dépendance optionnelle {.unnumbered}
+## `Suggests` : une dépendance optionnelle
 
 Une librairie placée dans :
   
@@ -183,7 +183,7 @@ usethis::use_package(
 Notre code ne peut pas supposer qu'une librairie inscrite dans `Suggests` est installée chez tous les utilisateurs.
 :::
   
-## `Imports` : une dépendance nécessaire {.unnumbered}
+## `Imports` : une dépendance nécessaire
   
   Le champ :
 
@@ -266,7 +266,7 @@ import dans NAMESPACE
 sont deux concepts différents.
 :::
   
-  C'est une distinction importante que nous allons maintenant explorer.
+C'est une distinction importante que nous allons maintenant explorer.
 
 ## Utiliser une fonction d'une autre librairie {.unnumbered}
 
@@ -328,7 +328,7 @@ stats::model.matrix()
 ou une importation explicite dans le `NAMESPACE`.
 :::
   
-  ## Pourquoi les espaces de noms? 
+## Pourquoi les espaces de noms? {.unnumbered}
   
   Supposons que deux librairies possèdent toutes les deux une fonction appelée :
   
@@ -383,7 +383,7 @@ Ce système est essentiel au fonctionnement de l'écosystème R.
 
 Il permet notamment à plusieurs librairies d'utiliser des fonctions portant les mêmes noms sans nécessairement entrer en conflit.
 
-## Le fichier `NAMESPACE`
+## Le fichier `NAMESPACE` {.unnumbered}
 
 Le fichier :
   
@@ -418,7 +418,7 @@ Quels objets entrent et sortent de
 l'espace de noms de notre librairie?
   ```
 
-## Importer une fonction dans notre espace de noms
+## Importer une fonction dans notre espace de noms {.unnumbered}
 
 La syntaxe :
   
@@ -518,7 +518,7 @@ Nous éviterons généralement d'importer l'ensemble d'une librairie avec :
 puisque cela rend l'origine des fonctions moins évidente et augmente les possibilités de conflits de noms.
 :::
 
-##  `Depends` : attacher une autre librairie {.unnumbered}
+##  `Depends` : attacher une autre librairie
 
 Le troisième champ est :
 
@@ -562,7 +562,7 @@ Imports
 est préférable.
 
 ::: callout-important
-## Le cas important de `Depends`
+## Le cas important de `Depends` 
 
 Une utilisation encore très courante de `Depends` consiste à spécifier une version minimale de **R** :
 
@@ -754,7 +754,7 @@ documentation
 
 À ce stade, trois opérations qui peuvent sembler similaires doivent être clairement distinguées :
   
-  1. **déclarer une dépendance**;
+1. **déclarer une dépendance**;
 2. **utiliser explicitement une fonction d'une autre librairie**;
 3. **importer une fonction dans notre espace de noms**.
 
@@ -857,7 +857,7 @@ sans importer directement ces fonctions dans notre espace de noms.
 C'est d'ailleurs l'approche que nous privilégierons généralement dans ce cours.
 :::
   
-  ## Retour à notre librairie Ridge
+## Retour à notre librairie Ridge
   
   Pour notre projet Ridge, nous pourrions donc avoir un fichier `DESCRIPTION` contenant notamment :
   
@@ -920,13 +920,13 @@ peut demeurer une fonction interne utilisée pour effectuer le calcul numérique
 
 Cette distinction deviendra encore plus intéressante lorsque nous remplacerons certaines fonctions internes écrites en R par des versions écrites en **C++**.
 
-## Prochaine étape : sortir de R
+## Prochaine étape : sortir de R {.unnumbered}
 
 Jusqu'ici, nous avons considéré des dépendances vers d'autres **librairies R**.
 
 Notre librairie sait maintenant :
   
-  - déclarer ses dépendances dans `DESCRIPTION`;
+- déclarer ses dépendances dans `DESCRIPTION`;
 - utiliser les fonctions d'autres librairies;
 - contrôler les objets entrant dans son espace de noms;
 - contrôler les fonctions qu'elle exporte à ses utilisateurs.
