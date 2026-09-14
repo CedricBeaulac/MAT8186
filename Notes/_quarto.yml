@@ -13,6 +13,7 @@ book:
     - Git.qmd
     - Package.qmd
     - description.qmd
+    - namespace.qmd
     - rcpp.qmd
     - references.qmd
 

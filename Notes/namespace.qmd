@@ -1,0 +1,952 @@
+# Dépendances et espaces de noms {#dependencies}
+
+Nous avons vu dans la section précédente que le fichier `DESCRIPTION` permet notamment de déclarer les autres librairies nécessaires au fonctionnement de notre projet.
+
+Mais déclarer une dépendance soulève plusieurs nouvelles questions :
+  
+  - Devrait-on vraiment ajouter cette dépendance?
+  - Est-elle absolument nécessaire ou seulement optionnelle?
+  - Comment utiliser ses fonctions dans notre code?
+  - Comment éviter les conflits entre deux fonctions portant le même nom?
+  - Quelles fonctions de **notre** librairie voulons-nous rendre accessibles aux utilisateurs?
+  
+  Nous allons maintenant répondre à ces questions.
+
+## Pourquoi utiliser une dépendance? {.unnumbered}
+
+Une dépendance apparaît lorsque notre librairie utilise une fonctionnalité provenant d'une autre librairie.
+
+Supposons, par exemple, que nous développions une librairie permettant d'ajuster un modèle de régression Ridge.
+
+Nous pourrions décider que l'utilisateur spécifie son modèle avec une formule :
+
+```{r}
+#| eval: false
+
+ridge(
+  y ~ x1 + x2 + x1:x2,
+  data = donnees
+)
+```
+
+Notre fonction devra alors transformer cette formule en une matrice de design.
+
+Nous pourrions essayer de programmer nous-mêmes tout le mécanisme nécessaire pour :
+
+- ajouter une colonne pour l'intercept;
+- traiter les variables catégorielles;
+- créer des variables indicatrices;
+- construire des interactions;
+- interpréter la syntaxe des formules R.
+
+Cela représenterait beaucoup de travail!
+  
+  Heureusement, la librairie `stats`, distribuée avec R, fournit déjà la fonction :
+  
+```{r}
+#| eval: false
+
+stats::model.matrix()
+```
+
+qui effectue précisément ce travail.
+
+Par exemple :
+  
+  ```{r}
+#| eval: false
+
+X <- stats::model.matrix(
+  y ~ x1 + x2 + x1:x2,
+  data = donnees
+)
+```
+
+Notre librairie peut donc se concentrer sur sa véritable contribution : **l'ajustement du modèle Ridge**, plutôt que de réimplémenter le système de formules de R.
+
+::: callout-tip
+## Ne pas réinventer la roue
+
+Prendre une dépendance permet souvent de profiter de code :
+
+- déjà testé;
+- utilisé par de nombreux utilisateurs;
+- maintenu par d'autres développeurs;
+- capable de gérer plusieurs cas particuliers auxquels nous n'aurions pas nécessairement pensé.
+
+Une dépendance bien choisie peut donc **réduire** la quantité de code que nous devons maintenir.
+:::
+
+## Une dépendance a aussi un coût {.unnumbered}
+
+Ajouter une dépendance n'est cependant pas complètement gratuit.
+
+Une nouvelle dépendance peut :
+  
+  - devoir être installée par l'utilisateur;
+- posséder elle-même plusieurs dépendances;
+- augmenter le temps d'installation;
+- nécessiter de la compilation;
+- nécessiter un logiciel externe;
+- modifier son interface dans une version future;
+- éventuellement ne plus être maintenue.
+
+Il ne faut donc pas chercher systématiquement à minimiser le **nombre** de dépendances.
+
+Il faut plutôt se demander :
+  
+  > Est-ce que les avantages apportés par cette dépendance justifient son coût?
+  
+  Toutes les dépendances ne représentent d'ailleurs pas le même coût.
+
+Des librairies comme :
+
+``` text
+stats
+utils
+methods
+```
+
+sont distribuées avec R et représentent donc des dépendances extrêmement légères.
+
+À l'inverse, certaines librairies nécessitent plusieurs dizaines de dépendances supplémentaires ou l'installation d'outils externes.
+
+::: callout-note
+## Une décision contextuelle
+
+Le bon nombre de dépendances n'est donc pas nécessairement zéro.
+
+Il faut plutôt trouver un compromis entre :
+
+``` text
+réutiliser du code existant
+           et
+limiter la complexité du projet
+```
+:::
+
+## Trois relations avec une dépendance
+
+Dans `DESCRIPTION`, trois champs permettent d'exprimer des relations différentes avec une autre librairie :
+  
+``` text
+Suggests
+Imports
+Depends
+```
+
+Nous allons les présenter du **moins contraignant au plus contraignant**.
+
+## `Suggests` : une dépendance optionnelle {.unnumbered}
+
+Une librairie placée dans :
+  
+``` text
+Suggests:
+```
+
+n'est **pas nécessaire au fonctionnement normal de notre librairie**.
+
+Elle peut être utile pour :
+
+- les tests;
+- les vignettes;
+- certains exemples;
+- une fonctionnalité optionnelle;
+- des données exemples.
+
+Nous avons déjà un excellent exemple dans notre projet :
+
+``` text
+Suggests:
+    testthat
+```
+
+Notre librairie Ridge peut parfaitement être utilisée par un utilisateur qui ne possède pas `testthat`.
+
+Par contre, `testthat` est nécessaire pour exécuter notre suite de tests pendant le développement.
+
+On peut ajouter une dépendance à `Suggests` avec :
+
+```{r}
+#| eval: false
+
+usethis::use_package(
+  "testthat",
+  type = "Suggests"
+)
+```
+
+::: callout-important
+## Une dépendance dans `Suggests` peut être absente
+
+Notre code ne peut pas supposer qu'une librairie inscrite dans `Suggests` est installée chez tous les utilisateurs.
+:::
+  
+## `Imports` : une dépendance nécessaire {.unnumbered}
+  
+  Le champ :
+
+``` text
+Imports:
+```
+
+contient les librairies nécessaires au **fonctionnement normal** de notre librairie.
+
+Pour notre librairie Ridge, nous pourrions par exemple utiliser :
+  
+``` text
+Imports:
+  stats
+```
+
+puisque nous voulons utiliser certaines fonctions de `stats` pour construire notre matrice de design.
+
+On peut ajouter cette dépendance avec :
+  
+```{r}
+#| eval: false
+
+usethis::use_package("stats", type = "Imports")
+```
+
+Nous pourrions alors écrire notre fonction :
+  
+```{r}
+#| eval: false
+
+ridge <- function(formula, data, lambda) {
+  
+  mf <- stats::model.frame(
+    formula,
+    data = data
+  )
+  
+  X <- stats::model.matrix(
+    formula,
+    data = mf
+  )
+  
+  y <- stats::model.response(mf)
+  
+  # Ajustement Ridge...
+}
+```
+
+Ici, notre librairie profite du système de formules déjà implanté dans R.
+
+::: callout-important
+## `Imports` ne veut pas dire « importer »
+
+Le nom du champ `Imports` est malheureusement un peu trompeur.
+
+Écrire :
+  
+``` text
+Imports:
+  stats
+```
+
+dans `DESCRIPTION` garantit essentiellement que la dépendance nécessaire est disponible lorsque notre librairie est installée.
+
+Cela **ne rend pas automatiquement toutes les fonctions de `stats` directement disponibles dans notre code**.
+
+Autrement dit :
+  
+``` text
+Imports dans DESCRIPTION
+```
+
+et
+
+``` text
+import dans NAMESPACE
+```
+
+sont deux concepts différents.
+:::
+  
+  C'est une distinction importante que nous allons maintenant explorer.
+
+## Utiliser une fonction d'une autre librairie {.unnumbered}
+
+La manière recommandée par défaut pour utiliser une fonction externe consiste à indiquer explicitement sa provenance avec :
+  
+``` text
+librairie::fonction()
+```
+
+Par exemple :
+  
+```{r}
+#| eval: false
+
+stats::model.matrix()
+stats::model.frame()
+stats::model.response()
+```
+
+Cette syntaxe possède plusieurs avantages.
+
+Premièrement, lorsqu'on lit :
+
+``` r
+stats::model.matrix()
+```
+
+on sait immédiatement que `model.matrix()` n'est pas une fonction définie dans notre propre librairie.
+
+Deuxièmement, elle évite les ambiguïtés lorsque plusieurs librairies possèdent des fonctions portant le même nom.
+
+Finalement, elle rend notre code moins dépendant de l'environnement de travail de l'utilisateur.
+
+::: callout-warning
+## Éviter `library()` dans `R/`
+
+Dans le code d'une librairie, nous n'écrivons généralement pas :
+  
+``` r
+library(stats)
+```
+
+ou :
+  
+``` r
+library(dplyr)
+```
+
+dans les fichiers contenus dans `R/`.
+
+Notre librairie ne devrait pas modifier inutilement l'environnement global de l'utilisateur.
+
+Nous préférons :
+  
+``` r
+stats::model.matrix()
+```
+
+ou une importation explicite dans le `NAMESPACE`.
+:::
+  
+  ## Pourquoi les espaces de noms? 
+  
+  Supposons que deux librairies possèdent toutes les deux une fonction appelée :
+  
+``` text
+filter()
+```
+
+Si notre code contient simplement :
+  
+``` r
+filter(x)
+```
+
+nous devons être certains de savoir **quelle fonction `filter()` sera appelée**.
+
+R utilise pour cela des **espaces de noms**, ou *namespaces*.
+
+On peut imaginer qu'une librairie possède une sorte de boîte contenant ses objets :
+
+``` text
+stats
+├── model.matrix
+├── model.frame
+├── model.response
+├── predict
+└── ...
+
+dplyr
+├── filter
+├── select
+├── mutate
+└── ...
+
+NotreLibrairie
+├── ridge
+├── ridge_fit
+├── cv_ridge
+└── ...
+```
+
+La notation :
+
+``` r
+stats::model.matrix()
+```
+
+signifie donc explicitement :
+
+> Chercher `model.matrix()` dans l'espace de noms de `stats`.
+
+Ce système est essentiel au fonctionnement de l'écosystème R.
+
+Il permet notamment à plusieurs librairies d'utiliser des fonctions portant les mêmes noms sans nécessairement entrer en conflit.
+
+## Le fichier `NAMESPACE`
+
+Le fichier :
+  
+``` text
+NAMESPACE
+```
+
+décrit les échanges entre l'espace de noms de notre librairie et le reste de l'écosystème R.
+
+Il contrôle principalement deux directions :
+  
+``` text
+Notre librairie
+/               \
+/                 \
+IMPORTATIONS          EXPORTATIONS
+↑                    ↓
+fonctions provenant        fonctions accessibles
+d'autres librairies        aux utilisateurs
+```
+
+Il faut donc distinguer :
+
+``` text
+DESCRIPTION
+    ↓
+Quelles librairies sont nécessaires?
+
+NAMESPACE
+    ↓
+Quels objets entrent et sortent de
+l'espace de noms de notre librairie?
+  ```
+
+## Importer une fonction dans notre espace de noms
+
+La syntaxe :
+  
+``` r
+stats::model.matrix()
+```
+
+sera notre approche par défaut.
+
+Cependant, il est également possible d'importer directement une fonction externe dans l'espace de noms de notre librairie.
+
+Avec `roxygen2`, nous pouvons écrire :
+  
+``` r
+#' @importFrom stats model.matrix
+```
+
+puis exécuter :
+  
+```{r}
+#| eval: false
+
+devtools::document()
+```
+
+Cela ajoutera automatiquement une instruction semblable à :
+  
+``` text
+importFrom(stats,model.matrix)
+```
+
+dans `NAMESPACE`.
+
+Nous pourrions ensuite écrire directement :
+  
+``` r
+model.matrix(...)
+```
+
+dans notre code sans préciser `stats::`.
+
+On peut également demander à `usethis` de préparer cette importation :
+  
+```{r}
+#| eval: false
+
+usethis::use_import_from(
+  "stats",
+  "model.matrix"
+)
+```
+
+## Faut-il utiliser `pkg::fun()` ou `@importFrom`? {.unnumbered}
+
+Dans la majorité des situations, nous privilégierons :
+  
+``` r
+stats::model.matrix()
+```
+
+L'origine de la fonction demeure alors immédiatement visible.
+
+L'utilisation de :
+  
+``` text
+@importFrom
+```
+
+peut cependant être raisonnable lorsque :
+  
+  - une même fonction externe est utilisée très fréquemment;
+- l'écriture répétée de `pkg::fun()` réduit beaucoup la lisibilité;
+- on doit importer un opérateur;
+- l'appel se trouve dans une boucle extrêmement intensive.
+
+::: callout-tip
+## Notre approche dans ce cours
+
+Par défaut :
+  
+``` r
+pkg::fun()
+```
+
+Si nous avons une bonne raison d'importer explicitement :
+
+``` text
+@importFrom pkg fun
+```
+
+Nous éviterons généralement d'importer l'ensemble d'une librairie avec :
+  
+``` text
+@import pkg
+```
+
+puisque cela rend l'origine des fonctions moins évidente et augmente les possibilités de conflits de noms.
+:::
+
+##  `Depends` : attacher une autre librairie {.unnumbered}
+
+Le troisième champ est :
+
+``` text
+Depends:
+```
+
+Une dépendance placée dans `Depends` ressemble à une dépendance placée dans `Imports` sur un point important :
+
+> Elle doit être disponible pour que notre librairie fonctionne.
+
+La différence principale est que la librairie inscrite dans `Depends` sera également **attachée** lorsque notre librairie sera attachée.
+
+Par exemple, imaginons :
+
+``` text
+Depends:
+    uneLibrairie
+```
+
+Lorsqu'un utilisateur fait :
+  
+``` r
+library(MaLibrairie)
+```
+
+`uneLibrairie` sera également attachée.
+
+Ses fonctions deviennent donc directement présentes dans le *search path* de l'utilisateur.
+
+Cela modifie davantage son environnement de travail et peut augmenter les risques de conflits entre les noms de fonctions.
+
+Pour cette raison, l'utilisation moderne de `Depends` pour dépendre d'une autre librairie est relativement rare.
+
+Dans la grande majorité des situations :
+
+``` text
+Imports
+```
+
+est préférable.
+
+::: callout-important
+## Le cas important de `Depends`
+
+Une utilisation encore très courante de `Depends` consiste à spécifier une version minimale de **R** :
+
+``` text
+Depends:
+    R (>= 4.0.0)
+```
+
+Cela signifie que notre librairie nécessite au minimum R 4.0.0.
+
+Il faut toutefois éviter d'imposer inutilement une version récente de R, puisqu'un utilisateur ne peut pas simplement mettre R à jour automatiquement comme une librairie ordinaire.
+:::
+
+Nous pouvons donc résumer :
+
+| Champ | La dépendance doit être installée? | Attachée avec notre librairie? | Usage |
+|-----------------|------------------:|------------------:|-----------------|
+| `Suggests` | Pas nécessairement | Non | Tests, vignettes, fonctionnalités optionnelles |
+| `Imports` | Oui | Non | Dépendance normale |
+| `Depends` | Oui | Oui | Cas particuliers; généralement éviter |
+
+## Exporter nos propres fonctions
+
+Le `NAMESPACE` ne sert pas uniquement à gérer les fonctions provenant d'autres librairies.
+
+Il détermine également quelles fonctions de **notre librairie** sont accessibles aux utilisateurs.
+
+Considérons notre fonction :
+  
+```{r}
+#| eval: false
+
+CR <- function(x) {
+  (x - mean(x)) / sd(x)
+}
+```
+
+Si nous voulons que cette fonction fasse partie de l'interface publique de notre librairie, nous pouvons ajouter :
+
+```{r}
+#| eval: false
+
+#' Centrer et réduire un vecteur
+#'
+#' @param x Un vecteur numérique.
+#'
+#' @return Un vecteur centré et réduit.
+#'
+#' @export
+CR <- function(x) {
+  (x - mean(x)) / sd(x)
+}
+```
+
+Puis :
+  
+```{r}
+#| eval: false
+
+devtools::document()
+```
+
+`roxygen2` ajoutera automatiquement :
+  
+``` text
+export(CR)
+```
+
+dans `NAMESPACE`.
+
+La fonction pourra alors être utilisée par les utilisateurs de notre librairie.
+
+À l'inverse, considérons une petite fonction auxiliaire :
+
+```{r}
+#| eval: false
+
+verifier_lambda <- function(lambda) {
+
+  if (any(lambda < 0)) {
+    stop("`lambda` doit être positif.")
+  }
+
+}
+```
+
+Si cette fonction sert uniquement au fonctionnement interne de notre librairie, nous n'avons aucune raison de l'exporter.
+
+Nous n'ajoutons donc pas :
+  
+``` text
+@export
+```
+
+La fonction demeure utilisable par les autres fonctions de notre librairie, mais elle ne fait pas partie de l'interface proposée aux utilisateurs.
+
+On obtient donc une distinction importante :
+
+``` text
+Fonctions exportées
+       ↓
+interface publique
+       ↓
+ridge()
+predict()
+plot()
+
+
+Fonctions internes
+       ↓
+implémentation
+       ↓
+ridge_fit()
+verifier_lambda()
+```
+
+::: callout-tip
+## Ne pas tout exporter
+
+Une bonne librairie n'expose pas nécessairement toutes les fonctions qu'elle contient.
+
+Plus l'interface publique est petite et cohérente, plus il est facile de :
+  
+  - la documenter;
+- la maintenir;
+- faire évoluer l'implémentation interne;
+- garantir son comportement dans le temps.
+:::
+
+## `NAMESPACE` et `roxygen2`
+
+Dans notre workflow, nous **ne modifierons pas directement** le fichier :
+
+``` text
+NAMESPACE
+```
+
+Il commence d'ailleurs normalement par :
+  
+``` text
+# Generated by roxygen2: do not edit by hand
+```
+
+Nous ajoutons plutôt les instructions nécessaires dans les commentaires `roxygen2`.
+
+Par exemple :
+  
+``` r
+#' @importFrom stats model.matrix
+#' @export
+ridge <- function(...) {
+  ...
+}
+```
+
+Puis :
+  
+```{r}
+#| eval: false
+
+devtools::document()
+```
+
+met à jour simultanément :
+  
+``` text
+man/
+  ```
+
+et :
+  
+``` text
+NAMESPACE
+```
+
+Notre cycle devient donc :
+  
+``` text
+Modifier le code ou les commentaires roxygen
+↓
+devtools::document()
+↓
+documentation
++
+  NAMESPACE
+```
+
+## Une distinction à retenir
+
+À ce stade, trois opérations qui peuvent sembler similaires doivent être clairement distinguées :
+  
+  1. **déclarer une dépendance**;
+2. **utiliser explicitement une fonction d'une autre librairie**;
+3. **importer une fonction dans notre espace de noms**.
+
+Ces trois opérations sont reliées, mais elles n'ont pas le même effet.
+
+### Déclarer une dépendance {.unnumbered}
+
+Dans `DESCRIPTION` :
+  
+```text
+Imports:
+  stats
+```
+
+signifie essentiellement :
+  
+  > Ma librairie a besoin de `stats` pour fonctionner.
+
+Cette déclaration permet notamment aux outils d'installation de R de savoir que `stats` doit être disponible.
+
+Par contre, cette ligne ne dit pas encore **quelles fonctions de `stats` nous allons utiliser** et ne rend pas automatiquement leurs noms disponibles directement dans notre code.
+
+### Utiliser explicitement une fonction {.unnumbered}
+
+Dans notre code, nous pouvons écrire :
+
+```r
+stats::model.matrix(...)
+```
+
+La notation `::` indique explicitement :
+
+> Chercher la fonction `model.matrix()` dans l'espace de noms de `stats`.
+
+Dans ce cas, nous n'importons pas `model.matrix()` dans notre propre espace de noms. Nous demandons simplement à R d'aller chercher cette fonction précisément là où elle se trouve.
+
+Cette approche est généralement très claire, puisque la provenance de la fonction est visible directement dans le code.
+
+### Importer une fonction dans notre espace de noms {.unnumbered}
+
+Nous pouvons aussi décider d'importer une fonction externe dans l'espace de noms de notre librairie.
+
+Avec `roxygen2` :
+  
+```text
+#' @importFrom stats model.matrix
+```
+
+puis :
+  
+```r
+devtools::document()
+```
+
+produira une instruction du type :
+  
+```text
+importFrom(stats, model.matrix)
+```
+
+dans `NAMESPACE`.
+
+À partir de ce moment, notre code peut simplement écrire :
+  
+```r
+model.matrix(...)
+```
+
+sans préciser `stats::`.
+
+La fonction `model.matrix()` demeure une fonction de `stats`, mais son nom est maintenant disponible directement dans l'espace de noms de notre librairie.
+
+Nous pouvons donc résumer :
+
+| Opération | Où? | Effet principal |
+|---|---|---|
+| Déclarer une dépendance | `DESCRIPTION` | Indique qu'une autre librairie est nécessaire |
+  | Utiliser `pkg::fun()` | Code R | Utilise explicitement une fonction sans l'importer |
+| Utiliser `@importFrom` | `NAMESPACE` via `roxygen2` | Rend le nom de la fonction disponible dans notre espace de noms |
+
+::: {.callout-important}
+## À retenir
+
+En particulier :
+
+```text
+Imports dans DESCRIPTION
+        ≠
+import dans NAMESPACE
+```
+
+Une librairie peut donc être déclarée dans `Imports` tout en utilisant ses fonctions uniquement avec :
+
+```r
+pkg::fun()
+```
+
+sans importer directement ces fonctions dans notre espace de noms.
+
+C'est d'ailleurs l'approche que nous privilégierons généralement dans ce cours.
+:::
+  
+  ## Retour à notre librairie Ridge
+  
+  Pour notre projet Ridge, nous pourrions donc avoir un fichier `DESCRIPTION` contenant notamment :
+  
+``` text
+Imports:
+  stats
+Suggests:
+  testthat
+```
+
+Notre fonction publique pourrait utiliser explicitement les outils de `stats` :
+  
+```{r}
+#| eval: false
+
+#' Ajuster un modèle Ridge
+#'
+#' @param formula Une formule décrivant le modèle.
+#' @param data Un jeu de données.
+#' @param lambda Paramètre de régularisation.
+#'
+#' @export
+ridge <- function(formula, data, lambda) {
+  
+  mf <- stats::model.frame(
+    formula,
+    data = data
+  )
+  
+  X <- stats::model.matrix(
+    formula,
+    data = mf
+  )
+  
+  y <- stats::model.response(mf)
+  
+  ridge_fit(
+    X = X,
+    y = y,
+    lambda = lambda
+  )
+}
+```
+
+Ici :
+  
+``` text
+ridge()
+```
+
+est exportée et constitue une partie de l'interface utilisateur.
+
+À l'inverse :
+  
+``` text
+ridge_fit()
+```
+
+peut demeurer une fonction interne utilisée pour effectuer le calcul numérique.
+
+Cette distinction deviendra encore plus intéressante lorsque nous remplacerons certaines fonctions internes écrites en R par des versions écrites en **C++**.
+
+## Prochaine étape : sortir de R
+
+Jusqu'ici, nous avons considéré des dépendances vers d'autres **librairies R**.
+
+Notre librairie sait maintenant :
+  
+  - déclarer ses dépendances dans `DESCRIPTION`;
+- utiliser les fonctions d'autres librairies;
+- contrôler les objets entrant dans son espace de noms;
+- contrôler les fonctions qu'elle exporte à ses utilisateurs.
+
+Nous allons maintenant pousser cette idée plus loin.
+
+Certaines opérations peuvent être coûteuses lorsqu'elles sont répétées un très grand nombre de fois. Dans ces situations, nous pouvons vouloir implémenter une partie de notre librairie dans un autre langage.
+
+Nous commencerons par **C++**, à l'aide de la librairie :
+  
+``` text
+Rcpp
+```
+
+et nous poursuivrons avec une équivalence rapide pour **Python** à l'aide la librairie:
+
+``` text
+reticulate
+```
+
+## Plus de lecture {.unnumbered}
+
+Je vous recommande de lire le [Chapitre 10](https://r-pkgs.org/dependencies-mindset-background.html) et le [Chapitre 11](https://r-pkgs.org/dependencies-in-practice.html) du manuel de référence.

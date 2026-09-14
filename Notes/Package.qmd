@@ -17,7 +17,7 @@ L'objectif de cette séance est de comprendre plus précisément :
 - comment vérifier automatiquement leur comportement avec `testthat`;
 - comment utiliser `load_all()`, `test()` et `check()` dans un cycle de développement.
 
-::: {.callout-note}
+::: callout-note
 ## Notre objectif
 
 À la fin de cette séance, nous voulons être capables de passer de quelques fonctions contenues dans un script `.R` à une **petite librairie structurée, documentée et testée**.
@@ -48,7 +48,7 @@ Plutôt que de copier ces fonctions d'un projet à l'autre, il peut être avanta
 
 On obtient alors :
 
-```text
+``` text
 Projet A ──┐
 Projet B ──┼──> maLibrairie
 Projet C ──┘
@@ -70,13 +70,13 @@ Dans ce contexte, la librairie devient un **moyen de diffusion scientifique**.
 
 Au lieu de fournir à nos utilisateurs :
 
-```text
+``` text
 method_final_v2.R
 ```
 
 nous pouvons fournir :
 
-```r
+``` r
 install.packages("maLibrairie")
 
 library(maLibrairie)
@@ -97,7 +97,7 @@ Une librairie bien conçue fournit non seulement du code, mais également :
 - éventuellement des vignettes;
 - un mécanisme standard d'installation.
 
-::: {.callout-tip}
+::: callout-tip
 ## Une librairie comme produit de recherche {.unnumbered}
 
 Dans plusieurs domaines de la statistique et de la science des données, le code constitue une partie importante du résultat scientifique.
@@ -138,12 +138,12 @@ Il faut également garder en tête qu'une librairie existante ne doit pas néces
 
 Il peut être préférable :
 
-1. d'utiliser une librairie existante;
-2. de contribuer à une librairie existante;
-3. d'écrire une fonction complémentaire;
-4. ou seulement ensuite de créer une nouvelle librairie.
+1.  d'utiliser une librairie existante;
+2.  de contribuer à une librairie existante;
+3.  d'écrire une fonction complémentaire;
+4.  ou seulement ensuite de créer une nouvelle librairie.
 
-::: {.callout-important}
+::: callout-important
 ## Ne pas réinventer inutilement la roue
 
 Créer une nouvelle librairie demande du temps.
@@ -180,7 +180,7 @@ Le nom :
 
 Par exemple :
 
-```text
+``` text
 BESTree
 shapeR
 fdaTools
@@ -191,7 +191,7 @@ sont des noms possibles.
 
 Les noms suivants ne sont pas valides :
 
-```text
+``` text
 2methods
 my-package
 my_package
@@ -249,7 +249,7 @@ La fonction vérifie notamment :
 
 Elle effectue également quelques vérifications additionnelles sur le nom proposé.
 
-::: {.callout-note}
+::: callout-note
 ## Un outil, pas une garantie
 
 Le fait que `available()` considère un nom comme disponible ne garantit pas qu'il s'agit d'un bon nom.
@@ -283,7 +283,7 @@ usethis::create_package(
 
 On obtient quelque chose ressemblant à :
 
-```text
+``` text
 MaLibrairie/
 ├── .Rbuildignore
 ├── .gitignore
@@ -301,7 +301,7 @@ Nous allons maintenant commencer à comprendre davantage le rôle de chacun de c
 
 Pour cette séance, le répertoire le plus important est :
 
-```text
+``` text
 R/
 ```
 
@@ -309,7 +309,7 @@ C'est ici que sera placé **le code R qui définit les fonctions de notre librai
 
 Par exemple :
 
-```text
+``` text
 MaLibrairie/
 └── R/
     ├── statistiques.R
@@ -319,14 +319,14 @@ MaLibrairie/
 
 Nous reviendrons lors de la prochaine séance sur certains des autres fichiers, notamment :
 
-```text
+``` text
 DESCRIPTION
 NAMESPACE
 ```
 
 qui jouent un rôle particulièrement important dans la gestion des dépendances et de l'interface publique de la librairie.
 
-## Organisation des fonctions 
+## Organisation des fonctions
 
 Une librairie est généralement composée d'un ensemble de fonctions R.
 
@@ -348,7 +348,7 @@ addition(2, 3)
 
 Cette fonction est évidemment très simple, mais elle possède déjà les trois composantes fondamentales d'une fonction :
 
-```text
+``` text
 nom
  ↓
 addition <- function(x, y) {
@@ -371,7 +371,7 @@ Il existe une règle fondamentale :
 
 Par exemple :
 
-```text
+``` text
 MaLibrairie/
 └── R/
     ├── addition.R
@@ -383,7 +383,7 @@ Il n'est pas nécessaire qu'un fichier corresponde à une seule fonction.
 
 Par exemple :
 
-```text
+``` text
 R/statistiques.R
 ```
 
@@ -409,23 +409,23 @@ Toutes les fonctions définies dans les différents fichiers du répertoire `R/`
 
 Ainsi, une fonction définie dans :
 
-```text
+``` text
 R/statistiques.R
 ```
 
 peut utiliser une fonction définie dans :
 
-```text
+``` text
 R/utils.R
 ```
 
 sans avoir besoin de faire :
 
-```r
+``` r
 source("R/utils.R")
 ```
 
-::: {.callout-important}
+::: callout-important
 ## Pas de `source()` dans une librairie
 
 Il n'est normalement pas nécessaire d'utiliser `source()` pour charger les différents fichiers du répertoire `R/`.
@@ -439,7 +439,7 @@ Il existe énormément de liberté dans l'organisation des fichiers `.R`.
 
 À un extrême, on pourrait avoir :
 
-```text
+``` text
 R/
 └── fonctions.R
 ```
@@ -448,7 +448,7 @@ contenant 150 fonctions.
 
 À l'autre extrême :
 
-```text
+``` text
 R/
 ├── fonction1.R
 ├── fonction2.R
@@ -466,7 +466,7 @@ Une approche plus raisonnable consiste à regrouper les fonctions selon leur **r
 
 Par exemple :
 
-```text
+``` text
 R/
 ├── nettoyage.R
 ├── modeles.R
@@ -477,7 +477,7 @@ R/
 
 Le fichier :
 
-```text
+``` text
 utils.R
 ```
 
@@ -497,7 +497,7 @@ verifier_vecteur <- function(x) {
 
 Cette fonction pourrait être utilisée par plusieurs fonctions de la librairie.
 
-::: {.callout-note}
+::: callout-note
 ## Fonctions publiques (visible) et fonctions internes (invisble)
 
 Une librairie contient souvent deux types de fonctions :
@@ -585,7 +585,7 @@ Le nom d'une fonction devrait idéalement décrire **une action**.
 
 Par exemple :
 
-```r
+``` r
 calculer_moyenne()
 ajuster_modele()
 predire_classe()
@@ -594,7 +594,7 @@ tracer_surface()
 
 Les arguments représentent plutôt les objets sur lesquels cette action est effectuée :
 
-```r
+``` r
 calculer_moyenne(x)
 
 ajuster_modele(x, y)
@@ -606,7 +606,7 @@ Il est également utile d'être cohérent à travers une librairie.
 
 Évitez par exemple de mélanger sans raison :
 
-```text
+``` text
 get_mean()
 computeVariance()
 calcul_median()
@@ -712,7 +712,7 @@ addition <- function(x, y) {
 
 Que se passe-t-il si l'utilisateur fait :
 
-```r
+``` r
 addition("bonjour", 3)
 ```
 
@@ -739,7 +739,7 @@ addition <- function(x, y) {
 
 L'utilisateur reçoit alors une erreur plus informative.
 
-::: {.callout-tip}
+::: callout-tip
 ## Jusqu'où faut-il vérifier?
 
 Il n'est pas nécessaire de vérifier absolument toutes les situations imaginables.
@@ -755,9 +755,9 @@ L'objectif est surtout de détecter les erreurs :
 
 Une fonction est généralement plus facile à utiliser si elle :
 
-1. reçoit des arguments;
-2. effectue un calcul;
-3. retourne un résultat.
+1.  reçoit des arguments;
+2.  effectue un calcul;
+3.  retourne un résultat.
 
 Par exemple :
 
@@ -793,11 +793,10 @@ Après l'utilisation de cette fonction :
 
 Cela peut affecter le reste de la session de l'utilisateur.
 
-::: callout-note
+::::::::::: callout-note
 ## Un beau style et une belle indentation {.unnumbered}
 
-Que vous developpez pour vous-même ou a des fin de publication, une belle indentation peut aider la lecture des fonctions. Il y existe plusieurs manières de procéder mais la librairie `styler` peut s'en occuper pour vous! 
-::
+Que vous developpez pour vous-même ou a des fin de publication, une belle indentation peut aider la lecture des fonctions. Il y existe plusieurs manières de procéder mais la librairie `styler` peut s'en occuper pour vous! ::
 
 ## Quelques contraintes pour CRAN {.unnumbered}
 
@@ -807,7 +806,7 @@ En particulier, le code contenu dans les fichiers `.R` devrait utiliser des cara
 
 Cela comprend principalement :
 
-```text
+``` text
 a-z
 A-Z
 0-9
@@ -817,7 +816,7 @@ ainsi que la ponctuation courante.
 
 Il faut donc être prudent avec certains caractères copiés depuis un traitement de texte, par exemple :
 
-```text
+``` text
 “ ”
 ‘ ’
 µ
@@ -835,7 +834,7 @@ x <- "30\u00B0"
 x
 ```
 
-::: {.callout-note}
+::: callout-note
 ## Attention
 
 Cette contrainte concerne principalement le **code R distribué dans les fichiers `.R`**.
@@ -847,7 +846,7 @@ Elle ne signifie évidemment pas que toute la documentation d'une librairie doit
 
 Nous avons maintenant plusieurs fonctions dans notre répertoire :
 
-```text
+``` text
 R/
 ```
 
@@ -855,7 +854,7 @@ Comment les utiliser pendant que nous les développons?
 
 Une première tentation serait :
 
-```r
+``` r
 source("R/fonction.R")
 ```
 
@@ -883,7 +882,7 @@ addition(2, 3)
 
 Cela mène à notre premier cycle de développement :
 
-```text
+``` text
 Modifier une fonction
         ↓
    sauvegarder
@@ -921,13 +920,13 @@ Une librairie doit donc fournir de la documentation.
 
 En R, cette documentation est normalement accessible avec :
 
-```r
+``` r
 ?CR
 ```
 
 ou :
 
-```r
+``` r
 help("CR")
 ```
 
@@ -935,19 +934,19 @@ help("CR")
 
 R utilise traditionnellement des fichiers de documentation avec l'extension :
 
-```text
+``` text
 .Rd
 ```
 
 Ces fichiers sont placés dans :
 
-```text
+``` text
 man/
 ```
 
 Par exemple :
 
-```text
+``` text
 MaLibrairie/
 ├── R/
 │   └── CR.R
@@ -959,7 +958,7 @@ Nous **n'allons cependant pas écrire les fichiers `.Rd` directement**.
 
 Nous utiliserons plutôt la librairie :
 
-```text
+``` text
 roxygen2
 ```
 
@@ -969,7 +968,7 @@ roxygen2
 
 Les commentaires de documentation commencent par :
 
-```text
+``` text
 #'
 ```
 
@@ -1002,7 +1001,7 @@ Plusieurs éléments apparaissent dans cette documentation.
 
 La première ligne constitue généralement le titre :
 
-```text
+``` text
 #' Recalibrer un vecteur entre 0 et 1
 ```
 
@@ -1012,7 +1011,7 @@ Il devrait être court et décrire clairement l'objectif de la fonction.
 
 Le paragraphe suivant fournit une description plus détaillée :
 
-```text
+``` text
 #' Transforme linéairement les valeurs d'un vecteur numérique
 #' afin qu'il aie une moyenne de 0 et une variance unitaire. 
 ```
@@ -1021,21 +1020,21 @@ Si ici qu'on met tous les détails, et qu'on explique longuement ce que fait la 
 
 ## `@param` {.unnumbered}
 
-Chaque entrée de la fonction est décrite brièvement. 
+Chaque entrée de la fonction est décrite brièvement.
 
-```text
+``` text
 #' @param x Un vecteur numérique.
 ```
 
 Pour une fonction :
 
-```r
+``` r
 ma_fonction <- function(x, y, methode)
 ```
 
 nous aurons généralement :
 
-```text
+``` text
 #' @param x ...
 #' @param y ...
 #' @param methode ...
@@ -1045,13 +1044,13 @@ On ce soucis souvent du format (vecteur, matrice, etc..) de l'entré mais une bo
 
 Par exemple, plutôt que :
 
-```text
+``` text
 @param alpha Un nombre.
 ```
 
 nous pourrions écrire :
 
-```text
+``` text
 @param alpha Valeur positive contrôlant l'intensité de la pénalisation.
 ```
 
@@ -1059,7 +1058,7 @@ nous pourrions écrire :
 
 Le marqueur :
 
-```text
+``` text
 @returns
 ```
 
@@ -1067,13 +1066,13 @@ décrit ce que retourne la fonction.
 
 Par exemple :
 
-```text
+``` text
 #' @returns Un vecteur numérique de même longueur que `x`.
 ```
 
 Pour une fonction plus complexe :
 
-```text
+``` text
 #' @returns Une liste contenant :
 #'
 #' - `coefficients` : les coefficients estimés;
@@ -1087,21 +1086,21 @@ Cette partie est particulièrement importante lorsque la fonction retourne une s
 
 La section :
 
-```text
+``` text
 @examples
 ```
 
 permet de montrer comment utiliser la fonction.
 
-```text
+``` text
 #' @examples
 #' CR(c(10, 20, 30))
 ```
 
 Les exemples ont deux rôles :
 
-1. aider l'utilisateur à comprendre la fonction;
-2. fournir du code pouvant être exécuté lors de la vérification de la librairie.
+1.  aider l'utilisateur à comprendre la fonction;
+2.  fournir du code pouvant être exécuté lors de la vérification de la librairie.
 
 Les exemples devraient donc idéalement être :
 
@@ -1113,11 +1112,11 @@ Les exemples devraient donc idéalement être :
 
 Nous avons également écrit :
 
-```text
+``` text
 #' @export
 ```
 
-Cette instruction indique que la fonction doit faire partie de l'interface publique de la librairie. Ce que nous 
+Cette instruction indique que la fonction doit faire partie de l'interface publique de la librairie. Ce que nous
 
 Nous allons utiliser `@export` aujourd'hui, mais nous examinerons **plus précisément son fonctionnement lors de la prochaine séance**, lorsque nous discuterons du fichier `NAMESPACE` et de la distinction entre fonctions internes et fonctions exportées.
 
@@ -1135,37 +1134,37 @@ Cette commande génère ou met à jour les fichiers de documentation.
 
 Dans notre exemple, elle créera notamment :
 
-```text
+``` text
 man/rescale01.Rd
 ```
 
 Elle mettra également à jour le fichier :
 
-```text
+``` text
 NAMESPACE
 ```
 
-::: {.callout-important}
+::: callout-important
 ## Ne modifiez pas les `.Rd` directement
 
 Lorsque nous utilisons `roxygen2`, les fichiers du répertoire `man/` sont **générés automatiquement**.
 
 Si nous voulons modifier la documentation, nous modifions :
 
-```text
+``` text
 R/rescale01.R
 ```
 
 puis nous relançons :
 
-```r
+``` r
 devtools::document()
 ```
 :::
 
 Dans RStudio, nous pouvons également utiliser :
 
-```text
+``` text
 Ctrl + Shift + D
 ```
 
@@ -1195,7 +1194,7 @@ La page d'aide devrait apparaître exactement comme pour une fonction provenant 
 
 Nous obtenons donc un deuxième cycle de développement :
 
-```text
+``` text
 Modifier la fonction
         ↓
 Modifier sa documentation
@@ -1209,7 +1208,7 @@ Modifier sa documentation
      recommencer
 ```
 
-::: {.callout-tip}
+::: callout-tip
 ## RStudio peut nous aider
 
 Lorsque le curseur est placé dans une fonction, RStudio permet de créer automatiquement une structure de documentation avec :
@@ -1249,7 +1248,7 @@ CR(c(10, 20, 30))
 
 et vérifier que le résultat est :
 
-```text
+``` text
 -1 0 1
 ```
 
@@ -1265,7 +1264,7 @@ Un **test unitaire** vérifie qu'une petite partie de notre code possède le com
 
 Pour nos librairies R, nous utiliserons principalement :
 
-```text
+``` text
 testthat
 ```
 
@@ -1281,7 +1280,7 @@ usethis::use_testthat()
 
 Cette commande crée notamment :
 
-```text
+``` text
 tests/
 ├── testthat.R
 └── testthat/
@@ -1289,7 +1288,7 @@ tests/
 
 Nous placerons nos tests dans :
 
-```text
+``` text
 tests/testthat/
 ```
 
@@ -1297,7 +1296,7 @@ tests/testthat/
 
 Pour créer des tests correspondant à :
 
-```text
+``` text
 R/CR.R
 ```
 
@@ -1311,13 +1310,13 @@ usethis::use_test("CR")
 
 Cette commande crée :
 
-```text
+``` text
 tests/testthat/test-CR.R
 ```
 
 Une organisation pratique consiste donc à avoir :
 
-```text
+``` text
 R/
 └── rescale01.R
 
@@ -1328,7 +1327,7 @@ tests/
 
 Les fichiers de tests doivent commencer par :
 
-```text
+``` text
 test-
 ```
 
@@ -1351,7 +1350,7 @@ test_that("CR transforme correctement un vecteur", {
 
 La structure générale est :
 
-```r
+``` r
 test_that("description du comportement", {
 
   expectation
@@ -1361,7 +1360,7 @@ test_that("description du comportement", {
 
 Dans notre cas :
 
-```text
+``` text
 expect_equal()
 ```
 
@@ -1371,7 +1370,7 @@ vérifie que le résultat obtenu est égal au résultat attendu.
 
 `testthat` fournit plusieurs fonctions commençant par :
 
-```text
+``` text
 expect_
 ```
 
@@ -1489,9 +1488,9 @@ Les tests peuvent sembler représenter du travail supplémentaire.
 
 Après tout, nous devons :
 
-1. écrire la fonction;
-2. écrire la documentation;
-3. écrire des tests.
+1.  écrire la fonction;
+2.  écrire la documentation;
+3.  écrire des tests.
 
 Cependant, les tests deviennent particulièrement utiles lorsque :
 
@@ -1504,21 +1503,21 @@ Cependant, les tests deviennent particulièrement utiles lorsque :
 
 Supposons que nous modifiions complètement l'implémentation de :
 
-```r
+``` r
 CR()
 ```
 
 Si tous les tests continuent à réussir, nous gagnons rapidement de la confiance que le comportement attendu de la fonction n'a pas changé.
 
-::: {.callout-tip}
+::: callout-tip
 ## Un bogue est une excellente occasion d'écrire un test
 
 Lorsqu'un utilisateur découvre un bogue :
 
-1. écrivez un test reproduisant le bogue;
-2. vérifiez que le test échoue;
-3. corrigez le code;
-4. vérifiez que le test réussit.
+1.  écrivez un test reproduisant le bogue;
+2.  vérifiez que le test échoue;
+3.  corrigez le code;
+4.  vérifiez que le test réussit.
 
 Le test empêche ensuite le même bogue de réapparaître silencieusement dans une version future.
 :::
@@ -1531,7 +1530,7 @@ Nous voulons surtout tester les **comportements importants**.
 
 Par exemple :
 
-```text
+``` text
 Cas normal
 Cas limite
 Entrée invalide
@@ -1542,7 +1541,7 @@ Valeurs extrêmes
 
 Pour une fonction :
 
-```r
+``` r
 moyenne_robuste(x)
 ```
 
@@ -1580,14 +1579,13 @@ test_that("moyenne_robuste refuse les caractères", {
 })
 ```
 
-
 ## Notre cycle de développement complet
 
 Nous pouvons maintenant améliorer notre cycle de développement.
 
 Au lieu de simplement :
 
-```text
+``` text
 modifier
    ↓
 load_all()
@@ -1597,7 +1595,7 @@ essayer
 
 nous avons maintenant :
 
-```text
+``` text
 Modifier le code
         ↓
     load_all()
@@ -1670,13 +1668,13 @@ effectue une vérification beaucoup plus générale de la librairie.
 
 Nous visons éventuellement :
 
-```text
+``` text
 0 errors
 0 warnings
 0 notes
 ```
 
-::: {.callout-important}
+::: callout-important
 ## `check()` n'est pas seulement pour la fin
 
 Une erreur fréquente serait d'attendre que la librairie soit « terminée » avant d'utiliser `check()`.
@@ -1692,7 +1690,7 @@ Il n'est pas nécessaire d'exécuter `check()` après chaque caractère modifié
 
 Un workflow réaliste pourrait ressembler à :
 
-```text
+``` text
 Écrire quelques lignes
         ↓
     load_all()
@@ -1714,9 +1712,10 @@ Documenter
 
 Puis :
 
-```text
+``` text
 recommencer
 ```
+
 ## Inclure des données dans une librairie
 
 Une librairie R peut également contenir des **données**.
@@ -1734,7 +1733,7 @@ La manière d'inclure les données dépend de **leur rôle**.
 
 Si nous voulons inclure un objet R directement accessible aux utilisateurs, nous le plaçons dans le répertoire :
 
-```text
+``` text
 data/
 ```
 
@@ -1759,7 +1758,7 @@ usethis::use_data(exemple)
 
 Cette commande crée notamment :
 
-```text
+``` text
 data/exemple.rda
 ```
 
@@ -1783,7 +1782,7 @@ MaLibrairie::exemple
 
 Les jeux de données distribués de cette manière devraient également être **documentés**, exactement comme les fonctions de la librairie.
 
-::: {.callout-tip}
+::: callout-tip
 ## Données d'exemple
 
 Les données contenues dans `data/` devraient généralement être relativement petites.
@@ -1815,7 +1814,7 @@ usethis::use_data(
 
 Ils seront alors enregistrés dans :
 
-```text
+``` text
 R/sysdata.rda
 ```
 
@@ -1827,7 +1826,7 @@ Il arrive finalement que nous voulions distribuer un véritable fichier plutôt 
 
 Par exemple :
 
-```text
+``` text
 .csv
 .xlsx
 .json
@@ -1839,13 +1838,13 @@ Cela peut être particulièrement utile si notre librairie contient une fonction
 
 Dans ce cas, les fichiers peuvent être placés dans :
 
-```text
+``` text
 inst/extdata/
 ```
 
 Par exemple :
 
-```text
+``` text
 MaLibrairie/
 └── inst/
     └── extdata/
@@ -1871,21 +1870,21 @@ Cela permet notamment d'utiliser de vrais fichiers dans les exemples, les tests 
 Nous pouvons donc distinguer trois situations principales :
 
 | Type de données | Emplacement | Utilisation |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | Objets R destinés aux utilisateurs | `data/` | Exemples ou données distribuées |
 | Objets R internes | `R/sysdata.rda` | Fonctionnement interne |
 | Fichiers bruts | `inst/extdata/` | Exemples, tests ou lecture de fichiers |
 
 Le répertoire `data-raw/`, quant à lui, contient le **code utilisé pour créer les données**, mais n'est pas distribué avec la librairie.
 
-::: {.callout-note}
+::: callout-note
 ## À retenir
 
 Une librairie peut donc distribuer beaucoup plus que des fonctions.
 
 Elle peut regrouper dans une même structure :
 
-```text
+``` text
 fonctions
 documentation
 tests
@@ -1904,7 +1903,7 @@ Nous avons vu qu'une librairie R est beaucoup plus qu'un ensemble de fichiers `.
 
 Elle nous fournit une structure permettant d'organiser :
 
-```text
+``` text
 Code
  │
  ├── fonctions
@@ -1918,7 +1917,7 @@ Code
 
 Pour l'instant, notre librairie pourrait ressembler à :
 
-```text
+``` text
 MaLibrairie/
 ├── DESCRIPTION
 ├── NAMESPACE
@@ -1959,7 +1958,7 @@ Nous discuterons notamment :
 - de l'utilisation de fonctions provenant d'autres librairies;
 - puis de l'intégration de code provenant d'autres langages.
 
-::: {.callout-tip}
+::: callout-tip
 ## L'idée principale
 
 Une bonne librairie ne contient pas seulement du code qui fonctionne.
@@ -1969,4 +1968,5 @@ Elle contient du code **organisé, documenté, testé et maintenable**.
 
 ## Plus de lecture {.unnumbered}
 
-Je vous recommande de lire le [Chapitre 6](https://r-pkgs.org/code.html) et le [Chapitre 7](https://r-pkgs.org/data.html) du manuel de référence. 
+Je vous recommande de lire le [Chapitre 6](https://r-pkgs.org/code.html) et le [Chapitre 7](https://r-pkgs.org/data.html) du manuel de référence.
+:::::::::::

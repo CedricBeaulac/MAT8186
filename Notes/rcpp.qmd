@@ -1,5 +1,5 @@
 # Intégration avec d'autres langages de programmation {#rcpp}
 
-Nous avons précédement 
+Nous avons précédement
 
 ## Pourquoi ? {.unnumbered}

@@ -198,8 +198,14 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./namespace.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dépendances et espaces de noms</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./rcpp.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Intégration avec d’autres langages de programmation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Intégration avec d’autres langages de programmation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -236,41 +242,6 @@ div.csl-indent {
   <li><a href="#retourner-un-résultat" id="toc-retourner-un-résultat" class="nav-link" data-scroll-target="#retourner-un-résultat"><span class="header-section-number">4.10</span> Retourner un résultat</a></li>
   <li><a href="#vérifier-les-entrées" id="toc-vérifier-les-entrées" class="nav-link" data-scroll-target="#vérifier-les-entrées"><span class="header-section-number">4.11</span> Vérifier les entrées</a></li>
   <li><a href="#éviter-les-effets-de-bord" id="toc-éviter-les-effets-de-bord" class="nav-link" data-scroll-target="#éviter-les-effets-de-bord">Éviter les effets de bord</a></li>
-  <li><a href="#quelques-contraintes-pour-cran" id="toc-quelques-contraintes-pour-cran" class="nav-link" data-scroll-target="#quelques-contraintes-pour-cran">Quelques contraintes pour CRAN</a></li>
-  <li><a href="#développer-de-manière-itérative" id="toc-développer-de-manière-itérative" class="nav-link" data-scroll-target="#développer-de-manière-itérative"><span class="header-section-number">4.12</span> Développer de manière itérative</a></li>
-  <li><a href="#documenter-nos-fonctions" id="toc-documenter-nos-fonctions" class="nav-link" data-scroll-target="#documenter-nos-fonctions"><span class="header-section-number">4.13</span> Documenter nos fonctions</a></li>
-  <li><a href="#les-fichiers-.rd" id="toc-les-fichiers-.rd" class="nav-link" data-scroll-target="#les-fichiers-.rd"><span class="header-section-number">4.14</span> Les fichiers <code>.Rd</code></a></li>
-  <li><a href="#documentation-avec-roxygen2" id="toc-documentation-avec-roxygen2" class="nav-link" data-scroll-target="#documentation-avec-roxygen2"><span class="header-section-number">4.15</span> Documentation avec <code>roxygen2</code></a></li>
-  <li><a href="#le-titre" id="toc-le-titre" class="nav-link" data-scroll-target="#le-titre">Le titre</a></li>
-  <li><a href="#la-description" id="toc-la-description" class="nav-link" data-scroll-target="#la-description">La description</a></li>
-  <li><a href="#param" id="toc-param" class="nav-link" data-scroll-target="#param"><code>@param</code></a></li>
-  <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns"><code>@returns</code></a></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><code>@examples</code></a></li>
-  <li><a href="#export" id="toc-export" class="nav-link" data-scroll-target="#export"><code>@export</code></a></li>
-  <li><a href="#générer-la-documentation" id="toc-générer-la-documentation" class="nav-link" data-scroll-target="#générer-la-documentation"><span class="header-section-number">4.16</span> Générer la documentation</a></li>
-  <li><a href="#voir-la-documentation" id="toc-voir-la-documentation" class="nav-link" data-scroll-target="#voir-la-documentation"><span class="header-section-number">4.17</span> Voir la documentation</a></li>
-  <li><a href="#tester-nos-fonctions" id="toc-tester-nos-fonctions" class="nav-link" data-scroll-target="#tester-nos-fonctions"><span class="header-section-number">4.18</span> Tester nos fonctions</a></li>
-  <li><a href="#tests-unitaires" id="toc-tests-unitaires" class="nav-link" data-scroll-target="#tests-unitaires"><span class="header-section-number">4.19</span> Tests unitaires</a></li>
-  <li><a href="#créer-un-premier-fichier-de-tests" id="toc-créer-un-premier-fichier-de-tests" class="nav-link" data-scroll-target="#créer-un-premier-fichier-de-tests"><span class="header-section-number">4.20</span> Créer un premier fichier de tests</a></li>
-  <li><a href="#notre-premier-test" id="toc-notre-premier-test" class="nav-link" data-scroll-target="#notre-premier-test">Notre premier test</a></li>
-  <li><a href="#les-attentes" id="toc-les-attentes" class="nav-link" data-scroll-target="#les-attentes"><span class="header-section-number">4.21</span> Les attentes</a></li>
-  <li><a href="#tester-plusieurs-comportements" id="toc-tester-plusieurs-comportements" class="nav-link" data-scroll-target="#tester-plusieurs-comportements"><span class="header-section-number">4.22</span> Tester plusieurs comportements</a></li>
-  <li><a href="#exécuter-les-tests" id="toc-exécuter-les-tests" class="nav-link" data-scroll-target="#exécuter-les-tests"><span class="header-section-number">4.23</span> Exécuter les tests</a></li>
-  <li><a href="#pourquoi-tester" id="toc-pourquoi-tester" class="nav-link" data-scroll-target="#pourquoi-tester"><span class="header-section-number">4.24</span> Pourquoi tester?</a></li>
-  <li><a href="#que-faut-il-tester" id="toc-que-faut-il-tester" class="nav-link" data-scroll-target="#que-faut-il-tester"><span class="header-section-number">4.25</span> Que faut-il tester?</a></li>
-  <li><a href="#notre-cycle-de-développement-complet" id="toc-notre-cycle-de-développement-complet" class="nav-link" data-scroll-target="#notre-cycle-de-développement-complet"><span class="header-section-number">4.26</span> Notre cycle de développement complet</a></li>
-  <li><a href="#load_all" id="toc-load_all" class="nav-link" data-scroll-target="#load_all"><code>load_all()</code></a></li>
-  <li><a href="#document" id="toc-document" class="nav-link" data-scroll-target="#document"><code>document()</code></a></li>
-  <li><a href="#test" id="toc-test" class="nav-link" data-scroll-target="#test"><code>test()</code></a></li>
-  <li><a href="#check" id="toc-check" class="nav-link" data-scroll-target="#check"><code>check()</code></a></li>
-  <li><a href="#un-workflow-raisonnable" id="toc-un-workflow-raisonnable" class="nav-link" data-scroll-target="#un-workflow-raisonnable">Un workflow raisonnable</a></li>
-  <li><a href="#inclure-des-données-dans-une-librairie" id="toc-inclure-des-données-dans-une-librairie" class="nav-link" data-scroll-target="#inclure-des-données-dans-une-librairie"><span class="header-section-number">4.27</span> Inclure des données dans une librairie</a></li>
-  <li><a href="#données-accessibles-aux-utilisateurs" id="toc-données-accessibles-aux-utilisateurs" class="nav-link" data-scroll-target="#données-accessibles-aux-utilisateurs">Données accessibles aux utilisateurs</a></li>
-  <li><a href="#données-internes-invisible" id="toc-données-internes-invisible" class="nav-link" data-scroll-target="#données-internes-invisible">Données internes (invisible)</a></li>
-  <li><a href="#fichiers-de-données-brutes" id="toc-fichiers-de-données-brutes" class="nav-link" data-scroll-target="#fichiers-de-données-brutes">Fichiers de données brutes</a></li>
-  <li><a href="#résumé" id="toc-résumé" class="nav-link" data-scroll-target="#résumé">Résumé</a></li>
-  <li><a href="#résumé-de-la-séance" id="toc-résumé-de-la-séance" class="nav-link" data-scroll-target="#résumé-de-la-séance"><span class="header-section-number">4.28</span> Résumé de la séance</a></li>
-  <li><a href="#plus-de-lecture" id="toc-plus-de-lecture" class="nav-link" data-scroll-target="#plus-de-lecture">Plus de lecture</a></li>
   </ul>
 </nav>
     </div>
@@ -922,9 +893,17 @@ Jusqu’où faut-il vérifier?
 <li>les options de R ont changé.</li>
 </ul>
 <p>Cela peut affecter le reste de la session de l’utilisateur.</p>
-<p>::: callout-note ## Un beau style et une belle indentation {.unnumbered}</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Un beau style et une belle indentation
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Que vous developpez pour vous-même ou a des fin de publication, une belle indentation peut aider la lecture des fonctions. Il y existe plusieurs manières de procéder mais la librairie <code>styler</code> peut s’en occuper pour vous! ::</p>
-</section>
 <section id="quelques-contraintes-pour-cran" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="quelques-contraintes-pour-cran">Quelques contraintes pour CRAN</h2>
 <p>Si nous souhaitons éventuellement publier notre librairie sur CRAN, certaines contraintes additionnelles doivent être respectées.</p>
@@ -1793,6 +1772,9 @@ L’idée principale
 <section id="plus-de-lecture" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="plus-de-lecture">Plus de lecture</h2>
 <p>Je vous recommande de lire le <a href="https://r-pkgs.org/code.html">Chapitre 6</a> et le <a href="https://r-pkgs.org/data.html">Chapitre 7</a> du manuel de référence.</p>
+</section>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
