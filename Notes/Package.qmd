@@ -793,10 +793,11 @@ Après l'utilisation de cette fonction :
 
 Cela peut affecter le reste de la session de l'utilisateur.
 
-::::::::::: callout-note
+::: callout-note
 ## Un beau style et une belle indentation {.unnumbered}
 
 Que vous developpez pour vous-même ou a des fin de publication, une belle indentation peut aider la lecture des fonctions. Il y existe plusieurs manières de procéder mais la librairie `styler` peut s'en occuper pour vous! ::
+:::
 
 ## Quelques contraintes pour CRAN {.unnumbered}
 
@@ -1870,7 +1871,7 @@ Cela permet notamment d'utiliser de vrais fichiers dans les exemples, les tests 
 Nous pouvons donc distinguer trois situations principales :
 
 | Type de données | Emplacement | Utilisation |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Objets R destinés aux utilisateurs | `data/` | Exemples ou données distribuées |
 | Objets R internes | `R/sysdata.rda` | Fonctionnement interne |
 | Fichiers bruts | `inst/extdata/` | Exemples, tests ou lecture de fichiers |
@@ -1968,5 +1969,4 @@ Elle contient du code **organisé, documenté, testé et maintenable**.
 
 ## Plus de lecture {.unnumbered}
 
-Je vous recommande de lire le [Chapitre 6](https://r-pkgs.org/code.html) et le [Chapitre 7](https://r-pkgs.org/data.html) du manuel de référence.
-:::::::::::
+Je vous recommande de lire le [Chapitre 6](https://r-pkgs.org/code.html) et le [Chapitre 7](https://r-pkgs.org/data.html) du manuel de référence. :::::::::::
