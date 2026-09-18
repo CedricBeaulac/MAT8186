@@ -1,5 +1,1022 @@
 # Intégration avec d'autres langages de programmation {#rcpp}
 
-Nous avons précédement
+Jusqu'à maintenant, toutes les fonctions de nos librairies ont été écrites en R.
 
-## Pourquoi ? {.unnumbered}
+Il n'existe cependant aucune obligation voulant que l'ensemble du code d'une librairie R soit écrit en R. Il est possible d'intégrer du code provenant d'autres langages et de rendre celui-ci accessible à travers une interface R.
+
+Dans cette section, nous allons nous intéresser au **C++**, à l'aide de la librairie `Rcpp`.
+
+L'objectif n'est pas d'apprendre le C++ en profondeur. Nous voulons plutôt être capables :
+
+- d'identifier une situation où l'utilisation de C++ peut être avantageuse;
+- de traduire une petite fonction R en C++;
+- de comprendre les principaux types de données utilisés par Rcpp;
+- de compiler et appeler une fonction C++ depuis R;
+- d'intégrer du code C++ à une véritable librairie R;
+- de vérifier que l'implémentation C++ produit les mêmes résultats que l'implémentation R;
+- de mesurer si l'utilisation de C++ apporte réellement un gain de performance.
+
+Une référence particulièrement utile pour cette section est le chapitre 25 de *Advanced R* de Hadley Wickham, **Rewriting R code in C++**.
+
+## Pourquoi utiliser C++? {.unnumbered}
+
+La première question à se poser n'est pas :
+
+> Comment écrire du C++?
+
+mais plutôt :
+
+> **Pourquoi voudrions-nous écrire une partie de notre librairie en C++?**
+
+R est un langage particulièrement efficace pour effectuer de l'analyse statistique et manipuler des données. Il fournit également une interface beaucoup plus simple et flexible que C++ pour plusieurs tâches.
+
+Il n'est donc généralement **pas souhaitable de réécrire une librairie entière en C++**.
+
+L'intérêt de C++ apparaît plutôt lorsque nous identifions une portion de notre code qui constitue un **goulot d'étranglement**.
+
+## Quelques situations intéressantes {.unnumbered}
+
+C++ peut notamment être avantageux lorsque notre code contient :
+
+- des boucles contenant un très grand nombre d'itérations;
+- des calculs récursifs;
+- des opérations simples répétées des millions de fois;
+- des algorithmes difficiles à vectoriser en R;
+- des structures de données ou des algorithmes disponibles naturellement en C++;
+- une portion de code pour laquelle le temps d'exécution devient réellement important.
+
+Par exemple, imaginons une opération conceptuellement très simple :
+
+```r
+for (i in seq_len(1000000)) {
+  # quelques petites opérations
+}
+```
+
+La durée d'une seule opération peut être négligeable.
+
+Cependant, lorsqu'elle est répétée plusieurs millions de fois, les coûts associés à l'interprétation du code R et aux appels de fonctions peuvent devenir importants.
+
+Le C++ étant un langage **compilé**, une partie de ce coût peut être éliminée.
+
+::: {.callout-tip}
+## Une bonne stratégie
+
+Une bonne stratégie n'est généralement pas :
+
+```text
+programme R
+    ↓
+tout traduire en C++
+```
+
+mais plutôt :
+
+```text
+programme R
+    ↓
+identifier la partie lente
+    ↓
+traduire seulement cette partie en C++
+```
+
+Notre interface principale peut donc demeurer en R alors que certains calculs internes sont effectués en C++.
+
+:::
+
+## C++ n'est pas automatiquement plus rapide {.unnumbered}
+
+Il faut cependant éviter une conclusion trop rapide :
+
+> C++ est plus rapide que R, donc traduire une fonction en C++ la rendra nécessairement plus rapide.
+
+Ce n'est **pas** toujours vrai.
+
+Plusieurs fonctions R effectuent déjà leurs calculs dans du code compilé.
+
+Par exemple :
+
+```r
+sum(x)
+mean(x)
+X %*% beta
+crossprod(X)
+solve(A, b)
+```
+
+ne réalisent pas nécessairement l'ensemble de leurs calculs directement dans l'interpréteur R.
+
+Une fonction R comme :
+
+```{r}
+#| eval: false
+
+prediction <- function(X, beta) {
+  X %*% beta
+}
+```
+
+fait très peu de travail en R. Le calcul matriciel lui-même est déjà effectué par du code compilé et optimisé.
+
+Réécrire naïvement cette fonction en C++ risque donc d'apporter **très peu de gain**.
+
+À l'opposé, une fonction contenant plusieurs boucles R imbriquées peut être une bien meilleure candidate.
+
+::: {.callout-important}
+## Mesurer plutôt que présumer
+
+Avant d'optimiser du code :
+
+1. identifier la partie coûteuse;
+2. produire une version de référence correcte;
+3. mesurer son temps d'exécution;
+4. optimiser;
+5. vérifier que le résultat demeure le même;
+6. mesurer à nouveau.
+
+Une optimisation dont nous ne mesurons pas l'effet n'est qu'une hypothèse.
+:::
+
+Cette idée sera particulièrement importante dans notre projet Ridge.
+
+Une seule estimation Ridge repose principalement sur des opérations matricielles déjà très optimisées. Par contre, une validation croisée répète l'ajustement et la prédiction pour plusieurs valeurs de $\lambda$ et plusieurs partitions des données.
+
+Nous aurons donc éventuellement une structure ressemblant à :
+
+```text
+pour chaque lambda
+    pour chaque fold
+        ajuster le modèle
+        prédire
+        calculer l'erreur
+```
+
+C'est ce type de calcul répétitif qui peut devenir intéressant à déplacer vers C++.
+
+## Préparer notre ordinateur
+
+Pour utiliser Rcpp, deux éléments sont nécessaires :
+
+1. une installation de la librairie `Rcpp`;
+2. un compilateur C++ permettant à R de compiler notre code.
+
+## Installer Rcpp {.unnumbered}
+
+`Rcpp` est disponible sur CRAN :
+
+```{r}
+#| eval: false
+
+install.packages("Rcpp")
+```
+
+Nous pouvons ensuite la charger :
+
+```{r}
+#| eval: false
+
+library(Rcpp)
+```
+
+## Installer les outils de compilation sous Windows {.unnumbered}
+
+Sous Windows, nous devons également installer **Rtools**.
+
+Rtools fournit notamment les compilateurs et outils nécessaires à la construction de librairies R contenant du code C ou C++.
+
+La version de Rtools doit correspondre à la version de R utilisée. Il est donc préférable de télécharger la version appropriée directement à partir de la page officielle **Rtools** de CRAN.
+
+Après l'installation, redémarrez RStudio.
+
+Nous pouvons ensuite vérifier que notre environnement est prêt à compiler du code avec :
+
+```{r}
+#| eval: false
+
+pkgbuild::check_build_tools(debug = TRUE)
+```
+
+Si tout fonctionne correctement, nous devrions obtenir un message indiquant que notre système est prêt à construire des librairies contenant du code compilé.
+
+::: {.callout-note}
+## Sur macOS et Linux
+
+Le principe est le même : R doit avoir accès à une chaîne de compilation C++.
+
+Sous macOS, cela passe généralement par les outils de développement d'Apple. Sous Linux, les outils de compilation sont généralement disponibles à travers le gestionnaire de paquets du système.
+
+Dans ce cours, nous nous concentrerons principalement sur la configuration Windows.
+:::
+
+## Notre première fonction C++
+
+Nous allons commencer avec la manière la plus simple possible d'appeler du C++ depuis R :
+
+```r
+Rcpp::cppFunction()
+```
+
+`cppFunction()` permet de fournir directement le code d'une petite fonction C++ sous forme de chaîne de caractères.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+Rcpp::cppFunction('
+double carre_cpp(double x) {
+  return x * x;
+}
+')
+```
+
+Une nouvelle fonction R devient immédiatement disponible :
+
+```{r}
+#| eval: false
+
+carre_cpp(4)
+```
+
+et retourne :
+
+```text
+[1] 16
+```
+
+Nous venons donc de :
+
+```text
+écrire du C++
+      ↓
+compiler le code
+      ↓
+créer automatiquement une interface avec R
+      ↓
+appeler la fonction depuis R
+```
+
+Rcpp prend en charge une grande partie de la mécanique nécessaire pour faire communiquer les deux langages.
+
+## Comparaison avec R
+
+La version R de notre fonction serait simplement :
+
+```{r}
+#| eval: false
+
+carre_R <- function(x) {
+  x * x
+}
+```
+
+Comparons les deux :
+
+```text
+R                           C++
+
+carre_R <- function(x) {    double carre_cpp(double x) {
+  x * x                       return x * x;
+}                           }
+```
+
+Plusieurs différences apparaissent immédiatement.
+
+En C++ :
+
+- le type de la valeur retournée est indiqué;
+- le type de chaque argument est indiqué;
+- `return` est explicite;
+- chaque instruction se termine par `;`.
+
+
+Cette obligation de préciser les types constitue l'une des différences fondamentales entre R et C++.
+
+## Les types de données
+
+R permet généralement de manipuler les objets sans déclarer explicitement leur type dans la définition d'une fonction.
+
+Par exemple :
+
+```r
+f <- function(x) {
+  ...
+}
+```
+
+ne nous dit pas si `x` doit être :
+
+- un entier;
+- un nombre réel;
+- un vecteur;
+- une chaîne de caractères;
+- une matrice.
+
+En C++, cette information doit généralement être explicitée.
+
+Voici quelques correspondances utiles avec Rcpp :
+
+| R | Scalaire C++ | Vecteur Rcpp |
+|---|---|---|
+| `logical` | `bool` | `LogicalVector` |
+| `integer` | `int` | `IntegerVector` |
+| `numeric` | `double` | `NumericVector` |
+| `character` | `std::string` ou `String` | `CharacterVector` |
+
+Pour les matrices, on retrouve notamment :
+
+```text
+NumericMatrix
+IntegerMatrix
+LogicalMatrix
+CharacterMatrix
+```
+
+On retrouve également :
+
+```text
+List
+DataFrame
+Function
+```
+
+pour manipuler d'autres objets R.
+
+::: {.callout-important}
+## `integer` et `numeric`
+
+Dans R :
+
+```r
+1
+```
+
+est normalement un objet de type `double`, alors que :
+
+```r
+1L
+```
+
+est un entier.
+
+Ainsi :
+
+```text
+numeric  → double
+integer  → int
+```
+
+Cette distinction devient plus importante lorsque nous devons explicitement définir les types de nos arguments en C++.
+:::
+
+## Un exemple avec un vecteur
+
+Considérons une fonction R qui calcule la somme des carrés :
+
+```{r}
+#| eval: false
+
+somme_carres_R <- function(x) {
+
+  total <- 0
+
+  for (i in seq_along(x)) {
+    total <- total + x[i]^2
+  }
+
+  total
+}
+```
+
+Nous pouvons écrire une version C++ :
+
+```{r}
+#| eval: false
+
+Rcpp::cppFunction('
+double somme_carres_cpp(Rcpp::NumericVector x) {
+
+  double total = 0.0;
+
+  for (int i = 0; i < x.size(); ++i) {
+    total += x[i] * x[i];
+  }
+
+  return total;
+}
+')
+```
+
+Nous pouvons alors comparer :
+
+```{r}
+#| eval: false
+
+x <- c(1, 2, 3, 4)
+
+somme_carres_R(x)
+somme_carres_cpp(x)
+```
+
+Les deux fonctions devraient produire le même résultat.
+
+## L'indexation commence à zéro {.unnumbered}
+
+Il y a cependant une différence particulièrement importante.
+
+En R, le premier élément d'un vecteur est :
+
+```r
+x[1]
+```
+
+En C++, le premier élément est :
+
+```cpp
+x[0]
+```
+
+Ainsi, une boucle C++ typique prend la forme :
+
+```cpp
+for (int i = 0; i < x.size(); ++i) {
+  ...
+}
+```
+
+plutôt que :
+
+```r
+for (i in 1:length(x)) {
+  ...
+}
+```
+
+::: {.callout-warning}
+## Une source classique d'erreurs
+
+Lors de la traduction d'une fonction R vers C++, il faut toujours vérifier soigneusement les indices.
+
+```text
+R      : 1, 2, 3, ..., n
+C++    : 0, 1, 2, ..., n - 1
+```
+
+Les erreurs d'indexation sont parmi les erreurs les plus faciles à introduire lors d'une traduction entre les deux langages.
+:::
+
+## De `cppFunction()` à `sourceCpp()`
+
+`cppFunction()` est très pratique pour :
+
+- apprendre;
+- faire un petit prototype;
+- tester rapidement une idée;
+- compiler une seule fonction simple.
+
+Cependant, écrire une fonction C++ à l'intérieur d'une chaîne de caractères R devient rapidement désagréable.
+
+Pour du code plus substantiel, nous préférons créer un véritable fichier :
+
+```text
+.cpp
+```
+
+et le compiler avec :
+
+```r
+Rcpp::sourceCpp()
+```
+
+Créons par exemple le fichier :
+
+```text
+erreur.cpp
+```
+
+contenant :
+
+```cpp
+#include <Rcpp.h>
+
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double mse_cpp(NumericVector y, NumericVector prediction) {
+
+  int n = y.size();
+
+  if (prediction.size() != n) {
+    stop("`y` et `prediction` doivent avoir la même longueur.");
+  }
+
+  double erreur = 0.0;
+
+  for (int i = 0; i < n; ++i) {
+
+    double residu = y[i] - prediction[i];
+
+    erreur += residu * residu;
+  }
+
+  return erreur / n;
+}
+```
+
+Nous pouvons ensuite compiler le fichier depuis R :
+
+```{r}
+#| eval: false
+
+Rcpp::sourceCpp("erreur.cpp")
+```
+
+et appeler :
+
+```{r}
+#| eval: false
+
+y <- c(2, 4, 7)
+pred <- c(1.5, 4.5, 6)
+
+mse_cpp(y, pred)
+```
+
+## Comprendre le fichier C++
+
+Regardons quelques lignes importantes.
+
+## Inclure Rcpp {.unnumbered}
+
+```cpp
+#include <Rcpp.h>
+```
+
+permet d'utiliser les fonctionnalités fournies par Rcpp.
+
+## L'espace de noms Rcpp {.unnumbered}
+
+Nous avons ensuite :
+
+```cpp
+using namespace Rcpp;
+```
+
+Cela nous permet d'écrire :
+
+```cpp
+NumericVector
+```
+
+plutôt que :
+
+```cpp
+Rcpp::NumericVector
+```
+
+Cette ligne est pratique pour de petits exemples.
+
+## `Rcpp::export` {.unnumbered}
+
+La ligne :
+
+```cpp
+// [[Rcpp::export]]
+```
+
+est particulièrement importante.
+
+Elle indique à Rcpp que la fonction C++ définie immédiatement après doit être rendue accessible depuis R.
+
+Il faut cependant faire attention à la signification du mot **export**.
+
+Nous avons déjà rencontré :
+
+```text
+#' @export
+```
+
+avec `roxygen2`.
+
+Les deux mécanismes ne jouent pas le même rôle :
+
+```text
+// [[Rcpp::export]]
+        ↓
+créer une interface R vers une fonction C++
+
+#' @export
+        ↓
+rendre une fonction publique pour
+les utilisateurs de notre librairie
+```
+
+Cette distinction deviendra particulièrement importante lorsque nous intégrerons notre code C++ dans une librairie.
+
+## Pourquoi `sourceCpp()`?
+
+`sourceCpp()` :
+
+1. lit le fichier `.cpp`;
+2. compile le code;
+3. construit la librairie dynamique nécessaire;
+4. crée les interfaces R correspondant aux fonctions marquées `Rcpp::export`;
+5. rend ces fonctions disponibles dans notre session.
+
+Pour un prototype, c'est extrêmement pratique.
+
+Cependant, `sourceCpp()` n'est pas encore la manière finale dont nous voulons distribuer le code de notre librairie.
+
+Nous voulons éventuellement que le C++ soit **une composante normale de notre librairie R**.
+
+## Utiliser Rcpp dans une librairie
+
+Supposons maintenant que nous travaillions à l'intérieur d'une véritable librairie R.
+
+Notre structure ressemble actuellement à :
+
+```text
+MaLibrairie/
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+├── man/
+├── tests/
+└── MaLibrairie.Rproj
+```
+
+Pour préparer cette librairie à contenir du code C++, `usethis` fournit :
+
+```{r}
+#| eval: false
+
+usethis::use_rcpp()
+```
+
+Cette commande met en place plusieurs éléments nécessaires au code compilé.
+
+Elle crée notamment :
+
+```text
+src/
+```
+
+et ajoute les dépendances nécessaires dans `DESCRIPTION`.
+
+Nous devrions notamment retrouver :
+
+```text
+Imports:
+    Rcpp
+
+LinkingTo:
+    Rcpp
+```
+
+Nous retrouvons ici directement les notions discutées dans @dependencies.
+
+`Imports` indique que notre librairie utilise `Rcpp`, alors que `LinkingTo` permet au compilateur d'accéder aux fichiers nécessaires lors de la compilation du code C++.
+
+Notre projet contient alors quelque chose ressemblant à :
+
+```text
+MaLibrairie/
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+├── src/
+│   └── calcul.cpp
+├── man/
+└── tests/
+```
+
+## Le répertoire `src/`
+
+Le code compilé d'une librairie R est placé dans :
+
+```text
+src/
+```
+
+Cela crée une distinction assez claire :
+
+```text
+R/
+    ↓
+code R
+
+src/
+    ↓
+code C, C++, Fortran, ...
+```
+
+Nous pouvons donc créer :
+
+```text
+src/erreur.cpp
+```
+
+contenant notre code C++.
+
+## `compileAttributes()` {.unnumbered}
+
+Comment R sait-il maintenant comment appeler notre fonction C++?
+
+Rcpp doit générer une couche d'interface entre :
+
+```text
+R
+↕
+C++
+```
+
+Cette étape peut être effectuée avec :
+
+```{r}
+#| eval: false
+
+Rcpp::compileAttributes()
+```
+
+Rcpp examine alors les fichiers C++ de `src/` à la recherche de directives comme :
+
+```cpp
+// [[Rcpp::export]]
+```
+
+et génère les interfaces nécessaires.
+
+Cela crée notamment des fichiers semblables à :
+
+```text
+R/RcppExports.R
+src/RcppExports.cpp
+```
+
+::: {.callout-important}
+## Ne pas modifier `RcppExports` à la main
+
+Les fichiers :
+
+```text
+R/RcppExports.R
+src/RcppExports.cpp
+```
+
+sont générés automatiquement.
+
+Nous modifions plutôt notre fichier C++ original puis nous régénérons les interfaces.
+:::
+
+Nous pouvons ensuite utiliser :
+
+```{r}
+#| eval: false
+
+devtools::load_all()
+```
+
+pour compiler et charger la version de développement de notre librairie.
+
+## Fonction C++ accessible ou fonction publique?
+
+La directive :
+
+```cpp
+// [[Rcpp::export]]
+```
+
+permet à notre code R d'appeler une fonction C++.
+
+Cela ne signifie pas nécessairement que cette fonction devrait devenir une fonction **publique** de notre librairie.
+
+Considérons :
+
+```text
+ridge()
+```
+
+comme fonction publique.
+
+Elle pourrait appeler en interne :
+
+```text
+ridge_fit_cpp()
+```
+
+qui effectue un calcul numérique en C++.
+
+L'utilisateur n'a pas nécessairement besoin de connaître cette fonction interne.
+
+Nous pouvons donc avoir :
+
+```text
+UTILISATEUR
+
+ridge(...)
+   │
+   ▼
+code R
+   │
+   ▼
+ridge_fit_cpp(...)
+   │
+   ▼
+code C++
+```
+
+Cette architecture permet de conserver en R :
+
+- la validation des arguments;
+- la gestion des formules;
+- `stats::model.matrix()`;
+- les messages destinés à l'utilisateur;
+- la création de l'objet retourné.
+
+Et d'utiliser C++ seulement pour :
+
+- le calcul numérique;
+- les boucles répétitives;
+- les portions véritablement coûteuses.
+
+## Traduire une fonction R vers C++
+
+Une traduction R vers C++ ne devrait pas être une simple opération de copier-coller syntaxique.
+
+Avant de traduire une fonction, il faut comprendre :
+
+1. les arguments qu'elle reçoit;
+2. leurs types;
+3. la structure des objets;
+4. les valeurs retournées;
+5. les boucles effectuées;
+6. les cas limites;
+7. les valeurs manquantes;
+8. les fonctions R déjà utilisées.
+
+Une méthode raisonnable consiste à commencer par une fonction R **simple et correcte**.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+mse_R <- function(y, prediction) {
+
+  if (length(y) != length(prediction)) {
+    stop("`y` et `prediction` doivent avoir la même longueur.")
+  }
+
+  erreur <- 0
+
+  for (i in seq_along(y)) {
+
+    residu <- y[i] - prediction[i]
+
+    erreur <- erreur + residu^2
+  }
+
+  erreur / length(y)
+}
+```
+
+Nous pouvons ensuite établir une correspondance :
+
+| R | C++ |
+|---|---|
+| `numeric` | `double` |
+| vecteur `numeric` | `NumericVector` |
+| `integer` | `int` |
+| vecteur `integer` | `IntegerVector` |
+| `length(x)` | `x.size()` |
+| indices `1,...,n` | indices `0,...,n-1` |
+| `stop()` | `stop()` avec Rcpp |
+| retour implicite | `return` explicite |
+
+Seulement ensuite traduisons-nous la fonction.
+
+#@ Utiliser un modèle d'IAG pour aider à la traduction
+
+Les modèles d'intelligence artificielle générative peuvent être particulièrement utiles lorsqu'on doit traduire une petite fonction R vers C++.
+
+On peut leur fournir :
+
+- la fonction R originale;
+- les types attendus des arguments;
+- la valeur retournée;
+- des exemples d'utilisation;
+- les contraintes particulières;
+- le fait que le code doit utiliser Rcpp.
+
+Un modèle peut alors proposer une première traduction.
+
+Cependant :
+
+> **Le code généré constitue un point de départ, pas une preuve de correction.**
+
+Une traduction peut notamment :
+
+- choisir un mauvais type;
+- oublier que l'indexation commence à zéro;
+- gérer incorrectement les valeurs `NA`;
+- modifier silencieusement le comportement de la fonction;
+- créer des copies inutiles;
+- produire du code compilable mais numériquement différent;
+- produire du code plus compliqué sans être plus rapide.
+
+Nous devons donc conserver le workflow :
+
+```text
+fonction R correcte
+       ↓
+traduction proposée
+       ↓
+comprendre le C++
+       ↓
+compiler
+       ↓
+tester les résultats
+       ↓
+tester les cas limites
+       ↓
+mesurer la performance
+```
+
+::: {.callout-important}
+## Être capable d'expliquer son code
+
+L'utilisation d'un modèle d'IAG ne remplace pas la compréhension du code produit.
+
+Dans le cadre de ce cours, vous devriez notamment être capables d'expliquer :
+
+- les types utilisés;
+- la structure des boucles;
+- les indices;
+- les valeurs retournées;
+- les échanges entre R et C++;
+- pourquoi cette portion du code constitue une bonne candidate pour C++.
+:::
+
+## Comparer avant et après
+
+Une fois notre version C++ créée, deux questions doivent être posées.
+
+## Est-ce correct? {.unnumbered}
+
+Nous voulons d'abord comparer les résultats :
+
+```{r}
+#| eval: false
+
+resultat_R <- mse_R(y, prediction)
+resultat_cpp <- mse_cpp(y, prediction)
+
+all.equal(
+  resultat_R,
+  resultat_cpp
+)
+```
+
+Une fonction plus rapide mais incorrecte n'est évidemment pas une amélioration.
+
+## Est-ce réellement plus rapide? {.unnumbered}
+
+Ensuite seulement, nous comparons les temps d'exécution.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+system.time(
+  replicate(
+    1000,
+    mse_R(y, prediction)
+  )
+)
+
+system.time(
+  replicate(
+    1000,
+    mse_cpp(y, prediction)
+  )
+)
+```
+
+::: {.callout-tip}
+## Le résultat peut être décevant — et c'est intéressant!
+
+Il est tout à fait possible que notre première traduction C++ soit seulement légèrement plus rapide.
+
+Il est même possible qu'elle soit plus lente.
+
+Ce résultat n'est pas un échec.
+
+Il nous apprend quelque chose sur l'endroit où le temps de calcul est réellement dépensé.
+:::
+
+## reticule: un équivalent à Rcpp pour Python
+
+## Plus de lecture {.unnumbered}
+
+Une [source très complète de Hadley Whickam](https://adv-r.hadley.nz/rcpp.html?utm_source=chatgpt.com) et un autre [livre R Markodown très intéressant](https://teuder.github.io/rcpp4everyone_en/index.html).

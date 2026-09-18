@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -89,6 +123,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -190,7 +253,33 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#pourquoi" id="toc-pourquoi" class="nav-link active" data-scroll-target="#pourquoi">Pourquoi ?</a></li>
+  <li><a href="#pourquoi-utiliser-c" id="toc-pourquoi-utiliser-c" class="nav-link active" data-scroll-target="#pourquoi-utiliser-c">Pourquoi utiliser C++?</a></li>
+  <li><a href="#quelques-situations-intéressantes" id="toc-quelques-situations-intéressantes" class="nav-link" data-scroll-target="#quelques-situations-intéressantes">Quelques situations intéressantes</a></li>
+  <li><a href="#c-nest-pas-automatiquement-plus-rapide" id="toc-c-nest-pas-automatiquement-plus-rapide" class="nav-link" data-scroll-target="#c-nest-pas-automatiquement-plus-rapide">C++ n’est pas automatiquement plus rapide</a></li>
+  <li><a href="#préparer-notre-ordinateur" id="toc-préparer-notre-ordinateur" class="nav-link" data-scroll-target="#préparer-notre-ordinateur"><span class="header-section-number">7.1</span> Préparer notre ordinateur</a></li>
+  <li><a href="#installer-rcpp" id="toc-installer-rcpp" class="nav-link" data-scroll-target="#installer-rcpp">Installer Rcpp</a></li>
+  <li><a href="#installer-les-outils-de-compilation-sous-windows" id="toc-installer-les-outils-de-compilation-sous-windows" class="nav-link" data-scroll-target="#installer-les-outils-de-compilation-sous-windows">Installer les outils de compilation sous Windows</a></li>
+  <li><a href="#notre-première-fonction-c" id="toc-notre-première-fonction-c" class="nav-link" data-scroll-target="#notre-première-fonction-c"><span class="header-section-number">7.2</span> Notre première fonction C++</a></li>
+  <li><a href="#comparaison-avec-r" id="toc-comparaison-avec-r" class="nav-link" data-scroll-target="#comparaison-avec-r"><span class="header-section-number">7.3</span> Comparaison avec R</a></li>
+  <li><a href="#les-types-de-données" id="toc-les-types-de-données" class="nav-link" data-scroll-target="#les-types-de-données"><span class="header-section-number">7.4</span> Les types de données</a></li>
+  <li><a href="#un-exemple-avec-un-vecteur" id="toc-un-exemple-avec-un-vecteur" class="nav-link" data-scroll-target="#un-exemple-avec-un-vecteur"><span class="header-section-number">7.5</span> Un exemple avec un vecteur</a></li>
+  <li><a href="#lindexation-commence-à-zéro" id="toc-lindexation-commence-à-zéro" class="nav-link" data-scroll-target="#lindexation-commence-à-zéro">L’indexation commence à zéro</a></li>
+  <li><a href="#de-cppfunction-à-sourcecpp" id="toc-de-cppfunction-à-sourcecpp" class="nav-link" data-scroll-target="#de-cppfunction-à-sourcecpp"><span class="header-section-number">7.6</span> De <code>cppFunction()</code> à <code>sourceCpp()</code></a></li>
+  <li><a href="#comprendre-le-fichier-c" id="toc-comprendre-le-fichier-c" class="nav-link" data-scroll-target="#comprendre-le-fichier-c"><span class="header-section-number">7.7</span> Comprendre le fichier C++</a></li>
+  <li><a href="#inclure-rcpp" id="toc-inclure-rcpp" class="nav-link" data-scroll-target="#inclure-rcpp">Inclure Rcpp</a></li>
+  <li><a href="#lespace-de-noms-rcpp" id="toc-lespace-de-noms-rcpp" class="nav-link" data-scroll-target="#lespace-de-noms-rcpp">L’espace de noms Rcpp</a></li>
+  <li><a href="#rcppexport" id="toc-rcppexport" class="nav-link" data-scroll-target="#rcppexport"><code>Rcpp::export</code></a></li>
+  <li><a href="#pourquoi-sourcecpp" id="toc-pourquoi-sourcecpp" class="nav-link" data-scroll-target="#pourquoi-sourcecpp"><span class="header-section-number">7.8</span> Pourquoi <code>sourceCpp()</code>?</a></li>
+  <li><a href="#utiliser-rcpp-dans-une-librairie" id="toc-utiliser-rcpp-dans-une-librairie" class="nav-link" data-scroll-target="#utiliser-rcpp-dans-une-librairie"><span class="header-section-number">7.9</span> Utiliser Rcpp dans une librairie</a></li>
+  <li><a href="#le-répertoire-src" id="toc-le-répertoire-src" class="nav-link" data-scroll-target="#le-répertoire-src"><span class="header-section-number">7.10</span> Le répertoire <code>src/</code></a></li>
+  <li><a href="#compileattributes" id="toc-compileattributes" class="nav-link" data-scroll-target="#compileattributes"><code>compileAttributes()</code></a></li>
+  <li><a href="#fonction-c-accessible-ou-fonction-publique" id="toc-fonction-c-accessible-ou-fonction-publique" class="nav-link" data-scroll-target="#fonction-c-accessible-ou-fonction-publique"><span class="header-section-number">7.11</span> Fonction C++ accessible ou fonction publique?</a></li>
+  <li><a href="#traduire-une-fonction-r-vers-c" id="toc-traduire-une-fonction-r-vers-c" class="nav-link" data-scroll-target="#traduire-une-fonction-r-vers-c"><span class="header-section-number">7.12</span> Traduire une fonction R vers C++</a></li>
+  <li><a href="#comparer-avant-et-après" id="toc-comparer-avant-et-après" class="nav-link" data-scroll-target="#comparer-avant-et-après"><span class="header-section-number">7.13</span> Comparer avant et après</a></li>
+  <li><a href="#est-ce-correct" id="toc-est-ce-correct" class="nav-link" data-scroll-target="#est-ce-correct">Est-ce correct?</a></li>
+  <li><a href="#est-ce-réellement-plus-rapide" id="toc-est-ce-réellement-plus-rapide" class="nav-link" data-scroll-target="#est-ce-réellement-plus-rapide">Est-ce réellement plus rapide?</a></li>
+  <li><a href="#reticule-un-équivalent-à-rcpp-pour-python" id="toc-reticule-un-équivalent-à-rcpp-pour-python" class="nav-link" data-scroll-target="#reticule-un-équivalent-à-rcpp-pour-python"><span class="header-section-number">7.14</span> reticule: un équivalent à Rcpp pour Python</a></li>
+  <li><a href="#plus-de-lecture" id="toc-plus-de-lecture" class="nav-link" data-scroll-target="#plus-de-lecture">Plus de lecture</a></li>
   </ul>
 </nav>
     </div>
@@ -216,9 +305,825 @@ div.csl-indent {
 </header>
 
 
-<p>Nous avons précédement</p>
-<section id="pourquoi" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="pourquoi">Pourquoi ?</h2>
+<p>Jusqu’à maintenant, toutes les fonctions de nos librairies ont été écrites en R.</p>
+<p>Il n’existe cependant aucune obligation voulant que l’ensemble du code d’une librairie R soit écrit en R. Il est possible d’intégrer du code provenant d’autres langages et de rendre celui-ci accessible à travers une interface R.</p>
+<p>Dans cette section, nous allons nous intéresser au <strong>C++</strong>, à l’aide de la librairie <code>Rcpp</code>.</p>
+<p>L’objectif n’est pas d’apprendre le C++ en profondeur. Nous voulons plutôt être capables :</p>
+<ul>
+<li>d’identifier une situation où l’utilisation de C++ peut être avantageuse;</li>
+<li>de traduire une petite fonction R en C++;</li>
+<li>de comprendre les principaux types de données utilisés par Rcpp;</li>
+<li>de compiler et appeler une fonction C++ depuis R;</li>
+<li>d’intégrer du code C++ à une véritable librairie R;</li>
+<li>de vérifier que l’implémentation C++ produit les mêmes résultats que l’implémentation R;</li>
+<li>de mesurer si l’utilisation de C++ apporte réellement un gain de performance.</li>
+</ul>
+<p>Une référence particulièrement utile pour cette section est le chapitre 25 de <em>Advanced R</em> de Hadley Wickham, <strong>Rewriting R code in C++</strong>.</p>
+<section id="pourquoi-utiliser-c" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="pourquoi-utiliser-c">Pourquoi utiliser C++?</h2>
+<p>La première question à se poser n’est pas :</p>
+<blockquote class="blockquote">
+<p>Comment écrire du C++?</p>
+</blockquote>
+<p>mais plutôt :</p>
+<blockquote class="blockquote">
+<p><strong>Pourquoi voudrions-nous écrire une partie de notre librairie en C++?</strong></p>
+</blockquote>
+<p>R est un langage particulièrement efficace pour effectuer de l’analyse statistique et manipuler des données. Il fournit également une interface beaucoup plus simple et flexible que C++ pour plusieurs tâches.</p>
+<p>Il n’est donc généralement <strong>pas souhaitable de réécrire une librairie entière en C++</strong>.</p>
+<p>L’intérêt de C++ apparaît plutôt lorsque nous identifions une portion de notre code qui constitue un <strong>goulot d’étranglement</strong>.</p>
+</section>
+<section id="quelques-situations-intéressantes" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="quelques-situations-intéressantes">Quelques situations intéressantes</h2>
+<p>C++ peut notamment être avantageux lorsque notre code contient :</p>
+<ul>
+<li>des boucles contenant un très grand nombre d’itérations;</li>
+<li>des calculs récursifs;</li>
+<li>des opérations simples répétées des millions de fois;</li>
+<li>des algorithmes difficiles à vectoriser en R;</li>
+<li>des structures de données ou des algorithmes disponibles naturellement en C++;</li>
+<li>une portion de code pour laquelle le temps d’exécution devient réellement important.</li>
+</ul>
+<p>Par exemple, imaginons une opération conceptuellement très simple :</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="dv">1000000</span>)) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># quelques petites opérations</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La durée d’une seule opération peut être négligeable.</p>
+<p>Cependant, lorsqu’elle est répétée plusieurs millions de fois, les coûts associés à l’interprétation du code R et aux appels de fonctions peuvent devenir importants.</p>
+<p>Le C++ étant un langage <strong>compilé</strong>, une partie de ce coût peut être éliminée.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Une bonne stratégie
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une bonne stratégie n’est généralement pas :</p>
+<pre class="text"><code>programme R
+    ↓
+tout traduire en C++</code></pre>
+<p>mais plutôt :</p>
+<pre class="text"><code>programme R
+    ↓
+identifier la partie lente
+    ↓
+traduire seulement cette partie en C++</code></pre>
+<p>Notre interface principale peut donc demeurer en R alors que certains calculs internes sont effectués en C++.</p>
+</div>
+</div>
+</section>
+<section id="c-nest-pas-automatiquement-plus-rapide" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="c-nest-pas-automatiquement-plus-rapide">C++ n’est pas automatiquement plus rapide</h2>
+<p>Il faut cependant éviter une conclusion trop rapide :</p>
+<blockquote class="blockquote">
+<p>C++ est plus rapide que R, donc traduire une fonction en C++ la rendra nécessairement plus rapide.</p>
+</blockquote>
+<p>Ce n’est <strong>pas</strong> toujours vrai.</p>
+<p>Plusieurs fonctions R effectuent déjà leurs calculs dans du code compilé.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>X <span class="sc">%*%</span> beta</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(X)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(A, b)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ne réalisent pas nécessairement l’ensemble de leurs calculs directement dans l’interpréteur R.</p>
+<p>Une fonction R comme :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prediction <span class="ot">&lt;-</span> <span class="cf">function</span>(X, beta) {</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  X <span class="sc">%*%</span> beta</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>fait très peu de travail en R. Le calcul matriciel lui-même est déjà effectué par du code compilé et optimisé.</p>
+<p>Réécrire naïvement cette fonction en C++ risque donc d’apporter <strong>très peu de gain</strong>.</p>
+<p>À l’opposé, une fonction contenant plusieurs boucles R imbriquées peut être une bien meilleure candidate.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Mesurer plutôt que présumer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Avant d’optimiser du code :</p>
+<ol type="1">
+<li>identifier la partie coûteuse;</li>
+<li>produire une version de référence correcte;</li>
+<li>mesurer son temps d’exécution;</li>
+<li>optimiser;</li>
+<li>vérifier que le résultat demeure le même;</li>
+<li>mesurer à nouveau.</li>
+</ol>
+<p>Une optimisation dont nous ne mesurons pas l’effet n’est qu’une hypothèse.</p>
+</div>
+</div>
+<p>Cette idée sera particulièrement importante dans notre projet Ridge.</p>
+<p>Une seule estimation Ridge repose principalement sur des opérations matricielles déjà très optimisées. Par contre, une validation croisée répète l’ajustement et la prédiction pour plusieurs valeurs de <span class="math inline">\(\lambda\)</span> et plusieurs partitions des données.</p>
+<p>Nous aurons donc éventuellement une structure ressemblant à :</p>
+<pre class="text"><code>pour chaque lambda
+    pour chaque fold
+        ajuster le modèle
+        prédire
+        calculer l'erreur</code></pre>
+<p>C’est ce type de calcul répétitif qui peut devenir intéressant à déplacer vers C++.</p>
+</section>
+<section id="préparer-notre-ordinateur" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="préparer-notre-ordinateur"><span class="header-section-number">7.1</span> Préparer notre ordinateur</h2>
+<p>Pour utiliser Rcpp, deux éléments sont nécessaires :</p>
+<ol type="1">
+<li>une installation de la librairie <code>Rcpp</code>;</li>
+<li>un compilateur C++ permettant à R de compiler notre code.</li>
+</ol>
+</section>
+<section id="installer-rcpp" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="installer-rcpp">Installer Rcpp</h2>
+<p><code>Rcpp</code> est disponible sur CRAN :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"Rcpp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous pouvons ensuite la charger :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rcpp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="installer-les-outils-de-compilation-sous-windows" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="installer-les-outils-de-compilation-sous-windows">Installer les outils de compilation sous Windows</h2>
+<p>Sous Windows, nous devons également installer <strong>Rtools</strong>.</p>
+<p>Rtools fournit notamment les compilateurs et outils nécessaires à la construction de librairies R contenant du code C ou C++.</p>
+<p>La version de Rtools doit correspondre à la version de R utilisée. Il est donc préférable de télécharger la version appropriée directement à partir de la page officielle <strong>Rtools</strong> de CRAN.</p>
+<p>Après l’installation, redémarrez RStudio.</p>
+<p>Nous pouvons ensuite vérifier que notre environnement est prêt à compiler du code avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pkgbuild<span class="sc">::</span><span class="fu">check_build_tools</span>(<span class="at">debug =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Si tout fonctionne correctement, nous devrions obtenir un message indiquant que notre système est prêt à construire des librairies contenant du code compilé.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sur macOS et Linux
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le principe est le même : R doit avoir accès à une chaîne de compilation C++.</p>
+<p>Sous macOS, cela passe généralement par les outils de développement d’Apple. Sous Linux, les outils de compilation sont généralement disponibles à travers le gestionnaire de paquets du système.</p>
+<p>Dans ce cours, nous nous concentrerons principalement sur la configuration Windows.</p>
+</div>
+</div>
+</section>
+<section id="notre-première-fonction-c" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="notre-première-fonction-c"><span class="header-section-number">7.2</span> Notre première fonction C++</h2>
+<p>Nous allons commencer avec la manière la plus simple possible d’appeler du C++ depuis R :</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Rcpp<span class="sc">::</span><span class="fu">cppFunction</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>cppFunction()</code> permet de fournir directement le code d’une petite fonction C++ sous forme de chaîne de caractères.</p>
+<p>Par exemple :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Rcpp<span class="sc">::</span><span class="fu">cppFunction</span>(<span class="st">'</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="st">double carre_cpp(double x) {</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="st">  return x * x;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Une nouvelle fonction R devient immédiatement disponible :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">carre_cpp</span>(<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>et retourne :</p>
+<pre class="text"><code>[1] 16</code></pre>
+<p>Nous venons donc de :</p>
+<pre class="text"><code>écrire du C++
+      ↓
+compiler le code
+      ↓
+créer automatiquement une interface avec R
+      ↓
+appeler la fonction depuis R</code></pre>
+<p>Rcpp prend en charge une grande partie de la mécanique nécessaire pour faire communiquer les deux langages.</p>
+</section>
+<section id="comparaison-avec-r" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="comparaison-avec-r"><span class="header-section-number">7.3</span> Comparaison avec R</h2>
+<p>La version R de notre fonction serait simplement :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>carre_R <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">*</span> x</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Comparons les deux :</p>
+<pre class="text"><code>R                           C++
+
+carre_R &lt;- function(x) {    double carre_cpp(double x) {
+  x * x                       return x * x;
+}                           }</code></pre>
+<p>Plusieurs différences apparaissent immédiatement.</p>
+<p>En C++ :</p>
+<ul>
+<li>le type de la valeur retournée est indiqué;</li>
+<li>le type de chaque argument est indiqué;</li>
+<li><code>return</code> est explicite;</li>
+<li>chaque instruction se termine par <code>;</code>.</li>
+</ul>
+<p>Cette obligation de préciser les types constitue l’une des différences fondamentales entre R et C++.</p>
+</section>
+<section id="les-types-de-données" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="les-types-de-données"><span class="header-section-number">7.4</span> Les types de données</h2>
+<p>R permet généralement de manipuler les objets sans déclarer explicitement leur type dans la définition d’une fonction.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ne nous dit pas si <code>x</code> doit être :</p>
+<ul>
+<li>un entier;</li>
+<li>un nombre réel;</li>
+<li>un vecteur;</li>
+<li>une chaîne de caractères;</li>
+<li>une matrice.</li>
+</ul>
+<p>En C++, cette information doit généralement être explicitée.</p>
+<p>Voici quelques correspondances utiles avec Rcpp :</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>R</th>
+<th>Scalaire C++</th>
+<th>Vecteur Rcpp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>logical</code></td>
+<td><code>bool</code></td>
+<td><code>LogicalVector</code></td>
+</tr>
+<tr class="even">
+<td><code>integer</code></td>
+<td><code>int</code></td>
+<td><code>IntegerVector</code></td>
+</tr>
+<tr class="odd">
+<td><code>numeric</code></td>
+<td><code>double</code></td>
+<td><code>NumericVector</code></td>
+</tr>
+<tr class="even">
+<td><code>character</code></td>
+<td><code>std::string</code> ou <code>String</code></td>
+<td><code>CharacterVector</code></td>
+</tr>
+</tbody>
+</table>
+<p>Pour les matrices, on retrouve notamment :</p>
+<pre class="text"><code>NumericMatrix
+IntegerMatrix
+LogicalMatrix
+CharacterMatrix</code></pre>
+<p>On retrouve également :</p>
+<pre class="text"><code>List
+DataFrame
+Function</code></pre>
+<p>pour manipuler d’autres objets R.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>integer</code> et <code>numeric</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans R :</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>est normalement un objet de type <code>double</code>, alors que :</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>est un entier.</p>
+<p>Ainsi :</p>
+<pre class="text"><code>numeric  → double
+integer  → int</code></pre>
+<p>Cette distinction devient plus importante lorsque nous devons explicitement définir les types de nos arguments en C++.</p>
+</div>
+</div>
+</section>
+<section id="un-exemple-avec-un-vecteur" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="un-exemple-avec-un-vecteur"><span class="header-section-number">7.5</span> Un exemple avec un vecteur</h2>
+<p>Considérons une fonction R qui calcule la somme des carrés :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>somme_carres_R <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  total <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(x)) {</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    total <span class="ot">&lt;-</span> total <span class="sc">+</span> x[i]<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  total</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous pouvons écrire une version C++ :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Rcpp<span class="sc">::</span><span class="fu">cppFunction</span>(<span class="st">'</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="st">double somme_carres_cpp(Rcpp::NumericVector x) {</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="st">  double total = 0.0;</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="st">  for (int i = 0; i &lt; x.size(); ++i) {</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="st">    total += x[i] * x[i];</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="st">  }</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="st">  return total;</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous pouvons alors comparer :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">somme_carres_R</span>(x)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">somme_carres_cpp</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Les deux fonctions devraient produire le même résultat.</p>
+</section>
+<section id="lindexation-commence-à-zéro" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="lindexation-commence-à-zéro">L’indexation commence à zéro</h2>
+<p>Il y a cependant une différence particulièrement importante.</p>
+<p>En R, le premier élément d’un vecteur est :</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En C++, le premier élément est :</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>x<span class="op">[</span><span class="dv">0</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ainsi, une boucle C++ typique prend la forme :</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> x<span class="op">.</span>size<span class="op">();</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>plutôt que :</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)) {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Une source classique d’erreurs
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lors de la traduction d’une fonction R vers C++, il faut toujours vérifier soigneusement les indices.</p>
+<pre class="text"><code>R      : 1, 2, 3, ..., n
+C++    : 0, 1, 2, ..., n - 1</code></pre>
+<p>Les erreurs d’indexation sont parmi les erreurs les plus faciles à introduire lors d’une traduction entre les deux langages.</p>
+</div>
+</div>
+</section>
+<section id="de-cppfunction-à-sourcecpp" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="de-cppfunction-à-sourcecpp"><span class="header-section-number">7.6</span> De <code>cppFunction()</code> à <code>sourceCpp()</code></h2>
+<p><code>cppFunction()</code> est très pratique pour :</p>
+<ul>
+<li>apprendre;</li>
+<li>faire un petit prototype;</li>
+<li>tester rapidement une idée;</li>
+<li>compiler une seule fonction simple.</li>
+</ul>
+<p>Cependant, écrire une fonction C++ à l’intérieur d’une chaîne de caractères R devient rapidement désagréable.</p>
+<p>Pour du code plus substantiel, nous préférons créer un véritable fichier :</p>
+<pre class="text"><code>.cpp</code></pre>
+<p>et le compiler avec :</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>Rcpp<span class="sc">::</span><span class="fu">sourceCpp</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Créons par exemple le fichier :</p>
+<pre class="text"><code>erreur.cpp</code></pre>
+<p>contenant :</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp<span class="op">;</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> mse_cpp<span class="op">(</span>NumericVector y<span class="op">,</span> NumericVector prediction<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> n <span class="op">=</span> y<span class="op">.</span>size<span class="op">();</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>prediction<span class="op">.</span>size<span class="op">()</span> <span class="op">!=</span> n<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    stop<span class="op">(</span><span class="st">"`y` et `prediction` doivent avoir la même longueur."</span><span class="op">);</span></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> erreur <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> <span class="op">++</span>i<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> residu <span class="op">=</span> y<span class="op">[</span>i<span class="op">]</span> <span class="op">-</span> prediction<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>    erreur <span class="op">+=</span> residu <span class="op">*</span> residu<span class="op">;</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> erreur <span class="op">/</span> n<span class="op">;</span></span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous pouvons ensuite compiler le fichier depuis R :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Rcpp<span class="sc">::</span><span class="fu">sourceCpp</span>(<span class="st">"erreur.cpp"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>et appeler :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">7</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.5</span>, <span class="fl">4.5</span>, <span class="dv">6</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mse_cpp</span>(y, pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="comprendre-le-fichier-c" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="comprendre-le-fichier-c"><span class="header-section-number">7.7</span> Comprendre le fichier C++</h2>
+<p>Regardons quelques lignes importantes.</p>
+</section>
+<section id="inclure-rcpp" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="inclure-rcpp">Inclure Rcpp</h2>
+<div class="sourceCode" id="cb37"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>permet d’utiliser les fonctionnalités fournies par Rcpp.</p>
+</section>
+<section id="lespace-de-noms-rcpp" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="lespace-de-noms-rcpp">L’espace de noms Rcpp</h2>
+<p>Nous avons ensuite :</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cela nous permet d’écrire :</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>NumericVector</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>plutôt que :</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>Rcpp<span class="op">::</span>NumericVector</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cette ligne est pratique pour de petits exemples.</p>
+</section>
+<section id="rcppexport" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="rcppexport"><code>Rcpp::export</code></h2>
+<p>La ligne :</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>est particulièrement importante.</p>
+<p>Elle indique à Rcpp que la fonction C++ définie immédiatement après doit être rendue accessible depuis R.</p>
+<p>Il faut cependant faire attention à la signification du mot <strong>export</strong>.</p>
+<p>Nous avons déjà rencontré :</p>
+<pre class="text"><code>#' @export</code></pre>
+<p>avec <code>roxygen2</code>.</p>
+<p>Les deux mécanismes ne jouent pas le même rôle :</p>
+<pre class="text"><code>// [[Rcpp::export]]
+        ↓
+créer une interface R vers une fonction C++
+
+#' @export
+        ↓
+rendre une fonction publique pour
+les utilisateurs de notre librairie</code></pre>
+<p>Cette distinction deviendra particulièrement importante lorsque nous intégrerons notre code C++ dans une librairie.</p>
+</section>
+<section id="pourquoi-sourcecpp" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="pourquoi-sourcecpp"><span class="header-section-number">7.8</span> Pourquoi <code>sourceCpp()</code>?</h2>
+<p><code>sourceCpp()</code> :</p>
+<ol type="1">
+<li>lit le fichier <code>.cpp</code>;</li>
+<li>compile le code;</li>
+<li>construit la librairie dynamique nécessaire;</li>
+<li>crée les interfaces R correspondant aux fonctions marquées <code>Rcpp::export</code>;</li>
+<li>rend ces fonctions disponibles dans notre session.</li>
+</ol>
+<p>Pour un prototype, c’est extrêmement pratique.</p>
+<p>Cependant, <code>sourceCpp()</code> n’est pas encore la manière finale dont nous voulons distribuer le code de notre librairie.</p>
+<p>Nous voulons éventuellement que le C++ soit <strong>une composante normale de notre librairie R</strong>.</p>
+</section>
+<section id="utiliser-rcpp-dans-une-librairie" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="utiliser-rcpp-dans-une-librairie"><span class="header-section-number">7.9</span> Utiliser Rcpp dans une librairie</h2>
+<p>Supposons maintenant que nous travaillions à l’intérieur d’une véritable librairie R.</p>
+<p>Notre structure ressemble actuellement à :</p>
+<pre class="text"><code>MaLibrairie/
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+├── man/
+├── tests/
+└── MaLibrairie.Rproj</code></pre>
+<p>Pour préparer cette librairie à contenir du code C++, <code>usethis</code> fournit :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_rcpp</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cette commande met en place plusieurs éléments nécessaires au code compilé.</p>
+<p>Elle crée notamment :</p>
+<pre class="text"><code>src/</code></pre>
+<p>et ajoute les dépendances nécessaires dans <code>DESCRIPTION</code>.</p>
+<p>Nous devrions notamment retrouver :</p>
+<pre class="text"><code>Imports:
+    Rcpp
+
+LinkingTo:
+    Rcpp</code></pre>
+<p>Nous retrouvons ici directement les notions discutées dans <span class="citation" data-cites="dependencies">(<a href="references.html#ref-dependencies" role="doc-biblioref"><strong>dependencies?</strong></a>)</span>.</p>
+<p><code>Imports</code> indique que notre librairie utilise <code>Rcpp</code>, alors que <code>LinkingTo</code> permet au compilateur d’accéder aux fichiers nécessaires lors de la compilation du code C++.</p>
+<p>Notre projet contient alors quelque chose ressemblant à :</p>
+<pre class="text"><code>MaLibrairie/
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+├── src/
+│   └── calcul.cpp
+├── man/
+└── tests/</code></pre>
+</section>
+<section id="le-répertoire-src" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="le-répertoire-src"><span class="header-section-number">7.10</span> Le répertoire <code>src/</code></h2>
+<p>Le code compilé d’une librairie R est placé dans :</p>
+<pre class="text"><code>src/</code></pre>
+<p>Cela crée une distinction assez claire :</p>
+<pre class="text"><code>R/
+    ↓
+code R
+
+src/
+    ↓
+code C, C++, Fortran, ...</code></pre>
+<p>Nous pouvons donc créer :</p>
+<pre class="text"><code>src/erreur.cpp</code></pre>
+<p>contenant notre code C++.</p>
+</section>
+<section id="compileattributes" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="compileattributes"><code>compileAttributes()</code></h2>
+<p>Comment R sait-il maintenant comment appeler notre fonction C++?</p>
+<p>Rcpp doit générer une couche d’interface entre :</p>
+<pre class="text"><code>R
+↕
+C++</code></pre>
+<p>Cette étape peut être effectuée avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Rcpp<span class="sc">::</span><span class="fu">compileAttributes</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Rcpp examine alors les fichiers C++ de <code>src/</code> à la recherche de directives comme :</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et génère les interfaces nécessaires.</p>
+<p>Cela crée notamment des fichiers semblables à :</p>
+<pre class="text"><code>R/RcppExports.R
+src/RcppExports.cpp</code></pre>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Ne pas modifier <code>RcppExports</code> à la main
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les fichiers :</p>
+<pre class="text"><code>R/RcppExports.R
+src/RcppExports.cpp</code></pre>
+<p>sont générés automatiquement.</p>
+<p>Nous modifions plutôt notre fichier C++ original puis nous régénérons les interfaces.</p>
+</div>
+</div>
+<p>Nous pouvons ensuite utiliser :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>pour compiler et charger la version de développement de notre librairie.</p>
+</section>
+<section id="fonction-c-accessible-ou-fonction-publique" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="fonction-c-accessible-ou-fonction-publique"><span class="header-section-number">7.11</span> Fonction C++ accessible ou fonction publique?</h2>
+<p>La directive :</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>permet à notre code R d’appeler une fonction C++.</p>
+<p>Cela ne signifie pas nécessairement que cette fonction devrait devenir une fonction <strong>publique</strong> de notre librairie.</p>
+<p>Considérons :</p>
+<pre class="text"><code>ridge()</code></pre>
+<p>comme fonction publique.</p>
+<p>Elle pourrait appeler en interne :</p>
+<pre class="text"><code>ridge_fit_cpp()</code></pre>
+<p>qui effectue un calcul numérique en C++.</p>
+<p>L’utilisateur n’a pas nécessairement besoin de connaître cette fonction interne.</p>
+<p>Nous pouvons donc avoir :</p>
+<pre class="text"><code>UTILISATEUR
+
+ridge(...)
+   │
+   ▼
+code R
+   │
+   ▼
+ridge_fit_cpp(...)
+   │
+   ▼
+code C++</code></pre>
+<p>Cette architecture permet de conserver en R :</p>
+<ul>
+<li>la validation des arguments;</li>
+<li>la gestion des formules;</li>
+<li><code>stats::model.matrix()</code>;</li>
+<li>les messages destinés à l’utilisateur;</li>
+<li>la création de l’objet retourné.</li>
+</ul>
+<p>Et d’utiliser C++ seulement pour :</p>
+<ul>
+<li>le calcul numérique;</li>
+<li>les boucles répétitives;</li>
+<li>les portions véritablement coûteuses.</li>
+</ul>
+</section>
+<section id="traduire-une-fonction-r-vers-c" class="level2" data-number="7.12">
+<h2 data-number="7.12" class="anchored" data-anchor-id="traduire-une-fonction-r-vers-c"><span class="header-section-number">7.12</span> Traduire une fonction R vers C++</h2>
+<p>Une traduction R vers C++ ne devrait pas être une simple opération de copier-coller syntaxique.</p>
+<p>Avant de traduire une fonction, il faut comprendre :</p>
+<ol type="1">
+<li>les arguments qu’elle reçoit;</li>
+<li>leurs types;</li>
+<li>la structure des objets;</li>
+<li>les valeurs retournées;</li>
+<li>les boucles effectuées;</li>
+<li>les cas limites;</li>
+<li>les valeurs manquantes;</li>
+<li>les fonctions R déjà utilisées.</li>
+</ol>
+<p>Une méthode raisonnable consiste à commencer par une fonction R <strong>simple et correcte</strong>.</p>
+<p>Par exemple :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>mse_R <span class="ot">&lt;-</span> <span class="cf">function</span>(y, prediction) {</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(y) <span class="sc">!=</span> <span class="fu">length</span>(prediction)) {</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"`y` et `prediction` doivent avoir la même longueur."</span>)</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  erreur <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(y)) {</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>    residu <span class="ot">&lt;-</span> y[i] <span class="sc">-</span> prediction[i]</span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>    erreur <span class="ot">&lt;-</span> erreur <span class="sc">+</span> residu<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>  erreur <span class="sc">/</span> <span class="fu">length</span>(y)</span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous pouvons ensuite établir une correspondance :</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>R</th>
+<th>C++</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>numeric</code></td>
+<td><code>double</code></td>
+</tr>
+<tr class="even">
+<td>vecteur <code>numeric</code></td>
+<td><code>NumericVector</code></td>
+</tr>
+<tr class="odd">
+<td><code>integer</code></td>
+<td><code>int</code></td>
+</tr>
+<tr class="even">
+<td>vecteur <code>integer</code></td>
+<td><code>IntegerVector</code></td>
+</tr>
+<tr class="odd">
+<td><code>length(x)</code></td>
+<td><code>x.size()</code></td>
+</tr>
+<tr class="even">
+<td>indices <code>1,...,n</code></td>
+<td>indices <code>0,...,n-1</code></td>
+</tr>
+<tr class="odd">
+<td><code>stop()</code></td>
+<td><code>stop()</code> avec Rcpp</td>
+</tr>
+<tr class="even">
+<td>retour implicite</td>
+<td><code>return</code> explicite</td>
+</tr>
+</tbody>
+</table>
+<p>Seulement ensuite traduisons-nous la fonction.</p>
+<p>#@ Utiliser un modèle d’IAG pour aider à la traduction</p>
+<p>Les modèles d’intelligence artificielle générative peuvent être particulièrement utiles lorsqu’on doit traduire une petite fonction R vers C++.</p>
+<p>On peut leur fournir :</p>
+<ul>
+<li>la fonction R originale;</li>
+<li>les types attendus des arguments;</li>
+<li>la valeur retournée;</li>
+<li>des exemples d’utilisation;</li>
+<li>les contraintes particulières;</li>
+<li>le fait que le code doit utiliser Rcpp.</li>
+</ul>
+<p>Un modèle peut alors proposer une première traduction.</p>
+<p>Cependant :</p>
+<blockquote class="blockquote">
+<p><strong>Le code généré constitue un point de départ, pas une preuve de correction.</strong></p>
+</blockquote>
+<p>Une traduction peut notamment :</p>
+<ul>
+<li>choisir un mauvais type;</li>
+<li>oublier que l’indexation commence à zéro;</li>
+<li>gérer incorrectement les valeurs <code>NA</code>;</li>
+<li>modifier silencieusement le comportement de la fonction;</li>
+<li>créer des copies inutiles;</li>
+<li>produire du code compilable mais numériquement différent;</li>
+<li>produire du code plus compliqué sans être plus rapide.</li>
+</ul>
+<p>Nous devons donc conserver le workflow :</p>
+<pre class="text"><code>fonction R correcte
+       ↓
+traduction proposée
+       ↓
+comprendre le C++
+       ↓
+compiler
+       ↓
+tester les résultats
+       ↓
+tester les cas limites
+       ↓
+mesurer la performance</code></pre>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Être capable d’expliquer son code
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’utilisation d’un modèle d’IAG ne remplace pas la compréhension du code produit.</p>
+<p>Dans le cadre de ce cours, vous devriez notamment être capables d’expliquer :</p>
+<ul>
+<li>les types utilisés;</li>
+<li>la structure des boucles;</li>
+<li>les indices;</li>
+<li>les valeurs retournées;</li>
+<li>les échanges entre R et C++;</li>
+<li>pourquoi cette portion du code constitue une bonne candidate pour C++.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="comparer-avant-et-après" class="level2" data-number="7.13">
+<h2 data-number="7.13" class="anchored" data-anchor-id="comparer-avant-et-après"><span class="header-section-number">7.13</span> Comparer avant et après</h2>
+<p>Une fois notre version C++ créée, deux questions doivent être posées.</p>
+</section>
+<section id="est-ce-correct" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="est-ce-correct">Est-ce correct?</h2>
+<p>Nous voulons d’abord comparer les résultats :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>resultat_R <span class="ot">&lt;-</span> <span class="fu">mse_R</span>(y, prediction)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>resultat_cpp <span class="ot">&lt;-</span> <span class="fu">mse_cpp</span>(y, prediction)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>  resultat_R,</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>  resultat_cpp</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Une fonction plus rapide mais incorrecte n’est évidemment pas une amélioration.</p>
+</section>
+<section id="est-ce-réellement-plus-rapide" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="est-ce-réellement-plus-rapide">Est-ce réellement plus rapide?</h2>
+<p>Ensuite seulement, nous comparons les temps d’exécution.</p>
+<p>Par exemple :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replicate</span>(</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1000</span>,</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mse_R</span>(y, prediction)</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replicate</span>(</span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1000</span>,</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mse_cpp</span>(y, prediction)</span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Le résultat peut être décevant — et c’est intéressant!
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Il est tout à fait possible que notre première traduction C++ soit seulement légèrement plus rapide.</p>
+<p>Il est même possible qu’elle soit plus lente.</p>
+<p>Ce résultat n’est pas un échec.</p>
+<p>Il nous apprend quelque chose sur l’endroit où le temps de calcul est réellement dépensé.</p>
+</div>
+</div>
+</section>
+<section id="reticule-un-équivalent-à-rcpp-pour-python" class="level2" data-number="7.14">
+<h2 data-number="7.14" class="anchored" data-anchor-id="reticule-un-équivalent-à-rcpp-pour-python"><span class="header-section-number">7.14</span> reticule: un équivalent à Rcpp pour Python</h2>
+</section>
+<section id="plus-de-lecture" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="plus-de-lecture">Plus de lecture</h2>
+<p>Une <a href="https://adv-r.hadley.nz/rcpp.html?utm_source=chatgpt.com">source très complète de Hadley Whickam</a> et un autre <a href="https://teuder.github.io/rcpp4everyone_en/index.html">livre R Markodown très intéressant</a>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
