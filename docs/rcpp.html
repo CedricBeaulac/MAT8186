@@ -278,7 +278,17 @@ window.Quarto = {
   <li><a href="#comparer-avant-et-après" id="toc-comparer-avant-et-après" class="nav-link" data-scroll-target="#comparer-avant-et-après"><span class="header-section-number">7.13</span> Comparer avant et après</a></li>
   <li><a href="#est-ce-correct" id="toc-est-ce-correct" class="nav-link" data-scroll-target="#est-ce-correct">Est-ce correct?</a></li>
   <li><a href="#est-ce-réellement-plus-rapide" id="toc-est-ce-réellement-plus-rapide" class="nav-link" data-scroll-target="#est-ce-réellement-plus-rapide">Est-ce réellement plus rapide?</a></li>
-  <li><a href="#reticule-un-équivalent-à-rcpp-pour-python" id="toc-reticule-un-équivalent-à-rcpp-pour-python" class="nav-link" data-scroll-target="#reticule-un-équivalent-à-rcpp-pour-python"><span class="header-section-number">7.14</span> reticule: un équivalent à Rcpp pour Python</a></li>
+  <li><a href="#sec-reticulate" id="toc-sec-reticulate" class="nav-link" data-scroll-target="#sec-reticulate"><span class="header-section-number">7.14</span> reticule: un équivalent à Rcpp pour Python</a></li>
+  <li><a href="#installer-reticulate" id="toc-installer-reticulate" class="nav-link" data-scroll-target="#installer-reticulate"><span class="header-section-number">7.15</span> Installer <code>reticulate</code></a></li>
+  <li><a href="#utiliser-notre-propre-code-python" id="toc-utiliser-notre-propre-code-python" class="nav-link" data-scroll-target="#utiliser-notre-propre-code-python"><span class="header-section-number">7.16</span> Utiliser notre propre code Python</a></li>
+  <li><a href="#utiliser-une-librairie-python" id="toc-utiliser-une-librairie-python" class="nav-link" data-scroll-target="#utiliser-une-librairie-python"><span class="header-section-number">7.17</span> Utiliser une librairie Python</a></li>
+  <li><a href="#déclarer-une-dépendance-python" id="toc-déclarer-une-dépendance-python" class="nav-link" data-scroll-target="#déclarer-une-dépendance-python"><span class="header-section-number">7.18</span> Déclarer une dépendance Python</a></li>
+  <li><a href="#importer-un-module-python" id="toc-importer-un-module-python" class="nav-link" data-scroll-target="#importer-un-module-python"><span class="header-section-number">7.19</span> Importer un module Python</a></li>
+  <li><a href="#exemple-calculer-une-dérivée-symbolique" id="toc-exemple-calculer-une-dérivée-symbolique" class="nav-link" data-scroll-target="#exemple-calculer-une-dérivée-symbolique"><span class="header-section-number">7.20</span> Exemple : calculer une dérivée symbolique</a></li>
+  <li><a href="#les-conversions-entre-r-et-python" id="toc-les-conversions-entre-r-et-python" class="nav-link" data-scroll-target="#les-conversions-entre-r-et-python"><span class="header-section-number">7.21</span> Les conversions entre R et Python</a></li>
+  <li><a href="#utiliser-python-dans-une-librairie-r" id="toc-utiliser-python-dans-une-librairie-r" class="nav-link" data-scroll-target="#utiliser-python-dans-une-librairie-r"><span class="header-section-number">7.22</span> Utiliser Python dans une librairie R</a></li>
+  <li><a href="#rcpp-ou-reticulate" id="toc-rcpp-ou-reticulate" class="nav-link" data-scroll-target="#rcpp-ou-reticulate"><span class="header-section-number">7.23</span> <code>Rcpp</code> ou <code>reticulate</code>?</a></li>
+  <li><a href="#un-même-principe-cacher-la-complexité" id="toc-un-même-principe-cacher-la-complexité" class="nav-link" data-scroll-target="#un-même-principe-cacher-la-complexité"><span class="header-section-number">7.24</span> Un même principe : cacher la complexité</a></li>
   <li><a href="#plus-de-lecture" id="toc-plus-de-lecture" class="nav-link" data-scroll-target="#plus-de-lecture">Plus de lecture</a></li>
   </ul>
 </nav>
@@ -1118,8 +1128,404 @@ Le résultat peut être décevant — et c’est intéressant!
 </div>
 </div>
 </section>
-<section id="reticule-un-équivalent-à-rcpp-pour-python" class="level2" data-number="7.14">
-<h2 data-number="7.14" class="anchored" data-anchor-id="reticule-un-équivalent-à-rcpp-pour-python"><span class="header-section-number">7.14</span> reticule: un équivalent à Rcpp pour Python</h2>
+<section id="sec-reticulate" class="level2" data-number="7.14">
+<h2 data-number="7.14" class="anchored" data-anchor-id="sec-reticulate"><span class="header-section-number">7.14</span> reticule: un équivalent à Rcpp pour Python</h2>
+<p>Nous venons de voir comment intégrer du code C++ à une librairie R avec <code>Rcpp</code>.</p>
+<p>Il existe cependant une autre raison pour laquelle nous pourrions vouloir faire appel à un autre langage : <strong>profiter d’un écosystème logiciel qui existe déjà ailleurs</strong>.</p>
+<p>Python possède aujourd’hui un très grand nombre de librairies spécialisées en calcul scientifique, apprentissage automatique, traitement d’images, calcul symbolique, traitement du langage, etc.</p>
+<p>La librairie R <code>reticulate</code> permet d’utiliser directement du code Python depuis R.</p>
+<p>L’objectif est donc assez différent de celui de <code>Rcpp</code>.</p>
+<pre class="text"><code>Rcpp
+────────────────────────────────
+J'ai un calcul que je veux
+implémenter moi-même.
+
+Je peux en déplacer une partie
+vers C++ pour améliorer les
+performances.
+
+
+reticulate
+────────────────────────────────
+Une fonctionnalité intéressante
+existe déjà dans l'écosystème
+Python.
+
+Je veux pouvoir l'utiliser
+depuis ma librairie R.</code></pre>
+<p>Dans cette section, nous allons seulement faire un <strong>court survol</strong> de <code>reticulate</code>.</p>
+<p>Notre objectif n’est pas d’apprendre Python, mais plutôt de comprendre comment une librairie R peut utiliser du code provenant de cet écosystème.</p>
+</section>
+<section id="installer-reticulate" class="level2" data-number="7.15">
+<h2 data-number="7.15" class="anchored" data-anchor-id="installer-reticulate"><span class="header-section-number">7.15</span> Installer <code>reticulate</code></h2>
+<p><code>reticulate</code> est une librairie R et peut être installée normalement depuis CRAN :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"reticulate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dans une librairie R, nous pouvons également déclarer cette dépendance avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"reticulate"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nous retrouverons alors :</p>
+<pre class="text"><code>Imports:
+    reticulate</code></pre>
+<p>dans notre fichier <code>DESCRIPTION</code>.</p>
+</section>
+<section id="utiliser-notre-propre-code-python" class="level2" data-number="7.16">
+<h2 data-number="7.16" class="anchored" data-anchor-id="utiliser-notre-propre-code-python"><span class="header-section-number">7.16</span> Utiliser notre propre code Python</h2>
+<p>Commençons par un exemple extrêmement simple.</p>
+<p>Créons un fichier :</p>
+<pre class="text"><code>calcul.py</code></pre>
+<p>contenant une fonction Python :</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> puissance(x, p):</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">**</span> p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous pouvons ensuite exécuter ce fichier depuis R avec :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">source_python</span>(<span class="st">"calcul.py"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La fonction définie dans le fichier Python devient alors accessible depuis R :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">puissance</span>(<span class="dv">2</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>qui retourne :</p>
+<pre class="text"><code>[1] 32</code></pre>
+<p>Nous obtenons donc une structure assez semblable à celle rencontrée avec <code>Rcpp</code> :</p>
+<pre class="text"><code>C++                            Python
+
+calcul.cpp                     calcul.py
+     ↓                              ↓
+sourceCpp()                    source_python()
+     ↓                              ↓
+fonction accessible           fonction accessible
+depuis R                      depuis R</code></pre>
+<p>Il existe toutefois une différence fondamentale.</p>
+<p>Avec <code>Rcpp</code>, notre code C++ est <strong>compilé</strong>.</p>
+<p>Avec <code>reticulate</code>, nous démarrons plutôt une session Python à laquelle R communique.</p>
+</section>
+<section id="utiliser-une-librairie-python" class="level2" data-number="7.17">
+<h2 data-number="7.17" class="anchored" data-anchor-id="utiliser-une-librairie-python"><span class="header-section-number">7.17</span> Utiliser une librairie Python</h2>
+<p>L’intérêt principal de <code>reticulate</code> n’est cependant pas nécessairement d’écrire nous-mêmes du code Python.</p>
+<p>Nous pouvons aussi utiliser directement une librairie de l’écosystème Python.</p>
+<p>Pour illustrer cette possibilité, nous allons utiliser <strong>SymPy</strong>.</p>
+<p>SymPy est une librairie Python spécialisée dans le <strong>calcul symbolique</strong>.</p>
+<p>Elle permet notamment de :</p>
+<ul>
+<li>manipuler des expressions mathématiques;</li>
+<li>calculer des dérivées;</li>
+<li>calculer des intégrales;</li>
+<li>résoudre des équations;</li>
+<li>simplifier des expressions.</li>
+</ul>
+<p>Plutôt que d’implémenter nous-mêmes un moteur de calcul symbolique dans notre librairie R, nous pouvons utiliser celui qui existe déjà dans Python.</p>
+</section>
+<section id="déclarer-une-dépendance-python" class="level2" data-number="7.18">
+<h2 data-number="7.18" class="anchored" data-anchor-id="déclarer-une-dépendance-python"><span class="header-section-number">7.18</span> Déclarer une dépendance Python</h2>
+<p>Une librairie R utilisant <code>reticulate</code> peut avoir deux types de dépendances :</p>
+<pre class="text"><code>Dépendance R
+    ↓
+reticulate
+
+
+Dépendance Python
+    ↓
+SymPy</code></pre>
+<p>Dans les versions modernes de <code>reticulate</code>, la méthode recommandée pour déclarer une dépendance Python consiste à utiliser :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">py_require</span>(<span class="st">"sympy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cette commande signifie essentiellement :</p>
+<blockquote class="blockquote">
+<p>Notre code aura besoin de la librairie Python <code>sympy</code>.</p>
+</blockquote>
+<p>Il est également possible de préciser des contraintes de version :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">py_require</span>(<span class="st">"sympy&gt;=1.12"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Dans la majorité des situations, il est cependant préférable de ne pas imposer inutilement une version précise.</p>
+<p><code>reticulate</code> peut alors trouver ou construire un environnement Python compatible avec les dépendances déclarées.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Une gestion beaucoup plus automatisée
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les anciennes approches avec <code>reticulate</code> demandaient souvent de créer et configurer manuellement des environnements Python ou Conda.</p>
+<p>La fonction <code>py_require()</code> permet aujourd’hui d’automatiser une grande partie de cette gestion.</p>
+<p>Pour une introduction à <code>reticulate</code>, nous utiliserons donc cette approche.</p>
+</div>
+</div>
+</section>
+<section id="importer-un-module-python" class="level2" data-number="7.19">
+<h2 data-number="7.19" class="anchored" data-anchor-id="importer-un-module-python"><span class="header-section-number">7.19</span> Importer un module Python</h2>
+<p>Une fois notre dépendance déclarée :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">py_require</span>(<span class="st">"sympy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>nous pouvons importer le module :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>sp <span class="ot">&lt;-</span> reticulate<span class="sc">::</span><span class="fu">import</span>(<span class="st">"sympy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>L’objet :</p>
+<pre class="text"><code>sp</code></pre>
+<p>représente maintenant le module Python <code>sympy</code>.</p>
+<p>Nous pouvons accéder à ses fonctions avec l’opérateur <code>$</code>.</p>
+<p>Par exemple :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> sp<span class="sc">$</span><span class="fu">symbols</span>(<span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>appelle en réalité la fonction Python :</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>sympy.symbols(<span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Depuis R, nous écrivons donc :</p>
+<pre class="text"><code>sp$symbols("x")
+│       │
+│       └── fonction Python
+│
+└── module Python</code></pre>
+<p>L’opérateur <code>$</code> permet ainsi de naviguer parmi les objets, fonctions et méthodes provenant de Python.</p>
+</section>
+<section id="exemple-calculer-une-dérivée-symbolique" class="level2" data-number="7.20">
+<h2 data-number="7.20" class="anchored" data-anchor-id="exemple-calculer-une-dérivée-symbolique"><span class="header-section-number">7.20</span> Exemple : calculer une dérivée symbolique</h2>
+<p>Créons maintenant l’expression :</p>
+<p>[ f(x) = x^3 + 2x^2 - x. ]</p>
+<p>Nous pouvons demander à SymPy de représenter cette expression :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> sp<span class="sc">$</span><span class="fu">sympify</span>(</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"x**3 + 2*x**2 - x"</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La notation :</p>
+<pre class="text"><code>**</code></pre>
+<p>correspond à l’exponentiation en Python.</p>
+<p>Nous pouvons maintenant calculer symboliquement la dérivée :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> sp<span class="sc">$</span><span class="fu">diff</span>(f, x)</span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>SymPy retourne l’expression correspondant à :</p>
+<p>[ f’(x) = 3x^2 + 4x - 1. ]</p>
+<p>Nous pouvons également calculer une primitive :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>sp<span class="sc">$</span><span class="fu">integrate</span>(f, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Le calcul n’est pas effectué numériquement pour une valeur particulière de <span class="math inline">\(x\)</span>.</p>
+<p>SymPy manipule directement <strong>l’expression mathématique</strong>.</p>
+<p>C’est précisément le type de fonctionnalité spécialisée que nous pouvons vouloir récupérer dans un autre écosystème plutôt que de la réimplémenter nous-mêmes.</p>
+</section>
+<section id="les-conversions-entre-r-et-python" class="level2" data-number="7.21">
+<h2 data-number="7.21" class="anchored" data-anchor-id="les-conversions-entre-r-et-python"><span class="header-section-number">7.21</span> Les conversions entre R et Python</h2>
+<p>Pour rendre cette communication possible, <code>reticulate</code> convertit plusieurs objets automatiquement.</p>
+<p>Par exemple, lorsque nous appelons une fonction Python depuis R :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fonction_python</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>reticulate</code> convertit l’objet R vers une représentation Python appropriée.</p>
+<p>Dans l’autre direction, plusieurs résultats Python sont automatiquement reconvertis vers R.</p>
+<p>Conceptuellement :</p>
+<pre class="text"><code>objet R
+   ↓
+conversion
+   ↓
+objet Python
+   ↓
+fonction Python
+   ↓
+objet Python
+   ↓
+conversion
+   ↓
+objet R</code></pre>
+<p>Cela rend l’utilisation de Python depuis R relativement transparente.</p>
+<p>La conversion n’est toutefois pas toujours parfaite. Certains objets Python complexes demeurent des références vers des objets Python.</p>
+<p>Nous pouvons alors continuer à interagir avec eux grâce à <code>$</code>.</p>
+</section>
+<section id="utiliser-python-dans-une-librairie-r" class="level2" data-number="7.22">
+<h2 data-number="7.22" class="anchored" data-anchor-id="utiliser-python-dans-une-librairie-r"><span class="header-section-number">7.22</span> Utiliser Python dans une librairie R</h2>
+<p>Supposons maintenant que nous voulions ajouter à notre librairie une fonction :</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">derive</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>qui utilise SymPy pour calculer une dérivée symbolique.</p>
+<p>Une stratégie simple serait de créer un objet interne qui représentera le module Python :</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>sympy <span class="ot">&lt;-</span> <span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Puis, lors du chargement de notre librairie :</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>.onLoad <span class="ot">&lt;-</span> <span class="cf">function</span>(libname, pkgname) {</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  reticulate<span class="sc">::</span><span class="fu">py_require</span>(<span class="st">"sympy"</span>)</span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>  sympy <span class="ot">&lt;&lt;-</span> reticulate<span class="sc">::</span><span class="fu">import</span>(</span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sympy"</span>,</span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">delay_load =</span> <span class="cn">TRUE</span></span>
+<span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb93-9"><a href="#cb93-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>L’argument :</p>
+<pre class="text"><code>delay_load = TRUE</code></pre>
+<p>est particulièrement intéressant dans une librairie.</p>
+<p>Il signifie que le module Python ne sera réellement chargé que lorsqu’il sera nécessaire.</p>
+<p>Notre fonction R pourrait ensuite être :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>derive <span class="ot">&lt;-</span> <span class="cf">function</span>(expression, <span class="at">variable =</span> <span class="st">"x"</span>) {</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> sympy<span class="sc">$</span><span class="fu">symbols</span>(variable)</span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>  expr <span class="ot">&lt;-</span> sympy<span class="sc">$</span><span class="fu">sympify</span>(expression)</span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a>  resultat <span class="ot">&lt;-</span> sympy<span class="sc">$</span><span class="fu">diff</span>(</span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>    expr,</span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-12"><a href="#cb95-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.character</span>(resultat)</span>
+<span id="cb95-13"><a href="#cb95-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>L’utilisateur pourrait alors simplement écrire :</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">derive</span>(</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"x**3 + 2*x**2 - x"</span></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>sans avoir à interagir directement avec SymPy.</p>
+<p>Nous obtenons donc une architecture semblable à :</p>
+<pre class="text"><code>UTILISATEUR
+
+derive(...)
+   │
+   ▼
+fonction R
+   │
+   ▼
+reticulate
+   │
+   ▼
+SymPy
+   │
+   ▼
+Python</code></pre>
+<p>L’interface offerte à l’utilisateur demeure une <strong>interface R</strong>, même si une partie du travail est effectuée ailleurs.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Garder une interface R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tout comme avec <code>Rcpp</code>, il est généralement intéressant de conserver l’interface publique de notre librairie en R.</p>
+<p>L’utilisateur peut donc utiliser :</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">derive</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>sans avoir à connaître :</p>
+<pre class="text"><code>reticulate
+Python
+SymPy</code></pre>
+<p>La technologie utilisée pour effectuer le calcul devient un détail d’implémentation de notre librairie.</p>
+</div>
+</div>
+</section>
+<section id="rcpp-ou-reticulate" class="level2" data-number="7.23">
+<h2 data-number="7.23" class="anchored" data-anchor-id="rcpp-ou-reticulate"><span class="header-section-number">7.23</span> <code>Rcpp</code> ou <code>reticulate</code>?</h2>
+<p>Les deux outils permettent à une librairie R de communiquer avec un autre langage, mais ils répondent généralement à des besoins différents.</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>Rcpp</code></th>
+<th><code>reticulate</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Langage</td>
+<td>C++</td>
+<td>Python</td>
+</tr>
+<tr class="even">
+<td>Objectif principal</td>
+<td>Implémenter ou accélérer un calcul</td>
+<td>Accéder à l’écosystème Python</td>
+</tr>
+<tr class="odd">
+<td>Code externe</td>
+<td>Souvent écrit par nous</td>
+<td>Souvent fourni par une librairie Python</td>
+</tr>
+<tr class="even">
+<td>Premier outil</td>
+<td><code>cppFunction()</code> / <code>sourceCpp()</code></td>
+<td><code>source_python()</code> / <code>import()</code></td>
+</tr>
+<tr class="odd">
+<td>Dépendances externes</td>
+<td>Compilation C++</td>
+<td>Environnement Python</td>
+</tr>
+<tr class="even">
+<td>Exemple</td>
+<td>Réécrire une boucle coûteuse</td>
+<td>Utiliser SymPy</td>
+</tr>
+<tr class="odd">
+<td>Interface utilisateur</td>
+<td>Peut rester en R</td>
+<td>Peut rester en R</td>
+</tr>
+</tbody>
+</table>
+<p>Nous pouvons donc résumer les deux approches de la façon suivante :</p>
+<pre class="text"><code>J'ai identifié un calcul coûteux
+que je veux implémenter moi-même
+              ↓
+             Rcpp
+
+
+Une fonctionnalité spécialisée
+existe déjà dans Python
+              ↓
+          reticulate</code></pre>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Choisir un outil pour répondre à un besoin
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>L’objectif n’est pas d’intégrer un autre langage simplement parce que nous le pouvons.</p>
+<p>Avant d’ajouter C++ ou Python à une librairie, il faut se demander :</p>
+<blockquote class="blockquote">
+<p>Quel problème cette dépendance supplémentaire permet-elle de résoudre?</p>
+</blockquote>
+<p>Chaque langage externe augmente également la complexité de notre projet.</p>
+<p>Une intégration est donc particulièrement intéressante lorsque le bénéfice obtenu justifie cette complexité supplémentaire.</p>
+</div>
+</div>
+</section>
+<section id="un-même-principe-cacher-la-complexité" class="level2" data-number="7.24">
+<h2 data-number="7.24" class="anchored" data-anchor-id="un-même-principe-cacher-la-complexité"><span class="header-section-number">7.24</span> Un même principe : cacher la complexité</h2>
+<p>Que nous utilisions Rcpp ou reticulate, une bonne architecture peut conserver la majorité de la complexité à l’intérieur de notre librairie.</p>
+<pre class="text"><code>                UTILISATEUR
+                    │
+                    ▼
+              fonctions R
+                    │
+          ┌─────────┴─────────┐
+          ▼                   ▼
+        Rcpp              reticulate
+          │                   │
+          ▼                   ▼
+         C++                Python</code></pre>
+<p>L’utilisateur continue donc à travailler avec une librairie R normale.</p>
+<p>L’intégration d’autres langages devient simplement un outil supplémentaire dont nous disposons lors de la <strong>mise au point d’une librairie R</strong>.</p>
 </section>
 <section id="plus-de-lecture" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="plus-de-lecture">Plus de lecture</h2>

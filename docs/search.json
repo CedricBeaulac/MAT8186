@@ -1760,11 +1760,111 @@
     ]
   },
   {
-    "objectID": "rcpp.html#reticule-un-équivalent-à-rcpp-pour-python",
-    "href": "rcpp.html#reticule-un-équivalent-à-rcpp-pour-python",
+    "objectID": "rcpp.html#sec-reticulate",
+    "href": "rcpp.html#sec-reticulate",
     "title": "7  Intégration avec d’autres langages de programmation",
     "section": "7.14 reticule: un équivalent à Rcpp pour Python",
-    "text": "7.14 reticule: un équivalent à Rcpp pour Python",
+    "text": "7.14 reticule: un équivalent à Rcpp pour Python\nNous venons de voir comment intégrer du code C++ à une librairie R avec Rcpp.\nIl existe cependant une autre raison pour laquelle nous pourrions vouloir faire appel à un autre langage : profiter d’un écosystème logiciel qui existe déjà ailleurs.\nPython possède aujourd’hui un très grand nombre de librairies spécialisées en calcul scientifique, apprentissage automatique, traitement d’images, calcul symbolique, traitement du langage, etc.\nLa librairie R reticulate permet d’utiliser directement du code Python depuis R.\nL’objectif est donc assez différent de celui de Rcpp.\nRcpp\n────────────────────────────────\nJ'ai un calcul que je veux\nimplémenter moi-même.\n\nJe peux en déplacer une partie\nvers C++ pour améliorer les\nperformances.\n\n\nreticulate\n────────────────────────────────\nUne fonctionnalité intéressante\nexiste déjà dans l'écosystème\nPython.\n\nJe veux pouvoir l'utiliser\ndepuis ma librairie R.\nDans cette section, nous allons seulement faire un court survol de reticulate.\nNotre objectif n’est pas d’apprendre Python, mais plutôt de comprendre comment une librairie R peut utiliser du code provenant de cet écosystème.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#installer-reticulate",
+    "href": "rcpp.html#installer-reticulate",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.15 Installer reticulate",
+    "text": "7.15 Installer reticulate\nreticulate est une librairie R et peut être installée normalement depuis CRAN :\n\ninstall.packages(\"reticulate\")\n\nDans une librairie R, nous pouvons également déclarer cette dépendance avec :\n\nusethis::use_package(\"reticulate\")\n\nNous retrouverons alors :\nImports:\n    reticulate\ndans notre fichier DESCRIPTION.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#utiliser-notre-propre-code-python",
+    "href": "rcpp.html#utiliser-notre-propre-code-python",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.16 Utiliser notre propre code Python",
+    "text": "7.16 Utiliser notre propre code Python\nCommençons par un exemple extrêmement simple.\nCréons un fichier :\ncalcul.py\ncontenant une fonction Python :\ndef puissance(x, p):\n    return x ** p\nNous pouvons ensuite exécuter ce fichier depuis R avec :\n\nreticulate::source_python(\"calcul.py\")\n\nLa fonction définie dans le fichier Python devient alors accessible depuis R :\n\npuissance(2, 5)\n\nqui retourne :\n[1] 32\nNous obtenons donc une structure assez semblable à celle rencontrée avec Rcpp :\nC++                            Python\n\ncalcul.cpp                     calcul.py\n     ↓                              ↓\nsourceCpp()                    source_python()\n     ↓                              ↓\nfonction accessible           fonction accessible\ndepuis R                      depuis R\nIl existe toutefois une différence fondamentale.\nAvec Rcpp, notre code C++ est compilé.\nAvec reticulate, nous démarrons plutôt une session Python à laquelle R communique.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#utiliser-une-librairie-python",
+    "href": "rcpp.html#utiliser-une-librairie-python",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.17 Utiliser une librairie Python",
+    "text": "7.17 Utiliser une librairie Python\nL’intérêt principal de reticulate n’est cependant pas nécessairement d’écrire nous-mêmes du code Python.\nNous pouvons aussi utiliser directement une librairie de l’écosystème Python.\nPour illustrer cette possibilité, nous allons utiliser SymPy.\nSymPy est une librairie Python spécialisée dans le calcul symbolique.\nElle permet notamment de :\n\nmanipuler des expressions mathématiques;\ncalculer des dérivées;\ncalculer des intégrales;\nrésoudre des équations;\nsimplifier des expressions.\n\nPlutôt que d’implémenter nous-mêmes un moteur de calcul symbolique dans notre librairie R, nous pouvons utiliser celui qui existe déjà dans Python.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#déclarer-une-dépendance-python",
+    "href": "rcpp.html#déclarer-une-dépendance-python",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.18 Déclarer une dépendance Python",
+    "text": "7.18 Déclarer une dépendance Python\nUne librairie R utilisant reticulate peut avoir deux types de dépendances :\nDépendance R\n    ↓\nreticulate\n\n\nDépendance Python\n    ↓\nSymPy\nDans les versions modernes de reticulate, la méthode recommandée pour déclarer une dépendance Python consiste à utiliser :\n\nreticulate::py_require(\"sympy\")\n\nCette commande signifie essentiellement :\n\nNotre code aura besoin de la librairie Python sympy.\n\nIl est également possible de préciser des contraintes de version :\n\nreticulate::py_require(\"sympy&gt;=1.12\")\n\nDans la majorité des situations, il est cependant préférable de ne pas imposer inutilement une version précise.\nreticulate peut alors trouver ou construire un environnement Python compatible avec les dépendances déclarées.\n\n\n\n\n\n\nUne gestion beaucoup plus automatisée\n\n\n\nLes anciennes approches avec reticulate demandaient souvent de créer et configurer manuellement des environnements Python ou Conda.\nLa fonction py_require() permet aujourd’hui d’automatiser une grande partie de cette gestion.\nPour une introduction à reticulate, nous utiliserons donc cette approche.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#importer-un-module-python",
+    "href": "rcpp.html#importer-un-module-python",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.19 Importer un module Python",
+    "text": "7.19 Importer un module Python\nUne fois notre dépendance déclarée :\n\nreticulate::py_require(\"sympy\")\n\nnous pouvons importer le module :\n\nsp &lt;- reticulate::import(\"sympy\")\n\nL’objet :\nsp\nreprésente maintenant le module Python sympy.\nNous pouvons accéder à ses fonctions avec l’opérateur $.\nPar exemple :\n\nx &lt;- sp$symbols(\"x\")\n\nappelle en réalité la fonction Python :\nsympy.symbols(\"x\")\nDepuis R, nous écrivons donc :\nsp$symbols(\"x\")\n│       │\n│       └── fonction Python\n│\n└── module Python\nL’opérateur $ permet ainsi de naviguer parmi les objets, fonctions et méthodes provenant de Python.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#exemple-calculer-une-dérivée-symbolique",
+    "href": "rcpp.html#exemple-calculer-une-dérivée-symbolique",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.20 Exemple : calculer une dérivée symbolique",
+    "text": "7.20 Exemple : calculer une dérivée symbolique\nCréons maintenant l’expression :\n[ f(x) = x^3 + 2x^2 - x. ]\nNous pouvons demander à SymPy de représenter cette expression :\n\nf &lt;- sp$sympify(\n  \"x**3 + 2*x**2 - x\"\n)\n\nLa notation :\n**\ncorrespond à l’exponentiation en Python.\nNous pouvons maintenant calculer symboliquement la dérivée :\n\ndf &lt;- sp$diff(f, x)\n\ndf\n\nSymPy retourne l’expression correspondant à :\n[ f’(x) = 3x^2 + 4x - 1. ]\nNous pouvons également calculer une primitive :\n\nsp$integrate(f, x)\n\nLe calcul n’est pas effectué numériquement pour une valeur particulière de \\(x\\).\nSymPy manipule directement l’expression mathématique.\nC’est précisément le type de fonctionnalité spécialisée que nous pouvons vouloir récupérer dans un autre écosystème plutôt que de la réimplémenter nous-mêmes.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#les-conversions-entre-r-et-python",
+    "href": "rcpp.html#les-conversions-entre-r-et-python",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.21 Les conversions entre R et Python",
+    "text": "7.21 Les conversions entre R et Python\nPour rendre cette communication possible, reticulate convertit plusieurs objets automatiquement.\nPar exemple, lorsque nous appelons une fonction Python depuis R :\n\nfonction_python(c(1, 2, 3))\n\nreticulate convertit l’objet R vers une représentation Python appropriée.\nDans l’autre direction, plusieurs résultats Python sont automatiquement reconvertis vers R.\nConceptuellement :\nobjet R\n   ↓\nconversion\n   ↓\nobjet Python\n   ↓\nfonction Python\n   ↓\nobjet Python\n   ↓\nconversion\n   ↓\nobjet R\nCela rend l’utilisation de Python depuis R relativement transparente.\nLa conversion n’est toutefois pas toujours parfaite. Certains objets Python complexes demeurent des références vers des objets Python.\nNous pouvons alors continuer à interagir avec eux grâce à $.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#utiliser-python-dans-une-librairie-r",
+    "href": "rcpp.html#utiliser-python-dans-une-librairie-r",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.22 Utiliser Python dans une librairie R",
+    "text": "7.22 Utiliser Python dans une librairie R\nSupposons maintenant que nous voulions ajouter à notre librairie une fonction :\nderive()\nqui utilise SymPy pour calculer une dérivée symbolique.\nUne stratégie simple serait de créer un objet interne qui représentera le module Python :\nsympy &lt;- NULL\nPuis, lors du chargement de notre librairie :\n.onLoad &lt;- function(libname, pkgname) {\n\n  reticulate::py_require(\"sympy\")\n\n  sympy &lt;&lt;- reticulate::import(\n    \"sympy\",\n    delay_load = TRUE\n  )\n}\nL’argument :\ndelay_load = TRUE\nest particulièrement intéressant dans une librairie.\nIl signifie que le module Python ne sera réellement chargé que lorsqu’il sera nécessaire.\nNotre fonction R pourrait ensuite être :\n\nderive &lt;- function(expression, variable = \"x\") {\n\n  x &lt;- sympy$symbols(variable)\n\n  expr &lt;- sympy$sympify(expression)\n\n  resultat &lt;- sympy$diff(\n    expr,\n    x\n  )\n\n  as.character(resultat)\n}\n\nL’utilisateur pourrait alors simplement écrire :\n\nderive(\n  \"x**3 + 2*x**2 - x\"\n)\n\nsans avoir à interagir directement avec SymPy.\nNous obtenons donc une architecture semblable à :\nUTILISATEUR\n\nderive(...)\n   │\n   ▼\nfonction R\n   │\n   ▼\nreticulate\n   │\n   ▼\nSymPy\n   │\n   ▼\nPython\nL’interface offerte à l’utilisateur demeure une interface R, même si une partie du travail est effectuée ailleurs.\n\n\n\n\n\n\nGarder une interface R\n\n\n\nTout comme avec Rcpp, il est généralement intéressant de conserver l’interface publique de notre librairie en R.\nL’utilisateur peut donc utiliser :\nderive(...)\nsans avoir à connaître :\nreticulate\nPython\nSymPy\nLa technologie utilisée pour effectuer le calcul devient un détail d’implémentation de notre librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#rcpp-ou-reticulate",
+    "href": "rcpp.html#rcpp-ou-reticulate",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.23 Rcpp ou reticulate?",
+    "text": "7.23 Rcpp ou reticulate?\nLes deux outils permettent à une librairie R de communiquer avec un autre langage, mais ils répondent généralement à des besoins différents.\n\n\n\n\n\n\n\n\n\nRcpp\nreticulate\n\n\n\n\nLangage\nC++\nPython\n\n\nObjectif principal\nImplémenter ou accélérer un calcul\nAccéder à l’écosystème Python\n\n\nCode externe\nSouvent écrit par nous\nSouvent fourni par une librairie Python\n\n\nPremier outil\ncppFunction() / sourceCpp()\nsource_python() / import()\n\n\nDépendances externes\nCompilation C++\nEnvironnement Python\n\n\nExemple\nRéécrire une boucle coûteuse\nUtiliser SymPy\n\n\nInterface utilisateur\nPeut rester en R\nPeut rester en R\n\n\n\nNous pouvons donc résumer les deux approches de la façon suivante :\nJ'ai identifié un calcul coûteux\nque je veux implémenter moi-même\n              ↓\n             Rcpp\n\n\nUne fonctionnalité spécialisée\nexiste déjà dans Python\n              ↓\n          reticulate\n\n\n\n\n\n\nChoisir un outil pour répondre à un besoin\n\n\n\nL’objectif n’est pas d’intégrer un autre langage simplement parce que nous le pouvons.\nAvant d’ajouter C++ ou Python à une librairie, il faut se demander :\n\nQuel problème cette dépendance supplémentaire permet-elle de résoudre?\n\nChaque langage externe augmente également la complexité de notre projet.\nUne intégration est donc particulièrement intéressante lorsque le bénéfice obtenu justifie cette complexité supplémentaire.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#un-même-principe-cacher-la-complexité",
+    "href": "rcpp.html#un-même-principe-cacher-la-complexité",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.24 Un même principe : cacher la complexité",
+    "text": "7.24 Un même principe : cacher la complexité\nQue nous utilisions Rcpp ou reticulate, une bonne architecture peut conserver la majorité de la complexité à l’intérieur de notre librairie.\n                UTILISATEUR\n                    │\n                    ▼\n              fonctions R\n                    │\n          ┌─────────┴─────────┐\n          ▼                   ▼\n        Rcpp              reticulate\n          │                   │\n          ▼                   ▼\n         C++                Python\nL’utilisateur continue donc à travailler avec une librairie R normale.\nL’intégration d’autres langages devient simplement un outil supplémentaire dont nous disposons lors de la mise au point d’une librairie R.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
     ]

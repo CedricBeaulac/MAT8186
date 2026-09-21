@@ -47,7 +47,7 @@ C++ peut notamment être avantageux lorsque notre code contient :
 
 Par exemple, imaginons une opération conceptuellement très simple :
 
-```r
+``` r
 for (i in seq_len(1000000)) {
   # quelques petites opérations
 }
@@ -59,12 +59,12 @@ Cependant, lorsqu'elle est répétée plusieurs millions de fois, les coûts ass
 
 Le C++ étant un langage **compilé**, une partie de ce coût peut être éliminée.
 
-::: {.callout-tip}
+::: callout-tip
 ## Une bonne stratégie
 
 Une bonne stratégie n'est généralement pas :
 
-```text
+``` text
 programme R
     ↓
 tout traduire en C++
@@ -72,7 +72,7 @@ tout traduire en C++
 
 mais plutôt :
 
-```text
+``` text
 programme R
     ↓
 identifier la partie lente
@@ -81,7 +81,6 @@ traduire seulement cette partie en C++
 ```
 
 Notre interface principale peut donc demeurer en R alors que certains calculs internes sont effectués en C++.
-
 :::
 
 ## C++ n'est pas automatiquement plus rapide {.unnumbered}
@@ -96,7 +95,7 @@ Plusieurs fonctions R effectuent déjà leurs calculs dans du code compilé.
 
 Par exemple :
 
-```r
+``` r
 sum(x)
 mean(x)
 X %*% beta
@@ -122,17 +121,17 @@ Réécrire naïvement cette fonction en C++ risque donc d'apporter **très peu d
 
 À l'opposé, une fonction contenant plusieurs boucles R imbriquées peut être une bien meilleure candidate.
 
-::: {.callout-important}
+::: callout-important
 ## Mesurer plutôt que présumer
 
 Avant d'optimiser du code :
 
-1. identifier la partie coûteuse;
-2. produire une version de référence correcte;
-3. mesurer son temps d'exécution;
-4. optimiser;
-5. vérifier que le résultat demeure le même;
-6. mesurer à nouveau.
+1.  identifier la partie coûteuse;
+2.  produire une version de référence correcte;
+3.  mesurer son temps d'exécution;
+4.  optimiser;
+5.  vérifier que le résultat demeure le même;
+6.  mesurer à nouveau.
 
 Une optimisation dont nous ne mesurons pas l'effet n'est qu'une hypothèse.
 :::
@@ -143,7 +142,7 @@ Une seule estimation Ridge repose principalement sur des opérations matricielle
 
 Nous aurons donc éventuellement une structure ressemblant à :
 
-```text
+``` text
 pour chaque lambda
     pour chaque fold
         ajuster le modèle
@@ -157,8 +156,8 @@ C'est ce type de calcul répétitif qui peut devenir intéressant à déplacer v
 
 Pour utiliser Rcpp, deux éléments sont nécessaires :
 
-1. une installation de la librairie `Rcpp`;
-2. un compilateur C++ permettant à R de compiler notre code.
+1.  une installation de la librairie `Rcpp`;
+2.  un compilateur C++ permettant à R de compiler notre code.
 
 ## Installer Rcpp {.unnumbered}
 
@@ -198,7 +197,7 @@ pkgbuild::check_build_tools(debug = TRUE)
 
 Si tout fonctionne correctement, nous devrions obtenir un message indiquant que notre système est prêt à construire des librairies contenant du code compilé.
 
-::: {.callout-note}
+::: callout-note
 ## Sur macOS et Linux
 
 Le principe est le même : R doit avoir accès à une chaîne de compilation C++.
@@ -212,7 +211,7 @@ Dans ce cours, nous nous concentrerons principalement sur la configuration Windo
 
 Nous allons commencer avec la manière la plus simple possible d'appeler du C++ depuis R :
 
-```r
+``` r
 Rcpp::cppFunction()
 ```
 
@@ -240,13 +239,13 @@ carre_cpp(4)
 
 et retourne :
 
-```text
+``` text
 [1] 16
 ```
 
 Nous venons donc de :
 
-```text
+``` text
 écrire du C++
       ↓
 compiler le code
@@ -272,7 +271,7 @@ carre_R <- function(x) {
 
 Comparons les deux :
 
-```text
+``` text
 R                           C++
 
 carre_R <- function(x) {    double carre_cpp(double x) {
@@ -289,7 +288,6 @@ En C++ :
 - `return` est explicite;
 - chaque instruction se termine par `;`.
 
-
 Cette obligation de préciser les types constitue l'une des différences fondamentales entre R et C++.
 
 ## Les types de données
@@ -298,7 +296,7 @@ R permet généralement de manipuler les objets sans déclarer explicitement leu
 
 Par exemple :
 
-```r
+``` r
 f <- function(x) {
   ...
 }
@@ -316,16 +314,16 @@ En C++, cette information doit généralement être explicitée.
 
 Voici quelques correspondances utiles avec Rcpp :
 
-| R | Scalaire C++ | Vecteur Rcpp |
-|---|---|---|
-| `logical` | `bool` | `LogicalVector` |
-| `integer` | `int` | `IntegerVector` |
-| `numeric` | `double` | `NumericVector` |
+| R           | Scalaire C++              | Vecteur Rcpp      |
+|-------------|---------------------------|-------------------|
+| `logical`   | `bool`                    | `LogicalVector`   |
+| `integer`   | `int`                     | `IntegerVector`   |
+| `numeric`   | `double`                  | `NumericVector`   |
 | `character` | `std::string` ou `String` | `CharacterVector` |
 
 Pour les matrices, on retrouve notamment :
 
-```text
+``` text
 NumericMatrix
 IntegerMatrix
 LogicalMatrix
@@ -334,7 +332,7 @@ CharacterMatrix
 
 On retrouve également :
 
-```text
+``` text
 List
 DataFrame
 Function
@@ -342,18 +340,18 @@ Function
 
 pour manipuler d'autres objets R.
 
-::: {.callout-important}
+::: callout-important
 ## `integer` et `numeric`
 
 Dans R :
 
-```r
+``` r
 1
 ```
 
 est normalement un objet de type `double`, alors que :
 
-```r
+``` r
 1L
 ```
 
@@ -361,7 +359,7 @@ est un entier.
 
 Ainsi :
 
-```text
+``` text
 numeric  → double
 integer  → int
 ```
@@ -426,19 +424,19 @@ Il y a cependant une différence particulièrement importante.
 
 En R, le premier élément d'un vecteur est :
 
-```r
+``` r
 x[1]
 ```
 
 En C++, le premier élément est :
 
-```cpp
+``` cpp
 x[0]
 ```
 
 Ainsi, une boucle C++ typique prend la forme :
 
-```cpp
+``` cpp
 for (int i = 0; i < x.size(); ++i) {
   ...
 }
@@ -446,18 +444,18 @@ for (int i = 0; i < x.size(); ++i) {
 
 plutôt que :
 
-```r
+``` r
 for (i in 1:length(x)) {
   ...
 }
 ```
 
-::: {.callout-warning}
+::: callout-warning
 ## Une source classique d'erreurs
 
 Lors de la traduction d'une fonction R vers C++, il faut toujours vérifier soigneusement les indices.
 
-```text
+``` text
 R      : 1, 2, 3, ..., n
 C++    : 0, 1, 2, ..., n - 1
 ```
@@ -478,25 +476,25 @@ Cependant, écrire une fonction C++ à l'intérieur d'une chaîne de caractères
 
 Pour du code plus substantiel, nous préférons créer un véritable fichier :
 
-```text
+``` text
 .cpp
 ```
 
 et le compiler avec :
 
-```r
+``` r
 Rcpp::sourceCpp()
 ```
 
 Créons par exemple le fichier :
 
-```text
+``` text
 erreur.cpp
 ```
 
 contenant :
 
-```cpp
+``` cpp
 #include <Rcpp.h>
 
 using namespace Rcpp;
@@ -548,7 +546,7 @@ Regardons quelques lignes importantes.
 
 ## Inclure Rcpp {.unnumbered}
 
-```cpp
+``` cpp
 #include <Rcpp.h>
 ```
 
@@ -558,19 +556,19 @@ permet d'utiliser les fonctionnalités fournies par Rcpp.
 
 Nous avons ensuite :
 
-```cpp
+``` cpp
 using namespace Rcpp;
 ```
 
 Cela nous permet d'écrire :
 
-```cpp
+``` cpp
 NumericVector
 ```
 
 plutôt que :
 
-```cpp
+``` cpp
 Rcpp::NumericVector
 ```
 
@@ -580,7 +578,7 @@ Cette ligne est pratique pour de petits exemples.
 
 La ligne :
 
-```cpp
+``` cpp
 // [[Rcpp::export]]
 ```
 
@@ -592,7 +590,7 @@ Il faut cependant faire attention à la signification du mot **export**.
 
 Nous avons déjà rencontré :
 
-```text
+``` text
 #' @export
 ```
 
@@ -600,7 +598,7 @@ avec `roxygen2`.
 
 Les deux mécanismes ne jouent pas le même rôle :
 
-```text
+``` text
 // [[Rcpp::export]]
         ↓
 créer une interface R vers une fonction C++
@@ -617,11 +615,11 @@ Cette distinction deviendra particulièrement importante lorsque nous intégrero
 
 `sourceCpp()` :
 
-1. lit le fichier `.cpp`;
-2. compile le code;
-3. construit la librairie dynamique nécessaire;
-4. crée les interfaces R correspondant aux fonctions marquées `Rcpp::export`;
-5. rend ces fonctions disponibles dans notre session.
+1.  lit le fichier `.cpp`;
+2.  compile le code;
+3.  construit la librairie dynamique nécessaire;
+4.  crée les interfaces R correspondant aux fonctions marquées `Rcpp::export`;
+5.  rend ces fonctions disponibles dans notre session.
 
 Pour un prototype, c'est extrêmement pratique.
 
@@ -635,7 +633,7 @@ Supposons maintenant que nous travaillions à l'intérieur d'une véritable libr
 
 Notre structure ressemble actuellement à :
 
-```text
+``` text
 MaLibrairie/
 ├── DESCRIPTION
 ├── NAMESPACE
@@ -657,7 +655,7 @@ Cette commande met en place plusieurs éléments nécessaires au code compilé.
 
 Elle crée notamment :
 
-```text
+``` text
 src/
 ```
 
@@ -665,7 +663,7 @@ et ajoute les dépendances nécessaires dans `DESCRIPTION`.
 
 Nous devrions notamment retrouver :
 
-```text
+``` text
 Imports:
     Rcpp
 
@@ -679,7 +677,7 @@ Nous retrouvons ici directement les notions discutées dans @dependencies.
 
 Notre projet contient alors quelque chose ressemblant à :
 
-```text
+``` text
 MaLibrairie/
 ├── DESCRIPTION
 ├── NAMESPACE
@@ -694,13 +692,13 @@ MaLibrairie/
 
 Le code compilé d'une librairie R est placé dans :
 
-```text
+``` text
 src/
 ```
 
 Cela crée une distinction assez claire :
 
-```text
+``` text
 R/
     ↓
 code R
@@ -712,7 +710,7 @@ code C, C++, Fortran, ...
 
 Nous pouvons donc créer :
 
-```text
+``` text
 src/erreur.cpp
 ```
 
@@ -724,7 +722,7 @@ Comment R sait-il maintenant comment appeler notre fonction C++?
 
 Rcpp doit générer une couche d'interface entre :
 
-```text
+``` text
 R
 ↕
 C++
@@ -740,7 +738,7 @@ Rcpp::compileAttributes()
 
 Rcpp examine alors les fichiers C++ de `src/` à la recherche de directives comme :
 
-```cpp
+``` cpp
 // [[Rcpp::export]]
 ```
 
@@ -748,17 +746,17 @@ et génère les interfaces nécessaires.
 
 Cela crée notamment des fichiers semblables à :
 
-```text
+``` text
 R/RcppExports.R
 src/RcppExports.cpp
 ```
 
-::: {.callout-important}
+::: callout-important
 ## Ne pas modifier `RcppExports` à la main
 
 Les fichiers :
 
-```text
+``` text
 R/RcppExports.R
 src/RcppExports.cpp
 ```
@@ -782,7 +780,7 @@ pour compiler et charger la version de développement de notre librairie.
 
 La directive :
 
-```cpp
+``` cpp
 // [[Rcpp::export]]
 ```
 
@@ -792,7 +790,7 @@ Cela ne signifie pas nécessairement que cette fonction devrait devenir une fonc
 
 Considérons :
 
-```text
+``` text
 ridge()
 ```
 
@@ -800,7 +798,7 @@ comme fonction publique.
 
 Elle pourrait appeler en interne :
 
-```text
+``` text
 ridge_fit_cpp()
 ```
 
@@ -810,7 +808,7 @@ L'utilisateur n'a pas nécessairement besoin de connaître cette fonction intern
 
 Nous pouvons donc avoir :
 
-```text
+``` text
 UTILISATEUR
 
 ridge(...)
@@ -845,14 +843,14 @@ Une traduction R vers C++ ne devrait pas être une simple opération de copier-c
 
 Avant de traduire une fonction, il faut comprendre :
 
-1. les arguments qu'elle reçoit;
-2. leurs types;
-3. la structure des objets;
-4. les valeurs retournées;
-5. les boucles effectuées;
-6. les cas limites;
-7. les valeurs manquantes;
-8. les fonctions R déjà utilisées.
+1.  les arguments qu'elle reçoit;
+2.  leurs types;
+3.  la structure des objets;
+4.  les valeurs retournées;
+5.  les boucles effectuées;
+6.  les cas limites;
+7.  les valeurs manquantes;
+8.  les fonctions R déjà utilisées.
 
 Une méthode raisonnable consiste à commencer par une fonction R **simple et correcte**.
 
@@ -882,20 +880,20 @@ mse_R <- function(y, prediction) {
 
 Nous pouvons ensuite établir une correspondance :
 
-| R | C++ |
-|---|---|
-| `numeric` | `double` |
-| vecteur `numeric` | `NumericVector` |
-| `integer` | `int` |
-| vecteur `integer` | `IntegerVector` |
-| `length(x)` | `x.size()` |
+| R                 | C++                 |
+|-------------------|---------------------|
+| `numeric`         | `double`            |
+| vecteur `numeric` | `NumericVector`     |
+| `integer`         | `int`               |
+| vecteur `integer` | `IntegerVector`     |
+| `length(x)`       | `x.size()`          |
 | indices `1,...,n` | indices `0,...,n-1` |
-| `stop()` | `stop()` avec Rcpp |
-| retour implicite | `return` explicite |
+| `stop()`          | `stop()` avec Rcpp  |
+| retour implicite  | `return` explicite  |
 
 Seulement ensuite traduisons-nous la fonction.
 
-#@ Utiliser un modèle d'IAG pour aider à la traduction
+\#\@ Utiliser un modèle d'IAG pour aider à la traduction
 
 Les modèles d'intelligence artificielle générative peuvent être particulièrement utiles lorsqu'on doit traduire une petite fonction R vers C++.
 
@@ -926,7 +924,7 @@ Une traduction peut notamment :
 
 Nous devons donc conserver le workflow :
 
-```text
+``` text
 fonction R correcte
        ↓
 traduction proposée
@@ -942,7 +940,7 @@ tester les cas limites
 mesurer la performance
 ```
 
-::: {.callout-important}
+::: callout-important
 ## Être capable d'expliquer son code
 
 L'utilisation d'un modèle d'IAG ne remplace pas la compréhension du code produit.
@@ -1003,7 +1001,7 @@ system.time(
 )
 ```
 
-::: {.callout-tip}
+::: callout-tip
 ## Le résultat peut être décevant — et c'est intéressant!
 
 Il est tout à fait possible que notre première traduction C++ soit seulement légèrement plus rapide.
@@ -1015,7 +1013,527 @@ Ce résultat n'est pas un échec.
 Il nous apprend quelque chose sur l'endroit où le temps de calcul est réellement dépensé.
 :::
 
-## reticule: un équivalent à Rcpp pour Python
+## reticule: un équivalent à Rcpp pour Python {#sec-reticulate}
+
+Nous venons de voir comment intégrer du code C++ à une librairie R avec `Rcpp`.
+
+Il existe cependant une autre raison pour laquelle nous pourrions vouloir faire appel à un autre langage : **profiter d'un écosystème logiciel qui existe déjà ailleurs**.
+
+Python possède aujourd'hui un très grand nombre de librairies spécialisées en calcul scientifique, apprentissage automatique, traitement d'images, calcul symbolique, traitement du langage, etc.
+
+La librairie R `reticulate` permet d'utiliser directement du code Python depuis R.
+
+L'objectif est donc assez différent de celui de `Rcpp`.
+
+```text
+Rcpp
+────────────────────────────────
+J'ai un calcul que je veux
+implémenter moi-même.
+
+Je peux en déplacer une partie
+vers C++ pour améliorer les
+performances.
+
+
+reticulate
+────────────────────────────────
+Une fonctionnalité intéressante
+existe déjà dans l'écosystème
+Python.
+
+Je veux pouvoir l'utiliser
+depuis ma librairie R.
+```
+
+Dans cette section, nous allons seulement faire un **court survol** de `reticulate`.
+
+Notre objectif n'est pas d'apprendre Python, mais plutôt de comprendre comment une librairie R peut utiliser du code provenant de cet écosystème.
+
+## Installer `reticulate`
+
+`reticulate` est une librairie R et peut être installée normalement depuis CRAN :
+
+```{r}
+#| eval: false
+
+install.packages("reticulate")
+```
+
+Dans une librairie R, nous pouvons également déclarer cette dépendance avec :
+
+```{r}
+#| eval: false
+
+usethis::use_package("reticulate")
+```
+
+Nous retrouverons alors :
+
+```text
+Imports:
+    reticulate
+```
+
+dans notre fichier `DESCRIPTION`.
+
+## Utiliser notre propre code Python
+
+Commençons par un exemple extrêmement simple.
+
+Créons un fichier :
+
+```text
+calcul.py
+```
+
+contenant une fonction Python :
+
+```python
+def puissance(x, p):
+    return x ** p
+```
+
+Nous pouvons ensuite exécuter ce fichier depuis R avec :
+
+```{r}
+#| eval: false
+
+reticulate::source_python("calcul.py")
+```
+
+La fonction définie dans le fichier Python devient alors accessible depuis R :
+
+```{r}
+#| eval: false
+
+puissance(2, 5)
+```
+
+qui retourne :
+
+```text
+[1] 32
+```
+
+Nous obtenons donc une structure assez semblable à celle rencontrée avec `Rcpp` :
+
+```text
+C++                            Python
+
+calcul.cpp                     calcul.py
+     ↓                              ↓
+sourceCpp()                    source_python()
+     ↓                              ↓
+fonction accessible           fonction accessible
+depuis R                      depuis R
+```
+
+Il existe toutefois une différence fondamentale.
+
+Avec `Rcpp`, notre code C++ est **compilé**.
+
+Avec `reticulate`, nous démarrons plutôt une session Python à laquelle R communique.
+
+## Utiliser une librairie Python
+
+L'intérêt principal de `reticulate` n'est cependant pas nécessairement d'écrire nous-mêmes du code Python.
+
+Nous pouvons aussi utiliser directement une librairie de l'écosystème Python.
+
+Pour illustrer cette possibilité, nous allons utiliser **SymPy**.
+
+SymPy est une librairie Python spécialisée dans le **calcul symbolique**.
+
+Elle permet notamment de :
+
+- manipuler des expressions mathématiques;
+- calculer des dérivées;
+- calculer des intégrales;
+- résoudre des équations;
+- simplifier des expressions.
+
+Plutôt que d'implémenter nous-mêmes un moteur de calcul symbolique dans notre librairie R, nous pouvons utiliser celui qui existe déjà dans Python.
+
+## Déclarer une dépendance Python
+
+Une librairie R utilisant `reticulate` peut avoir deux types de dépendances :
+
+```text
+Dépendance R
+    ↓
+reticulate
+
+
+Dépendance Python
+    ↓
+SymPy
+```
+
+Dans les versions modernes de `reticulate`, la méthode recommandée pour déclarer une dépendance Python consiste à utiliser :
+
+```{r}
+#| eval: false
+
+reticulate::py_require("sympy")
+```
+
+Cette commande signifie essentiellement :
+
+> Notre code aura besoin de la librairie Python `sympy`.
+
+Il est également possible de préciser des contraintes de version :
+
+```{r}
+#| eval: false
+
+reticulate::py_require("sympy>=1.12")
+```
+
+Dans la majorité des situations, il est cependant préférable de ne pas imposer inutilement une version précise.
+
+`reticulate` peut alors trouver ou construire un environnement Python compatible avec les dépendances déclarées.
+
+::: {.callout-note}
+## Une gestion beaucoup plus automatisée
+
+Les anciennes approches avec `reticulate` demandaient souvent de créer et configurer manuellement des environnements Python ou Conda.
+
+La fonction `py_require()` permet aujourd'hui d'automatiser une grande partie de cette gestion.
+
+Pour une introduction à `reticulate`, nous utiliserons donc cette approche.
+:::
+
+## Importer un module Python
+
+Une fois notre dépendance déclarée :
+
+```{r}
+#| eval: false
+
+reticulate::py_require("sympy")
+```
+
+nous pouvons importer le module :
+
+```{r}
+#| eval: false
+
+sp <- reticulate::import("sympy")
+```
+
+L'objet :
+
+```text
+sp
+```
+
+représente maintenant le module Python `sympy`.
+
+Nous pouvons accéder à ses fonctions avec l'opérateur `$`.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+x <- sp$symbols("x")
+```
+
+appelle en réalité la fonction Python :
+
+```python
+sympy.symbols("x")
+```
+
+Depuis R, nous écrivons donc :
+
+```text
+sp$symbols("x")
+│       │
+│       └── fonction Python
+│
+└── module Python
+```
+
+L'opérateur `$` permet ainsi de naviguer parmi les objets, fonctions et méthodes provenant de Python.
+
+## Exemple : calculer une dérivée symbolique
+
+Créons maintenant l'expression :
+
+\[
+f(x) = x^3 + 2x^2 - x.
+\]
+
+Nous pouvons demander à SymPy de représenter cette expression :
+
+```{r}
+#| eval: false
+
+f <- sp$sympify(
+  "x**3 + 2*x**2 - x"
+)
+```
+
+La notation :
+
+```text
+**
+```
+
+correspond à l'exponentiation en Python.
+
+Nous pouvons maintenant calculer symboliquement la dérivée :
+
+```{r}
+#| eval: false
+
+df <- sp$diff(f, x)
+
+df
+```
+
+SymPy retourne l'expression correspondant à :
+
+\[
+f'(x) = 3x^2 + 4x - 1.
+\]
+
+Nous pouvons également calculer une primitive :
+
+```{r}
+#| eval: false
+
+sp$integrate(f, x)
+```
+
+Le calcul n'est pas effectué numériquement pour une valeur particulière de $x$.
+
+SymPy manipule directement **l'expression mathématique**.
+
+C'est précisément le type de fonctionnalité spécialisée que nous pouvons vouloir récupérer dans un autre écosystème plutôt que de la réimplémenter nous-mêmes.
+
+## Les conversions entre R et Python
+
+Pour rendre cette communication possible, `reticulate` convertit plusieurs objets automatiquement.
+
+Par exemple, lorsque nous appelons une fonction Python depuis R :
+
+```{r}
+#| eval: false
+
+fonction_python(c(1, 2, 3))
+```
+
+`reticulate` convertit l'objet R vers une représentation Python appropriée.
+
+Dans l'autre direction, plusieurs résultats Python sont automatiquement reconvertis vers R.
+
+Conceptuellement :
+
+```text
+objet R
+   ↓
+conversion
+   ↓
+objet Python
+   ↓
+fonction Python
+   ↓
+objet Python
+   ↓
+conversion
+   ↓
+objet R
+```
+
+Cela rend l'utilisation de Python depuis R relativement transparente.
+
+La conversion n'est toutefois pas toujours parfaite. Certains objets Python complexes demeurent des références vers des objets Python.
+
+Nous pouvons alors continuer à interagir avec eux grâce à `$`.
+
+## Utiliser Python dans une librairie R
+
+Supposons maintenant que nous voulions ajouter à notre librairie une fonction :
+
+```r
+derive()
+```
+
+qui utilise SymPy pour calculer une dérivée symbolique.
+
+Une stratégie simple serait de créer un objet interne qui représentera le module Python :
+
+```r
+sympy <- NULL
+```
+
+Puis, lors du chargement de notre librairie :
+
+```r
+.onLoad <- function(libname, pkgname) {
+
+  reticulate::py_require("sympy")
+
+  sympy <<- reticulate::import(
+    "sympy",
+    delay_load = TRUE
+  )
+}
+```
+
+L'argument :
+
+```text
+delay_load = TRUE
+```
+
+est particulièrement intéressant dans une librairie.
+
+Il signifie que le module Python ne sera réellement chargé que lorsqu'il sera nécessaire.
+
+Notre fonction R pourrait ensuite être :
+
+```{r}
+#| eval: false
+
+derive <- function(expression, variable = "x") {
+
+  x <- sympy$symbols(variable)
+
+  expr <- sympy$sympify(expression)
+
+  resultat <- sympy$diff(
+    expr,
+    x
+  )
+
+  as.character(resultat)
+}
+```
+
+L'utilisateur pourrait alors simplement écrire :
+
+```{r}
+#| eval: false
+
+derive(
+  "x**3 + 2*x**2 - x"
+)
+```
+
+sans avoir à interagir directement avec SymPy.
+
+Nous obtenons donc une architecture semblable à :
+
+```text
+UTILISATEUR
+
+derive(...)
+   │
+   ▼
+fonction R
+   │
+   ▼
+reticulate
+   │
+   ▼
+SymPy
+   │
+   ▼
+Python
+```
+
+L'interface offerte à l'utilisateur demeure une **interface R**, même si une partie du travail est effectuée ailleurs.
+
+::: {.callout-tip}
+## Garder une interface R
+
+Tout comme avec `Rcpp`, il est généralement intéressant de conserver l'interface publique de notre librairie en R.
+
+L'utilisateur peut donc utiliser :
+
+```r
+derive(...)
+```
+
+sans avoir à connaître :
+
+```text
+reticulate
+Python
+SymPy
+```
+
+La technologie utilisée pour effectuer le calcul devient un détail d'implémentation de notre librairie.
+:::
+
+## `Rcpp` ou `reticulate`?
+
+Les deux outils permettent à une librairie R de communiquer avec un autre langage, mais ils répondent généralement à des besoins différents.
+
+| | `Rcpp` | `reticulate` |
+|---|---|---|
+| Langage | C++ | Python |
+| Objectif principal | Implémenter ou accélérer un calcul | Accéder à l'écosystème Python |
+| Code externe | Souvent écrit par nous | Souvent fourni par une librairie Python |
+| Premier outil | `cppFunction()` / `sourceCpp()` | `source_python()` / `import()` |
+| Dépendances externes | Compilation C++ | Environnement Python |
+| Exemple | Réécrire une boucle coûteuse | Utiliser SymPy |
+| Interface utilisateur | Peut rester en R | Peut rester en R |
+
+Nous pouvons donc résumer les deux approches de la façon suivante :
+
+```text
+J'ai identifié un calcul coûteux
+que je veux implémenter moi-même
+              ↓
+             Rcpp
+
+
+Une fonctionnalité spécialisée
+existe déjà dans Python
+              ↓
+          reticulate
+```
+
+::: {.callout-important}
+## Choisir un outil pour répondre à un besoin
+
+L'objectif n'est pas d'intégrer un autre langage simplement parce que nous le pouvons.
+
+Avant d'ajouter C++ ou Python à une librairie, il faut se demander :
+
+> Quel problème cette dépendance supplémentaire permet-elle de résoudre?
+
+Chaque langage externe augmente également la complexité de notre projet.
+
+Une intégration est donc particulièrement intéressante lorsque le bénéfice obtenu justifie cette complexité supplémentaire.
+:::
+
+## Un même principe : cacher la complexité
+
+Que nous utilisions Rcpp ou reticulate, une bonne architecture peut conserver la majorité de la complexité à l'intérieur de notre librairie.
+
+```text
+                UTILISATEUR
+                    │
+                    ▼
+              fonctions R
+                    │
+          ┌─────────┴─────────┐
+          ▼                   ▼
+        Rcpp              reticulate
+          │                   │
+          ▼                   ▼
+         C++                Python
+```
+
+L'utilisateur continue donc à travailler avec une librairie R normale.
+
+L'intégration d'autres langages devient simplement un outil supplémentaire dont nous disposons lors de la **mise au point d'une librairie R**.
 
 ## Plus de lecture {.unnumbered}
 
