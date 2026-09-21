@@ -1140,6 +1140,16 @@
     ]
   },
   {
+    "objectID": "Package.html#documentation-des-données",
+    "href": "Package.html#documentation-des-données",
+    "title": "4  La fonction au coeur de nos librairies",
+    "section": "4.28 Documentation des données",
+    "text": "4.28 Documentation des données\nTout comme nos fonctions, nos données doivent être documentées.\nPour ce faire, il est proposé de créer un fichier data.R dans le dossier R/ et d’y écrire un bloc de documentation de la forme suivante :\n#' Jeu de données pour l'ajustement d'un modèle Ridge\n#'\n#' Un jeu de données simulé utilisé pour illustrer les fonctions\n#' de la librairie.\n#'\n#' @format Un data frame contenant 100 observations et 4 variables :\n#' \\describe{\n#'   \\item{y}{Variable réponse numérique.}\n#'   \\item{x1}{Première variable explicative numérique.}\n#'   \\item{x2}{Deuxième variable explicative numérique.}\n#'   \\item{x3}{Troisième variable explicative numérique.}\n#' }\n#'\n#' @source Données simulées.\n\"my_data\"\nLa dernière ligne indique à roxygen2 que ce bloc de documentation correspond au jeu de données my_data.\nIl suffit ensuite de générer la documentation avec :\ndevtools::document()\nLa page d’aide associée au jeu de données sera alors créée dans le dossier man/.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>La fonction au coeur de nos librairies</span>"
+    ]
+  },
+  {
     "objectID": "Package.html#résumé",
     "href": "Package.html#résumé",
     "title": "4  La fonction au coeur de nos librairies",
@@ -1153,8 +1163,8 @@
     "objectID": "Package.html#résumé-de-la-séance",
     "href": "Package.html#résumé-de-la-séance",
     "title": "4  La fonction au coeur de nos librairies",
-    "section": "4.28 Résumé de la séance",
-    "text": "4.28 Résumé de la séance\nNous sommes maintenant passés d’une vision très rapide de la conception d’une librairie à un véritable workflow de développement.\nNous avons vu qu’une librairie R est beaucoup plus qu’un ensemble de fichiers .R.\nElle nous fournit une structure permettant d’organiser :\nCode\n │\n ├── fonctions\n │\n ├── documentation\n │\n ├── tests\n │\n └── métadonnées\nPour l’instant, notre librairie pourrait ressembler à :\nMaLibrairie/\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n│   ├── statistiques.R\n│   └── utils.R\n├── man/\n│   ├── fonction1.Rd\n│   └── fonction2.Rd\n├── tests/\n│   ├── testthat.R\n│   └── testthat/\n│       ├── test-statistiques.R\n│       └── test-utils.R\n└── MaLibrairie.Rproj\nNous savons maintenant :\n\ncréer une librairie;\norganiser ses fonctions;\nréfléchir à leur conception;\ncharger la librairie avec load_all();\ndocumenter les fonctions avec roxygen2;\ngénérer la documentation avec document();\nécrire des tests avec testthat;\nexécuter ces tests avec test();\nvérifier l’ensemble de la librairie avec check().\n\nLors de la prochaine séance, nous examinerons plus précisément ce qui se passe entre notre librairie et le reste de l’écosystème R.\nNous discuterons notamment :\n\ndu fichier DESCRIPTION;\ndes dépendances;\ndu fichier NAMESPACE;\ndes fonctions exportées et internes;\nde l’utilisation de fonctions provenant d’autres librairies;\npuis de l’intégration de code provenant d’autres langages.\n\n\n\n\n\n\n\nL’idée principale\n\n\n\nUne bonne librairie ne contient pas seulement du code qui fonctionne.\nElle contient du code organisé, documenté, testé et maintenable.",
+    "section": "4.29 Résumé de la séance",
+    "text": "4.29 Résumé de la séance\nNous sommes maintenant passés d’une vision très rapide de la conception d’une librairie à un véritable workflow de développement.\nNous avons vu qu’une librairie R est beaucoup plus qu’un ensemble de fichiers .R.\nElle nous fournit une structure permettant d’organiser :\nCode\n │\n ├── fonctions\n │\n ├── documentation\n │\n ├── tests\n │\n └── métadonnées\nPour l’instant, notre librairie pourrait ressembler à :\nMaLibrairie/\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n│   ├── statistiques.R\n│   └── utils.R\n├── man/\n│   ├── fonction1.Rd\n│   └── fonction2.Rd\n├── tests/\n│   ├── testthat.R\n│   └── testthat/\n│       ├── test-statistiques.R\n│       └── test-utils.R\n└── MaLibrairie.Rproj\nNous savons maintenant :\n\ncréer une librairie;\norganiser ses fonctions;\nréfléchir à leur conception;\ncharger la librairie avec load_all();\ndocumenter les fonctions avec roxygen2;\ngénérer la documentation avec document();\nécrire des tests avec testthat;\nexécuter ces tests avec test();\nvérifier l’ensemble de la librairie avec check().\n\nLors de la prochaine séance, nous examinerons plus précisément ce qui se passe entre notre librairie et le reste de l’écosystème R.\nNous discuterons notamment :\n\ndu fichier DESCRIPTION;\ndes dépendances;\ndu fichier NAMESPACE;\ndes fonctions exportées et internes;\nde l’utilisation de fonctions provenant d’autres librairies;\npuis de l’intégration de code provenant d’autres langages.\n\n\n\n\n\n\n\nL’idée principale\n\n\n\nUne bonne librairie ne contient pas seulement du code qui fonctionne.\nElle contient du code organisé, documenté, testé et maintenable.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>La fonction au coeur de nos librairies</span>"
     ]
@@ -1164,7 +1174,7 @@
     "href": "Package.html#plus-de-lecture",
     "title": "4  La fonction au coeur de nos librairies",
     "section": "Plus de lecture",
-    "text": "Plus de lecture\nJe vous recommande de lire le Chapitre 6 et le Chapitre 7 du manuel de référence. :::::::::::\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
+    "text": "Plus de lecture\nJe vous recommande de lire le Chapitre 6 et le Chapitre 7 du manuel de référence.\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>La fonction au coeur de nos librairies</span>"
     ]
@@ -1494,17 +1504,277 @@
     "href": "rcpp.html",
     "title": "7  Intégration avec d’autres langages de programmation",
     "section": "",
-    "text": "Pourquoi ?",
+    "text": "Pourquoi utiliser C++?\nLa première question à se poser n’est pas :\nmais plutôt :\nR est un langage particulièrement efficace pour effectuer de l’analyse statistique et manipuler des données. Il fournit également une interface beaucoup plus simple et flexible que C++ pour plusieurs tâches.\nIl n’est donc généralement pas souhaitable de réécrire une librairie entière en C++.\nL’intérêt de C++ apparaît plutôt lorsque nous identifions une portion de notre code qui constitue un goulot d’étranglement.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
     ]
   },
   {
-    "objectID": "rcpp.html#pourquoi",
-    "href": "rcpp.html#pourquoi",
+    "objectID": "rcpp.html#pourquoi-utiliser-c",
+    "href": "rcpp.html#pourquoi-utiliser-c",
     "title": "7  Intégration avec d’autres langages de programmation",
     "section": "",
-    "text": "Bryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
+    "text": "Comment écrire du C++?\n\n\n\nPourquoi voudrions-nous écrire une partie de notre librairie en C++?",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#quelques-situations-intéressantes",
+    "href": "rcpp.html#quelques-situations-intéressantes",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "Quelques situations intéressantes",
+    "text": "Quelques situations intéressantes\nC++ peut notamment être avantageux lorsque notre code contient :\n\ndes boucles contenant un très grand nombre d’itérations;\ndes calculs récursifs;\ndes opérations simples répétées des millions de fois;\ndes algorithmes difficiles à vectoriser en R;\ndes structures de données ou des algorithmes disponibles naturellement en C++;\nune portion de code pour laquelle le temps d’exécution devient réellement important.\n\nPar exemple, imaginons une opération conceptuellement très simple :\nfor (i in seq_len(1000000)) {\n  # quelques petites opérations\n}\nLa durée d’une seule opération peut être négligeable.\nCependant, lorsqu’elle est répétée plusieurs millions de fois, les coûts associés à l’interprétation du code R et aux appels de fonctions peuvent devenir importants.\nLe C++ étant un langage compilé, une partie de ce coût peut être éliminée.\n\n\n\n\n\n\nUne bonne stratégie\n\n\n\nUne bonne stratégie n’est généralement pas :\nprogramme R\n    ↓\ntout traduire en C++\nmais plutôt :\nprogramme R\n    ↓\nidentifier la partie lente\n    ↓\ntraduire seulement cette partie en C++\nNotre interface principale peut donc demeurer en R alors que certains calculs internes sont effectués en C++.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#c-nest-pas-automatiquement-plus-rapide",
+    "href": "rcpp.html#c-nest-pas-automatiquement-plus-rapide",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "C++ n’est pas automatiquement plus rapide",
+    "text": "C++ n’est pas automatiquement plus rapide\nIl faut cependant éviter une conclusion trop rapide :\n\nC++ est plus rapide que R, donc traduire une fonction en C++ la rendra nécessairement plus rapide.\n\nCe n’est pas toujours vrai.\nPlusieurs fonctions R effectuent déjà leurs calculs dans du code compilé.\nPar exemple :\nsum(x)\nmean(x)\nX %*% beta\ncrossprod(X)\nsolve(A, b)\nne réalisent pas nécessairement l’ensemble de leurs calculs directement dans l’interpréteur R.\nUne fonction R comme :\n\nprediction &lt;- function(X, beta) {\n  X %*% beta\n}\n\nfait très peu de travail en R. Le calcul matriciel lui-même est déjà effectué par du code compilé et optimisé.\nRéécrire naïvement cette fonction en C++ risque donc d’apporter très peu de gain.\nÀ l’opposé, une fonction contenant plusieurs boucles R imbriquées peut être une bien meilleure candidate.\n\n\n\n\n\n\nMesurer plutôt que présumer\n\n\n\nAvant d’optimiser du code :\n\nidentifier la partie coûteuse;\nproduire une version de référence correcte;\nmesurer son temps d’exécution;\noptimiser;\nvérifier que le résultat demeure le même;\nmesurer à nouveau.\n\nUne optimisation dont nous ne mesurons pas l’effet n’est qu’une hypothèse.\n\n\nCette idée sera particulièrement importante dans notre projet Ridge.\nUne seule estimation Ridge repose principalement sur des opérations matricielles déjà très optimisées. Par contre, une validation croisée répète l’ajustement et la prédiction pour plusieurs valeurs de \\(\\lambda\\) et plusieurs partitions des données.\nNous aurons donc éventuellement une structure ressemblant à :\npour chaque lambda\n    pour chaque fold\n        ajuster le modèle\n        prédire\n        calculer l'erreur\nC’est ce type de calcul répétitif qui peut devenir intéressant à déplacer vers C++.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#préparer-notre-ordinateur",
+    "href": "rcpp.html#préparer-notre-ordinateur",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.1 Préparer notre ordinateur",
+    "text": "7.1 Préparer notre ordinateur\nPour utiliser Rcpp, deux éléments sont nécessaires :\n\nune installation de la librairie Rcpp;\nun compilateur C++ permettant à R de compiler notre code.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#installer-rcpp",
+    "href": "rcpp.html#installer-rcpp",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "Installer Rcpp",
+    "text": "Installer Rcpp\nRcpp est disponible sur CRAN :\n\ninstall.packages(\"Rcpp\")\n\nNous pouvons ensuite la charger :\n\nlibrary(Rcpp)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#installer-les-outils-de-compilation-sous-windows",
+    "href": "rcpp.html#installer-les-outils-de-compilation-sous-windows",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "Installer les outils de compilation sous Windows",
+    "text": "Installer les outils de compilation sous Windows\nSous Windows, nous devons également installer Rtools.\nRtools fournit notamment les compilateurs et outils nécessaires à la construction de librairies R contenant du code C ou C++.\nLa version de Rtools doit correspondre à la version de R utilisée. Il est donc préférable de télécharger la version appropriée directement à partir de la page officielle Rtools de CRAN.\nAprès l’installation, redémarrez RStudio.\nNous pouvons ensuite vérifier que notre environnement est prêt à compiler du code avec :\n\npkgbuild::check_build_tools(debug = TRUE)\n\nSi tout fonctionne correctement, nous devrions obtenir un message indiquant que notre système est prêt à construire des librairies contenant du code compilé.\n\n\n\n\n\n\nSur macOS et Linux\n\n\n\nLe principe est le même : R doit avoir accès à une chaîne de compilation C++.\nSous macOS, cela passe généralement par les outils de développement d’Apple. Sous Linux, les outils de compilation sont généralement disponibles à travers le gestionnaire de paquets du système.\nDans ce cours, nous nous concentrerons principalement sur la configuration Windows.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#notre-première-fonction-c",
+    "href": "rcpp.html#notre-première-fonction-c",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.2 Notre première fonction C++",
+    "text": "7.2 Notre première fonction C++\nNous allons commencer avec la manière la plus simple possible d’appeler du C++ depuis R :\nRcpp::cppFunction()\ncppFunction() permet de fournir directement le code d’une petite fonction C++ sous forme de chaîne de caractères.\nPar exemple :\n\nRcpp::cppFunction('\ndouble carre_cpp(double x) {\n  return x * x;\n}\n')\n\nUne nouvelle fonction R devient immédiatement disponible :\n\ncarre_cpp(4)\n\net retourne :\n[1] 16\nNous venons donc de :\nécrire du C++\n      ↓\ncompiler le code\n      ↓\ncréer automatiquement une interface avec R\n      ↓\nappeler la fonction depuis R\nRcpp prend en charge une grande partie de la mécanique nécessaire pour faire communiquer les deux langages.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#comparaison-avec-r",
+    "href": "rcpp.html#comparaison-avec-r",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.3 Comparaison avec R",
+    "text": "7.3 Comparaison avec R\nLa version R de notre fonction serait simplement :\n\ncarre_R &lt;- function(x) {\n  x * x\n}\n\nComparons les deux :\nR                           C++\n\ncarre_R &lt;- function(x) {    double carre_cpp(double x) {\n  x * x                       return x * x;\n}                           }\nPlusieurs différences apparaissent immédiatement.\nEn C++ :\n\nle type de la valeur retournée est indiqué;\nle type de chaque argument est indiqué;\nreturn est explicite;\nchaque instruction se termine par ;.\n\nCette obligation de préciser les types constitue l’une des différences fondamentales entre R et C++.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#les-types-de-données",
+    "href": "rcpp.html#les-types-de-données",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.4 Les types de données",
+    "text": "7.4 Les types de données\nR permet généralement de manipuler les objets sans déclarer explicitement leur type dans la définition d’une fonction.\nPar exemple :\nf &lt;- function(x) {\n  ...\n}\nne nous dit pas si x doit être :\n\nun entier;\nun nombre réel;\nun vecteur;\nune chaîne de caractères;\nune matrice.\n\nEn C++, cette information doit généralement être explicitée.\nVoici quelques correspondances utiles avec Rcpp :\n\n\n\nR\nScalaire C++\nVecteur Rcpp\n\n\n\n\nlogical\nbool\nLogicalVector\n\n\ninteger\nint\nIntegerVector\n\n\nnumeric\ndouble\nNumericVector\n\n\ncharacter\nstd::string ou String\nCharacterVector\n\n\n\nPour les matrices, on retrouve notamment :\nNumericMatrix\nIntegerMatrix\nLogicalMatrix\nCharacterMatrix\nOn retrouve également :\nList\nDataFrame\nFunction\npour manipuler d’autres objets R.\n\n\n\n\n\n\ninteger et numeric\n\n\n\nDans R :\n1\nest normalement un objet de type double, alors que :\n1L\nest un entier.\nAinsi :\nnumeric  → double\ninteger  → int\nCette distinction devient plus importante lorsque nous devons explicitement définir les types de nos arguments en C++.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#un-exemple-avec-un-vecteur",
+    "href": "rcpp.html#un-exemple-avec-un-vecteur",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.5 Un exemple avec un vecteur",
+    "text": "7.5 Un exemple avec un vecteur\nConsidérons une fonction R qui calcule la somme des carrés :\n\nsomme_carres_R &lt;- function(x) {\n\n  total &lt;- 0\n\n  for (i in seq_along(x)) {\n    total &lt;- total + x[i]^2\n  }\n\n  total\n}\n\nNous pouvons écrire une version C++ :\n\nRcpp::cppFunction('\ndouble somme_carres_cpp(Rcpp::NumericVector x) {\n\n  double total = 0.0;\n\n  for (int i = 0; i &lt; x.size(); ++i) {\n    total += x[i] * x[i];\n  }\n\n  return total;\n}\n')\n\nNous pouvons alors comparer :\n\nx &lt;- c(1, 2, 3, 4)\n\nsomme_carres_R(x)\nsomme_carres_cpp(x)\n\nLes deux fonctions devraient produire le même résultat.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#lindexation-commence-à-zéro",
+    "href": "rcpp.html#lindexation-commence-à-zéro",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "L’indexation commence à zéro",
+    "text": "L’indexation commence à zéro\nIl y a cependant une différence particulièrement importante.\nEn R, le premier élément d’un vecteur est :\nx[1]\nEn C++, le premier élément est :\nx[0]\nAinsi, une boucle C++ typique prend la forme :\nfor (int i = 0; i &lt; x.size(); ++i) {\n  ...\n}\nplutôt que :\nfor (i in 1:length(x)) {\n  ...\n}\n\n\n\n\n\n\nUne source classique d’erreurs\n\n\n\nLors de la traduction d’une fonction R vers C++, il faut toujours vérifier soigneusement les indices.\nR      : 1, 2, 3, ..., n\nC++    : 0, 1, 2, ..., n - 1\nLes erreurs d’indexation sont parmi les erreurs les plus faciles à introduire lors d’une traduction entre les deux langages.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#de-cppfunction-à-sourcecpp",
+    "href": "rcpp.html#de-cppfunction-à-sourcecpp",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.6 De cppFunction() à sourceCpp()",
+    "text": "7.6 De cppFunction() à sourceCpp()\ncppFunction() est très pratique pour :\n\napprendre;\nfaire un petit prototype;\ntester rapidement une idée;\ncompiler une seule fonction simple.\n\nCependant, écrire une fonction C++ à l’intérieur d’une chaîne de caractères R devient rapidement désagréable.\nPour du code plus substantiel, nous préférons créer un véritable fichier :\n.cpp\net le compiler avec :\nRcpp::sourceCpp()\nCréons par exemple le fichier :\nerreur.cpp\ncontenant :\n#include &lt;Rcpp.h&gt;\n\nusing namespace Rcpp;\n\n// [[Rcpp::export]]\ndouble mse_cpp(NumericVector y, NumericVector prediction) {\n\n  int n = y.size();\n\n  if (prediction.size() != n) {\n    stop(\"`y` et `prediction` doivent avoir la même longueur.\");\n  }\n\n  double erreur = 0.0;\n\n  for (int i = 0; i &lt; n; ++i) {\n\n    double residu = y[i] - prediction[i];\n\n    erreur += residu * residu;\n  }\n\n  return erreur / n;\n}\nNous pouvons ensuite compiler le fichier depuis R :\n\nRcpp::sourceCpp(\"erreur.cpp\")\n\net appeler :\n\ny &lt;- c(2, 4, 7)\npred &lt;- c(1.5, 4.5, 6)\n\nmse_cpp(y, pred)",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#comprendre-le-fichier-c",
+    "href": "rcpp.html#comprendre-le-fichier-c",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.7 Comprendre le fichier C++",
+    "text": "7.7 Comprendre le fichier C++\nRegardons quelques lignes importantes.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#inclure-rcpp",
+    "href": "rcpp.html#inclure-rcpp",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "Inclure Rcpp",
+    "text": "Inclure Rcpp\n#include &lt;Rcpp.h&gt;\npermet d’utiliser les fonctionnalités fournies par Rcpp.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#lespace-de-noms-rcpp",
+    "href": "rcpp.html#lespace-de-noms-rcpp",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "L’espace de noms Rcpp",
+    "text": "L’espace de noms Rcpp\nNous avons ensuite :\nusing namespace Rcpp;\nCela nous permet d’écrire :\nNumericVector\nplutôt que :\nRcpp::NumericVector\nCette ligne est pratique pour de petits exemples.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#rcppexport",
+    "href": "rcpp.html#rcppexport",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "Rcpp::export",
+    "text": "Rcpp::export\nLa ligne :\n// [[Rcpp::export]]\nest particulièrement importante.\nElle indique à Rcpp que la fonction C++ définie immédiatement après doit être rendue accessible depuis R.\nIl faut cependant faire attention à la signification du mot export.\nNous avons déjà rencontré :\n#' @export\navec roxygen2.\nLes deux mécanismes ne jouent pas le même rôle :\n// [[Rcpp::export]]\n        ↓\ncréer une interface R vers une fonction C++\n\n#' @export\n        ↓\nrendre une fonction publique pour\nles utilisateurs de notre librairie\nCette distinction deviendra particulièrement importante lorsque nous intégrerons notre code C++ dans une librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#pourquoi-sourcecpp",
+    "href": "rcpp.html#pourquoi-sourcecpp",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.8 Pourquoi sourceCpp()?",
+    "text": "7.8 Pourquoi sourceCpp()?\nsourceCpp() :\n\nlit le fichier .cpp;\ncompile le code;\nconstruit la librairie dynamique nécessaire;\ncrée les interfaces R correspondant aux fonctions marquées Rcpp::export;\nrend ces fonctions disponibles dans notre session.\n\nPour un prototype, c’est extrêmement pratique.\nCependant, sourceCpp() n’est pas encore la manière finale dont nous voulons distribuer le code de notre librairie.\nNous voulons éventuellement que le C++ soit une composante normale de notre librairie R.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#utiliser-rcpp-dans-une-librairie",
+    "href": "rcpp.html#utiliser-rcpp-dans-une-librairie",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.9 Utiliser Rcpp dans une librairie",
+    "text": "7.9 Utiliser Rcpp dans une librairie\nSupposons maintenant que nous travaillions à l’intérieur d’une véritable librairie R.\nNotre structure ressemble actuellement à :\nMaLibrairie/\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n├── man/\n├── tests/\n└── MaLibrairie.Rproj\nPour préparer cette librairie à contenir du code C++, usethis fournit :\n\nusethis::use_rcpp()\n\nCette commande met en place plusieurs éléments nécessaires au code compilé.\nElle crée notamment :\nsrc/\net ajoute les dépendances nécessaires dans DESCRIPTION.\nNous devrions notamment retrouver :\nImports:\n    Rcpp\n\nLinkingTo:\n    Rcpp\nNous retrouvons ici directement les notions discutées dans (dependencies?).\nImports indique que notre librairie utilise Rcpp, alors que LinkingTo permet au compilateur d’accéder aux fichiers nécessaires lors de la compilation du code C++.\nNotre projet contient alors quelque chose ressemblant à :\nMaLibrairie/\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n├── src/\n│   └── calcul.cpp\n├── man/\n└── tests/",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#le-répertoire-src",
+    "href": "rcpp.html#le-répertoire-src",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.10 Le répertoire src/",
+    "text": "7.10 Le répertoire src/\nLe code compilé d’une librairie R est placé dans :\nsrc/\nCela crée une distinction assez claire :\nR/\n    ↓\ncode R\n\nsrc/\n    ↓\ncode C, C++, Fortran, ...\nNous pouvons donc créer :\nsrc/erreur.cpp\ncontenant notre code C++.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#compileattributes",
+    "href": "rcpp.html#compileattributes",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "compileAttributes()",
+    "text": "compileAttributes()\nComment R sait-il maintenant comment appeler notre fonction C++?\nRcpp doit générer une couche d’interface entre :\nR\n↕\nC++\nCette étape peut être effectuée avec :\n\nRcpp::compileAttributes()\n\nRcpp examine alors les fichiers C++ de src/ à la recherche de directives comme :\n// [[Rcpp::export]]\net génère les interfaces nécessaires.\nCela crée notamment des fichiers semblables à :\nR/RcppExports.R\nsrc/RcppExports.cpp\n\n\n\n\n\n\nNe pas modifier RcppExports à la main\n\n\n\nLes fichiers :\nR/RcppExports.R\nsrc/RcppExports.cpp\nsont générés automatiquement.\nNous modifions plutôt notre fichier C++ original puis nous régénérons les interfaces.\n\n\nNous pouvons ensuite utiliser :\n\ndevtools::load_all()\n\npour compiler et charger la version de développement de notre librairie.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#fonction-c-accessible-ou-fonction-publique",
+    "href": "rcpp.html#fonction-c-accessible-ou-fonction-publique",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.11 Fonction C++ accessible ou fonction publique?",
+    "text": "7.11 Fonction C++ accessible ou fonction publique?\nLa directive :\n// [[Rcpp::export]]\npermet à notre code R d’appeler une fonction C++.\nCela ne signifie pas nécessairement que cette fonction devrait devenir une fonction publique de notre librairie.\nConsidérons :\nridge()\ncomme fonction publique.\nElle pourrait appeler en interne :\nridge_fit_cpp()\nqui effectue un calcul numérique en C++.\nL’utilisateur n’a pas nécessairement besoin de connaître cette fonction interne.\nNous pouvons donc avoir :\nUTILISATEUR\n\nridge(...)\n   │\n   ▼\ncode R\n   │\n   ▼\nridge_fit_cpp(...)\n   │\n   ▼\ncode C++\nCette architecture permet de conserver en R :\n\nla validation des arguments;\nla gestion des formules;\nstats::model.matrix();\nles messages destinés à l’utilisateur;\nla création de l’objet retourné.\n\nEt d’utiliser C++ seulement pour :\n\nle calcul numérique;\nles boucles répétitives;\nles portions véritablement coûteuses.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#traduire-une-fonction-r-vers-c",
+    "href": "rcpp.html#traduire-une-fonction-r-vers-c",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.12 Traduire une fonction R vers C++",
+    "text": "7.12 Traduire une fonction R vers C++\nUne traduction R vers C++ ne devrait pas être une simple opération de copier-coller syntaxique.\nAvant de traduire une fonction, il faut comprendre :\n\nles arguments qu’elle reçoit;\nleurs types;\nla structure des objets;\nles valeurs retournées;\nles boucles effectuées;\nles cas limites;\nles valeurs manquantes;\nles fonctions R déjà utilisées.\n\nUne méthode raisonnable consiste à commencer par une fonction R simple et correcte.\nPar exemple :\n\nmse_R &lt;- function(y, prediction) {\n\n  if (length(y) != length(prediction)) {\n    stop(\"`y` et `prediction` doivent avoir la même longueur.\")\n  }\n\n  erreur &lt;- 0\n\n  for (i in seq_along(y)) {\n\n    residu &lt;- y[i] - prediction[i]\n\n    erreur &lt;- erreur + residu^2\n  }\n\n  erreur / length(y)\n}\n\nNous pouvons ensuite établir une correspondance :\n\n\n\nR\nC++\n\n\n\n\nnumeric\ndouble\n\n\nvecteur numeric\nNumericVector\n\n\ninteger\nint\n\n\nvecteur integer\nIntegerVector\n\n\nlength(x)\nx.size()\n\n\nindices 1,...,n\nindices 0,...,n-1\n\n\nstop()\nstop() avec Rcpp\n\n\nretour implicite\nreturn explicite\n\n\n\nSeulement ensuite traduisons-nous la fonction.\n#@ Utiliser un modèle d’IAG pour aider à la traduction\nLes modèles d’intelligence artificielle générative peuvent être particulièrement utiles lorsqu’on doit traduire une petite fonction R vers C++.\nOn peut leur fournir :\n\nla fonction R originale;\nles types attendus des arguments;\nla valeur retournée;\ndes exemples d’utilisation;\nles contraintes particulières;\nle fait que le code doit utiliser Rcpp.\n\nUn modèle peut alors proposer une première traduction.\nCependant :\n\nLe code généré constitue un point de départ, pas une preuve de correction.\n\nUne traduction peut notamment :\n\nchoisir un mauvais type;\noublier que l’indexation commence à zéro;\ngérer incorrectement les valeurs NA;\nmodifier silencieusement le comportement de la fonction;\ncréer des copies inutiles;\nproduire du code compilable mais numériquement différent;\nproduire du code plus compliqué sans être plus rapide.\n\nNous devons donc conserver le workflow :\nfonction R correcte\n       ↓\ntraduction proposée\n       ↓\ncomprendre le C++\n       ↓\ncompiler\n       ↓\ntester les résultats\n       ↓\ntester les cas limites\n       ↓\nmesurer la performance\n\n\n\n\n\n\nÊtre capable d’expliquer son code\n\n\n\nL’utilisation d’un modèle d’IAG ne remplace pas la compréhension du code produit.\nDans le cadre de ce cours, vous devriez notamment être capables d’expliquer :\n\nles types utilisés;\nla structure des boucles;\nles indices;\nles valeurs retournées;\nles échanges entre R et C++;\npourquoi cette portion du code constitue une bonne candidate pour C++.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#comparer-avant-et-après",
+    "href": "rcpp.html#comparer-avant-et-après",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.13 Comparer avant et après",
+    "text": "7.13 Comparer avant et après\nUne fois notre version C++ créée, deux questions doivent être posées.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#est-ce-correct",
+    "href": "rcpp.html#est-ce-correct",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "Est-ce correct?",
+    "text": "Est-ce correct?\nNous voulons d’abord comparer les résultats :\n\nresultat_R &lt;- mse_R(y, prediction)\nresultat_cpp &lt;- mse_cpp(y, prediction)\n\nall.equal(\n  resultat_R,\n  resultat_cpp\n)\n\nUne fonction plus rapide mais incorrecte n’est évidemment pas une amélioration.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#est-ce-réellement-plus-rapide",
+    "href": "rcpp.html#est-ce-réellement-plus-rapide",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "Est-ce réellement plus rapide?",
+    "text": "Est-ce réellement plus rapide?\nEnsuite seulement, nous comparons les temps d’exécution.\nPar exemple :\n\nsystem.time(\n  replicate(\n    1000,\n    mse_R(y, prediction)\n  )\n)\n\nsystem.time(\n  replicate(\n    1000,\n    mse_cpp(y, prediction)\n  )\n)\n\n\n\n\n\n\n\nLe résultat peut être décevant — et c’est intéressant!\n\n\n\nIl est tout à fait possible que notre première traduction C++ soit seulement légèrement plus rapide.\nIl est même possible qu’elle soit plus lente.\nCe résultat n’est pas un échec.\nIl nous apprend quelque chose sur l’endroit où le temps de calcul est réellement dépensé.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#reticule-un-équivalent-à-rcpp-pour-python",
+    "href": "rcpp.html#reticule-un-équivalent-à-rcpp-pour-python",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "7.14 reticule: un équivalent à Rcpp pour Python",
+    "text": "7.14 reticule: un équivalent à Rcpp pour Python",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
+    ]
+  },
+  {
+    "objectID": "rcpp.html#plus-de-lecture",
+    "href": "rcpp.html#plus-de-lecture",
+    "title": "7  Intégration avec d’autres langages de programmation",
+    "section": "Plus de lecture",
+    "text": "Plus de lecture\nUne source très complète de Hadley Whickam et un autre livre R Markodown très intéressant.\n\n\n\n\nBryan, Jennifer, Jim Hester, Shannon Pileggi, and E. David Aja. 2024. What They Forgot to Teach You about r. https://rstats.wtf/.\n\n\nPosit Software, PBC. 2026. “RStudio Projects.” 2026. https://docs.posit.co/ide/user/ide/guide/code/projects.html.\n\n\nWickham, Hadley. 2015. R Packages: Organize, Test, Document, and Share Your Code. \" O’Reilly Media, Inc.\".",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Intégration avec d'autres langages de programmation</span>"
     ]

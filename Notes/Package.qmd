@@ -1866,12 +1866,46 @@ system.file(
 
 Cela permet notamment d'utiliser de vrais fichiers dans les exemples, les tests et les vignettes sans dépendre d'un chemin particulier sur l'ordinateur de l'utilisateur.
 
+## Documentation des données
+
+Tout comme nos fonctions, nos données doivent être documentées.
+
+Pour ce faire, il est proposé de créer un fichier `data.R` dans le dossier `R/` et d'y écrire un bloc de documentation de la forme suivante :
+
+```text
+#' Jeu de données pour l'ajustement d'un modèle Ridge
+#'
+#' Un jeu de données simulé utilisé pour illustrer les fonctions
+#' de la librairie.
+#'
+#' @format Un data frame contenant 100 observations et 4 variables :
+#' \describe{
+#'   \item{y}{Variable réponse numérique.}
+#'   \item{x1}{Première variable explicative numérique.}
+#'   \item{x2}{Deuxième variable explicative numérique.}
+#'   \item{x3}{Troisième variable explicative numérique.}
+#' }
+#'
+#' @source Données simulées.
+"my_data"
+```
+
+La dernière ligne indique à `roxygen2` que ce bloc de documentation correspond au jeu de données `my_data`.
+
+Il suffit ensuite de générer la documentation avec :
+
+```r
+devtools::document()
+```
+
+La page d'aide associée au jeu de données sera alors créée dans le dossier `man/`.
+
 ## Résumé {.unnumbered}
 
 Nous pouvons donc distinguer trois situations principales :
 
 | Type de données | Emplacement | Utilisation |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | Objets R destinés aux utilisateurs | `data/` | Exemples ou données distribuées |
 | Objets R internes | `R/sysdata.rda` | Fonctionnement interne |
 | Fichiers bruts | `inst/extdata/` | Exemples, tests ou lecture de fichiers |
@@ -1969,4 +2003,4 @@ Elle contient du code **organisé, documenté, testé et maintenable**.
 
 ## Plus de lecture {.unnumbered}
 
-Je vous recommande de lire le [Chapitre 6](https://r-pkgs.org/code.html) et le [Chapitre 7](https://r-pkgs.org/data.html) du manuel de référence. :::::::::::
+Je vous recommande de lire le [Chapitre 6](https://r-pkgs.org/code.html) et le [Chapitre 7](https://r-pkgs.org/data.html) du manuel de référence.

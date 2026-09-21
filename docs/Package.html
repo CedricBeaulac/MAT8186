@@ -274,8 +274,9 @@ div.csl-indent {
   <li><a href="#données-accessibles-aux-utilisateurs" id="toc-données-accessibles-aux-utilisateurs" class="nav-link" data-scroll-target="#données-accessibles-aux-utilisateurs">Données accessibles aux utilisateurs</a></li>
   <li><a href="#données-internes-invisible" id="toc-données-internes-invisible" class="nav-link" data-scroll-target="#données-internes-invisible">Données internes (invisible)</a></li>
   <li><a href="#fichiers-de-données-brutes" id="toc-fichiers-de-données-brutes" class="nav-link" data-scroll-target="#fichiers-de-données-brutes">Fichiers de données brutes</a></li>
+  <li><a href="#documentation-des-données" id="toc-documentation-des-données" class="nav-link" data-scroll-target="#documentation-des-données"><span class="header-section-number">4.28</span> Documentation des données</a></li>
   <li><a href="#résumé" id="toc-résumé" class="nav-link" data-scroll-target="#résumé">Résumé</a></li>
-  <li><a href="#résumé-de-la-séance" id="toc-résumé-de-la-séance" class="nav-link" data-scroll-target="#résumé-de-la-séance"><span class="header-section-number">4.28</span> Résumé de la séance</a></li>
+  <li><a href="#résumé-de-la-séance" id="toc-résumé-de-la-séance" class="nav-link" data-scroll-target="#résumé-de-la-séance"><span class="header-section-number">4.29</span> Résumé de la séance</a></li>
   <li><a href="#plus-de-lecture" id="toc-plus-de-lecture" class="nav-link" data-scroll-target="#plus-de-lecture">Plus de lecture</a></li>
   </ul>
 </nav>
@@ -1684,6 +1685,30 @@ Données d’exemple
 </div>
 <p>Cela permet notamment d’utiliser de vrais fichiers dans les exemples, les tests et les vignettes sans dépendre d’un chemin particulier sur l’ordinateur de l’utilisateur.</p>
 </section>
+<section id="documentation-des-données" class="level2" data-number="4.28">
+<h2 data-number="4.28" class="anchored" data-anchor-id="documentation-des-données"><span class="header-section-number">4.28</span> Documentation des données</h2>
+<p>Tout comme nos fonctions, nos données doivent être documentées.</p>
+<p>Pour ce faire, il est proposé de créer un fichier <code>data.R</code> dans le dossier <code>R/</code> et d’y écrire un bloc de documentation de la forme suivante :</p>
+<pre class="text"><code>#' Jeu de données pour l'ajustement d'un modèle Ridge
+#'
+#' Un jeu de données simulé utilisé pour illustrer les fonctions
+#' de la librairie.
+#'
+#' @format Un data frame contenant 100 observations et 4 variables :
+#' \describe{
+#'   \item{y}{Variable réponse numérique.}
+#'   \item{x1}{Première variable explicative numérique.}
+#'   \item{x2}{Deuxième variable explicative numérique.}
+#'   \item{x3}{Troisième variable explicative numérique.}
+#' }
+#'
+#' @source Données simulées.
+"my_data"</code></pre>
+<p>La dernière ligne indique à <code>roxygen2</code> que ce bloc de documentation correspond au jeu de données <code>my_data</code>.</p>
+<p>Il suffit ensuite de générer la documentation avec :</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La page d’aide associée au jeu de données sera alors créée dans le dossier <code>man/</code>.</p>
+</section>
 <section id="résumé" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="résumé">Résumé</h2>
 <p>Nous pouvons donc distinguer trois situations principales :</p>
@@ -1740,8 +1765,8 @@ fichiers d'exemple</code></pre>
 </div>
 </div>
 </section>
-<section id="résumé-de-la-séance" class="level2" data-number="4.28">
-<h2 data-number="4.28" class="anchored" data-anchor-id="résumé-de-la-séance"><span class="header-section-number">4.28</span> Résumé de la séance</h2>
+<section id="résumé-de-la-séance" class="level2" data-number="4.29">
+<h2 data-number="4.29" class="anchored" data-anchor-id="résumé-de-la-séance"><span class="header-section-number">4.29</span> Résumé de la séance</h2>
 <p>Nous sommes maintenant passés d’une vision très rapide de la conception d’une librairie à un véritable workflow de développement.</p>
 <p>Nous avons vu qu’une librairie R est beaucoup plus qu’un ensemble de fichiers <code>.R</code>.</p>
 <p>Elle nous fournit une structure permettant d’organiser :</p>
@@ -1809,7 +1834,7 @@ L’idée principale
 </section>
 <section id="plus-de-lecture" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="plus-de-lecture">Plus de lecture</h2>
-<p>Je vous recommande de lire le <a href="https://r-pkgs.org/code.html">Chapitre 6</a> et le <a href="https://r-pkgs.org/data.html">Chapitre 7</a> du manuel de référence. :::::::::::</p>
+<p>Je vous recommande de lire le <a href="https://r-pkgs.org/code.html">Chapitre 6</a> et le <a href="https://r-pkgs.org/data.html">Chapitre 7</a> du manuel de référence.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
