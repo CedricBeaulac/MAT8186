@@ -15,6 +15,7 @@ book:
     - description.qmd
     - namespace.qmd
     - rcpp.qmd
+    - poo.qmd
     - references.qmd
 
 bibliography: references.bib

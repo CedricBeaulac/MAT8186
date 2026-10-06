@@ -1,0 +1,826 @@
+# Programmation orientée objet en R {#sec-oop}
+
+Jusqu'à maintenant, nous avons principalement programmé en utilisant des **fonctions**.
+
+Nous écrivons une fonction :
+
+```r
+moyenne <- function(x) {
+  sum(x) / length(x)
+}
+```
+
+puis nous lui fournissons des objets :
+
+```r
+moyenne(c(1, 2, 3))
+```
+
+Cette façon de travailler est très naturelle en R. En fait, la **programmation fonctionnelle** occupe une place particulièrement importante dans le langage.
+
+Il existe cependant une autre façon d'organiser un programme : la **programmation orientée objet**, ou POO.
+
+L'idée générale consiste à associer certains objets à une **classe**, puis à définir des comportements adaptés à cette classe.
+
+Cette approche devient particulièrement intéressante lorsque nos fonctions retournent des résultats complexes que nous voulons :
+
+- organiser;
+- manipuler;
+- afficher;
+- réutiliser;
+- transmettre à d'autres fonctions.
+
+C'est exactement ce qui se produit avec plusieurs fonctions statistiques classiques de R.
+
+## Programmation fonctionnelle et programmation orientée objet
+
+Considérons un modèle linéaire :
+
+```{r}
+#| eval: false
+
+fit <- lm(
+  mpg ~ wt + hp,
+  data = mtcars
+)
+```
+
+La fonction `lm()` retourne beaucoup plus qu'un simple vecteur de coefficients.
+
+```{r}
+#| eval: false
+
+class(fit)
+```
+
+retourne :
+
+```text
+[1] "lm"
+```
+
+L'objet `fit` contient plusieurs informations :
+
+```{r}
+#| eval: false
+
+names(fit)
+```
+
+par exemple :
+
+```text
+coefficients
+residuals
+effects
+fitted.values
+rank
+...
+```
+
+Nous pouvons ensuite utiliser le même objet avec différentes fonctions :
+
+```{r}
+#| eval: false
+
+print(fit)
+
+summary(fit)
+
+predict(fit)
+
+plot(fit)
+```
+
+Chacune de ces fonctions comprend comment interagir avec un objet de classe `"lm"`.
+
+C'est l'une des idées principales de la programmation orientée objet en R.
+
+```text
+                    objet fit
+                    classe "lm"
+                        │
+          ┌─────────────┼─────────────┐
+          ▼             ▼             ▼
+       print()       predict()       plot()
+          │             │             │
+          ▼             ▼             ▼
+     affichage       prédiction    diagnostic
+     approprié       appropriée     approprié
+```
+
+Nous pouvons donc créer un objet relativement riche et ensuite lui associer plusieurs comportements.
+
+## Pourquoi utiliser la programmation orientée objet?
+
+L'un des principaux intérêts de la POO est le **polymorphisme**.
+
+Le polymorphisme permet d'utiliser une même interface avec plusieurs types d'objets.
+
+Par exemple :
+
+```r
+print(x)
+```
+
+peut produire des résultats complètement différents selon la nature de `x`.
+
+Même chose pour :
+
+```r
+summary(x)
+```
+
+ou :
+
+```r
+plot(x)
+```
+
+Considérons :
+
+```{r}
+#| eval: false
+
+x <- 1:10
+
+summary(x)
+```
+
+puis :
+
+```{r}
+#| eval: false
+
+f <- factor(
+  c("A", "A", "B", "C")
+)
+
+summary(f)
+```
+
+Nous utilisons exactement la même commande :
+
+```r
+summary(...)
+```
+
+mais le comportement est adapté à la classe de l'objet.
+
+Nous pourrions évidemment imaginer une énorme fonction contenant :
+
+```r
+if (...) {
+
+} else if (...) {
+
+} else if (...) {
+
+}
+```
+
+pour traiter tous les types d'objets possibles.
+
+Mais cette approche deviendrait rapidement difficile à maintenir et, surtout, difficile à étendre.
+
+La POO permet plutôt de séparer :
+
+```text
+l'interface
+    ↓
+summary()
+
+de
+
+l'implantation
+    ↓
+que doit faire summary()
+pour cette classe particulière?
+```
+
+Cette séparation devient particulièrement importante lors du développement de librairies.
+
+## Quelques concepts fondamentaux
+
+Avant d'étudier les différents systèmes de POO disponibles dans R, introduisons quelques termes.
+
+## Objet {.unnumbered}
+
+Un **objet** contient des données.
+
+Par exemple :
+
+```r
+x <- c(2, 4, 6)
+```
+
+crée un objet.
+
+Cependant, il faut faire attention à la terminologie.
+
+On dit souvent que :
+
+> Tout est un objet dans R.
+
+C'est vrai au sens général : les vecteurs, fonctions, matrices, listes, environnements, etc. sont tous des objets manipulables dans R.
+
+Mais cela ne signifie pas que tous ces objets participent nécessairement à un système de **programmation orientée objet**.
+
+Par exemple :
+
+```r
+x <- c(1, 2, 3)
+```
+
+est évidemment un objet R, mais ce n'est pas nécessairement un objet S3, S4, R6 ou S7.
+
+Il faut donc distinguer :
+
+```text
+objet R
+```
+
+et :
+
+```text
+objet participant à un système de POO
+```
+
+## Classe {.unnumbered}
+
+Une **classe** décrit le type conceptuel d'un objet dans un système orienté objet.
+
+Par exemple :
+
+```{r}
+#| eval: false
+
+fit <- lm(
+  mpg ~ wt,
+  data = mtcars
+)
+
+class(fit)
+```
+
+retourne :
+
+```text
+[1] "lm"
+```
+
+Nous pouvons donc dire que :
+
+```text
+fit
+```
+
+est un objet de classe :
+
+```text
+"lm"
+```
+
+La classe permet notamment à R de déterminer quels comportements utiliser avec cet objet.
+
+## Méthode {.unnumbered}
+
+Une **méthode** est une fonction conçue pour fonctionner avec une classe particulière.
+
+Par exemple, il existe une méthode spécialement conçue pour afficher les objets `"lm"` :
+
+```text
+print.lm()
+```
+
+Il existe également une méthode permettant de faire des prédictions :
+
+```text
+predict.lm()
+```
+
+et plusieurs méthodes permettant de tracer des graphiques appropriés.
+
+Une méthode répond donc essentiellement à la question :
+
+> Que doit faire cette opération lorsqu'elle reçoit un objet de cette classe?
+
+## Générique {.unnumbered}
+
+Une fonction comme :
+
+```r
+predict()
+```
+
+n'effectue pas elle-même toutes les prédictions possibles.
+
+C'est une **fonction générique**.
+
+Son rôle principal est de déterminer la classe de l'objet et de trouver la méthode appropriée.
+
+Par exemple :
+
+```r
+predict(fit)
+```
+
+avec :
+
+```r
+class(fit)
+# "lm"
+```
+
+conduit R à utiliser une méthode appropriée à la classe `"lm"`.
+
+Conceptuellement :
+
+```text
+predict(fit)
+     │
+     ▼
+quelle est la classe de fit?
+     │
+     ▼
+    "lm"
+     │
+     ▼
+predict.lm()
+```
+
+Le processus permettant de choisir la méthode appropriée s'appelle le **method dispatch**, ou la **répartition des méthodes**.
+
+::: {.callout-important}
+## Trois concepts à ne pas confondre
+
+```text
+Classe
+    ↓
+Quel type d'objet avons-nous?
+
+
+Générique
+    ↓
+Quelle opération voulons-nous effectuer?
+
+
+Méthode
+    ↓
+Comment cette opération doit-elle être effectuée
+pour cette classe particulière?
+```
+:::
+
+## POO fonctionnelle
+
+Les systèmes S3 et S4 utilisent principalement une forme de programmation orientée objet appelée **POO fonctionnelle**.
+
+Dans ce paradigme, nous appelons une fonction :
+
+```r
+predict(objet)
+```
+
+et R détermine ensuite quelle implantation utiliser.
+
+La fonction générique occupe donc le rôle central :
+
+```text
+             predict()
+                 │
+       ┌─────────┼──────────┐
+       ▼         ▼          ▼
+ predict.lm()   ...     autre méthode
+```
+
+Du point de vue de l'utilisateur, cela ressemble donc toujours beaucoup à de la programmation fonctionnelle traditionnelle :
+
+```r
+fonction(objet)
+```
+
+Cette approche est très caractéristique de R.
+
+## POO encapsulée
+
+Dans plusieurs autres langages orientés objet, les méthodes sont plutôt associées directement aux objets.
+
+On retrouve alors une syntaxe conceptuellement semblable à :
+
+```text
+objet.methode()
+```
+
+Par exemple :
+
+```text
+modele.predict()
+```
+
+plutôt que :
+
+```r
+predict(modele)
+```
+
+Dans cette forme de POO, l'objet regroupe davantage :
+
+```text
+données
++
+comportements
+```
+
+On parle alors de **POO encapsulée**.
+
+Le système R6 adopte principalement cette philosophie.
+
+Nous pouvons donc distinguer grossièrement :
+
+```text
+POO fonctionnelle
+────────────────────────
+
+predict(modele)
+
+S3
+S4
+S7
+
+
+POO encapsulée
+────────────────────────
+
+modele$predict()
+
+R6
+```
+
+Cette distinction explique pourquoi la POO en R peut sembler un peu inhabituelle pour une personne provenant d'un langage comme Python, Java ou C++.
+
+## Héritage
+
+Les classes peuvent également être organisées de manière hiérarchique.
+
+Une classe peut être une version spécialisée d'une autre classe.
+
+On parle alors d'**héritage**.
+
+Par exemple, dans R, un modèle linéaire généralisé possède notamment les classes :
+
+```{r}
+#| eval: false
+
+fit <- glm(
+  am ~ wt,
+  data = mtcars,
+  family = binomial()
+)
+
+class(fit)
+```
+
+qui retourne :
+
+```text
+[1] "glm" "lm"
+```
+
+L'objet est donc d'abord considéré comme un objet `"glm"`, mais il peut également hériter de comportements associés à `"lm"`.
+
+Conceptuellement :
+
+```text
+lm
+│
+└── glm
+```
+
+Si une méthode spécialisée existe pour `"glm"`, celle-ci peut être utilisée.
+
+Sinon, R peut chercher une méthode définie pour une classe parente.
+
+L'héritage permet donc de réutiliser des comportements déjà définis.
+
+::: {.callout-note}
+## Hériter de méthodes
+
+L'héritage ne signifie pas seulement qu'un objet possède plusieurs étiquettes.
+
+L'intérêt principal est qu'une classe plus spécialisée peut **hériter des méthodes** définies pour une classe plus générale.
+
+Nous reviendrons en détail sur ce mécanisme lorsque nous étudierons S3.
+:::
+
+## Plusieurs systèmes de POO dans R
+
+Une particularité importante de R est qu'il ne possède pas **un seul système** de programmation orientée objet.
+
+Plusieurs systèmes coexistent.
+
+Les principaux que nous rencontrerons sont :
+
+```text
+S3
+S4
+R6
+S7
+```
+
+Ils répondent à des besoins différents et ne possèdent pas tous la même philosophie.
+
+## S3
+
+S3 est le système de programmation orientée objet le plus ancien et le plus simple que nous étudierons.
+
+Il est également profondément intégré à R.
+
+On retrouve S3 derrière plusieurs objets que nous utilisons quotidiennement :
+
+```text
+factor
+data.frame
+lm
+glm
+Date
+...
+```
+
+S3 est volontairement peu formel.
+
+Une classe S3 repose essentiellement sur l'utilisation d'un attribut :
+
+```text
+class
+```
+
+et sur certaines conventions concernant le nom des méthodes.
+
+Cette simplicité rend S3 :
+
+- facile à créer;
+- facile à étendre;
+- très flexible;
+- particulièrement bien adapté à de nombreuses librairies statistiques.
+
+Cette flexibilité vient cependant avec relativement peu de mécanismes permettant d'empêcher le programmeur de construire un objet incohérent.
+
+S3 repose donc beaucoup sur les **conventions**.
+
+Pour notre projet Ridge, S3 sera particulièrement naturel.
+
+Nous voulons qu'une fonction :
+
+```r
+ridge(...)
+```
+
+retourne un objet contenant plusieurs informations :
+
+```text
+coefficients
+lambda sélectionné
+grille de lambda
+erreurs de validation croisée
+formule
+...
+```
+
+puis permettre :
+
+```r
+print(fit)
+
+predict(fit)
+
+plot(fit)
+```
+
+Notre objet pourra donc avoir la classe :
+
+```text
+"ridge"
+```
+
+et posséder des méthodes :
+
+```text
+print.ridge()
+
+predict.ridge()
+
+plot.ridge()
+```
+
+Nous consacrerons donc la plus grande partie de cette séance à **S3**.
+
+## S4
+
+S4 peut être vu comme un système plus **formel et rigoureux** que S3.
+
+Avec S4, les classes sont définies explicitement et la structure des objets est davantage contrôlée.
+
+On peut notamment spécifier :
+
+- les composantes qu'un objet doit contenir;
+- le type de chacune de ces composantes;
+- certaines conditions nécessaires pour qu'un objet soit valide;
+- des relations d'héritage formelles.
+
+Cette rigueur nécessite davantage de travail lors de la conception.
+
+En échange, S4 offre davantage de garanties sur la structure des objets.
+
+Il devient particulièrement intéressant pour des systèmes logiciels :
+
+- relativement grands;
+- maintenus sur une longue période;
+- possédant plusieurs classes reliées;
+- développés par plusieurs programmeurs.
+
+S4 est notamment très présent dans l'écosystème **Bioconductor**.
+
+Dans ce cours, nous allons principalement chercher à **comprendre et reconnaître S4**, plutôt qu'à développer une architecture complexe basée sur ce système.
+
+## R6
+
+R6 adopte une philosophie assez différente de S3 et S4.
+
+Il permet de créer des objets dont les méthodes sont associées directement à l'objet.
+
+On peut donc obtenir une syntaxe ressemblant à :
+
+```r
+objet$methode()
+```
+
+R6 permet également de créer des objets **mutables**.
+
+Cela signifie qu'une méthode peut modifier directement l'objet plutôt que de toujours créer une nouvelle copie.
+
+Cette propriété est particulièrement utile lorsque nous voulons représenter un objet qui possède une existence ou un état indépendant de R.
+
+Par exemple :
+
+```text
+connexion à une base de données
+session web
+API
+fichier externe
+état d'une application
+```
+
+Dans ces situations, l'objet R peut agir comme une interface vers une ressource externe dont l'état évolue.
+
+R6 est donc particulièrement utile pour certains types de développement logiciel, mais il sera moins central pour notre projet statistique Ridge.
+
+Nous n'en ferons qu'un bref survol.
+
+## S7
+
+S7 est un système de programmation orientée objet beaucoup plus récent.
+
+Il a été conçu pour tirer des leçons des forces et des faiblesses de S3 et S4.
+
+On peut grossièrement voir S7 comme une tentative de conserver plusieurs qualités de S3 :
+
+- une interface relativement naturelle;
+- une POO fonctionnelle;
+- l'utilisation de fonctions génériques;
+
+tout en ajoutant davantage de structure et de garanties, comme dans S4.
+
+S7 permet notamment de définir explicitement :
+
+- des classes;
+- des propriétés;
+- des validateurs;
+- des constructeurs;
+- des génériques;
+- des méthodes;
+- des relations d'héritage.
+
+Une différence conceptuelle importante est que les classes S7 sont elles-mêmes des objets explicitement définis.
+
+S7 possède également un système formel d'héritage permettant à une classe enfant d'hériter des méthodes de sa classe parente.
+
+L'objectif à long terme est donc de proposer un système moderne qui puisse éventuellement jouer une partie du rôle actuellement partagé entre S3 et S4.
+
+S7 demeure toutefois beaucoup plus récent que S3 et S4.
+
+Pour cette raison, nous allons surtout chercher à comprendre :
+
+1. pourquoi un nouveau système a été proposé;
+2. quelles améliorations il apporte;
+3. comment sa philosophie se compare à S3 et S4.
+
+## Résumé des principaux systèmes
+
+Nous pouvons grossièrement comparer les quatre systèmes de la façon suivante :
+
+| Système | Style | Principale qualité | Principale utilisation dans ce cours |
+|---|---|---|---|
+| S3 | POO fonctionnelle | Simple et flexible | **Approfondi** |
+| S4 | POO fonctionnelle | Formel et rigoureux | Survol |
+| R6 | POO encapsulée | Objets mutables | Bref survol |
+| S7 | POO fonctionnelle | Structure moderne combinant plusieurs idées de S3 et S4 | Survol |
+
+Il ne faut donc pas chercher un système qui serait toujours « meilleur » que les autres.
+
+Le choix dépend notamment :
+
+- de la complexité de la librairie;
+- de la durée de vie prévue du projet;
+- du nombre de développeurs;
+- du niveau de validation souhaité;
+- de la nécessité ou non d'avoir des objets mutables;
+- de l'écosystème dans lequel la librairie doit s'intégrer.
+
+## Retour à notre projet Ridge
+
+Notre projet donne une motivation très naturelle pour introduire la programmation orientée objet.
+
+Supposons que notre fonction :
+
+```r
+ridge(...)
+```
+
+effectue :
+
+1. la construction de la matrice de design;
+2. une validation croisée sur plusieurs valeurs de $\lambda$;
+3. la sélection d'un $\lambda$;
+4. l'ajustement final du modèle.
+
+Elle doit alors retourner plusieurs résultats.
+
+Nous pourrions simplement retourner une liste :
+
+```r
+list(
+  coefficients = beta,
+  lambda = lambda,
+  lambda_grid = lambda_grid,
+  cv_error = cv_error,
+  formula = formula
+)
+```
+
+Cette approche contient toutes les informations nécessaires.
+
+Cependant, du point de vue de l'utilisateur, nous voudrions plutôt obtenir quelque chose comme :
+
+```r
+fit <- ridge(
+  y ~ x1 + x2,
+  data = donnees
+)
+
+fit
+```
+
+puis :
+
+```r
+predict(
+  fit,
+  newdata = nouvelles_donnees
+)
+```
+
+et :
+
+```r
+plot(fit)
+```
+
+Nous voulons donc transformer :
+
+```text
+une simple liste de résultats
+```
+
+en :
+
+```text
+un objet statistique possédant
+des comportements appropriés
+```
+
+S3 va nous permettre de faire exactement cela.
+
+Dans la prochaine section, nous allons donc construire progressivement notre première classe S3 et comprendre comment fonctionnent :
+
+```text
+classe
+    ↓
+générique
+    ↓
+méthode
+    ↓
+method dispatch
+    ↓
+héritage
+```
