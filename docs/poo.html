@@ -123,35 +123,6 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -275,7 +246,40 @@ window.Quarto = {
   <li><a href="#r6" id="toc-r6" class="nav-link" data-scroll-target="#r6"><span class="header-section-number">8.10</span> R6</a></li>
   <li><a href="#s7" id="toc-s7" class="nav-link" data-scroll-target="#s7"><span class="header-section-number">8.11</span> S7</a></li>
   <li><a href="#résumé-des-principaux-systèmes" id="toc-résumé-des-principaux-systèmes" class="nav-link" data-scroll-target="#résumé-des-principaux-systèmes"><span class="header-section-number">8.12</span> Résumé des principaux systèmes</a></li>
-  <li><a href="#retour-à-notre-projet-ridge" id="toc-retour-à-notre-projet-ridge" class="nav-link" data-scroll-target="#retour-à-notre-projet-ridge"><span class="header-section-number">8.13</span> Retour à notre projet Ridge</a></li>
+  <li><a href="#sec-s3" id="toc-sec-s3" class="nav-link" data-scroll-target="#sec-s3"><span class="header-section-number">8.13</span> S3 : un premier système de programmation orientée objet</a></li>
+  <li><a href="#le-modèle-mental-minimal-de-s3" id="toc-le-modèle-mental-minimal-de-s3" class="nav-link" data-scroll-target="#le-modèle-mental-minimal-de-s3"><span class="header-section-number">8.14</span> Le modèle mental minimal de S3</a></li>
+  <li><a href="#objet-1" id="toc-objet-1" class="nav-link" data-scroll-target="#objet-1">Objet</a></li>
+  <li><a href="#classe-1" id="toc-classe-1" class="nav-link" data-scroll-target="#classe-1">Classe</a></li>
+  <li><a href="#générique-1" id="toc-générique-1" class="nav-link" data-scroll-target="#générique-1">Générique</a></li>
+  <li><a href="#méthode-1" id="toc-méthode-1" class="nav-link" data-scroll-target="#méthode-1">Méthode</a></li>
+  <li><a href="#un-exemple-une-variable-fonctionnelle" id="toc-un-exemple-une-variable-fonctionnelle" class="nav-link" data-scroll-target="#un-exemple-une-variable-fonctionnelle"><span class="header-section-number">8.15</span> Un exemple : une variable fonctionnelle</a></li>
+  <li><a href="#créer-notre-première-classe-s3" id="toc-créer-notre-première-classe-s3" class="nav-link" data-scroll-target="#créer-notre-première-classe-s3"><span class="header-section-number">8.16</span> Créer notre première classe S3</a></li>
+  <li><a href="#première-méthode-print" id="toc-première-méthode-print" class="nav-link" data-scroll-target="#première-méthode-print">Première méthode : <code>print()</code></a></li>
+  <li><a href="#deuxième-méthode-plot" id="toc-deuxième-méthode-plot" class="nav-link" data-scroll-target="#deuxième-méthode-plot">Deuxième méthode : <code>plot()</code></a></li>
+  <li><a href="#arguments-spécifiques-et-..." id="toc-arguments-spécifiques-et-..." class="nav-link" data-scroll-target="#arguments-spécifiques-et-..."><span class="header-section-number">8.17</span> Arguments spécifiques et <code>...</code></a></li>
+  <li><a href="#troisième-méthode-mean" id="toc-troisième-méthode-mean" class="nav-link" data-scroll-target="#troisième-méthode-mean">Troisième méthode : <code>mean()</code></a></li>
+  <li><a href="#la-classe-comme-contrat-implicite" id="toc-la-classe-comme-contrat-implicite" class="nav-link" data-scroll-target="#la-classe-comme-contrat-implicite">La classe comme contrat implicite</a></li>
+  <li><a href="#utiliser-un-constructeur" id="toc-utiliser-un-constructeur" class="nav-link" data-scroll-target="#utiliser-un-constructeur"><span class="header-section-number">8.18</span> Utiliser un constructeur</a></li>
+  <li><a href="#modifier-mean.funvar" id="toc-modifier-mean.funvar" class="nav-link" data-scroll-target="#modifier-mean.funvar">Modifier <code>mean.funvar()</code></a></li>
+  <li><a href="#dans-une-librairie-r" id="toc-dans-une-librairie-r" class="nav-link" data-scroll-target="#dans-une-librairie-r"><span class="header-section-number">8.19</span> Dans une librairie R</a></li>
+  <li><a href="#pourquoi-ne-pas-simplement-créer-plot_funvar" id="toc-pourquoi-ne-pas-simplement-créer-plot_funvar" class="nav-link" data-scroll-target="#pourquoi-ne-pas-simplement-créer-plot_funvar"><span class="header-section-number">8.20</span> Pourquoi ne pas simplement créer <code>plot_funvar()</code>?</a></li>
+  <li><a href="#une-courte-introduction-à-lhéritage" id="toc-une-courte-introduction-à-lhéritage" class="nav-link" data-scroll-target="#une-courte-introduction-à-lhéritage"><span class="header-section-number">8.21</span> Une courte introduction à l’héritage</a></li>
+  <li><a href="#retour-sur-notre-classe-funvar" id="toc-retour-sur-notre-classe-funvar" class="nav-link" data-scroll-target="#retour-sur-notre-classe-funvar">Retour sur notre classe <code>funvar</code></a></li>
+  <li><a href="#ce-que-la-poo-nous-apporte" id="toc-ce-que-la-poo-nous-apporte" class="nav-link" data-scroll-target="#ce-que-la-poo-nous-apporte"><span class="header-section-number">8.22</span> Ce que la POO nous apporte</a></li>
+  <li><a href="#sec-other-oop" id="toc-sec-other-oop" class="nav-link" data-scroll-target="#sec-other-oop"><span class="header-section-number">8.23</span> Au-delà de S3 : S4, R6 et S7</a></li>
+  <li><a href="#r6-changer-de-paradigme" id="toc-r6-changer-de-paradigme" class="nav-link" data-scroll-target="#r6-changer-de-paradigme"><span class="header-section-number">8.24</span> R6 : changer de paradigme</a></li>
+  <li><a href="#des-objets-qui-peuvent-changer" id="toc-des-objets-qui-peuvent-changer" class="nav-link" data-scroll-target="#des-objets-qui-peuvent-changer">Des objets qui peuvent changer</a></li>
+  <li><a href="#s4-rendre-s3-plus-formel" id="toc-s4-rendre-s3-plus-formel" class="nav-link" data-scroll-target="#s4-rendre-s3-plus-formel"><span class="header-section-number">8.25</span> S4 : rendre S3 plus formel</a></li>
+  <li><a href="#validation-plus-stricte" id="toc-validation-plus-stricte" class="nav-link" data-scroll-target="#validation-plus-stricte">Validation plus stricte</a></li>
+  <li><a href="#s7-une-tentative-de-réunir-les-forces-de-s3-et-s4" id="toc-s7-une-tentative-de-réunir-les-forces-de-s3-et-s4" class="nav-link" data-scroll-target="#s7-une-tentative-de-réunir-les-forces-de-s3-et-s4"><span class="header-section-number">8.26</span> S7 : une tentative de réunir les forces de S3 et S4</a></li>
+  <li><a href="#définir-une-classe-s7" id="toc-définir-une-classe-s7" class="nav-link" data-scroll-target="#définir-une-classe-s7"><span class="header-section-number">8.27</span> Définir une classe S7</a></li>
+  <li><a href="#les-propriétés" id="toc-les-propriétés" class="nav-link" data-scroll-target="#les-propriétés"><span class="header-section-number">8.28</span> Les propriétés</a></li>
+  <li><a href="#ajouter-un-validateur" id="toc-ajouter-un-validateur" class="nav-link" data-scroll-target="#ajouter-un-validateur"><span class="header-section-number">8.29</span> Ajouter un validateur</a></li>
+  <li><a href="#les-méthodes-avec-s7" id="toc-les-méthodes-avec-s7" class="nav-link" data-scroll-target="#les-méthodes-avec-s7"><span class="header-section-number">8.30</span> Les méthodes avec S7</a></li>
+  <li><a href="#créer-un-nouveau-générique-avec-s7" id="toc-créer-un-nouveau-générique-avec-s7" class="nav-link" data-scroll-target="#créer-un-nouveau-générique-avec-s7"><span class="header-section-number">8.31</span> Créer un nouveau générique avec S7</a></li>
+  <li><a href="#pourquoi-s7-est-particulièrement-intéressant" id="toc-pourquoi-s7-est-particulièrement-intéressant" class="nav-link" data-scroll-target="#pourquoi-s7-est-particulièrement-intéressant"><span class="header-section-number">8.32</span> Pourquoi S7 est particulièrement intéressant?</a></li>
+  <li><a href="#s7-est-encore-récent" id="toc-s7-est-encore-récent" class="nav-link" data-scroll-target="#s7-est-encore-récent"><span class="header-section-number">8.33</span> S7 est encore récent</a></li>
+  <li><a href="#quel-système-choisir" id="toc-quel-système-choisir" class="nav-link" data-scroll-target="#quel-système-choisir"><span class="header-section-number">8.34</span> Quel système choisir?</a></li>
   </ul>
 </nav>
     </div>
@@ -372,6 +376,7 @@ rank
 </section>
 <section id="pourquoi-utiliser-la-programmation-orientée-objet" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="pourquoi-utiliser-la-programmation-orientée-objet"><span class="header-section-number">8.2</span> Pourquoi utiliser la programmation orientée objet?</h2>
+<p>Tout d’abord, comprennons que nous pourrions faire un cours de 45 heures sur la POO, ici nous ne ferrons qu’un survol très rapide d’une version très spécifique de la POO en R. L’objectif est de mettre au point une petit rampe de lancement et vous pourrez voler de vous même si nécessaire par la suite.</p>
 <p>L’un des principaux intérêts de la POO est le <strong>polymorphisme</strong>.</p>
 <p>Le polymorphisme permet d’utiliser une même interface avec plusieurs types d’objets.</p>
 <p>Par exemple :</p>
@@ -812,59 +817,1309 @@ fichier externe
 <li>de la nécessité ou non d’avoir des objets mutables;</li>
 <li>de l’écosystème dans lequel la librairie doit s’intégrer.</li>
 </ul>
+<p>Dans le contexte de ce cours, nous n’allons que discuter longuement dy système S3 et faire un léger survol des système S4 et S7.</p>
 </section>
-<section id="retour-à-notre-projet-ridge" class="level2" data-number="8.13">
-<h2 data-number="8.13" class="anchored" data-anchor-id="retour-à-notre-projet-ridge"><span class="header-section-number">8.13</span> Retour à notre projet Ridge</h2>
-<p>Notre projet donne une motivation très naturelle pour introduire la programmation orientée objet.</p>
-<p>Supposons que notre fonction :</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ridge</span>(...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>effectue :</p>
-<ol type="1">
-<li>la construction de la matrice de design;</li>
-<li>une validation croisée sur plusieurs valeurs de <span class="math inline">\(\lambda\)</span>;</li>
-<li>la sélection d’un <span class="math inline">\(\lambda\)</span>;</li>
-<li>l’ajustement final du modèle.</li>
-</ol>
-<p>Elle doit alors retourner plusieurs résultats.</p>
-<p>Nous pourrions simplement retourner une liste :</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">coefficients =</span> beta,</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">lambda =</span> lambda,</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">lambda_grid =</span> lambda_grid,</span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cv_error =</span> cv_error,</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">formula =</span> formula</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Cette approche contient toutes les informations nécessaires.</p>
-<p>Cependant, du point de vue de l’utilisateur, nous voudrions plutôt obtenir quelque chose comme :</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">ridge</span>(</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x1 <span class="sc">+</span> x2,</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> donnees</span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>puis :</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  fit,</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> nouvelles_donnees</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>et :</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Nous voulons donc transformer :</p>
-<pre class="text"><code>une simple liste de résultats</code></pre>
-<p>en :</p>
-<pre class="text"><code>un objet statistique possédant
-des comportements appropriés</code></pre>
-<p>S3 va nous permettre de faire exactement cela.</p>
-<p>Dans la prochaine section, nous allons donc construire progressivement notre première classe S3 et comprendre comment fonctionnent :</p>
-<pre class="text"><code>classe
-    ↓
+<section id="sec-s3" class="level2" data-number="8.13">
+<h2 data-number="8.13" class="anchored" data-anchor-id="sec-s3"><span class="header-section-number">8.13</span> S3 : un premier système de programmation orientée objet</h2>
+<p>Nous allons maintenant nous concentrer sur <strong>S3</strong>, le système de programmation orientée objet le plus simple et le plus utilisé dans R.</p>
+<p>L’objectif n’est pas d’étudier toutes les subtilités de S3. Nous voulons plutôt comprendre comment la programmation orientée objet peut nous permettre de construire une <strong>meilleure interface pour les utilisateurs de notre librairie</strong>.</p>
+<p>Nous allons utiliser comme exemple une <strong>variable fonctionnelle</strong>, c’est-à-dire un ensemble de courbes observées sur une même grille.</p>
+</section>
+<section id="le-modèle-mental-minimal-de-s3" class="level2" data-number="8.14">
+<h2 data-number="8.14" class="anchored" data-anchor-id="le-modèle-mental-minimal-de-s3"><span class="header-section-number">8.14</span> Le modèle mental minimal de S3</h2>
+<p>Pour comprendre S3, quatre concepts sont particulièrement importants :</p>
+<pre class="text"><code>objet
+classe
 générique
+méthode</code></pre>
+</section>
+<section id="objet-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="objet-1">Objet</h2>
+<p>Un objet contient de l’information.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ou :</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp, <span class="at">data =</span> mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>sont des objets R.</p>
+<p>Cependant, tous les objets R ne participent pas nécessairement à un système de programmation orientée objet.</p>
+</section>
+<section id="classe-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="classe-1">Classe</h2>
+<p>Une <strong>classe</strong> permet d’indiquer à R quel est le type d’objet nous manipulons.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> wt <span class="sc">+</span> hp, <span class="at">data =</span> mtcars)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>retourne :</p>
+<pre class="text"><code>[1] "lm"</code></pre>
+<p>R sait donc que <code>fit</code> est un objet représentant un modèle linéaire, idenfité par sa classe; <code>lm</code>.</p>
+<p>Dans S3, une classe est essentiellement un <strong>attribut ajouté à un objet R</strong>.</p>
+<p>Nous pouvons voir les attributs d’un objet avec :</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ou simplement sa classe avec :</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Dans le système S3, la classe d’une objet peut-être directement assignée:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fit) <span class="ot">&lt;-</span> lm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="générique-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="générique-1">Générique</h2>
+<p>Une fonction <strong>générique</strong> représente une opération générale qui peut être utile dans un large éventaille de scénarios.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>()</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>()</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>()</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>()</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>sont des fonctions génériques.</p>
+<p>L’idée est qu’une même opération peut avoir un comportement différent selon la classe de l’objet.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ne produit pas le même graphique que :</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>même si nous appelons dans les deux cas la fonction :</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="méthode-1" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="méthode-1">Méthode</h2>
+<p>Une <strong>méthode</strong> est l’implantation d’une fonction générique pour une classe particulière.</p>
+<p>Dans S3, les méthodes suivent généralement la convention :</p>
+<pre class="text"><code>generique.classe()</code></pre>
+<p>Par exemple :</p>
+<pre class="text"><code>print.lm()
+predict.lm()
+plot.lm()</code></pre>
+<p>sont des méthodes conçues pour les objets de classe <code>"lm"</code>.</p>
+<p>Lorsque nous écrivons :</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>R effectue conceptuellement :</p>
+<pre class="text"><code>plot(fit)
     ↓
-méthode
+quelle est la classe de fit?
     ↓
-method dispatch
+"lm"
     ↓
-héritage</code></pre>
+chercher une méthode plot.lm()
+    ↓
+exécuter plot.lm(fit)</code></pre>
+<p>Ce mécanisme s’appelle le <strong>method dispatch</strong>, ou la répartition des méthodes.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Le cœur de S3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dans sa forme la plus simple, S3 repose donc sur deux idées :</p>
+<pre class="text"><code>un objet possède une classe</code></pre>
+<p>et :</p>
+<pre class="text"><code>les fonctions génériques recherchent
+des méthodes correspondant à cette classe</code></pre>
+<p>C’est simple mais c’est ça!</p>
+</div>
+</div>
+</section>
+<section id="un-exemple-une-variable-fonctionnelle" class="level2" data-number="8.15">
+<h2 data-number="8.15" class="anchored" data-anchor-id="un-exemple-une-variable-fonctionnelle"><span class="header-section-number">8.15</span> Un exemple : une variable fonctionnelle</h2>
+<p>Supposons que nous observions plusieurs courbes sur une même grille.</p>
+<p>Par exemple, générons 30 courbes :</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">101</span>)</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>values <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NA_real_</span>,</span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">nrow =</span> n,</span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ncol =</span> <span class="fu">length</span>(grid)</span>
+<span id="cb72-11"><a href="#cb72-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb72-12"><a href="#cb72-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-13"><a href="#cb72-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(n)) {</span>
+<span id="cb72-14"><a href="#cb72-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-15"><a href="#cb72-15" aria-hidden="true" tabindex="-1"></a>  amplitude <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> <span class="dv">1</span>, <span class="at">sd =</span> <span class="fl">0.15</span>)</span>
+<span id="cb72-16"><a href="#cb72-16" aria-hidden="true" tabindex="-1"></a>  phase <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.08</span>)</span>
+<span id="cb72-17"><a href="#cb72-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-18"><a href="#cb72-18" aria-hidden="true" tabindex="-1"></a>  values[i, ] <span class="ot">&lt;-</span></span>
+<span id="cb72-19"><a href="#cb72-19" aria-hidden="true" tabindex="-1"></a>    amplitude <span class="sc">*</span> <span class="fu">sin</span>(<span class="dv">2</span> <span class="sc">*</span> pi <span class="sc">*</span> (grid <span class="sc">+</span> phase)) <span class="sc">+</span></span>
+<span id="cb72-20"><a href="#cb72-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rnorm</span>(<span class="fu">length</span>(grid), <span class="at">sd =</span> <span class="fl">0.15</span>)</span>
+<span id="cb72-21"><a href="#cb72-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La matrice :</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>contient nos courbes :</p>
+<pre class="text"><code>lignes    → individus
+colonnes  → points de la grille</code></pre>
+<p>Nous avons également besoin de conserver :</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>qui nous indique où les courbes sont observées.</p>
+<p>Nous pouvons regrouper ces informations dans une liste :</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> values,</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> grid,</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"Température"</span></span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cette liste contient maintenant tout ce dont nous avons besoin.</p>
+<p>Cependant, pour R, elle demeure simplement une liste :</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>retourne :</p>
+<pre class="text"><code>[1] "list"</code></pre>
+</section>
+<section id="créer-notre-première-classe-s3" class="level2" data-number="8.16">
+<h2 data-number="8.16" class="anchored" data-anchor-id="créer-notre-première-classe-s3"><span class="header-section-number">8.16</span> Créer notre première classe S3</h2>
+<p>Nous voulons indiquer à R que cette liste représente quelque chose de plus spécifique qu’une simple liste.</p>
+<p>Nous pouvons lui attribuer une classe :</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(temperature) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Puis :</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>retourne :</p>
+<pre class="text"><code>[1] "funvar"</code></pre>
+<p>Nous venons de créer notre premier objet S3.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Une classe S3 est très légère
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nous n’avons pas eu besoin de déclarer formellement la classe <code>"funvar"</code> quelque part.</p>
+<p>Cette commande suffit :</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(temperature) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>C’est l’une des grandes forces, mais aussi l’une des faiblesses, de S3 : le système est extrêmement flexible et repose largement sur des conventions généralement respecté par les utilisateurs.</p>
+</div>
+</div>
+<p>À ce stade, notre objet contient :</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>soit :</p>
+<pre class="text"><code>values
+grid
+name</code></pre>
+<p>Nous pouvons accéder directement à ces composantes :</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">$</span>values</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">$</span>grid</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">$</span>name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Mais l’utilisateur de notre librairie ne devrait pas nécessairement avoir à connaître toute cette structure interne.</p>
+<p>C’est ici que les méthodes deviennent intéressantes.</p>
+</section>
+<section id="première-méthode-print" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="première-méthode-print">Première méthode : <code>print()</code></h2>
+<p>Regardons ce qui se produit actuellement :</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>temperature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>R imprime essentiellement toute la liste.</p>
+<p>Dans notre cas, cela signifie potentiellement imprimer une matrice contenant des milliers de valeurs.</p>
+<p>Ce n’est probablement pas ce qu’un utilisateur souhaite voir lorsqu’il demande simplement :</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>temperature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous pouvons définir une méthode d’affichage spécifique à notre classe :</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>print.funvar <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Variable fonctionnelle</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Nom :"</span>, x<span class="sc">$</span>name, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Nombre de courbes :"</span>, <span class="fu">nrow</span>(x<span class="sc">$</span>values), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Nombre de points :"</span>, <span class="fu">ncol</span>(x<span class="sc">$</span>values), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(</span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Domaine : ["</span>,</span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">min</span>(x<span class="sc">$</span>grid),</span>
+<span id="cb88-11"><a href="#cb88-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">", "</span>,</span>
+<span id="cb88-12"><a href="#cb88-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">max</span>(x<span class="sc">$</span>grid),</span>
+<span id="cb88-13"><a href="#cb88-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"]</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb88-14"><a href="#cb88-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">sep =</span> <span class="st">""</span></span>
+<span id="cb88-15"><a href="#cb88-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb88-16"><a href="#cb88-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-17"><a href="#cb88-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(x)</span>
+<span id="cb88-18"><a href="#cb88-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous pouvons maintenant écrire :</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>ou simplement :</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>temperature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et obtenir quelque chose comme :</p>
+<pre class="text"><code>Variable fonctionnelle
+Nom : Température
+Nombre de courbes : 30
+Nombre de points : 101
+Domaine : [0, 1]</code></pre>
+<p>Le contenu interne de l’objet n’a pas changé.</p>
+<p>Ce qui a changé est <strong>la manière dont l’utilisateur interagit avec lui</strong>.</p>
+<p>Avant :</p>
+<pre class="text"><code>temperature
+    ↓
+énorme liste de nombres</code></pre>
+<p>Après :</p>
+<pre class="text"><code>temperature
+    ↓
+résumé utile de l'objet</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Premier bénéfice de la POO
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La programmation orientée objet nous permet de séparer :</p>
+<pre class="text"><code>comment les données sont stockées</code></pre>
+<p>de :</p>
+<pre class="text"><code>comment elles sont présentées à l'utilisateur</code></pre>
+<p>Nous pouvons donc modifier la structure interne de notre objet plus tard sans nécessairement modifier l’interface offerte aux utilisateurs.</p>
+</div>
+</div>
+</section>
+<section id="deuxième-méthode-plot" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="deuxième-méthode-plot">Deuxième méthode : <code>plot()</code></h2>
+<p>Une variable fonctionnelle possède également une représentation graphique naturelle.</p>
+<p>Sans programmation orientée objet, l’utilisateur devrait savoir que les courbes se trouvent dans :</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">$</span>values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et que leur grille se trouve dans :</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">$</span>grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Il devrait ensuite écrire quelque chose comme :</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  temperature<span class="sc">$</span>grid,</span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>(temperature<span class="sc">$</span>values),</span>
+<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb98-5"><a href="#cb98-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">lty =</span> <span class="dv">1</span></span>
+<span id="cb98-6"><a href="#cb98-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Mais si l’objet représente une variable fonctionnelle, nous pouvons définir directement ce que signifie :</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Créons une méthode :</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>plot.funvar <span class="ot">&lt;-</span> <span class="cf">function</span>(x,</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">show_mean =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>                        ...) {</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matplot</span>(</span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>    x<span class="sc">$</span>grid,</span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t</span>(x<span class="sc">$</span>values),</span>
+<span id="cb100-8"><a href="#cb100-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb100-9"><a href="#cb100-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">1</span>,</span>
+<span id="cb100-10"><a href="#cb100-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"t"</span>,</span>
+<span id="cb100-11"><a href="#cb100-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> x<span class="sc">$</span>name,</span>
+<span id="cb100-12"><a href="#cb100-12" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb100-13"><a href="#cb100-13" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb100-14"><a href="#cb100-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-15"><a href="#cb100-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (show_mean) {</span>
+<span id="cb100-16"><a href="#cb100-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(</span>
+<span id="cb100-17"><a href="#cb100-17" aria-hidden="true" tabindex="-1"></a>      x<span class="sc">$</span>grid,</span>
+<span id="cb100-18"><a href="#cb100-18" aria-hidden="true" tabindex="-1"></a>      <span class="fu">colMeans</span>(x<span class="sc">$</span>values),</span>
+<span id="cb100-19"><a href="#cb100-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">lwd =</span> <span class="dv">3</span></span>
+<span id="cb100-20"><a href="#cb100-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb100-21"><a href="#cb100-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb100-22"><a href="#cb100-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb100-23"><a href="#cb100-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(x)</span>
+<span id="cb100-24"><a href="#cb100-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous pouvons maintenant simplement écrire :</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>R effectue alors conceptuellement :</p>
+<pre class="text"><code>plot(temperature)
+       ↓
+class(temperature)
+       ↓
+"funvar"
+       ↓
+plot.funvar()</code></pre>
+<p>Notre méthode affiche toutes les courbes ainsi que leur moyenne.</p>
+</section>
+<section id="arguments-spécifiques-et-..." class="level2" data-number="8.17">
+<h2 data-number="8.17" class="anchored" data-anchor-id="arguments-spécifiques-et-..."><span class="header-section-number">8.17</span> Arguments spécifiques et <code>...</code></h2>
+<p>Notre méthode possède deux types d’arguments supplémentaires.</p>
+<p>Premièrement :</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>show_mean <span class="ot">=</span> <span class="cn">TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>est un argument spécifique à notre méthode <code>plot.funvar()</code>.</p>
+<p>Il permet par exemple :</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>  temperature,</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_mean =</span> <span class="cn">FALSE</span></span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Deuxièmement, nous avons :</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Les arguments contenus dans <code>...</code> sont transmis à <code>matplot()</code>.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>  temperature,</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Courbes de température"</span>,</span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">lwd =</span> <span class="dv">2</span></span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>conduit conceptuellement à :</p>
+<pre class="text"><code>plot(
+  temperature,
+  main = "...",
+  lwd = 2
+)
+        ↓
+plot.funvar(
+  temperature,
+  main = "...",
+  lwd = 2
+)
+        ↓
+matplot(
+  ...,
+  main = "...",
+  lwd = 2
+)</code></pre>
+<p>Nous avons donc :</p>
+<pre class="text"><code>show_mean
+    ↓
+argument propre à plot.funvar()
+
+
+main, lwd, ...
+    ↓
+arguments transmis à matplot()</code></pre>
+</section>
+<section id="troisième-méthode-mean" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="troisième-méthode-mean">Troisième méthode : <code>mean()</code></h2>
+<p>Les méthodes ne servent pas uniquement à modifier l’affichage.</p>
+<p>Nous pouvons également définir des opérations statistiques naturelles pour notre classe.</p>
+<p>Une variable fonctionnelle composée de plusieurs courbes possède, par exemple, une <strong>courbe moyenne</strong>.</p>
+<p>Définissons :</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>mean.funvar <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb109-2"><a href="#cb109-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-3"><a href="#cb109-3" aria-hidden="true" tabindex="-1"></a>  mean_values <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb109-4"><a href="#cb109-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colMeans</span>(x<span class="sc">$</span>values),</span>
+<span id="cb109-5"><a href="#cb109-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nrow =</span> <span class="dv">1</span></span>
+<span id="cb109-6"><a href="#cb109-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb109-7"><a href="#cb109-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-8"><a href="#cb109-8" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb109-9"><a href="#cb109-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> mean_values,</span>
+<span id="cb109-10"><a href="#cb109-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> x<span class="sc">$</span>grid,</span>
+<span id="cb109-11"><a href="#cb109-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="fu">paste</span>(<span class="st">"Moyenne de"</span>, x<span class="sc">$</span>name)</span>
+<span id="cb109-12"><a href="#cb109-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb109-13"><a href="#cb109-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-14"><a href="#cb109-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(result) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span>
+<span id="cb109-15"><a href="#cb109-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb109-16"><a href="#cb109-16" aria-hidden="true" tabindex="-1"></a>  result</span>
+<span id="cb109-17"><a href="#cb109-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous pouvons maintenant calculer :</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>mean_temperature <span class="ot">&lt;-</span> <span class="fu">mean</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Puis :</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>mean_temperature</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et :</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mean_temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>fonctionnent immédiatement.</p>
+<p>Pourquoi?</p>
+<p>Parce que <code>mean.funvar()</code> retourne lui-même un nouvel objet de classe :</p>
+<pre class="text"><code>"funvar"</code></pre>
+<p>Ce nouvel objet bénéficie donc automatiquement des méthodes que nous avons déjà écrites :</p>
+<pre class="text"><code>                   temperature
+                       │
+                       ▼
+                    mean()
+                       │
+                       ▼
+                mean.funvar()
+                       │
+                       ▼
+               nouvel objet funvar
+                       │
+              ┌────────┴────────┐
+              ▼                 ▼
+           print()            plot()</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deuxième bénéfice de la POO
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En définissant un ensemble cohérent de méthodes, nous construisons progressivement une <strong>interface commune</strong> pour tous les objets de notre classe.</p>
+<p>Une nouvelle fonction qui retourne un objet <code>"funvar"</code> peut automatiquement profiter des méthodes déjà disponibles.</p>
+</div>
+</div>
+</section>
+<section id="la-classe-comme-contrat-implicite" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="la-classe-comme-contrat-implicite">La classe comme contrat implicite</h2>
+<p>À ce stade, nous supposons qu’un objet <code>"funvar"</code> possède toujours :</p>
+<pre class="text"><code>values
+grid
+name</code></pre>
+<p>et que :</p>
+<pre class="text"><code>ncol(values) == length(grid)</code></pre>
+<p>Mais S3 ne vérifie pas automatiquement cette structure.</p>
+<p>Par exemple, rien ne nous empêche d’écrire :</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb117-2"><a href="#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pizza =</span> <span class="dv">12</span></span>
+<span id="cb117-3"><a href="#cb117-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb117-4"><a href="#cb117-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb117-5"><a href="#cb117-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>R accepte parfaitement cet objet.</p>
+<p>Mais :</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>échouera probablement, puisque <code>plot.funvar()</code> s’attend à trouver :</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span>grid</span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span>values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous rencontrons ici une limite importante de S3 :</p>
+<blockquote class="blockquote">
+<p>S3 sait qu’un objet possède une certaine classe, mais ne garantit pas automatiquement que cet objet possède une structure valide.</p>
+</blockquote>
+<p>C’est une des raisons pour lesquelles il est préférable de centraliser la création de nos objets.</p>
+</section>
+<section id="utiliser-un-constructeur" class="level2" data-number="8.18">
+<h2 data-number="8.18" class="anchored" data-anchor-id="utiliser-un-constructeur"><span class="header-section-number">8.18</span> Utiliser un constructeur</h2>
+<p>Nous avons jusqu’à maintenant créé nos objets avec :</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">list</span>(...)</span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(result) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cette approche est parfaite pour comprendre comment S3 fonctionne.</p>
+<p>Dans une véritable librairie, nous préférons cependant utiliser une fonction dédiée à la construction des objets.</p>
+<p>Par convention, nous pouvons l’appeler :</p>
+<pre class="text"><code>new_funvar()</code></pre>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>new_funvar <span class="ot">&lt;-</span> <span class="cf">function</span>(values,</span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>                       grid,</span>
+<span id="cb122-3"><a href="#cb122-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">name =</span> <span class="st">"Variable fonctionnelle"</span>) {</span>
+<span id="cb122-4"><a href="#cb122-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-5"><a href="#cb122-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(</span>
+<span id="cb122-6"><a href="#cb122-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.matrix</span>(values),</span>
+<span id="cb122-7"><a href="#cb122-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.numeric</span>(values),</span>
+<span id="cb122-8"><a href="#cb122-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.numeric</span>(grid),</span>
+<span id="cb122-9"><a href="#cb122-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ncol</span>(values) <span class="sc">==</span> <span class="fu">length</span>(grid),</span>
+<span id="cb122-10"><a href="#cb122-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">length</span>(name) <span class="sc">==</span> <span class="dv">1</span></span>
+<span id="cb122-11"><a href="#cb122-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb122-12"><a href="#cb122-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-13"><a href="#cb122-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">structure</span>(</span>
+<span id="cb122-14"><a href="#cb122-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(</span>
+<span id="cb122-15"><a href="#cb122-15" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> values,</span>
+<span id="cb122-16"><a href="#cb122-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">grid =</span> grid,</span>
+<span id="cb122-17"><a href="#cb122-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">name =</span> name</span>
+<span id="cb122-18"><a href="#cb122-18" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb122-19"><a href="#cb122-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">class =</span> <span class="st">"funvar"</span></span>
+<span id="cb122-20"><a href="#cb122-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb122-21"><a href="#cb122-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous pouvons maintenant construire notre objet avec :</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">&lt;-</span> <span class="fu">new_funvar</span>(</span>
+<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> values,</span>
+<span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> grid,</span>
+<span id="cb123-4"><a href="#cb123-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"Température"</span></span>
+<span id="cb123-5"><a href="#cb123-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Le constructeur joue donc deux rôles.</p>
+<p>Premièrement, il centralise la création de notre objet :</p>
+<pre class="text"><code>list(...)
++
+class(...)</code></pre>
+<p>Deuxièmement, il garantit certaines propriétés minimales :</p>
+<pre class="text"><code>values est une matrice numérique
+grid est numérique
+ncol(values) == length(grid)</code></pre>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pourquoi utiliser un constructeur?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sans constructeur, nous pourrions créer des objets <code>"funvar"</code> à plusieurs endroits différents :</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(y) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(z) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et oublier une composante ou créer une structure légèrement différente.</p>
+<p>Avec :</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new_funvar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>nous avons un seul endroit qui définit la structure attendue de notre classe.</p>
+</div>
+</div>
+</section>
+<section id="modifier-mean.funvar" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="modifier-mean.funvar">Modifier <code>mean.funvar()</code></h2>
+<p>Maintenant que nous possédons un constructeur, notre méthode :</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean.funvar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>n’a plus besoin de reconstruire manuellement l’objet.</p>
+<p>Nous pouvons écrire :</p>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>mean.funvar <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb129-2"><a href="#cb129-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-3"><a href="#cb129-3" aria-hidden="true" tabindex="-1"></a>  mean_values <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<span id="cb129-4"><a href="#cb129-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colMeans</span>(x<span class="sc">$</span>values),</span>
+<span id="cb129-5"><a href="#cb129-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">nrow =</span> <span class="dv">1</span></span>
+<span id="cb129-6"><a href="#cb129-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb129-7"><a href="#cb129-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb129-8"><a href="#cb129-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">new_funvar</span>(</span>
+<span id="cb129-9"><a href="#cb129-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> mean_values,</span>
+<span id="cb129-10"><a href="#cb129-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> x<span class="sc">$</span>grid,</span>
+<span id="cb129-11"><a href="#cb129-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="fu">paste</span>(<span class="st">"Moyenne de"</span>, x<span class="sc">$</span>name)</span>
+<span id="cb129-12"><a href="#cb129-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb129-13"><a href="#cb129-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notre architecture devient donc :</p>
+<pre class="text"><code>new_funvar()
+      ↓
+définit comment créer
+un objet funvar
+
+
+print.funvar()
+plot.funvar()
+mean.funvar()
+      ↓
+définissent comment
+utiliser un objet funvar</code></pre>
+<p>C’est une distinction particulièrement importante.</p>
+<p>Dans le cadre de ce cours et la mise-au-point de librairie, il est possible d’ignorer le constructeur, comme nous savons comment nous-même initialiser une objet de nos classes.</p>
+</section>
+<section id="dans-une-librairie-r" class="level2" data-number="8.19">
+<h2 data-number="8.19" class="anchored" data-anchor-id="dans-une-librairie-r"><span class="header-section-number">8.19</span> Dans une librairie R</h2>
+<p>Dans une librairie, nous placerions normalement ces fonctions dans le dossier :</p>
+<pre class="text"><code>R/</code></pre>
+<p>Par exemple :</p>
+<pre class="text"><code>R/
+├── funvar.R
+├── print.R
+├── plot.R
+└── mean.R</code></pre>
+<p>ou simplement dans un seul fichier :</p>
+<pre class="text"><code>R/funvar.R</code></pre>
+<p>pour une petite classe.</p>
+<p>Le constructeur peut demeurer une fonction interne :</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new_funvar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Il n’est pas nécessaire que l’utilisateur puisse l’appeler directement.</p>
+<p>Les méthodes doivent cependant être enregistrées dans le <code>NAMESPACE</code>.</p>
+<p>Avec <code>roxygen2</code>, nous pouvons utiliser :</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>print.funvar <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a>plot.funvar <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, ...) {</span>
+<span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb136-4"><a href="#cb136-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a>mean.funvar <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a>  ...</span>
+<span id="cb137-4"><a href="#cb137-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Puis :</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>générera dans <code>NAMESPACE</code> quelque chose ressemblant à :</p>
+<pre class="text"><code>S3method(mean,funvar)
+S3method(plot,funvar)
+S3method(print,funvar)</code></pre>
+<p>Nous ne modifions donc pas directement :</p>
+<pre class="text"><code>NAMESPACE</code></pre>
+<p>comme d’habitude.</p>
+<p>Le workflow devient :</p>
+<pre class="text"><code>écrire une méthode
+       ↓
+ajouter @export
+       ↓
+devtools::document()
+       ↓
+méthode enregistrée dans NAMESPACE
+       ↓
+devtools::load_all()
+       ↓
+tester la méthode</code></pre>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span>
+<span id="cb142-2"><a href="#cb142-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
+<span id="cb142-3"><a href="#cb142-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb142-4"><a href="#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(temperature)</span>
+<span id="cb142-5"><a href="#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temperature)</span>
+<span id="cb142-6"><a href="#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="pourquoi-ne-pas-simplement-créer-plot_funvar" class="level2" data-number="8.20">
+<h2 data-number="8.20" class="anchored" data-anchor-id="pourquoi-ne-pas-simplement-créer-plot_funvar"><span class="header-section-number">8.20</span> Pourquoi ne pas simplement créer <code>plot_funvar()</code>?</h2>
+<p>À ce stade, une question raisonnable serait :</p>
+<blockquote class="blockquote">
+<p>Pourquoi utiliser S3? Nous pourrions simplement écrire des fonctions comme <code>plot_funvar()</code> et <code>mean_funvar()</code>.</p>
+</blockquote>
+<p>Effectivement, nous pourrions.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_funvar</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>fonctionnerait parfaitement.</p>
+<p>Mais l’intérêt de la programmation orientée objet est de fournir une <strong>interface commune</strong>.</p>
+<p>Avec S3 :</p>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>signifie :</p>
+<blockquote class="blockquote">
+<p>Trace une représentation appropriée de cet objet.</p>
+</blockquote>
+<p>L’utilisateur n’a pas besoin de mémoriser :</p>
+<pre class="text"><code>plot_funvar()
+plot_lm()
+plot_glm()
+plot_factor()
+...</code></pre>
+<p>Il utilise simplement :</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et laisse R choisir la méthode appropriée.</p>
+<p>Même chose pour :</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>()</span>
+<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>()</span>
+<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>()</span>
+<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous obtenons donc une interface beaucoup plus cohérente.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Le véritable intérêt
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Le bénéfice principal de S3 n’est pas simplement de pouvoir écrire :</p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb148-1"><a href="#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.funvar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Le bénéfice est que l’utilisateur n’a <strong>pas besoin de savoir que cette fonction existe</strong>.</p>
+<p>Il écrit simplement :</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et la classe de <code>x</code> détermine le comportement approprié.</p>
+</div>
+</div>
+</section>
+<section id="une-courte-introduction-à-lhéritage" class="level2" data-number="8.21">
+<h2 data-number="8.21" class="anchored" data-anchor-id="une-courte-introduction-à-lhéritage"><span class="header-section-number">8.21</span> Une courte introduction à l’héritage</h2>
+<p>Les classes S3 peuvent également avoir plus d’une classe.</p>
+<p>Considérons un modèle linéaire généralisé :</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb150-1"><a href="#cb150-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb150-2"><a href="#cb150-2" aria-hidden="true" tabindex="-1"></a>  am <span class="sc">~</span> wt <span class="sc">+</span> hp,</span>
+<span id="cb150-3"><a href="#cb150-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> mtcars,</span>
+<span id="cb150-4"><a href="#cb150-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> <span class="fu">binomial</span>()</span>
+<span id="cb150-5"><a href="#cb150-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb150-6"><a href="#cb150-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb150-7"><a href="#cb150-7" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>retourne :</p>
+<pre class="text"><code>[1] "glm" "lm"</code></pre>
+<p>Cet objet est donc considéré d’abord comme un objet <code>"glm"</code>, puis comme un objet <code>"lm"</code>.</p>
+<p>Lorsqu’une fonction générique est appelée, R cherche les méthodes dans cet ordre.</p>
+<p>Conceptuellement :</p>
+<pre class="text"><code>plot(fit)
+    ↓
+plot.glm() existe?
+    ↓
+sinon
+    ↓
+plot.lm() existe?
+    ↓
+sinon
+    ↓
+plot.default()</code></pre>
+<p>Cela permet à une classe plus spécialisée de réutiliser des comportements définis pour une classe plus générale.</p>
+<p>C’est ce qu’on appelle <strong>l’héritage</strong>.</p>
+<p>Pour cette introduction à S3, nous n’utiliserons pas directement l’héritage dans notre classe <code>funvar</code>.</p>
+<p>Il est surtout important de comprendre l’idée :</p>
+<pre class="text"><code>une classe spécialisée
+peut réutiliser les méthodes
+d'une classe plus générale</code></pre>
+<p>Bien penser une classes veut souvent dire bien considérer la hierarchie d’héritage.</p>
+<p>Ce ne sera pas nécessaire dans la câdre de ce cours, mais c’est important de connaître l’existence de ce concept.</p>
+</section>
+<section id="retour-sur-notre-classe-funvar" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="retour-sur-notre-classe-funvar">Retour sur notre classe <code>funvar</code></h2>
+<p>Nous avons commencé avec deux objets indépendants :</p>
+<pre class="text"><code>values
+grid</code></pre>
+<p>Puis nous les avons regroupés :</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> values,</span>
+<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> grid,</span>
+<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"Température"</span></span>
+<span id="cb155-5"><a href="#cb155-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ensuite, nous avons donné un sens conceptuel à cette structure :</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb156-1"><a href="#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(temperature) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et défini des comportements naturels :</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb157-1"><a href="#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(temperature)</span>
+<span id="cb157-2"><a href="#cb157-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-3"><a href="#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temperature)</span>
+<span id="cb157-4"><a href="#cb157-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-5"><a href="#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Finalement, nous avons centralisé sa construction :</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb158-1"><a href="#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new_funvar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Notre architecture complète ressemble donc à :</p>
+<pre class="text"><code>                     new_funvar()
+                          │
+                          ▼
+                  objet de classe
+                      "funvar"
+                          │
+             ┌────────────┼────────────┐
+             ▼            ▼            ▼
+          print()       plot()       mean()
+             │            │            │
+             ▼            ▼            ▼
+      print.funvar  plot.funvar  mean.funvar</code></pre>
+</section>
+<section id="ce-que-la-poo-nous-apporte" class="level2" data-number="8.22">
+<h2 data-number="8.22" class="anchored" data-anchor-id="ce-que-la-poo-nous-apporte"><span class="header-section-number">8.22</span> Ce que la POO nous apporte</h2>
+<p>La programmation orientée objet n’a pas nécessairement modifié nos calculs.</p>
+<p>Les courbes sont toujours stockées dans une matrice.</p>
+<p>La moyenne fonctionnelle est toujours :</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb160-1"><a href="#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ce que la POO a changé est plutôt <strong>l’organisation de notre logiciel</strong> et <strong>l’interface offerte à l’utilisateur</strong>.</p>
+<p>Sans POO :</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb161-1"><a href="#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(</span>
+<span id="cb161-2"><a href="#cb161-2" aria-hidden="true" tabindex="-1"></a>  grid,</span>
+<span id="cb161-3"><a href="#cb161-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t</span>(values),</span>
+<span id="cb161-4"><a href="#cb161-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">"l"</span></span>
+<span id="cb161-5"><a href="#cb161-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb161-6"><a href="#cb161-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-7"><a href="#cb161-7" aria-hidden="true" tabindex="-1"></a>mean_curve <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(values)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>L’utilisateur doit connaître :</p>
+<ul>
+<li>la structure des données;</li>
+<li>la signification des lignes et colonnes;</li>
+<li>la grille associée;</li>
+<li>la fonction appropriée à utiliser;</li>
+<li>la manière de reconstruire un objet après une transformation.</li>
+</ul>
+<p>Avec S3 :</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb162-1"><a href="#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temperature)</span>
+<span id="cb162-2"><a href="#cb162-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-3"><a href="#cb162-3" aria-hidden="true" tabindex="-1"></a>mean_temperature <span class="ot">&lt;-</span> <span class="fu">mean</span>(temperature)</span>
+<span id="cb162-4"><a href="#cb162-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb162-5"><a href="#cb162-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mean_temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>L’utilisateur travaille maintenant avec un objet qui possède une <strong>signification statistique</strong> et un ensemble de comportements naturels.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Message principal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La programmation orientée objet ne sert pas uniquement à créer des objets plus compliqués.</p>
+<p>Elle permet surtout de construire une interface dans laquelle :</p>
+<pre class="text"><code>les données
++
+leur signification
++
+les opérations naturelles</code></pre>
+<p>forment un ensemble cohérent.</p>
+<p>S3 est une manière particulièrement simple d’introduire cette idée dans une librairie R.</p>
+</div>
+</div>
+</section>
+<section id="sec-other-oop" class="level2" data-number="8.23">
+<h2 data-number="8.23" class="anchored" data-anchor-id="sec-other-oop"><span class="header-section-number">8.23</span> Au-delà de S3 : S4, R6 et S7</h2>
+<p>S3 nous a permis d’introduire les principales idées de la programmation orientée objet :</p>
+<pre class="text"><code>classe
+   ↓
+objet
+   ↓
+générique
+   ↓
+méthode</code></pre>
+<p>et surtout de construire une interface simple :</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb165-1"><a href="#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(x)</span>
+<span id="cb165-2"><a href="#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span>
+<span id="cb165-3"><a href="#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
+<span id="cb165-4"><a href="#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>dont le comportement dépend de la classe de <code>x</code>.</p>
+<p>La grande force de S3 est sa <strong>simplicité</strong>.</p>
+<p>Nous avons toutefois également rencontré certaines de ses limites.</p>
+<p>Par exemple, rien ne nous empêchait d’écrire :</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb166-1"><a href="#cb166-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb166-2"><a href="#cb166-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pizza =</span> <span class="dv">12</span></span>
+<span id="cb166-3"><a href="#cb166-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb166-4"><a href="#cb166-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-5"><a href="#cb166-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(x) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>R acceptait alors parfaitement cet objet comme étant de classe <code>"funvar"</code>.</p>
+<p>S3 ne définit donc pas formellement :</p>
+<ul>
+<li>quelles composantes un objet doit contenir;</li>
+<li>quel doit être le type de ces composantes;</li>
+<li>quelles valeurs sont permises;</li>
+<li>comment l’objet doit être construit.</li>
+</ul>
+<p>Nous avons compensé cette faiblesse en écrivant nous-mêmes :</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb167-1"><a href="#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new_funvar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et en ajoutant certaines vérifications.</p>
+<p>D’autres systèmes de programmation orientée objet disponibles dans R proposent des solutions plus formelles à ces problèmes.</p>
+<p>Nous allons brièvement considérer :</p>
+<pre class="text"><code>R6
+S4
+S7</code></pre>
+<p>L’objectif n’est pas de maîtriser ces systèmes, mais plutôt de comprendre <strong>ce qu’ils ajoutent à S3 et pourquoi ils existent</strong>.</p>
+</section>
+<section id="r6-changer-de-paradigme" class="level2" data-number="8.24">
+<h2 data-number="8.24" class="anchored" data-anchor-id="r6-changer-de-paradigme"><span class="header-section-number">8.24</span> R6 : changer de paradigme</h2>
+<p>R6 est assez différent de S3.</p>
+<p>Avec S3, nous utilisons principalement une <strong>POO fonctionnelle</strong> :</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb169-1"><a href="#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span>
+<span id="cb169-2"><a href="#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
+<span id="cb169-3"><a href="#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Les méthodes appartiennent aux fonctions génériques.</p>
+<p>Avec R6, les méthodes appartiennent plutôt directement aux objets.</p>
+<p>On utilise alors une syntaxe du type :</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb170-1"><a href="#cb170-1" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span><span class="fu">plot</span>()</span>
+<span id="cb170-2"><a href="#cb170-2" aria-hidden="true" tabindex="-1"></a>x<span class="sc">$</span><span class="fu">predict</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>On parle de <strong>POO encapsulée</strong>.</p>
+<p>Cette approche ressemble davantage à celle utilisée dans plusieurs autres langages orientés objet, Java par exemple.</p>
+</section>
+<section id="des-objets-qui-peuvent-changer" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="des-objets-qui-peuvent-changer">Des objets qui peuvent changer</h2>
+<p>Une deuxième différence importante est que les objets R6 sont <strong>mutables</strong>.</p>
+<p>Considérons conceptuellement un objet :</p>
+<pre class="text"><code>compteur</code></pre>
+<p>contenant une valeur :</p>
+<pre class="text"><code>0</code></pre>
+<p>Une méthode R6 pourrait modifier directement cet objet :</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb173-1"><a href="#cb173-1" aria-hidden="true" tabindex="-1"></a>compteur<span class="sc">$</span><span class="fu">incrementer</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et la valeur stockée dans <code>compteur</code> serait maintenant différente.</p>
+<p>Avec la majorité des objets R traditionnels, nous travaillons plutôt selon une logique de :</p>
+<pre class="text"><code>objet initial
+     ↓
+fonction
+     ↓
+nouvel objet</code></pre>
+<p>R6 utilise des <strong>sémantiques de référence</strong> : plusieurs variables peuvent donc faire référence au même objet, et une modification effectuée à travers l’une d’elles est visible à travers les autres.</p>
+<p>Cette propriété est particulièrement utile pour représenter quelque chose qui possède un <strong>état</strong> qui évolue au cours du temps.</p>
+<p>Par exemple :</p>
+<pre class="text"><code>connexion à une base de données
+session web
+connexion à une API
+état d'une application
+ressource externe</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Pourquoi ne pas tout faire avec R6?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Les objets mutables peuvent être très pratiques, mais ils rendent également le comportement d’un programme plus difficile à prévoir.</p>
+<p>Pour plusieurs objets statistiques, une approche fonctionnelle comme S3 demeure donc plus naturelle :</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb176-1"><a href="#cb176-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(...)</span>
+<span id="cb176-2"><a href="#cb176-2" aria-hidden="true" tabindex="-1"></a>prediction <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>plutôt qu’un objet qui modifie constamment son propre état.</p>
+</div>
+</div>
+<p>Dans ce cours, nous ne développerons pas de classe R6. Il est surtout important de reconnaître qu’il s’agit d’une <strong>autre philosophie de programmation orientée objet</strong>.</p>
+</section>
+<section id="s4-rendre-s3-plus-formel" class="level2" data-number="8.25">
+<h2 data-number="8.25" class="anchored" data-anchor-id="s4-rendre-s3-plus-formel"><span class="header-section-number">8.25</span> S4 : rendre S3 plus formel</h2>
+<p>S4 conserve une philosophie beaucoup plus proche de S3.</p>
+<p>Il s’agit toujours principalement de <strong>POO fonctionnelle</strong> :</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb177-1"><a href="#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">generique</span>(objet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>mais la définition des classes est beaucoup plus formelle.</p>
+<p>Avec S3, nous avions simplement écrit :</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb178-1"><a href="#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(temperature) <span class="ot">&lt;-</span> <span class="st">"funvar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Avec S4, nous devons réellement <strong>définir la classe</strong>.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb179-1"><a href="#cb179-1" aria-hidden="true" tabindex="-1"></a>methods<span class="sc">::</span><span class="fu">setClass</span>(</span>
+<span id="cb179-2"><a href="#cb179-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Funvar"</span>,</span>
+<span id="cb179-3"><a href="#cb179-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
+<span id="cb179-4"><a href="#cb179-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="st">"matrix"</span>,</span>
+<span id="cb179-5"><a href="#cb179-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> <span class="st">"numeric"</span>,</span>
+<span id="cb179-6"><a href="#cb179-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">"character"</span></span>
+<span id="cb179-7"><a href="#cb179-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb179-8"><a href="#cb179-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous indiquons maintenant explicitement que tout objet <code>"Funvar"</code> doit posséder :</p>
+<pre class="text"><code>values   → matrix
+grid     → numeric
+name     → character</code></pre>
+<p>Les composantes d’un objet S4 sont appelées des <strong>slots</strong>.</p>
+<p>Nous pouvons ensuite construire un objet avec :</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb181-1"><a href="#cb181-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">&lt;-</span> methods<span class="sc">::</span><span class="fu">new</span>(</span>
+<span id="cb181-2"><a href="#cb181-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Funvar"</span>,</span>
+<span id="cb181-3"><a href="#cb181-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> values,</span>
+<span id="cb181-4"><a href="#cb181-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> grid,</span>
+<span id="cb181-5"><a href="#cb181-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"Température"</span></span>
+<span id="cb181-6"><a href="#cb181-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et accéder aux slots avec :</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb182-1"><a href="#cb182-1" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">@</span>values</span>
+<span id="cb182-2"><a href="#cb182-2" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">@</span>grid</span>
+<span id="cb182-3"><a href="#cb182-3" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">@</span>name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="validation-plus-stricte" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="validation-plus-stricte">Validation plus stricte</h2>
+<p>S4 vérifie automatiquement que les objets stockés dans les slots possèdent le bon type.</p>
+<p>Nous pouvons également définir des contraintes supplémentaires.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb183-1"><a href="#cb183-1" aria-hidden="true" tabindex="-1"></a>methods<span class="sc">::</span><span class="fu">setValidity</span>(</span>
+<span id="cb183-2"><a href="#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Funvar"</span>,</span>
+<span id="cb183-3"><a href="#cb183-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(object) {</span>
+<span id="cb183-4"><a href="#cb183-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-5"><a href="#cb183-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">ncol</span>(object<span class="sc">@</span>values) <span class="sc">!=</span> <span class="fu">length</span>(object<span class="sc">@</span>grid)) {</span>
+<span id="cb183-6"><a href="#cb183-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(</span>
+<span id="cb183-7"><a href="#cb183-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Le nombre de colonnes de `values` doit correspondre à la longueur de `grid`."</span></span>
+<span id="cb183-8"><a href="#cb183-8" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb183-9"><a href="#cb183-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb183-10"><a href="#cb183-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb183-11"><a href="#cb183-11" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span></span>
+<span id="cb183-12"><a href="#cb183-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb183-13"><a href="#cb183-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous obtenons donc une distinction importante :</p>
+<pre class="text"><code>S3
+─────────────────────────────
+structure implicite
+conventions
+flexibilité
+
+
+S4
+─────────────────────────────
+structure déclarée
+types définis
+validation formelle</code></pre>
+<p>S4 offre également des mécanismes plus avancés, notamment :</p>
+<ul>
+<li>l’héritage multiple;</li>
+<li>la définition formelle des génériques;</li>
+<li>la définition formelle des méthodes;</li>
+<li>le <strong>multiple dispatch</strong>, où la méthode choisie peut dépendre de la classe de plusieurs arguments.</li>
+</ul>
+<p>Cette rigueur devient particulièrement intéressante dans de grandes architectures comportant plusieurs classes reliées entre elles.</p>
+<p>C’est notamment une des raisons pour lesquelles S4 est très présent dans l’écosystème <strong>Bioconductor</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Le compromis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>S4 apporte davantage de garanties que S3.</p>
+<p>En échange, il nécessite davantage de code et possède une mécanique plus complexe.</p>
+<p>Pour une petite classe statistique, cette complexité supplémentaire n’est pas toujours nécessaire.</p>
+</div>
+</div>
+</section>
+<section id="s7-une-tentative-de-réunir-les-forces-de-s3-et-s4" class="level2" data-number="8.26">
+<h2 data-number="8.26" class="anchored" data-anchor-id="s7-une-tentative-de-réunir-les-forces-de-s3-et-s4"><span class="header-section-number">8.26</span> S7 : une tentative de réunir les forces de S3 et S4</h2>
+<p>S7 est beaucoup plus récent; toujours en développement!</p>
+<p>Il a été conçu par le groupe de travail sur la programmation orientée objet du <strong>R Consortium</strong>, avec l’objectif explicite de proposer éventuellement un successeur aux systèmes S3 et S4.</p>
+<p>S7 conserve une caractéristique importante de S3 :</p>
+<blockquote class="blockquote">
+<p>Il s’agit toujours principalement de <strong>POO fonctionnelle</strong>.</p>
+</blockquote>
+<p>Nous continuons donc à écrire :</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb185-1"><a href="#cb185-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span>
+<span id="cb185-2"><a href="#cb185-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
+<span id="cb185-3"><a href="#cb185-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>plutôt que :</p>
+<pre class="text"><code>x.plot()
+x.mean()
+x.predict()</code></pre>
+<p>Mais les classes sont maintenant définies de manière formelle, comme avec S4.</p>
+<p>On peut donc voir grossièrement S7 comme une tentative de combiner :</p>
+<pre class="text"><code>simplicité et interface de S3
+              +
+structure et garanties de S4</code></pre>
+</section>
+<section id="définir-une-classe-s7" class="level2" data-number="8.27">
+<h2 data-number="8.27" class="anchored" data-anchor-id="définir-une-classe-s7"><span class="header-section-number">8.27</span> Définir une classe S7</h2>
+<p>Avec S7, une classe est elle-même un <strong>objet R</strong>.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb188-1"><a href="#cb188-1" aria-hidden="true" tabindex="-1"></a>Funvar <span class="ot">&lt;-</span> S7<span class="sc">::</span><span class="fu">new_class</span>(</span>
+<span id="cb188-2"><a href="#cb188-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Funvar"</span>,</span>
+<span id="cb188-3"><a href="#cb188-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb188-4"><a href="#cb188-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> S7<span class="sc">::</span>class_any,</span>
+<span id="cb188-5"><a href="#cb188-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> S7<span class="sc">::</span>class_numeric,</span>
+<span id="cb188-6"><a href="#cb188-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> S7<span class="sc">::</span>class_character</span>
+<span id="cb188-7"><a href="#cb188-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb188-8"><a href="#cb188-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La classe :</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb189-1"><a href="#cb189-1" aria-hidden="true" tabindex="-1"></a>Funvar</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>est maintenant un objet représentant notre définition de classe.</p>
+<p>Elle joue également le rôle de <strong>constructeur</strong>.</p>
+<p>Nous pouvons donc directement écrire :</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb190-1"><a href="#cb190-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">&lt;-</span> <span class="fu">Funvar</span>(</span>
+<span id="cb190-2"><a href="#cb190-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">values =</span> values,</span>
+<span id="cb190-3"><a href="#cb190-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">grid =</span> grid,</span>
+<span id="cb190-4"><a href="#cb190-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"Température"</span></span>
+<span id="cb190-5"><a href="#cb190-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cela constitue déjà une différence intéressante avec notre implantation S3.</p>
+<p>Avec S3, nous avions dû créer nous-mêmes :</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb191-1"><a href="#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="fu">new_funvar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Avec S7, la définition de la classe produit automatiquement un constructeur.</p>
+</section>
+<section id="les-propriétés" class="level2" data-number="8.28">
+<h2 data-number="8.28" class="anchored" data-anchor-id="les-propriétés"><span class="header-section-number">8.28</span> Les propriétés</h2>
+<p>Dans S7, les composantes d’un objet sont appelées des <strong>propriétés</strong>.</p>
+<p>Nous y accédons avec :</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb192-1"><a href="#cb192-1" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">@</span>values</span>
+<span id="cb192-2"><a href="#cb192-2" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">@</span>grid</span>
+<span id="cb192-3"><a href="#cb192-3" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">@</span>name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Cette notation ressemble à celle des slots S4.</p>
+<p>Cependant, les propriétés font partie explicitement de la définition de la classe.</p>
+<p>Par exemple :</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb193-1"><a href="#cb193-1" aria-hidden="true" tabindex="-1"></a>grid <span class="ot">=</span> S7<span class="sc">::</span>class_numeric</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>signifie que la propriété <code>grid</code> doit contenir un objet numérique.</p>
+<p>Une tentative comme :</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb194-1"><a href="#cb194-1" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">@</span>grid <span class="ot">&lt;-</span> <span class="st">"bonjour"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>sera donc rejetée automatiquement.</p>
+<p>Cela contraste fortement avec S3, où rien n’empêchait un utilisateur d’écrire :</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb195-1"><a href="#cb195-1" aria-hidden="true" tabindex="-1"></a>temperature<span class="sc">$</span>grid <span class="ot">&lt;-</span> <span class="st">"bonjour"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et de rendre notre objet incohérent.</p>
+</section>
+<section id="ajouter-un-validateur" class="level2" data-number="8.29">
+<h2 data-number="8.29" class="anchored" data-anchor-id="ajouter-un-validateur"><span class="header-section-number">8.29</span> Ajouter un validateur</h2>
+<p>Les types ne suffisent pas toujours.</p>
+<p>Dans notre variable fonctionnelle, nous voulons également imposer :</p>
+<pre class="text"><code>nombre de colonnes de values
+        =
+longueur de grid</code></pre>
+<p>Nous pouvons intégrer cette contrainte directement à la définition de la classe :</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb197-1"><a href="#cb197-1" aria-hidden="true" tabindex="-1"></a>Funvar <span class="ot">&lt;-</span> S7<span class="sc">::</span><span class="fu">new_class</span>(</span>
+<span id="cb197-2"><a href="#cb197-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Funvar"</span>,</span>
+<span id="cb197-3"><a href="#cb197-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb197-4"><a href="#cb197-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">properties =</span> <span class="fu">list</span>(</span>
+<span id="cb197-5"><a href="#cb197-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> S7<span class="sc">::</span>class_any,</span>
+<span id="cb197-6"><a href="#cb197-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">grid =</span> S7<span class="sc">::</span>class_numeric,</span>
+<span id="cb197-7"><a href="#cb197-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> S7<span class="sc">::</span>class_character</span>
+<span id="cb197-8"><a href="#cb197-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb197-9"><a href="#cb197-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb197-10"><a href="#cb197-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">validator =</span> <span class="cf">function</span>(self) {</span>
+<span id="cb197-11"><a href="#cb197-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb197-12"><a href="#cb197-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.matrix</span>(self<span class="sc">@</span>values)) {</span>
+<span id="cb197-13"><a href="#cb197-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="st">"@values doit être une matrice."</span>)</span>
+<span id="cb197-14"><a href="#cb197-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb197-15"><a href="#cb197-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb197-16"><a href="#cb197-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(self<span class="sc">@</span>values)) {</span>
+<span id="cb197-17"><a href="#cb197-17" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="st">"@values doit être une matrice numérique."</span>)</span>
+<span id="cb197-18"><a href="#cb197-18" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb197-19"><a href="#cb197-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb197-20"><a href="#cb197-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">ncol</span>(self<span class="sc">@</span>values) <span class="sc">!=</span> <span class="fu">length</span>(self<span class="sc">@</span>grid)) {</span>
+<span id="cb197-21"><a href="#cb197-21" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(</span>
+<span id="cb197-22"><a href="#cb197-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Le nombre de colonnes de @values doit correspondre à la longueur de @grid."</span></span>
+<span id="cb197-23"><a href="#cb197-23" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb197-24"><a href="#cb197-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb197-25"><a href="#cb197-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb197-26"><a href="#cb197-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb197-27"><a href="#cb197-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La validation est alors associée directement à la classe.</p>
+<p>Elle est effectuée lors de la construction de l’objet et lorsque ses propriétés sont modifiées.</p>
+<p>Notre définition regroupe donc maintenant :</p>
+<pre class="text"><code>nom de la classe
+      +
+propriétés
+      +
+types
+      +
+contraintes de validité
+      +
+constructeur</code></pre>
+<p>C’est une différence importante avec S3, où tous ces éléments reposaient principalement sur nos propres conventions.</p>
+</section>
+<section id="les-méthodes-avec-s7" class="level2" data-number="8.30">
+<h2 data-number="8.30" class="anchored" data-anchor-id="les-méthodes-avec-s7"><span class="header-section-number">8.30</span> Les méthodes avec S7</h2>
+<p>S7 conserve le principe des fonctions génériques.</p>
+<p>Nous pouvons donc encore utiliser un générique existant comme :</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb199-1"><a href="#cb199-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>et définir une méthode pour notre classe.</p>
+<p>La syntaxe devient cependant explicite :</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb200-1"><a href="#cb200-1" aria-hidden="true" tabindex="-1"></a>S7<span class="sc">::</span><span class="fu">method</span>(plot, Funvar) <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, ...) {</span>
+<span id="cb200-2"><a href="#cb200-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-3"><a href="#cb200-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matplot</span>(</span>
+<span id="cb200-4"><a href="#cb200-4" aria-hidden="true" tabindex="-1"></a>    x<span class="sc">@</span>grid,</span>
+<span id="cb200-5"><a href="#cb200-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t</span>(x<span class="sc">@</span>values),</span>
+<span id="cb200-6"><a href="#cb200-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"l"</span>,</span>
+<span id="cb200-7"><a href="#cb200-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">1</span>,</span>
+<span id="cb200-8"><a href="#cb200-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">xlab =</span> <span class="st">"t"</span>,</span>
+<span id="cb200-9"><a href="#cb200-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">ylab =</span> x<span class="sc">@</span>name,</span>
+<span id="cb200-10"><a href="#cb200-10" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb200-11"><a href="#cb200-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb200-12"><a href="#cb200-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb200-13"><a href="#cb200-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(x)</span>
+<span id="cb200-14"><a href="#cb200-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous pouvons ensuite écrire exactement comme avec S3 :</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb201-1"><a href="#cb201-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>L’utilisateur n’a donc pas besoin de savoir si notre implantation utilise :</p>
+<pre class="text"><code>S3
+S4
+ou
+S7</code></pre>
+<p>L’interface peut demeurer :</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb203-1"><a href="#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>C’est une caractéristique importante de la <strong>POO fonctionnelle en R</strong>.</p>
+</section>
+<section id="créer-un-nouveau-générique-avec-s7" class="level2" data-number="8.31">
+<h2 data-number="8.31" class="anchored" data-anchor-id="créer-un-nouveau-générique-avec-s7"><span class="header-section-number">8.31</span> Créer un nouveau générique avec S7</h2>
+<p>S7 fournit également une manière explicite de créer nos propres fonctions génériques.</p>
+<p>Par exemple, imaginons une opération permettant de retourner le nombre de courbes d’un objet :</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb204-1"><a href="#cb204-1" aria-hidden="true" tabindex="-1"></a>ncurves <span class="ot">&lt;-</span> S7<span class="sc">::</span><span class="fu">new_generic</span>(</span>
+<span id="cb204-2"><a href="#cb204-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"ncurves"</span>,</span>
+<span id="cb204-3"><a href="#cb204-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"x"</span></span>
+<span id="cb204-4"><a href="#cb204-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nous pouvons ensuite définir une méthode :</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb205-1"><a href="#cb205-1" aria-hidden="true" tabindex="-1"></a>S7<span class="sc">::</span><span class="fu">method</span>(ncurves, Funvar) <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb205-2"><a href="#cb205-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>(x<span class="sc">@</span>values)</span>
+<span id="cb205-3"><a href="#cb205-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Puis :</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb206-1"><a href="#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncurves</span>(temperature)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La relation entre le générique et sa méthode est donc beaucoup plus explicite qu’en S3.</p>
+<p>En S3, nous aurions écrit quelque chose comme :</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb207-1"><a href="#cb207-1" aria-hidden="true" tabindex="-1"></a>ncurves <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb207-2"><a href="#cb207-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">UseMethod</span>(<span class="st">"ncurves"</span>)</span>
+<span id="cb207-3"><a href="#cb207-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb207-4"><a href="#cb207-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb207-5"><a href="#cb207-5" aria-hidden="true" tabindex="-1"></a>ncurves.funvar <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb207-6"><a href="#cb207-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>(x<span class="sc">$</span>values)</span>
+<span id="cb207-7"><a href="#cb207-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>S7 remplace cette convention de noms par une véritable opération d’enregistrement :</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb208-1"><a href="#cb208-1" aria-hidden="true" tabindex="-1"></a>S7<span class="sc">::</span><span class="fu">method</span>(ncurves, Funvar) <span class="ot">&lt;-</span> ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="pourquoi-s7-est-particulièrement-intéressant" class="level2" data-number="8.32">
+<h2 data-number="8.32" class="anchored" data-anchor-id="pourquoi-s7-est-particulièrement-intéressant"><span class="header-section-number">8.32</span> Pourquoi S7 est particulièrement intéressant?</h2>
+<p>S7 cherche à conserver plusieurs aspects agréables de S3 :</p>
+<pre class="text"><code>POO fonctionnelle
+
+plot(x)
+mean(x)
+predict(x)</code></pre>
+<p>tout en corrigeant plusieurs de ses faiblesses.</p>
+<p>Par exemple :</p>
+<table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>S3</th>
+<th>S7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Classe généralement implicite</td>
+<td>Classe explicitement définie</td>
+</tr>
+<tr class="even">
+<td>Structure basée sur une convention</td>
+<td>Propriétés déclarées</td>
+</tr>
+<tr class="odd">
+<td>Types non imposés</td>
+<td>Types de propriétés vérifiés</td>
+</tr>
+<tr class="even">
+<td>Constructeur à créer nous-mêmes</td>
+<td>Constructeur associé à la classe</td>
+</tr>
+<tr class="odd">
+<td>Validation à organiser nous-mêmes</td>
+<td>Validateur intégré à la classe</td>
+</tr>
+<tr class="even">
+<td>Méthodes reconnues par convention de nom</td>
+<td>Méthodes enregistrées explicitement</td>
+</tr>
+<tr class="odd">
+<td>Héritage basé sur le vecteur <code>class</code></td>
+<td>Héritage explicitement défini</td>
+</tr>
+</tbody>
+</table>
+<p>S7 ajoute également des mécanismes plus avancés, notamment la possibilité de faire dépendre la sélection d’une méthode de <strong>plusieurs arguments</strong>, tout en conservant une logique de programmation fonctionnelle.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+L’idée derrière S7
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>S7 ne cherche donc pas à remplacer la philosophie de S3.</p>
+<p>Il cherche plutôt à conserver son interface simple :</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb210-1"><a href="#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="fu">generique</span>(objet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>tout en ajoutant davantage de structure et de garanties pour le développement de librairies complexes.</p>
+</div>
+</div>
+</section>
+<section id="s7-est-encore-récent" class="level2" data-number="8.33">
+<h2 data-number="8.33" class="anchored" data-anchor-id="s7-est-encore-récent"><span class="header-section-number">8.33</span> S7 est encore récent</h2>
+<p>S7 est disponible sur CRAN, mais il demeure un système beaucoup plus récent que S3 ou S4.</p>
+<p>Son utilisation dans l’écosystème R est donc encore relativement limitée.</p>
+<p>Le projet indique d’ailleurs toujours que S7 possède un caractère <strong>expérimental</strong>, même si sa conception est maintenant suffisamment avancée pour être utilisée et expérimentée.</p>
+<p>L’objectif à long terme annoncé par le projet est que S7 puisse éventuellement être intégré directement à R.</p>
+<p>Pour cette raison, il est important aujourd’hui :</p>
+<ul>
+<li>de connaître son existence;</li>
+<li>de comprendre sa philosophie;</li>
+<li>de pouvoir lire du code S7;</li>
+</ul>
+<p>mais nous n’allons pas remplacer S3 par S7 dans notre projet.</p>
+</section>
+<section id="quel-système-choisir" class="level2" data-number="8.34">
+<h2 data-number="8.34" class="anchored" data-anchor-id="quel-système-choisir"><span class="header-section-number">8.34</span> Quel système choisir?</h2>
+<p>Nous pouvons maintenant résumer grossièrement les différents systèmes :</p>
+<table class="table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Système</th>
+<th>Philosophie</th>
+<th>Principal avantage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>S3</td>
+<td>POO fonctionnelle</td>
+<td>Simplicité et flexibilité</td>
+</tr>
+<tr class="even">
+<td>R6</td>
+<td>POO encapsulée</td>
+<td>Objets mutables et état</td>
+</tr>
+<tr class="odd">
+<td>S4</td>
+<td>POO fonctionnelle formelle</td>
+<td>Contrôle et rigueur</td>
+</tr>
+<tr class="even">
+<td>S7</td>
+<td>POO fonctionnelle formelle</td>
+<td>Cherche à combiner simplicité et rigueur</td>
+</tr>
+</tbody>
+</table>
+<p>Pour une petite librairie statistique :</p>
+<pre class="text"><code>S3</code></pre>
+<p>demeure souvent un excellent point de départ.</p>
+<p>Pour une architecture très structurée comprenant plusieurs classes et plusieurs développeurs :</p>
+<pre class="text"><code>S4</code></pre>
+<p>peut fournir davantage de garanties.</p>
+<p>Pour représenter des objets possédant un état mutable ou des ressources externes :</p>
+<pre class="text"><code>R6</code></pre>
+<p>peut être particulièrement naturel.</p>
+<p>Et :</p>
+<pre class="text"><code>S7</code></pre>
+<p>propose une nouvelle approche qui cherche à conserver l’interface naturelle de S3 tout en intégrant plusieurs mécanismes formels que nous retrouvons dans S4.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Message à retenir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Il n’existe pas un système de POO universellement supérieur.</p>
+<p>Les différents systèmes répondent à des compromis différents entre :</p>
+<pre class="text"><code>simplicité
+flexibilité
+rigueur
+encapsulation
+maintenabilité</code></pre>
+<p>Dans ce cours, S3 demeure notre outil principal parce qu’il permet de profiter rapidement des bénéfices de la programmation orientée objet tout en conservant une implantation relativement simple.</p>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

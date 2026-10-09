@@ -113,6 +113,8 @@ Nous pouvons donc créer un objet relativement riche et ensuite lui associer plu
 
 ## Pourquoi utiliser la programmation orientée objet?
 
+Tout d'abord, comprennons que nous pourrions faire un cours de 45 heures sur la POO, ici nous ne ferrons qu'un survol très rapide d'une version très spécifique de la POO en R. L'objectif est de mettre au point une petit rampe de lancement et vous pourrez voler de vous même si nécessaire par la suite.
+
 L'un des principaux intérêts de la POO est le **polymorphisme**.
 
 Le polymorphisme permet d'utiliser une même interface avec plusieurs types d'objets.
@@ -737,90 +739,1915 @@ Le choix dépend notamment :
 - de la nécessité ou non d'avoir des objets mutables;
 - de l'écosystème dans lequel la librairie doit s'intégrer.
 
-## Retour à notre projet Ridge
+Dans le contexte de ce cours, nous n'allons que discuter longuement dy système S3 et faire un léger survol des système S4 et S7. 
 
-Notre projet donne une motivation très naturelle pour introduire la programmation orientée objet.
+## S3 : un premier système de programmation orientée objet {#sec-s3}
 
-Supposons que notre fonction :
+Nous allons maintenant nous concentrer sur **S3**, le système de programmation orientée objet le plus simple et le plus utilisé dans R.
 
-```r
-ridge(...)
+L'objectif n'est pas d'étudier toutes les subtilités de S3. Nous voulons plutôt comprendre comment la programmation orientée objet peut nous permettre de construire une **meilleure interface pour les utilisateurs de notre librairie**.
+
+Nous allons utiliser comme exemple une **variable fonctionnelle**, c'est-à-dire un ensemble de courbes observées sur une même grille.
+
+## Le modèle mental minimal de S3
+
+Pour comprendre S3, quatre concepts sont particulièrement importants :
+
+```text
+objet
+classe
+générique
+méthode
 ```
 
-effectue :
+## Objet {.unnumbered}
 
-1. la construction de la matrice de design;
-2. une validation croisée sur plusieurs valeurs de $\lambda$;
-3. la sélection d'un $\lambda$;
-4. l'ajustement final du modèle.
+Un objet contient de l'information.
 
-Elle doit alors retourner plusieurs résultats.
-
-Nous pourrions simplement retourner une liste :
+Par exemple :
 
 ```r
-list(
-  coefficients = beta,
-  lambda = lambda,
-  lambda_grid = lambda_grid,
-  cv_error = cv_error,
-  formula = formula
-)
+x <- c(1, 2, 3)
 ```
 
-Cette approche contient toutes les informations nécessaires.
-
-Cependant, du point de vue de l'utilisateur, nous voudrions plutôt obtenir quelque chose comme :
+ou :
 
 ```r
-fit <- ridge(
-  y ~ x1 + x2,
-  data = donnees
-)
-
-fit
+fit <- lm(mpg ~ wt + hp, data = mtcars)
 ```
 
-puis :
+sont des objets R.
+
+Cependant, tous les objets R ne participent pas nécessairement à un système de programmation orientée objet.
+
+## Classe {.unnumbered}
+
+Une **classe** permet d'indiquer à R quel est le type d'objet nous manipulons.
+
+Par exemple :
 
 ```r
-predict(
-  fit,
-  newdata = nouvelles_donnees
-)
+fit <- lm(mpg ~ wt + hp, data = mtcars)
+
+class(fit)
 ```
 
-et :
+retourne :
+
+```text
+[1] "lm"
+```
+
+R sait donc que `fit` est un objet représentant un modèle linéaire, idenfité par sa classe; `lm`.
+
+Dans S3, une classe est essentiellement un **attribut ajouté à un objet R**.
+
+Nous pouvons voir les attributs d'un objet avec :
+
+```r
+attributes(fit)
+```
+
+ou simplement sa classe avec :
+
+```r
+class(fit)
+```
+
+Dans le système S3, la classe d'une objet peut-être directement assignée:
+
+```r
+class(fit) <- lm
+```
+
+## Générique {.unnumbered}
+
+Une fonction **générique** représente une opération générale qui peut être utile dans un large éventaille de scénarios.
+
+Par exemple :
+
+```r
+print()
+plot()
+mean()
+summary()
+predict()
+```
+
+sont des fonctions génériques.
+
+L'idée est qu'une même opération peut avoir un comportement différent selon la classe de l'objet.
+
+Par exemple :
 
 ```r
 plot(fit)
 ```
 
-Nous voulons donc transformer :
+ne produit pas le même graphique que :
 
-```text
-une simple liste de résultats
+```r
+plot(1:10)
 ```
 
-en :
+même si nous appelons dans les deux cas la fonction :
 
-```text
-un objet statistique possédant
-des comportements appropriés
+```r
+plot()
 ```
 
-S3 va nous permettre de faire exactement cela.
+## Méthode {.unnumbered}
 
-Dans la prochaine section, nous allons donc construire progressivement notre première classe S3 et comprendre comment fonctionnent :
+Une **méthode** est l'implantation d'une fonction générique pour une classe particulière.
+
+Dans S3, les méthodes suivent généralement la convention :
+
+```text
+generique.classe()
+```
+
+Par exemple :
+
+```text
+print.lm()
+predict.lm()
+plot.lm()
+```
+
+sont des méthodes conçues pour les objets de classe `"lm"`.
+
+Lorsque nous écrivons :
+
+```r
+plot(fit)
+```
+
+R effectue conceptuellement :
+
+```text
+plot(fit)
+    ↓
+quelle est la classe de fit?
+    ↓
+"lm"
+    ↓
+chercher une méthode plot.lm()
+    ↓
+exécuter plot.lm(fit)
+```
+
+Ce mécanisme s'appelle le **method dispatch**, ou la répartition des méthodes.
+
+::: {.callout-important}
+## Le cœur de S3
+
+Dans sa forme la plus simple, S3 repose donc sur deux idées :
+
+```text
+un objet possède une classe
+```
+
+et :
+
+```text
+les fonctions génériques recherchent
+des méthodes correspondant à cette classe
+```
+C'est simple mais c'est ça!
+:::
+
+## Un exemple : une variable fonctionnelle
+
+Supposons que nous observions plusieurs courbes sur une même grille.
+
+Par exemple, générons 30 courbes :
+
+```r
+set.seed(123)
+
+grid <- seq(0, 1, length.out = 101)
+
+n <- 30
+
+values <- matrix(
+  NA_real_,
+  nrow = n,
+  ncol = length(grid)
+)
+
+for (i in seq_len(n)) {
+
+  amplitude <- rnorm(1, mean = 1, sd = 0.15)
+  phase <- rnorm(1, mean = 0, sd = 0.08)
+
+  values[i, ] <-
+    amplitude * sin(2 * pi * (grid + phase)) +
+    rnorm(length(grid), sd = 0.15)
+}
+```
+
+La matrice :
+
+```r
+values
+```
+
+contient nos courbes :
+
+```text
+lignes    → individus
+colonnes  → points de la grille
+```
+
+Nous avons également besoin de conserver :
+
+```r
+grid
+```
+
+qui nous indique où les courbes sont observées.
+
+Nous pouvons regrouper ces informations dans une liste :
+
+```r
+temperature <- list(
+  values = values,
+  grid = grid,
+  name = "Température"
+)
+```
+
+Cette liste contient maintenant tout ce dont nous avons besoin.
+
+Cependant, pour R, elle demeure simplement une liste :
+
+```r
+class(temperature)
+```
+
+retourne :
+
+```text
+[1] "list"
+```
+
+## Créer notre première classe S3
+
+Nous voulons indiquer à R que cette liste représente quelque chose de plus spécifique qu'une simple liste.
+
+Nous pouvons lui attribuer une classe :
+
+```r
+class(temperature) <- "funvar"
+```
+
+Puis :
+
+```r
+class(temperature)
+```
+
+retourne :
+
+```text
+[1] "funvar"
+```
+
+Nous venons de créer notre premier objet S3.
+
+::: {.callout-note}
+## Une classe S3 est très légère
+
+Nous n'avons pas eu besoin de déclarer formellement la classe `"funvar"` quelque part.
+
+Cette commande suffit :
+
+```r
+class(temperature) <- "funvar"
+```
+
+C'est l'une des grandes forces, mais aussi l'une des faiblesses, de S3 : le système est extrêmement flexible et repose largement sur des conventions généralement respecté par les utilisateurs.
+:::
+
+À ce stade, notre objet contient :
+
+```r
+names(temperature)
+```
+
+soit :
+
+```text
+values
+grid
+name
+```
+
+Nous pouvons accéder directement à ces composantes :
+
+```r
+temperature$values
+temperature$grid
+temperature$name
+```
+
+Mais l'utilisateur de notre librairie ne devrait pas nécessairement avoir à connaître toute cette structure interne.
+
+C'est ici que les méthodes deviennent intéressantes.
+
+## Première méthode : `print()` {.unnumbered}
+
+Regardons ce qui se produit actuellement :
+
+```r
+temperature
+```
+
+R imprime essentiellement toute la liste.
+
+Dans notre cas, cela signifie potentiellement imprimer une matrice contenant des milliers de valeurs.
+
+Ce n'est probablement pas ce qu'un utilisateur souhaite voir lorsqu'il demande simplement :
+
+```r
+temperature
+```
+
+Nous pouvons définir une méthode d'affichage spécifique à notre classe :
+
+```r
+print.funvar <- function(x, ...) {
+
+  cat("Variable fonctionnelle\n")
+  cat("Nom :", x$name, "\n")
+  cat("Nombre de courbes :", nrow(x$values), "\n")
+  cat("Nombre de points :", ncol(x$values), "\n")
+
+  cat(
+    "Domaine : [",
+    min(x$grid),
+    ", ",
+    max(x$grid),
+    "]\n",
+    sep = ""
+  )
+
+  invisible(x)
+}
+```
+
+Nous pouvons maintenant écrire :
+
+```r
+print(temperature)
+```
+
+ou simplement :
+
+```r
+temperature
+```
+
+et obtenir quelque chose comme :
+
+```text
+Variable fonctionnelle
+Nom : Température
+Nombre de courbes : 30
+Nombre de points : 101
+Domaine : [0, 1]
+```
+
+Le contenu interne de l'objet n'a pas changé.
+
+Ce qui a changé est **la manière dont l'utilisateur interagit avec lui**.
+
+Avant :
+
+```text
+temperature
+    ↓
+énorme liste de nombres
+```
+
+Après :
+
+```text
+temperature
+    ↓
+résumé utile de l'objet
+```
+
+::: {.callout-tip}
+## Premier bénéfice de la POO
+
+La programmation orientée objet nous permet de séparer :
+
+```text
+comment les données sont stockées
+```
+
+de :
+
+```text
+comment elles sont présentées à l'utilisateur
+```
+
+Nous pouvons donc modifier la structure interne de notre objet plus tard sans nécessairement modifier l'interface offerte aux utilisateurs.
+:::
+
+## Deuxième méthode : `plot()` {.unnumbered}
+
+Une variable fonctionnelle possède également une représentation graphique naturelle.
+
+Sans programmation orientée objet, l'utilisateur devrait savoir que les courbes se trouvent dans :
+
+```r
+temperature$values
+```
+
+et que leur grille se trouve dans :
+
+```r
+temperature$grid
+```
+
+Il devrait ensuite écrire quelque chose comme :
+
+```r
+matplot(
+  temperature$grid,
+  t(temperature$values),
+  type = "l",
+  lty = 1
+)
+```
+
+Mais si l'objet représente une variable fonctionnelle, nous pouvons définir directement ce que signifie :
+
+```r
+plot(temperature)
+```
+
+Créons une méthode :
+
+```r
+plot.funvar <- function(x,
+                        show_mean = TRUE,
+                        ...) {
+
+  matplot(
+    x$grid,
+    t(x$values),
+    type = "l",
+    lty = 1,
+    xlab = "t",
+    ylab = x$name,
+    ...
+  )
+
+  if (show_mean) {
+    lines(
+      x$grid,
+      colMeans(x$values),
+      lwd = 3
+    )
+  }
+
+  invisible(x)
+}
+```
+
+Nous pouvons maintenant simplement écrire :
+
+```r
+plot(temperature)
+```
+
+R effectue alors conceptuellement :
+
+```text
+plot(temperature)
+       ↓
+class(temperature)
+       ↓
+"funvar"
+       ↓
+plot.funvar()
+```
+
+Notre méthode affiche toutes les courbes ainsi que leur moyenne.
+
+## Arguments spécifiques et `...`
+
+Notre méthode possède deux types d'arguments supplémentaires.
+
+Premièrement :
+
+```r
+show_mean = TRUE
+```
+
+est un argument spécifique à notre méthode `plot.funvar()`.
+
+Il permet par exemple :
+
+```r
+plot(
+  temperature,
+  show_mean = FALSE
+)
+```
+
+Deuxièmement, nous avons :
+
+```r
+...
+```
+
+Les arguments contenus dans `...` sont transmis à `matplot()`.
+
+Par exemple :
+
+```r
+plot(
+  temperature,
+  main = "Courbes de température",
+  lwd = 2
+)
+```
+
+conduit conceptuellement à :
+
+```text
+plot(
+  temperature,
+  main = "...",
+  lwd = 2
+)
+        ↓
+plot.funvar(
+  temperature,
+  main = "...",
+  lwd = 2
+)
+        ↓
+matplot(
+  ...,
+  main = "...",
+  lwd = 2
+)
+```
+
+Nous avons donc :
+
+```text
+show_mean
+    ↓
+argument propre à plot.funvar()
+
+
+main, lwd, ...
+    ↓
+arguments transmis à matplot()
+```
+
+## Troisième méthode : `mean()` {.unnumbered}
+
+Les méthodes ne servent pas uniquement à modifier l'affichage.
+
+Nous pouvons également définir des opérations statistiques naturelles pour notre classe.
+
+Une variable fonctionnelle composée de plusieurs courbes possède, par exemple, une **courbe moyenne**.
+
+Définissons :
+
+```r
+mean.funvar <- function(x, ...) {
+
+  mean_values <- matrix(
+    colMeans(x$values),
+    nrow = 1
+  )
+
+  result <- list(
+    values = mean_values,
+    grid = x$grid,
+    name = paste("Moyenne de", x$name)
+  )
+
+  class(result) <- "funvar"
+
+  result
+}
+```
+
+Nous pouvons maintenant calculer :
+
+```r
+mean_temperature <- mean(temperature)
+```
+
+Puis :
+
+```r
+mean_temperature
+```
+
+et :
+
+```r
+plot(mean_temperature)
+```
+
+fonctionnent immédiatement.
+
+Pourquoi?
+
+Parce que `mean.funvar()` retourne lui-même un nouvel objet de classe :
+
+```text
+"funvar"
+```
+
+Ce nouvel objet bénéficie donc automatiquement des méthodes que nous avons déjà écrites :
+
+```text
+                   temperature
+                       │
+                       ▼
+                    mean()
+                       │
+                       ▼
+                mean.funvar()
+                       │
+                       ▼
+               nouvel objet funvar
+                       │
+              ┌────────┴────────┐
+              ▼                 ▼
+           print()            plot()
+```
+
+::: {.callout-tip}
+## Deuxième bénéfice de la POO
+
+En définissant un ensemble cohérent de méthodes, nous construisons progressivement une **interface commune** pour tous les objets de notre classe.
+
+Une nouvelle fonction qui retourne un objet `"funvar"` peut automatiquement profiter des méthodes déjà disponibles.
+:::
+
+## La classe comme contrat implicite {.unnumbered}
+
+À ce stade, nous supposons qu'un objet `"funvar"` possède toujours :
+
+```text
+values
+grid
+name
+```
+
+et que :
+
+```text
+ncol(values) == length(grid)
+```
+
+Mais S3 ne vérifie pas automatiquement cette structure.
+
+Par exemple, rien ne nous empêche d'écrire :
+
+```r
+x <- list(
+  pizza = 12
+)
+
+class(x) <- "funvar"
+```
+
+R accepte parfaitement cet objet.
+
+Mais :
+
+```r
+plot(x)
+```
+
+échouera probablement, puisque `plot.funvar()` s'attend à trouver :
+
+```r
+x$grid
+x$values
+```
+
+Nous rencontrons ici une limite importante de S3 :
+
+> S3 sait qu'un objet possède une certaine classe, mais ne garantit pas automatiquement que cet objet possède une structure valide.
+
+C'est une des raisons pour lesquelles il est préférable de centraliser la création de nos objets.
+
+## Utiliser un constructeur
+
+Nous avons jusqu'à maintenant créé nos objets avec :
+
+```r
+result <- list(...)
+class(result) <- "funvar"
+```
+
+Cette approche est parfaite pour comprendre comment S3 fonctionne.
+
+Dans une véritable librairie, nous préférons cependant utiliser une fonction dédiée à la construction des objets.
+
+Par convention, nous pouvons l'appeler :
+
+```text
+new_funvar()
+```
+
+Par exemple :
+
+```r
+new_funvar <- function(values,
+                       grid,
+                       name = "Variable fonctionnelle") {
+
+  stopifnot(
+    is.matrix(values),
+    is.numeric(values),
+    is.numeric(grid),
+    ncol(values) == length(grid),
+    length(name) == 1
+  )
+
+  structure(
+    list(
+      values = values,
+      grid = grid,
+      name = name
+    ),
+    class = "funvar"
+  )
+}
+```
+
+Nous pouvons maintenant construire notre objet avec :
+
+```r
+temperature <- new_funvar(
+  values = values,
+  grid = grid,
+  name = "Température"
+)
+```
+
+Le constructeur joue donc deux rôles.
+
+Premièrement, il centralise la création de notre objet :
+
+```text
+list(...)
++
+class(...)
+```
+
+Deuxièmement, il garantit certaines propriétés minimales :
+
+```text
+values est une matrice numérique
+grid est numérique
+ncol(values) == length(grid)
+```
+
+::: {.callout-important}
+## Pourquoi utiliser un constructeur?
+
+Sans constructeur, nous pourrions créer des objets `"funvar"` à plusieurs endroits différents :
+
+```r
+class(x) <- "funvar"
+
+class(y) <- "funvar"
+
+class(z) <- "funvar"
+```
+
+et oublier une composante ou créer une structure légèrement différente.
+
+Avec :
+
+```r
+new_funvar()
+```
+
+nous avons un seul endroit qui définit la structure attendue de notre classe.
+:::
+
+## Modifier `mean.funvar()` {.unnumbered}
+
+Maintenant que nous possédons un constructeur, notre méthode :
+
+```r
+mean.funvar()
+```
+
+n'a plus besoin de reconstruire manuellement l'objet.
+
+Nous pouvons écrire :
+
+```r
+mean.funvar <- function(x, ...) {
+
+  mean_values <- matrix(
+    colMeans(x$values),
+    nrow = 1
+  )
+
+  new_funvar(
+    values = mean_values,
+    grid = x$grid,
+    name = paste("Moyenne de", x$name)
+  )
+}
+```
+
+Notre architecture devient donc :
+
+```text
+new_funvar()
+      ↓
+définit comment créer
+un objet funvar
+
+
+print.funvar()
+plot.funvar()
+mean.funvar()
+      ↓
+définissent comment
+utiliser un objet funvar
+```
+
+C'est une distinction particulièrement importante.
+
+Dans le cadre de ce cours et la mise-au-point de librairie, il est possible d'ignorer le constructeur, comme nous savons comment nous-même initialiser une objet de nos classes.
+
+## Dans une librairie R
+
+Dans une librairie, nous placerions normalement ces fonctions dans le dossier :
+
+```text
+R/
+```
+
+Par exemple :
+
+```text
+R/
+├── funvar.R
+├── print.R
+├── plot.R
+└── mean.R
+```
+
+ou simplement dans un seul fichier :
+
+```text
+R/funvar.R
+```
+
+pour une petite classe.
+
+Le constructeur peut demeurer une fonction interne :
+
+```r
+new_funvar()
+```
+
+Il n'est pas nécessaire que l'utilisateur puisse l'appeler directement.
+
+Les méthodes doivent cependant être enregistrées dans le `NAMESPACE`.
+
+Avec `roxygen2`, nous pouvons utiliser :
+
+```r
+#' @export
+print.funvar <- function(x, ...) {
+  ...
+}
+```
+
+```r
+#' @export
+plot.funvar <- function(x, y, ...) {
+  ...
+}
+```
+
+```r
+#' @export
+mean.funvar <- function(x, ...) {
+  ...
+}
+```
+
+Puis :
+
+```r
+devtools::document()
+```
+
+générera dans `NAMESPACE` quelque chose ressemblant à :
+
+```text
+S3method(mean,funvar)
+S3method(plot,funvar)
+S3method(print,funvar)
+```
+
+Nous ne modifions donc pas directement :
+
+```text
+NAMESPACE
+```
+comme d'habitude.
+
+Le workflow devient :
+
+```text
+écrire une méthode
+       ↓
+ajouter @export
+       ↓
+devtools::document()
+       ↓
+méthode enregistrée dans NAMESPACE
+       ↓
+devtools::load_all()
+       ↓
+tester la méthode
+```
+
+Par exemple :
+
+```r
+devtools::document()
+devtools::load_all()
+
+print(temperature)
+plot(temperature)
+mean(temperature)
+```
+
+## Pourquoi ne pas simplement créer `plot_funvar()`?
+
+À ce stade, une question raisonnable serait :
+
+> Pourquoi utiliser S3? Nous pourrions simplement écrire des fonctions comme `plot_funvar()` et `mean_funvar()`.
+
+Effectivement, nous pourrions.
+
+Par exemple :
+
+```r
+plot_funvar(temperature)
+```
+
+fonctionnerait parfaitement.
+
+Mais l'intérêt de la programmation orientée objet est de fournir une **interface commune**.
+
+Avec S3 :
+
+```r
+plot(x)
+```
+
+signifie :
+
+> Trace une représentation appropriée de cet objet.
+
+L'utilisateur n'a pas besoin de mémoriser :
+
+```text
+plot_funvar()
+plot_lm()
+plot_glm()
+plot_factor()
+...
+```
+
+Il utilise simplement :
+
+```r
+plot()
+```
+
+et laisse R choisir la méthode appropriée.
+
+Même chose pour :
+
+```r
+print()
+mean()
+predict()
+summary()
+```
+
+Nous obtenons donc une interface beaucoup plus cohérente.
+
+::: {.callout-tip}
+## Le véritable intérêt
+
+Le bénéfice principal de S3 n'est pas simplement de pouvoir écrire :
+
+```r
+plot.funvar()
+```
+
+Le bénéfice est que l'utilisateur n'a **pas besoin de savoir que cette fonction existe**.
+
+Il écrit simplement :
+
+```r
+plot(x)
+```
+
+et la classe de `x` détermine le comportement approprié.
+:::
+
+## Une courte introduction à l'héritage
+
+Les classes S3 peuvent également avoir plus d'une classe.
+
+Considérons un modèle linéaire généralisé :
+
+```r
+fit <- glm(
+  am ~ wt + hp,
+  data = mtcars,
+  family = binomial()
+)
+
+class(fit)
+```
+
+retourne :
+
+```text
+[1] "glm" "lm"
+```
+
+Cet objet est donc considéré d'abord comme un objet `"glm"`, puis comme un objet `"lm"`.
+
+Lorsqu'une fonction générique est appelée, R cherche les méthodes dans cet ordre.
+
+Conceptuellement :
+
+```text
+plot(fit)
+    ↓
+plot.glm() existe?
+    ↓
+sinon
+    ↓
+plot.lm() existe?
+    ↓
+sinon
+    ↓
+plot.default()
+```
+
+Cela permet à une classe plus spécialisée de réutiliser des comportements définis pour une classe plus générale.
+
+C'est ce qu'on appelle **l'héritage**.
+
+Pour cette introduction à S3, nous n'utiliserons pas directement l'héritage dans notre classe `funvar`.
+
+Il est surtout important de comprendre l'idée :
+
+```text
+une classe spécialisée
+peut réutiliser les méthodes
+d'une classe plus générale
+```
+Bien penser une classes veut souvent dire bien considérer la hierarchie d'héritage. 
+
+Ce ne sera pas nécessaire dans la câdre de ce cours, mais c'est important de connaître l'existence de ce concept.
+
+## Retour sur notre classe `funvar` {.unnumbered}
+
+Nous avons commencé avec deux objets indépendants :
+
+```text
+values
+grid
+```
+
+Puis nous les avons regroupés :
+
+```r
+temperature <- list(
+  values = values,
+  grid = grid,
+  name = "Température"
+)
+```
+
+Ensuite, nous avons donné un sens conceptuel à cette structure :
+
+```r
+class(temperature) <- "funvar"
+```
+
+et défini des comportements naturels :
+
+```r
+print(temperature)
+
+plot(temperature)
+
+mean(temperature)
+```
+
+Finalement, nous avons centralisé sa construction :
+
+```r
+new_funvar()
+```
+
+Notre architecture complète ressemble donc à :
+
+```text
+                     new_funvar()
+                          │
+                          ▼
+                  objet de classe
+                      "funvar"
+                          │
+             ┌────────────┼────────────┐
+             ▼            ▼            ▼
+          print()       plot()       mean()
+             │            │            │
+             ▼            ▼            ▼
+      print.funvar  plot.funvar  mean.funvar
+```
+
+## Ce que la POO nous apporte
+
+La programmation orientée objet n'a pas nécessairement modifié nos calculs.
+
+Les courbes sont toujours stockées dans une matrice.
+
+La moyenne fonctionnelle est toujours :
+
+```r
+colMeans(values)
+```
+
+Ce que la POO a changé est plutôt **l'organisation de notre logiciel** et **l'interface offerte à l'utilisateur**.
+
+Sans POO :
+
+```r
+matplot(
+  grid,
+  t(values),
+  type = "l"
+)
+
+mean_curve <- colMeans(values)
+```
+
+L'utilisateur doit connaître :
+
+- la structure des données;
+- la signification des lignes et colonnes;
+- la grille associée;
+- la fonction appropriée à utiliser;
+- la manière de reconstruire un objet après une transformation.
+
+Avec S3 :
+
+```r
+plot(temperature)
+
+mean_temperature <- mean(temperature)
+
+plot(mean_temperature)
+```
+
+L'utilisateur travaille maintenant avec un objet qui possède une **signification statistique** et un ensemble de comportements naturels.
+
+::: {.callout-important}
+## Message principal
+
+La programmation orientée objet ne sert pas uniquement à créer des objets plus compliqués.
+
+Elle permet surtout de construire une interface dans laquelle :
+
+```text
+les données
++
+leur signification
++
+les opérations naturelles
+```
+
+forment un ensemble cohérent.
+
+S3 est une manière particulièrement simple d'introduire cette idée dans une librairie R.
+:::
+
+## Au-delà de S3 : S4, R6 et S7 {#sec-other-oop}
+
+S3 nous a permis d'introduire les principales idées de la programmation orientée objet :
 
 ```text
 classe
-    ↓
+   ↓
+objet
+   ↓
 générique
-    ↓
+   ↓
 méthode
-    ↓
-method dispatch
-    ↓
-héritage
 ```
+
+et surtout de construire une interface simple :
+
+```r
+print(x)
+plot(x)
+mean(x)
+predict(x)
+```
+
+dont le comportement dépend de la classe de `x`.
+
+La grande force de S3 est sa **simplicité**.
+
+Nous avons toutefois également rencontré certaines de ses limites.
+
+Par exemple, rien ne nous empêchait d'écrire :
+
+```r
+x <- list(
+  pizza = 12
+)
+
+class(x) <- "funvar"
+```
+
+R acceptait alors parfaitement cet objet comme étant de classe `"funvar"`.
+
+S3 ne définit donc pas formellement :
+
+- quelles composantes un objet doit contenir;
+- quel doit être le type de ces composantes;
+- quelles valeurs sont permises;
+- comment l'objet doit être construit.
+
+Nous avons compensé cette faiblesse en écrivant nous-mêmes :
+
+```r
+new_funvar()
+```
+
+et en ajoutant certaines vérifications.
+
+D'autres systèmes de programmation orientée objet disponibles dans R proposent des solutions plus formelles à ces problèmes.
+
+Nous allons brièvement considérer :
+
+```text
+R6
+S4
+S7
+```
+
+L'objectif n'est pas de maîtriser ces systèmes, mais plutôt de comprendre **ce qu'ils ajoutent à S3 et pourquoi ils existent**.
+
+## R6 : changer de paradigme
+
+R6 est assez différent de S3.
+
+Avec S3, nous utilisons principalement une **POO fonctionnelle** :
+
+```r
+plot(x)
+mean(x)
+predict(x)
+```
+
+Les méthodes appartiennent aux fonctions génériques.
+
+Avec R6, les méthodes appartiennent plutôt directement aux objets.
+
+On utilise alors une syntaxe du type :
+
+```r
+x$plot()
+x$predict()
+```
+
+On parle de **POO encapsulée**.
+
+Cette approche ressemble davantage à celle utilisée dans plusieurs autres langages orientés objet, Java par exemple.
+
+## Des objets qui peuvent changer {.unnumbered}
+
+Une deuxième différence importante est que les objets R6 sont **mutables**.
+
+Considérons conceptuellement un objet :
+
+```text
+compteur
+```
+
+contenant une valeur :
+
+```text
+0
+```
+
+Une méthode R6 pourrait modifier directement cet objet :
+
+```r
+compteur$incrementer()
+```
+
+et la valeur stockée dans `compteur` serait maintenant différente.
+
+Avec la majorité des objets R traditionnels, nous travaillons plutôt selon une logique de :
+
+```text
+objet initial
+     ↓
+fonction
+     ↓
+nouvel objet
+```
+
+R6 utilise des **sémantiques de référence** : plusieurs variables peuvent donc faire référence au même objet, et une modification effectuée à travers l'une d'elles est visible à travers les autres.
+
+Cette propriété est particulièrement utile pour représenter quelque chose qui possède un **état** qui évolue au cours du temps.
+
+Par exemple :
+
+```text
+connexion à une base de données
+session web
+connexion à une API
+état d'une application
+ressource externe
+```
+
+::: {.callout-note}
+## Pourquoi ne pas tout faire avec R6?
+
+Les objets mutables peuvent être très pratiques, mais ils rendent également le comportement d'un programme plus difficile à prévoir.
+
+Pour plusieurs objets statistiques, une approche fonctionnelle comme S3 demeure donc plus naturelle :
+
+```r
+fit <- lm(...)
+prediction <- predict(fit)
+```
+
+plutôt qu'un objet qui modifie constamment son propre état.
+:::
+
+Dans ce cours, nous ne développerons pas de classe R6. Il est surtout important de reconnaître qu'il s'agit d'une **autre philosophie de programmation orientée objet**.
+
+## S4 : rendre S3 plus formel
+
+S4 conserve une philosophie beaucoup plus proche de S3.
+
+Il s'agit toujours principalement de **POO fonctionnelle** :
+
+```r
+generique(objet)
+```
+
+mais la définition des classes est beaucoup plus formelle.
+
+Avec S3, nous avions simplement écrit :
+
+```r
+class(temperature) <- "funvar"
+```
+
+Avec S4, nous devons réellement **définir la classe**.
+
+Par exemple :
+
+```r
+methods::setClass(
+  "Funvar",
+  slots = c(
+    values = "matrix",
+    grid = "numeric",
+    name = "character"
+  )
+)
+```
+
+Nous indiquons maintenant explicitement que tout objet `"Funvar"` doit posséder :
+
+```text
+values   → matrix
+grid     → numeric
+name     → character
+```
+
+Les composantes d'un objet S4 sont appelées des **slots**.
+
+Nous pouvons ensuite construire un objet avec :
+
+```r
+temperature <- methods::new(
+  "Funvar",
+  values = values,
+  grid = grid,
+  name = "Température"
+)
+```
+
+et accéder aux slots avec :
+
+```r
+temperature@values
+temperature@grid
+temperature@name
+```
+
+## Validation plus stricte {.unnumbered}
+
+S4 vérifie automatiquement que les objets stockés dans les slots possèdent le bon type.
+
+Nous pouvons également définir des contraintes supplémentaires.
+
+Par exemple :
+
+```r
+methods::setValidity(
+  "Funvar",
+  function(object) {
+
+    if (ncol(object@values) != length(object@grid)) {
+      return(
+        "Le nombre de colonnes de `values` doit correspondre à la longueur de `grid`."
+      )
+    }
+
+    TRUE
+  }
+)
+```
+
+Nous obtenons donc une distinction importante :
+
+```text
+S3
+─────────────────────────────
+structure implicite
+conventions
+flexibilité
+
+
+S4
+─────────────────────────────
+structure déclarée
+types définis
+validation formelle
+```
+
+S4 offre également des mécanismes plus avancés, notamment :
+
+- l'héritage multiple;
+- la définition formelle des génériques;
+- la définition formelle des méthodes;
+- le **multiple dispatch**, où la méthode choisie peut dépendre de la classe de plusieurs arguments.
+
+Cette rigueur devient particulièrement intéressante dans de grandes architectures comportant plusieurs classes reliées entre elles.
+
+C'est notamment une des raisons pour lesquelles S4 est très présent dans l'écosystème **Bioconductor**.
+
+::: {.callout-tip}
+## Le compromis
+
+S4 apporte davantage de garanties que S3.
+
+En échange, il nécessite davantage de code et possède une mécanique plus complexe.
+
+Pour une petite classe statistique, cette complexité supplémentaire n'est pas toujours nécessaire.
+:::
+
+## S7 : une tentative de réunir les forces de S3 et S4 
+
+S7 est beaucoup plus récent; toujours en développement!
+
+Il a été conçu par le groupe de travail sur la programmation orientée objet du **R Consortium**, avec l'objectif explicite de proposer éventuellement un successeur aux systèmes S3 et S4.
+
+S7 conserve une caractéristique importante de S3 :
+
+> Il s'agit toujours principalement de **POO fonctionnelle**.
+
+Nous continuons donc à écrire :
+
+```r
+plot(x)
+mean(x)
+predict(x)
+```
+
+plutôt que :
+
+```text
+x.plot()
+x.mean()
+x.predict()
+```
+
+Mais les classes sont maintenant définies de manière formelle, comme avec S4.
+
+On peut donc voir grossièrement S7 comme une tentative de combiner :
+
+```text
+simplicité et interface de S3
+              +
+structure et garanties de S4
+```
+
+## Définir une classe S7
+
+Avec S7, une classe est elle-même un **objet R**.
+
+Par exemple :
+
+```r
+Funvar <- S7::new_class(
+  "Funvar",
+  properties = list(
+    values = S7::class_any,
+    grid = S7::class_numeric,
+    name = S7::class_character
+  )
+)
+```
+
+La classe :
+
+```r
+Funvar
+```
+
+est maintenant un objet représentant notre définition de classe.
+
+Elle joue également le rôle de **constructeur**.
+
+Nous pouvons donc directement écrire :
+
+```r
+temperature <- Funvar(
+  values = values,
+  grid = grid,
+  name = "Température"
+)
+```
+
+Cela constitue déjà une différence intéressante avec notre implantation S3.
+
+Avec S3, nous avions dû créer nous-mêmes :
+
+```r
+new_funvar()
+```
+
+Avec S7, la définition de la classe produit automatiquement un constructeur.
+
+## Les propriétés 
+
+Dans S7, les composantes d'un objet sont appelées des **propriétés**.
+
+Nous y accédons avec :
+
+```r
+temperature@values
+temperature@grid
+temperature@name
+```
+
+Cette notation ressemble à celle des slots S4.
+
+Cependant, les propriétés font partie explicitement de la définition de la classe.
+
+Par exemple :
+
+```r
+grid = S7::class_numeric
+```
+
+signifie que la propriété `grid` doit contenir un objet numérique.
+
+Une tentative comme :
+
+```r
+temperature@grid <- "bonjour"
+```
+
+sera donc rejetée automatiquement.
+
+Cela contraste fortement avec S3, où rien n'empêchait un utilisateur d'écrire :
+
+```r
+temperature$grid <- "bonjour"
+```
+
+et de rendre notre objet incohérent.
+
+## Ajouter un validateur
+
+Les types ne suffisent pas toujours.
+
+Dans notre variable fonctionnelle, nous voulons également imposer :
+
+```text
+nombre de colonnes de values
+        =
+longueur de grid
+```
+
+Nous pouvons intégrer cette contrainte directement à la définition de la classe :
+
+```r
+Funvar <- S7::new_class(
+  "Funvar",
+
+  properties = list(
+    values = S7::class_any,
+    grid = S7::class_numeric,
+    name = S7::class_character
+  ),
+
+  validator = function(self) {
+
+    if (!is.matrix(self@values)) {
+      return("@values doit être une matrice.")
+    }
+
+    if (!is.numeric(self@values)) {
+      return("@values doit être une matrice numérique.")
+    }
+
+    if (ncol(self@values) != length(self@grid)) {
+      return(
+        "Le nombre de colonnes de @values doit correspondre à la longueur de @grid."
+      )
+    }
+
+  }
+)
+```
+
+La validation est alors associée directement à la classe.
+
+Elle est effectuée lors de la construction de l'objet et lorsque ses propriétés sont modifiées.
+
+Notre définition regroupe donc maintenant :
+
+```text
+nom de la classe
+      +
+propriétés
+      +
+types
+      +
+contraintes de validité
+      +
+constructeur
+```
+
+C'est une différence importante avec S3, où tous ces éléments reposaient principalement sur nos propres conventions.
+
+## Les méthodes avec S7
+
+S7 conserve le principe des fonctions génériques.
+
+Nous pouvons donc encore utiliser un générique existant comme :
+
+```r
+plot()
+```
+
+et définir une méthode pour notre classe.
+
+La syntaxe devient cependant explicite :
+
+```r
+S7::method(plot, Funvar) <- function(x, y, ...) {
+
+  matplot(
+    x@grid,
+    t(x@values),
+    type = "l",
+    lty = 1,
+    xlab = "t",
+    ylab = x@name,
+    ...
+  )
+
+  invisible(x)
+}
+```
+
+Nous pouvons ensuite écrire exactement comme avec S3 :
+
+```r
+plot(temperature)
+```
+
+L'utilisateur n'a donc pas besoin de savoir si notre implantation utilise :
+
+```text
+S3
+S4
+ou
+S7
+```
+
+L'interface peut demeurer :
+
+```r
+plot(x)
+```
+
+C'est une caractéristique importante de la **POO fonctionnelle en R**.
+
+## Créer un nouveau générique avec S7
+
+S7 fournit également une manière explicite de créer nos propres fonctions génériques.
+
+Par exemple, imaginons une opération permettant de retourner le nombre de courbes d'un objet :
+
+```r
+ncurves <- S7::new_generic(
+  "ncurves",
+  "x"
+)
+```
+
+Nous pouvons ensuite définir une méthode :
+
+```r
+S7::method(ncurves, Funvar) <- function(x) {
+  nrow(x@values)
+}
+```
+
+Puis :
+
+```r
+ncurves(temperature)
+```
+
+La relation entre le générique et sa méthode est donc beaucoup plus explicite qu'en S3.
+
+En S3, nous aurions écrit quelque chose comme :
+
+```r
+ncurves <- function(x, ...) {
+  UseMethod("ncurves")
+}
+
+ncurves.funvar <- function(x, ...) {
+  nrow(x$values)
+}
+```
+
+S7 remplace cette convention de noms par une véritable opération d'enregistrement :
+
+```r
+S7::method(ncurves, Funvar) <- ...
+```
+
+## Pourquoi S7 est particulièrement intéressant?
+
+S7 cherche à conserver plusieurs aspects agréables de S3 :
+
+```text
+POO fonctionnelle
+
+plot(x)
+mean(x)
+predict(x)
+```
+
+tout en corrigeant plusieurs de ses faiblesses.
+
+Par exemple :
+
+| S3 | S7 |
+|---|---|
+| Classe généralement implicite | Classe explicitement définie |
+| Structure basée sur une convention | Propriétés déclarées |
+| Types non imposés | Types de propriétés vérifiés |
+| Constructeur à créer nous-mêmes | Constructeur associé à la classe |
+| Validation à organiser nous-mêmes | Validateur intégré à la classe |
+| Méthodes reconnues par convention de nom | Méthodes enregistrées explicitement |
+| Héritage basé sur le vecteur `class` | Héritage explicitement défini |
+
+S7 ajoute également des mécanismes plus avancés, notamment la possibilité de faire dépendre la sélection d'une méthode de **plusieurs arguments**, tout en conservant une logique de programmation fonctionnelle.
+
+::: {.callout-important}
+## L'idée derrière S7
+
+S7 ne cherche donc pas à remplacer la philosophie de S3.
+
+Il cherche plutôt à conserver son interface simple :
+
+```r
+generique(objet)
+```
+
+tout en ajoutant davantage de structure et de garanties pour le développement de librairies complexes.
+:::
+
+## S7 est encore récent
+
+S7 est disponible sur CRAN, mais il demeure un système beaucoup plus récent que S3 ou S4.
+
+Son utilisation dans l'écosystème R est donc encore relativement limitée.
+
+Le projet indique d'ailleurs toujours que S7 possède un caractère **expérimental**, même si sa conception est maintenant suffisamment avancée pour être utilisée et expérimentée.
+
+L'objectif à long terme annoncé par le projet est que S7 puisse éventuellement être intégré directement à R.
+
+Pour cette raison, il est important aujourd'hui :
+
+- de connaître son existence;
+- de comprendre sa philosophie;
+- de pouvoir lire du code S7;
+
+mais nous n'allons pas remplacer S3 par S7 dans notre projet.
+
+## Quel système choisir?
+
+Nous pouvons maintenant résumer grossièrement les différents systèmes :
+
+| Système | Philosophie | Principal avantage |
+|---|---|---|
+| S3 | POO fonctionnelle | Simplicité et flexibilité |
+| R6 | POO encapsulée | Objets mutables et état |
+| S4 | POO fonctionnelle formelle | Contrôle et rigueur |
+| S7 | POO fonctionnelle formelle | Cherche à combiner simplicité et rigueur |
+
+Pour une petite librairie statistique :
+
+```text
+S3
+```
+
+demeure souvent un excellent point de départ.
+
+Pour une architecture très structurée comprenant plusieurs classes et plusieurs développeurs :
+
+```text
+S4
+```
+
+peut fournir davantage de garanties.
+
+Pour représenter des objets possédant un état mutable ou des ressources externes :
+
+```text
+R6
+```
+
+peut être particulièrement naturel.
+
+Et :
+
+```text
+S7
+```
+
+propose une nouvelle approche qui cherche à conserver l'interface naturelle de S3 tout en intégrant plusieurs mécanismes formels que nous retrouvons dans S4.
+
+::: {.callout-tip}
+## Message à retenir
+
+Il n'existe pas un système de POO universellement supérieur.
+
+Les différents systèmes répondent à des compromis différents entre :
+
+```text
+simplicité
+flexibilité
+rigueur
+encapsulation
+maintenabilité
+```
+
+Dans ce cours, S3 demeure notre outil principal parce qu'il permet de profiter rapidement des bénéfices de la programmation orientée objet tout en conservant une implantation relativement simple.
+:::
